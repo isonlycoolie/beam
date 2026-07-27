@@ -4,6 +4,7 @@ import { Command } from "commander";
 import { doctorCommand } from "./commands/doctor.js";
 import { exportCommand } from "./commands/export.js";
 import { inspectCommand } from "./commands/inspect.js";
+import { initCommand } from "./commands/init.js";
 import { mcpCommand } from "./commands/mcp.js";
 
 const program = new Command();
@@ -60,6 +61,17 @@ program
       },
     ) => {
       await exportCommand(url, options);
+    },
+  );
+
+program
+  .command("init")
+  .option("--client <client>", "MCP client to configure")
+  .option("--print", "Print manual MCP config without writing files")
+  .option("--json", "Print structured JSON output")
+  .action(
+    async (options: { client?: string; print?: boolean; json?: boolean }) => {
+      await initCommand(options);
     },
   );
 
