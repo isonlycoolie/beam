@@ -13,10 +13,14 @@ Beam is not an IDE, design editor, or code generator. It is infrastructure for r
 ## Core Flow
 
 ```bash
+beam login --token <figma-token>
 beam login
 beam doctor
 beam inspect <figma-url>
 beam export <figma-url>
+beam snapshots list
+beam mappings list
+beam debug bundle
 beam mcp
 ```
 
@@ -29,6 +33,7 @@ The early product focuses on proving the local bridge:
 - Generate implementation briefs from Figma nodes.
 - Export rendered assets and manifests.
 - Expose the same core through CLI commands and MCP tools.
+- Manage local snapshots, component mappings, and debug bundles.
 
 ## Workspace
 
