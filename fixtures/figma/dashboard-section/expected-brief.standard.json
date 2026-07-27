@@ -1,0 +1,45 @@
+{
+  "frame": {
+    "id": "5:1",
+    "name": "Dashboard Section / Desktop",
+    "width": 1280,
+    "height": 760,
+    "background": "#ffffff",
+    "nodeCount": 8
+  },
+  "layout": {
+    "direction": "vertical",
+    "spacing": 24,
+    "padding": { "top": 40, "right": 40, "bottom": 40, "left": 40 },
+    "sections": ["Stat Card", "Stat Card", "Chart Area", "Table Region"],
+    "repeatedGroups": [{ "name": "Stat Card", "count": 2 }]
+  },
+  "components": [
+    {
+      "nodeId": "5:2",
+      "name": "Stat Card",
+      "type": "frame",
+      "reuseHint": "Component candidate"
+    },
+    {
+      "nodeId": "5:4",
+      "name": "Stat Card",
+      "type": "frame",
+      "reuseHint": "Component candidate"
+    }
+  ],
+  "tokens": {
+    "colors": ["#ffffff"],
+    "typography": [
+      { "fontFamily": "Inter", "fontSize": 28, "fontWeight": 700 },
+      { "fontFamily": "Inter", "fontSize": 14, "fontWeight": 500 }
+    ],
+    "radii": [12],
+    "text": ["$42K", "8,120", "Recent activity"]
+  },
+  "assets": [],
+  "implementationNotes": [
+    "Frame uses vertical auto layout.",
+    "Primary sections: Stat Card, Stat Card, Chart Area, Table Region."
+  ]
+}
