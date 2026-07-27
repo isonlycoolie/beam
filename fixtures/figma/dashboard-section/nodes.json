@@ -1,0 +1,80 @@
+{
+  "nodes": {
+    "5:1": {
+      "document": {
+        "id": "5:1",
+        "name": "Dashboard Section / Desktop",
+        "type": "FRAME",
+        "layoutMode": "VERTICAL",
+        "itemSpacing": 24,
+        "paddingLeft": 40,
+        "paddingRight": 40,
+        "paddingTop": 40,
+        "paddingBottom": 40,
+        "absoluteBoundingBox": { "width": 1280, "height": 760 },
+        "fills": [{ "type": "SOLID", "color": { "r": 1, "g": 1, "b": 1 } }],
+        "children": [
+          {
+            "id": "5:2",
+            "name": "Stat Card",
+            "type": "FRAME",
+            "cornerRadius": 12,
+            "children": [
+              {
+                "id": "5:3",
+                "name": "Revenue",
+                "type": "TEXT",
+                "characters": "$42K",
+                "style": {
+                  "fontFamily": "Inter",
+                  "fontSize": 28,
+                  "fontWeight": 700
+                }
+              }
+            ]
+          },
+          {
+            "id": "5:4",
+            "name": "Stat Card",
+            "type": "FRAME",
+            "cornerRadius": 12,
+            "children": [
+              {
+                "id": "5:5",
+                "name": "Users",
+                "type": "TEXT",
+                "characters": "8,120",
+                "style": {
+                  "fontFamily": "Inter",
+                  "fontSize": 28,
+                  "fontWeight": 700
+                }
+              }
+            ]
+          },
+          { "id": "5:6", "name": "Chart Area", "type": "VECTOR" },
+          {
+            "id": "5:7",
+            "name": "Table Region",
+            "type": "FRAME",
+            "children": [
+              {
+                "id": "5:8",
+                "name": "Row Label",
+                "type": "TEXT",
+                "characters": "Recent activity",
+                "style": {
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 500
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "components": {},
+      "styles": {}
+    }
+  }
+}
