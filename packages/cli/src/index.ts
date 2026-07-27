@@ -1,3 +1,4 @@
+export { loginCommand, logoutCommand, whoamiCommand } from "./commands/auth.js";
 export { compareCommand, formatCompareResult } from "./commands/compare.js";
 export { doctorCommand, formatDoctorChecks } from "./commands/doctor.js";
 export { exportCommand } from "./commands/export.js";

@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from "commander";
+import { loginCommand, logoutCommand, whoamiCommand } from "./commands/auth.js";
 import { compareCommand } from "./commands/compare.js";
 import { doctorCommand } from "./commands/doctor.js";
 import { exportCommand } from "./commands/export.js";
@@ -14,6 +15,29 @@ program
   .name("beam")
   .description("Beam design intelligence CLI")
   .version("0.1.0");
+
+program
+  .command("login")
+  .option("--token <token>", "Figma personal access token")
+  .option("--token-stdin", "Read Figma token from stdin")
+  .action(async (options: { token?: string; tokenStdin?: boolean }) => {
+    await loginCommand(options);
+  });
+
+program
+  .command("logout")
+  .option("--yes", "Confirm credential removal")
+  .option("--json", "Print structured JSON output")
+  .action(async (options: { yes?: boolean; json?: boolean }) => {
+    await logoutCommand(options);
+  });
+
+program
+  .command("whoami")
+  .option("--json", "Print structured JSON output")
+  .action(async (options: { json?: boolean }) => {
+    await whoamiCommand(options);
+  });
 
 program
   .command("doctor")
