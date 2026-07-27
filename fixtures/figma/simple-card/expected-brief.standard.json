@@ -53,6 +53,7 @@
   "assets": [],
   "implementationNotes": [
     "Frame uses vertical auto layout.",
-    "Primary sections: Card."
+    "Primary sections: Card.",
+    "Omitted: raw vector paths, invisible layers."
   ]
 }

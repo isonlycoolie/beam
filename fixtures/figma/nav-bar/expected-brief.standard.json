@@ -33,6 +33,7 @@
   "assets": [],
   "implementationNotes": [
     "Frame uses horizontal auto layout.",
-    "Primary sections: Logo Icon, Home, Docs, Button."
+    "Primary sections: Logo Icon, Home, Docs, Button.",
+    "Omitted: raw vector paths, invisible layers."
   ]
 }

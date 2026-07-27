@@ -34,6 +34,7 @@
   "assets": [],
   "implementationNotes": [
     "Frame uses vertical auto layout.",
-    "Primary sections: Email Label, Input, Helper Text, Submit Button."
+    "Primary sections: Email Label, Input, Helper Text, Submit Button.",
+    "Omitted: raw vector paths, invisible layers."
   ]
 }

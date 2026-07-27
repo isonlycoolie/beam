@@ -40,6 +40,8 @@
   "assets": [],
   "implementationNotes": [
     "Frame uses vertical auto layout.",
-    "Primary sections: Stat Card, Stat Card, Chart Area, Table Region."
+    "Primary sections: Stat Card, Stat Card, Chart Area, Table Region.",
+    "Repeated structures: Stat Card x2.",
+    "Omitted: raw vector paths, invisible layers."
   ]
 }

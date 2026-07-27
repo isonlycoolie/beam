@@ -48,6 +48,8 @@
   "assets": [],
   "implementationNotes": [
     "Frame uses horizontal auto layout.",
-    "Primary sections: Pricing Card, Pricing Card, Pricing Card."
+    "Primary sections: Pricing Card, Pricing Card, Pricing Card.",
+    "Repeated structures: Pricing Card x3, Tier x3.",
+    "Omitted: raw vector paths, invisible layers."
   ]
 }
