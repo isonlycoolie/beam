@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from "commander";
+import { compareCommand } from "./commands/compare.js";
 import { doctorCommand } from "./commands/doctor.js";
 import { exportCommand } from "./commands/export.js";
 import { inspectCommand } from "./commands/inspect.js";
@@ -61,6 +62,29 @@ program
       },
     ) => {
       await exportCommand(url, options);
+    },
+  );
+
+program
+  .command("compare")
+  .argument("<figma-url>")
+  .argument("<local-url>")
+  .option("--threshold <threshold>", "Minimum passing score")
+  .option("--out <path>", "Output directory")
+  .option("--refresh", "Bypass cache")
+  .option("--json", "Print structured JSON output")
+  .action(
+    async (
+      figmaUrl: string,
+      localUrl: string,
+      options: {
+        threshold?: string;
+        out?: string;
+        refresh?: boolean;
+        json?: boolean;
+      },
+    ) => {
+      await compareCommand(figmaUrl, localUrl, options);
     },
   );
 
