@@ -42,6 +42,27 @@ describe("simplifyDesign", () => {
       expect(result.warnings).toEqual(expectedWarnings);
     },
   );
+
+  it("reports repeated structures and omissions", () => {
+    const result = simplifyDesign({
+      document: {
+        id: "1:1",
+        name: "Frame",
+        type: "FRAME",
+        children: [
+          { id: "1:2", name: "Card", type: "FRAME" },
+          { id: "1:3", name: "Card", type: "FRAME" },
+        ],
+      },
+    });
+
+    expect(result.brief.implementationNotes).toContain(
+      "Repeated structures: Card x2.",
+    );
+    expect(result.brief.implementationNotes).toContain(
+      "Omitted: raw vector paths, invisible layers.",
+    );
+  });
 });
 
 async function readFixture(name: string, file: string): Promise<any> {
