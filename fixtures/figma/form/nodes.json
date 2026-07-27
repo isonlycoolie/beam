@@ -1,0 +1,53 @@
+{
+  "nodes": {
+    "3:1": {
+      "document": {
+        "id": "3:1",
+        "name": "Signup Form / Desktop",
+        "type": "FRAME",
+        "layoutMode": "VERTICAL",
+        "itemSpacing": 16,
+        "paddingLeft": 32,
+        "paddingRight": 32,
+        "paddingTop": 32,
+        "paddingBottom": 32,
+        "absoluteBoundingBox": { "width": 480, "height": 520 },
+        "fills": [{ "type": "SOLID", "color": { "r": 1, "g": 1, "b": 1 } }],
+        "children": [
+          {
+            "id": "3:2",
+            "name": "Email Label",
+            "type": "TEXT",
+            "characters": "Email",
+            "style": {
+              "fontFamily": "Inter",
+              "fontSize": 14,
+              "fontWeight": 600
+            }
+          },
+          { "id": "3:3", "name": "Input", "type": "FRAME", "cornerRadius": 8 },
+          {
+            "id": "3:4",
+            "name": "Helper Text",
+            "type": "TEXT",
+            "characters": "Use your work email.",
+            "style": {
+              "fontFamily": "Inter",
+              "fontSize": 12,
+              "fontWeight": 400
+            }
+          },
+          {
+            "id": "3:5",
+            "name": "Submit Button",
+            "type": "FRAME",
+            "layoutMode": "HORIZONTAL",
+            "cornerRadius": 10
+          }
+        ]
+      },
+      "components": {},
+      "styles": {}
+    }
+  }
+}
