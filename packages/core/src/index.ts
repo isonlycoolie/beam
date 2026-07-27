@@ -3,6 +3,8 @@ export * from "./errors.js";
 export * from "./auth/credential-store.js";
 export * from "./assets/asset-discovery.js";
 export * from "./assets/asset-exporter.js";
+export * from "./agents/adapter-registry.js";
+export * from "./agents/mcp-client-adapter.js";
 export * from "./cache/cache-key.js";
 export * from "./cache/cache-manager.js";
 export * from "./cache/freshness-policy.js";
