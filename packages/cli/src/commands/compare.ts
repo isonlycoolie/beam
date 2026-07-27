@@ -1,4 +1,12 @@
 import { compareDesignToUrl, type CompareResult } from "@beam/core";
+import {
+  danger,
+  heading,
+  label,
+  section,
+  success,
+  warning,
+} from "../terminal.js";
 
 export async function compareCommand(
   figmaUrl: string,
@@ -31,19 +39,22 @@ export async function compareCommand(
 }
 
 export function formatCompareResult(result: CompareResult): string {
+  const passed = result.passed !== false;
   const lines = [
-    "Beam compare",
+    heading("Beam compare"),
     "",
-    `Score: ${result.score}`,
-    `Threshold: ${String(result.threshold ?? 0.95)}`,
-    `Result: ${result.passed === false ? "fail" : "pass"}`,
-    `Target: ${result.artifacts?.targetImage ?? "not captured"}`,
-    `Diff: ${result.artifacts?.diffImage ?? "not written"}`,
+    label("Result", passed ? success("pass") : danger("fail")),
+    label("Score", result.score),
+    label("Threshold", String(result.threshold ?? 0.95)),
+    label("Target", result.artifacts?.targetImage ?? "not captured"),
+    label("Diff", result.artifacts?.diffImage ?? "not written"),
   ];
 
   if (result.differences.length > 0) {
-    lines.push("", "Differences:");
-    lines.push(...result.differences.map((item) => `- ${item.message}`));
+    lines.push("", section("Differences"));
+    lines.push(
+      ...result.differences.map((item) => `- ${warning(item.message)}`),
+    );
   }
 
   return `${lines.join("\n")}\n`;

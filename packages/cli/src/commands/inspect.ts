@@ -3,6 +3,7 @@ import {
   type ContextMode,
   type DesignContextResponse,
 } from "@beam/core";
+import { heading, label, muted, section, warning } from "../terminal.js";
 
 export async function inspectCommand(
   url: string,
@@ -35,48 +36,62 @@ export function formatInspectResponse(response: DesignContextResponse): string {
     (component) => component["mapping"],
   ).length;
   const warnings = response.warnings.map(
-    (warning) => `- ${warning.code}: ${warning.message}`,
+    (item) => `- ${warning(`${item.code}: ${item.message}`)}`,
   );
   const lines = [
-    "Beam inspect",
+    heading("Beam inspect"),
     "",
-    "Source:",
-    `File: ${response.source.fileKey}`,
-    `Node: ${response.source.nodeId ?? "file"}`,
+    section("Source"),
+    label("File", response.source.fileKey),
+    label("Node", response.source.nodeId ?? "file"),
     "",
-    "Frame:",
-    `Frame: ${String(frame["name"] ?? "Unknown")}`,
-    `Size: ${String(frame["width"] ?? "?")} x ${String(frame["height"] ?? "?")}`,
-    `Nodes: ${String(frame["nodeCount"] ?? 0)}`,
+    section("Frame"),
+    label("Frame", String(frame["name"] ?? "Unknown")),
+    label(
+      "Size",
+      `${String(frame["width"] ?? "?")} x ${String(frame["height"] ?? "?")}`,
+    ),
+    label("Nodes", String(frame["nodeCount"] ?? 0)),
     "",
-    "Layout:",
-    `Type: ${String(layout["type"] ?? "unknown")}`,
-    `Sections: ${Array.isArray(layout["sections"]) ? layout["sections"].join(", ") : "none"}`,
+    section("Layout"),
+    label("Type", String(layout["type"] ?? "unknown")),
+    label(
+      "Sections",
+      Array.isArray(layout["sections"])
+        ? layout["sections"].join(", ")
+        : "none",
+    ),
     "",
-    "Components:",
-    `Components: ${response.brief.components.length}`,
-    `Mappings: ${mappingCount}`,
+    section("Components"),
+    label("Components", response.brief.components.length),
+    label("Mappings", mappingCount),
     "",
-    "Tokens:",
-    `Colors: ${Array.isArray(tokens["colors"]) ? tokens["colors"].length : 0}`,
-    `Typography: ${Array.isArray(tokens["typography"]) ? tokens["typography"].length : 0}`,
+    section("Tokens"),
+    label(
+      "Colors",
+      Array.isArray(tokens["colors"]) ? tokens["colors"].length : 0,
+    ),
+    label(
+      "Typography",
+      Array.isArray(tokens["typography"]) ? tokens["typography"].length : 0,
+    ),
     "",
-    "Assets:",
-    `Assets: ${response.brief.assets.length}`,
+    section("Assets"),
+    label("Assets", response.brief.assets.length),
     "",
-    "Context:",
-    `Mode: ${String(frame["mode"] ?? "standard")}`,
-    `Estimated context: ${response.estimatedTokens} tokens`,
-    `Included: layout, text, tokens, components`,
-    `Omitted: raw vector paths, invisible layers`,
+    section("Context"),
+    label("Mode", String(frame["mode"] ?? "standard")),
+    label("Estimated context", `${response.estimatedTokens} tokens`),
+    label("Included", "layout, text, tokens, components"),
+    label("Omitted", muted("raw vector paths, invisible layers")),
     "",
-    "Cache and snapshot:",
-    `Cache: ${response.snapshot.fromCache ? "hit" : "miss"}`,
-    `Snapshot: ${response.snapshot.id}`,
+    section("Cache and snapshot"),
+    label("Cache", response.snapshot.fromCache ? "hit" : "miss"),
+    label("Snapshot", response.snapshot.id),
   ];
 
   if (warnings.length > 0) {
-    lines.push("", "Warnings:", ...warnings);
+    lines.push("", section("Warnings"), ...warnings);
   }
 
   return `${lines.join("\n")}\n`;
