@@ -1,0 +1,53 @@
+{
+  "frame": {
+    "id": "4:1",
+    "name": "Pricing Cards / Desktop",
+    "width": 1200,
+    "height": 640,
+    "background": "#ffffff",
+    "nodeCount": 7
+  },
+  "layout": {
+    "direction": "horizontal",
+    "spacing": 24,
+    "padding": { "top": 48, "right": 48, "bottom": 48, "left": 48 },
+    "sections": ["Pricing Card", "Pricing Card", "Pricing Card"],
+    "repeatedGroups": [
+      { "name": "Pricing Card", "count": 3 },
+      { "name": "Tier", "count": 3 }
+    ]
+  },
+  "components": [
+    {
+      "nodeId": "4:2",
+      "name": "Pricing Card",
+      "type": "frame",
+      "reuseHint": "Component candidate"
+    },
+    {
+      "nodeId": "4:4",
+      "name": "Pricing Card",
+      "type": "frame",
+      "reuseHint": "Component candidate"
+    },
+    {
+      "nodeId": "4:6",
+      "name": "Pricing Card",
+      "type": "frame",
+      "reuseHint": "Component candidate"
+    }
+  ],
+  "tokens": {
+    "colors": ["#ffffff"],
+    "typography": [
+      { "fontFamily": "Inter", "fontSize": 20, "fontWeight": 700 }
+    ],
+    "radii": [12],
+    "text": ["Starter", "Pro", "Team"]
+  },
+  "assets": [],
+  "implementationNotes": [
+    "Frame uses horizontal auto layout.",
+    "Primary sections: Pricing Card, Pricing Card, Pricing Card."
+  ]
+}
