@@ -3,6 +3,7 @@
 import { Command } from "commander";
 import { loginCommand, logoutCommand, whoamiCommand } from "./commands/auth.js";
 import { compareCommand } from "./commands/compare.js";
+import { debugCommand } from "./commands/debug.js";
 import { doctorCommand } from "./commands/doctor.js";
 import { exportCommand } from "./commands/export.js";
 import { inspectCommand } from "./commands/inspect.js";
@@ -41,6 +42,21 @@ program
   .action(async (options: { json?: boolean }) => {
     await whoamiCommand(options);
   });
+
+program
+  .command("debug")
+  .argument("<action>")
+  .option("--out <path>", "Debug bundle output directory")
+  .option("--include-raw", "Record explicit raw payload inclusion")
+  .option("--json", "Print structured JSON output")
+  .action(
+    async (
+      action: string,
+      options: { out?: string; includeRaw?: boolean; json?: boolean },
+    ) => {
+      await debugCommand(action, options);
+    },
+  );
 
 program
   .command("doctor")
