@@ -14,7 +14,16 @@ export const compareResultSchema = z.object({
   figmaSnapshotId: z.string().min(1),
   targetUrl: z.string().url(),
   createdAt: z.string().datetime(),
+  threshold: z.number().min(0).max(1).optional(),
   score: z.number().min(0).max(1),
+  passed: z.boolean().optional(),
+  artifacts: z
+    .object({
+      figmaImage: z.string().min(1),
+      targetImage: z.string().min(1),
+      diffImage: z.string().min(1),
+    })
+    .optional(),
   differences: z.array(compareDifferenceSchema),
 });
 
