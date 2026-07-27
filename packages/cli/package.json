@@ -1,0 +1,23 @@
+{
+  "name": "@beam/client",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "bin": {
+    "beam": "./dist/cli.js"
+  },
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@beam/core": "workspace:*",
+    "@beam/mcp": "workspace:*",
+    "commander": "15.0.0",
+    "zod": "4.4.3"
+  }
+}
