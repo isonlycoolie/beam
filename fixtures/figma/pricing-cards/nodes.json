@@ -1,0 +1,83 @@
+{
+  "nodes": {
+    "4:1": {
+      "document": {
+        "id": "4:1",
+        "name": "Pricing Cards / Desktop",
+        "type": "FRAME",
+        "layoutMode": "HORIZONTAL",
+        "itemSpacing": 24,
+        "paddingLeft": 48,
+        "paddingRight": 48,
+        "paddingTop": 48,
+        "paddingBottom": 48,
+        "absoluteBoundingBox": { "width": 1200, "height": 640 },
+        "fills": [{ "type": "SOLID", "color": { "r": 1, "g": 1, "b": 1 } }],
+        "children": [
+          {
+            "id": "4:2",
+            "name": "Pricing Card",
+            "type": "FRAME",
+            "layoutMode": "VERTICAL",
+            "cornerRadius": 12,
+            "children": [
+              {
+                "id": "4:3",
+                "name": "Tier",
+                "type": "TEXT",
+                "characters": "Starter",
+                "style": {
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": 700
+                }
+              }
+            ]
+          },
+          {
+            "id": "4:4",
+            "name": "Pricing Card",
+            "type": "FRAME",
+            "layoutMode": "VERTICAL",
+            "cornerRadius": 12,
+            "children": [
+              {
+                "id": "4:5",
+                "name": "Tier",
+                "type": "TEXT",
+                "characters": "Pro",
+                "style": {
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": 700
+                }
+              }
+            ]
+          },
+          {
+            "id": "4:6",
+            "name": "Pricing Card",
+            "type": "FRAME",
+            "layoutMode": "VERTICAL",
+            "cornerRadius": 12,
+            "children": [
+              {
+                "id": "4:7",
+                "name": "Tier",
+                "type": "TEXT",
+                "characters": "Team",
+                "style": {
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": 700
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "components": {},
+      "styles": {}
+    }
+  }
+}
