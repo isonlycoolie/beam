@@ -9,6 +9,7 @@ import { z } from "zod";
 import { registerAssetTools } from "./assets.js";
 import { jsonContent, toolError } from "./responses.js";
 import { registerVariableTools } from "./variables.js";
+export { freeMcpCapabilities } from "./capabilities.js";
 
 export type BeamToolContext = {
   cwd: string;
