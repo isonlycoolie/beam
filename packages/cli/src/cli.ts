@@ -7,6 +7,7 @@ import { doctorCommand } from "./commands/doctor.js";
 import { exportCommand } from "./commands/export.js";
 import { inspectCommand } from "./commands/inspect.js";
 import { initCommand } from "./commands/init.js";
+import { mappingsCommand } from "./commands/mappings.js";
 import { mcpCommand } from "./commands/mcp.js";
 import { settingsCommand } from "./commands/settings.js";
 import { snapshotsCommand } from "./commands/snapshots.js";
@@ -122,6 +123,31 @@ program
   .action(
     async (options: { client?: string; print?: boolean; json?: boolean }) => {
       await initCommand(options);
+    },
+  );
+
+program
+  .command("mappings")
+  .argument("<action>")
+  .option("--figma-component-id <id>", "Figma component id")
+  .option("--figma-name <name>", "Figma component name")
+  .option("--import <path>", "Code import path")
+  .option("--export <name>", "Code export name")
+  .option("--notes <notes>", "Mapping notes")
+  .option("--json", "Print structured JSON output")
+  .action(
+    async (
+      action: string,
+      options: {
+        figmaComponentId?: string;
+        figmaName?: string;
+        import?: string;
+        export?: string;
+        notes?: string;
+        json?: boolean;
+      },
+    ) => {
+      await mappingsCommand(action, options);
     },
   );
 
