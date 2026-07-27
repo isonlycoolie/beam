@@ -9,6 +9,7 @@ import { inspectCommand } from "./commands/inspect.js";
 import { initCommand } from "./commands/init.js";
 import { mcpCommand } from "./commands/mcp.js";
 import { settingsCommand } from "./commands/settings.js";
+import { snapshotsCommand } from "./commands/snapshots.js";
 
 const program = new Command();
 
@@ -121,6 +122,22 @@ program
   .action(
     async (options: { client?: string; print?: boolean; json?: boolean }) => {
       await initCommand(options);
+    },
+  );
+
+program
+  .command("snapshots")
+  .argument("<action>")
+  .argument("[snapshot-id]")
+  .option("--out <path>", "Restore output directory")
+  .option("--json", "Print structured JSON output")
+  .action(
+    async (
+      action: string,
+      snapshotId: string | undefined,
+      options: { out?: string; json?: boolean },
+    ) => {
+      await snapshotsCommand(action, snapshotId, options);
     },
   );
 
