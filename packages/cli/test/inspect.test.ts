@@ -35,6 +35,10 @@ describe("inspect command", () => {
     });
 
     expect(output).toContain("Beam inspect");
+    expect(output).toContain("Source:");
+    expect(output).toContain("Layout:");
+    expect(output).toContain("Tokens:");
+    expect(output).toContain("Cache and snapshot:");
     expect(output).toContain("Frame: Frame");
     expect(output).toContain("Cache: hit");
     expect(output).toContain("Snapshot: snapshot_test");
