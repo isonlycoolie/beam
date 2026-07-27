@@ -13,6 +13,7 @@ export * from "./design-context/design-context-service.js";
 export * from "./doctor/doctor-service.js";
 export { FigmaClient } from "./figma/figma-client.js";
 export * from "./figma/rate-limit-manager.js";
+export * from "./figma/variables-service.js";
 export { RequestScheduler } from "./figma/request-scheduler.js";
 export { parseFigmaUrl } from "./figma/url-parser.js";
 export type { ParsedFigmaUrl } from "./figma/url-parser.js";
