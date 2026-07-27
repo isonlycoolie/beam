@@ -23,6 +23,7 @@ export * from "./figma/variables-service.js";
 export { RequestScheduler } from "./figma/request-scheduler.js";
 export { parseFigmaUrl } from "./figma/url-parser.js";
 export type { ParsedFigmaUrl } from "./figma/url-parser.js";
+export * from "./mappings/component-mappings.js";
 export * from "./simplify/design-simplifier.js";
 export * from "./snapshots/snapshot-store.js";
 export * from "./tokens/token-planner.js";
