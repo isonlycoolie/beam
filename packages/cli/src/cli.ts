@@ -1,0 +1,65 @@
+#!/usr/bin/env node
+
+import { Command } from "commander";
+import { doctorCommand } from "./commands/doctor.js";
+import { exportCommand } from "./commands/export.js";
+import { inspectCommand } from "./commands/inspect.js";
+
+const program = new Command();
+
+program
+  .name("beam")
+  .description("Beam design intelligence CLI")
+  .version("0.1.0");
+
+program
+  .command("doctor")
+  .description("Check local Beam setup")
+  .option("--json", "Print structured JSON output")
+  .action(async (options: { json?: boolean }) => {
+    await doctorCommand(options);
+  });
+
+program
+  .command("inspect")
+  .argument("<figma-url>")
+  .option("--mode <mode>", "Context mode")
+  .option("--raw", "Use raw context mode")
+  .option("--refresh", "Bypass cache")
+  .option("--json", "Print structured JSON output")
+  .action(
+    async (
+      url: string,
+      options: {
+        mode?: "summary" | "standard" | "full" | "raw";
+        raw?: boolean;
+        refresh?: boolean;
+        json?: boolean;
+      },
+    ) => {
+      await inspectCommand(url, options);
+    },
+  );
+
+program
+  .command("export")
+  .argument("<figma-url>")
+  .option("--out <path>", "Output directory")
+  .option("--scale <scale>", "Image scale")
+  .option("--refresh", "Bypass cache")
+  .option("--json", "Print structured JSON output")
+  .action(
+    async (
+      url: string,
+      options: {
+        out?: string;
+        scale?: string;
+        refresh?: boolean;
+        json?: boolean;
+      },
+    ) => {
+      await exportCommand(url, options);
+    },
+  );
+
+await program.parseAsync(process.argv);
