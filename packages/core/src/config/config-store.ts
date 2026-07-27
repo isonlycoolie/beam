@@ -65,3 +65,15 @@ export async function writeProjectConfig(
   await writeJson(configPath, projectConfigSchema.parse(config));
   return configPath;
 }
+
+export async function readProjectConfig(
+  input: { cwd?: string } = {},
+): Promise<ProjectConfig> {
+  const paths = createBeamPaths({ cwd: input.cwd });
+  return (
+    (await readOptionalJson(
+      join(paths.projectBeamDir, "config.json"),
+      projectConfigSchema,
+    )) ?? { schemaVersion: "1.0" }
+  );
+}

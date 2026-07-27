@@ -9,6 +9,7 @@ export * from "./cache/cache-key.js";
 export * from "./cache/cache-manager.js";
 export * from "./cache/freshness-policy.js";
 export * from "./config/config-store.js";
+export * from "./config/settings-service.js";
 export * from "./compare/compare-service.js";
 export * from "./compare/screenshot-capture.js";
 export * from "./compare/visual-comparator.js";
