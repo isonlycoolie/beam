@@ -1,4 +1,4 @@
-import { readFile, rm, mkdtemp } from "node:fs/promises";
+import { mkdir, readFile, rm, mkdtemp, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { afterEach, describe, expect, it } from "vitest";
@@ -58,6 +58,50 @@ describe("SnapshotStore", () => {
       brief,
     );
   });
+
+  it("lists snapshots and reports artifact status", async () => {
+    const cwd = await tempRoot();
+    const store = new SnapshotStore({ cwd });
+
+    await expect(store.list()).resolves.toEqual([]);
+    const snapshot = await createSnapshot(store);
+    await writeArtifact(cwd, snapshot.paths.image!, "image");
+    await writeArtifact(cwd, snapshot.paths.assetManifest!, "{}");
+
+    await expect(store.list()).resolves.toHaveLength(1);
+    await expect(store.artifactStatus(snapshot)).resolves.toMatchObject({
+      rawPayload: true,
+      brief: true,
+      image: true,
+      assetManifest: true,
+    });
+  });
+
+  it("restores snapshot artifacts without Figma credentials", async () => {
+    const cwd = await tempRoot();
+    const store = new SnapshotStore({ cwd });
+    const snapshot = await createSnapshot(store);
+    await writeArtifact(cwd, snapshot.paths.image!, "image");
+    await writeArtifact(cwd, snapshot.paths.assetManifest!, "{}");
+
+    const restored = await store.restore("snapshot_test", ".beam/restored");
+
+    expect(restored.restoredPaths).toMatchObject({
+      brief: join(cwd, ".beam/restored/brief.json"),
+      image: join(cwd, ".beam/restored/frame.png"),
+      assetManifest: join(cwd, ".beam/restored/assets.manifest.json"),
+    });
+  });
+
+  it("fails clearly when snapshot artifacts are missing", async () => {
+    const cwd = await tempRoot();
+    const store = new SnapshotStore({ cwd });
+    await createSnapshot(store);
+
+    await expect(store.restore("snapshot_test")).rejects.toMatchObject({
+      payload: { code: "BEAM_SNAPSHOT_NOT_FOUND" },
+    });
+  });
 });
 
 const brief: ImplementationBrief = {
@@ -71,6 +115,34 @@ const brief: ImplementationBrief = {
 
 async function readJson(path: string): Promise<unknown> {
   return JSON.parse(await readFile(path, "utf8"));
+}
+
+async function createSnapshot(store: SnapshotStore) {
+  const snapshot = await store.create({
+    id: "snapshot_test",
+    source: {
+      fileKey: "abc",
+      nodeId: "1:2",
+      url: "https://www.figma.com/design/abc/File?node-id=1-2",
+    },
+    mode: "standard",
+    rawPayload: { nodes: { "1:2": {} } },
+    brief,
+    imagePath: ".beam/cache/images/snapshot_test.png",
+    assetManifestPath: ".beam/cache/assets/snapshot_test.manifest.json",
+    createdAt: "2026-07-19T00:00:00.000Z",
+  });
+  return snapshot;
+}
+
+async function writeArtifact(
+  cwd: string,
+  relativePath: string,
+  content: string,
+): Promise<void> {
+  const path = join(cwd, relativePath);
+  await mkdir(join(path, ".."), { recursive: true });
+  await writeFile(path, content);
 }
 
 async function tempRoot(): Promise<string> {
