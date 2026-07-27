@@ -11,12 +11,15 @@
 - Package exports resolve.
 - `beam init --print` works.
 - MCP server starts over stdio.
+- Free commands are documented.
+- Example files contain no credentials.
 
 ## Security Checks
 
 - No credentials are tracked.
 - No `.beam/cache` files are tracked.
 - No signed image URLs are committed.
+- Debug bundle output is redacted by default.
 - No live Figma validation is claimed without credentials.
 
 ## Known MVP Limits

@@ -33,6 +33,9 @@ Credentials are stored in `~/.beam/credentials.json`. Do not place tokens in pro
 beam inspect <figma-url>
 beam inspect <figma-url> --json
 beam export <figma-url>
+beam snapshots list
+beam mappings list
+beam debug bundle
 ```
 
 `inspect` returns implementation context. `export` writes local visual assets and an asset manifest.

@@ -38,3 +38,13 @@ Add the printed `mcpServers.beam` config to the agent manually.
 ## Live Validation
 
 Unit and fixture tests do not use live Figma credentials. Do not claim live validation unless a real token and URL were used.
+
+## Debug Bundle
+
+Run:
+
+```bash
+beam debug bundle
+```
+
+The default bundle excludes credentials, raw Figma payloads, exported images, and signed URLs.
