@@ -4,6 +4,7 @@ import { Command } from "commander";
 import { doctorCommand } from "./commands/doctor.js";
 import { exportCommand } from "./commands/export.js";
 import { inspectCommand } from "./commands/inspect.js";
+import { mcpCommand } from "./commands/mcp.js";
 
 const program = new Command();
 
@@ -61,5 +62,12 @@ program
       await exportCommand(url, options);
     },
   );
+
+program
+  .command("mcp")
+  .description("Start the Beam MCP server")
+  .action(async () => {
+    await mcpCommand();
+  });
 
 await program.parseAsync(process.argv);

@@ -1,1 +1,2 @@
-// Public MCP exports will be added sprint by sprint.
+export { createMcpServer, startMcpServer } from "./server.js";
+export type { StartMcpServerInput } from "./server.js";
