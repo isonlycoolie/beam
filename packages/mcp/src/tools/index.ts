@@ -4,10 +4,12 @@ import {
   contextModeSchema,
   exportDesignAssets,
   getFileVariables,
+  compareDesignToUrl,
 } from "@beam/core";
 import { z } from "zod";
 import { registerAssetTools } from "./assets.js";
 import { registerFreeLocalTools } from "./free-local.js";
+import { registerCompareTools } from "./compare.js";
 import { jsonContent, toolError } from "./responses.js";
 import { registerVariableTools } from "./variables.js";
 export { freeMcpCapabilities } from "./capabilities.js";
@@ -17,6 +19,7 @@ export type BeamToolContext = {
   createDesignContext?: typeof createDesignContext;
   exportDesignAssets?: typeof exportDesignAssets;
   getFileVariables?: typeof getFileVariables;
+  compareDesignToUrl?: typeof compareDesignToUrl;
 };
 
 export function registerBeamTools(
@@ -51,4 +54,5 @@ export function registerBeamTools(
   registerAssetTools(server, context);
   registerVariableTools(server, context);
   registerFreeLocalTools(server, context);
+  registerCompareTools(server, context);
 }
