@@ -25,6 +25,7 @@ export { parseFigmaUrl } from "./figma/url-parser.js";
 export type { ParsedFigmaUrl } from "./figma/url-parser.js";
 export * from "./mappings/component-mappings.js";
 export * from "./observability/local-logs.js";
+export * from "./observability/debug-bundle.js";
 export * from "./simplify/design-simplifier.js";
 export * from "./snapshots/snapshot-store.js";
 export * from "./tokens/token-planner.js";
