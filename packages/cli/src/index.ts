@@ -3,6 +3,7 @@ export { compareCommand, formatCompareResult } from "./commands/compare.js";
 export { doctorCommand, formatDoctorChecks } from "./commands/doctor.js";
 export { exportCommand } from "./commands/export.js";
 export { initCommand } from "./commands/init.js";
+export { mappingsCommand } from "./commands/mappings.js";
 export { formatInspectResponse, inspectCommand } from "./commands/inspect.js";
 export { mcpCommand } from "./commands/mcp.js";
 export { settingsCommand } from "./commands/settings.js";
