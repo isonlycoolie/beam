@@ -5,6 +5,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import {
   loadFigmaCredentials,
   redactAccessToken,
+  removeFigmaCredentials,
   saveFigmaCredentials,
   summarizeFigmaCredentials,
 } from "../src/index.js";
@@ -44,6 +45,28 @@ describe("credential store", () => {
 
   it("does not expose short tokens through redaction", () => {
     expect(redactAccessToken("secret")).toBe("****");
+  });
+
+  it("removes only stored Figma credentials", async () => {
+    const homeDir = await tempRoot();
+    await saveFigmaCredentials("figd_secretabcd", { homeDir });
+
+    await removeFigmaCredentials({ homeDir });
+
+    await expect(loadFigmaCredentials({ homeDir })).rejects.toMatchObject({
+      payload: { code: "BEAM_MISSING_CREDENTIALS" },
+    });
+  });
+
+  it("summarizes missing credentials without failing", async () => {
+    const homeDir = await tempRoot();
+
+    await expect(summarizeFigmaCredentials({ homeDir })).resolves.toMatchObject(
+      {
+        configured: false,
+        type: "personal_access_token",
+      },
+    );
   });
 });
 
