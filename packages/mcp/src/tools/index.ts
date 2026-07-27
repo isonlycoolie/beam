@@ -7,6 +7,7 @@ import {
 } from "@beam/core";
 import { z } from "zod";
 import { registerAssetTools } from "./assets.js";
+import { registerFreeLocalTools } from "./free-local.js";
 import { jsonContent, toolError } from "./responses.js";
 import { registerVariableTools } from "./variables.js";
 export { freeMcpCapabilities } from "./capabilities.js";
@@ -49,4 +50,5 @@ export function registerBeamTools(
   );
   registerAssetTools(server, context);
   registerVariableTools(server, context);
+  registerFreeLocalTools(server, context);
 }
