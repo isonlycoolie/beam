@@ -39,7 +39,7 @@ export function simplifyDesign(input: {
     components,
     tokens: styles,
     assets: [],
-    implementationNotes: implementationNotes(root, layout.sections),
+    implementationNotes: implementationNotes(root, layout.sections, nodes),
   };
 
   return { brief, warnings };
@@ -48,6 +48,7 @@ export function simplifyDesign(input: {
 function implementationNotes(
   root: NormalizedNode,
   sections: string[],
+  nodes: NormalizedNode[],
 ): string[] {
   const notes: string[] = [];
 
@@ -59,5 +60,23 @@ function implementationNotes(
     notes.push(`Primary sections: ${sections.join(", ")}.`);
   }
 
+  const repeated = repeatedNames(nodes);
+  if (repeated.length > 0) {
+    notes.push(`Repeated structures: ${repeated.join(", ")}.`);
+  }
+
+  notes.push("Omitted: raw vector paths, invisible layers.");
+
   return notes;
+}
+
+function repeatedNames(nodes: NormalizedNode[]): string[] {
+  const counts = new Map<string, number>();
+  for (const node of nodes) {
+    if (!node.name) continue;
+    counts.set(node.name, (counts.get(node.name) ?? 0) + 1);
+  }
+  return [...counts.entries()]
+    .filter(([, count]) => count > 1)
+    .map(([name, count]) => `${name} x${count}`);
 }
