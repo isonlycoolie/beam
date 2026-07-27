@@ -8,6 +8,7 @@ import { exportCommand } from "./commands/export.js";
 import { inspectCommand } from "./commands/inspect.js";
 import { initCommand } from "./commands/init.js";
 import { mcpCommand } from "./commands/mcp.js";
+import { settingsCommand } from "./commands/settings.js";
 
 const program = new Command();
 
@@ -120,6 +121,23 @@ program
   .action(
     async (options: { client?: string; print?: boolean; json?: boolean }) => {
       await initCommand(options);
+    },
+  );
+
+program
+  .command("settings")
+  .argument("<action>")
+  .argument("[key]")
+  .argument("[value]")
+  .option("--json", "Print structured JSON output")
+  .action(
+    async (
+      action: string,
+      key: string | undefined,
+      value: string | undefined,
+      options: { json?: boolean },
+    ) => {
+      await settingsCommand(action, key, value, options);
     },
   );
 
