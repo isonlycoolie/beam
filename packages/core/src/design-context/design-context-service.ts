@@ -3,6 +3,8 @@ import { loadFigmaCredentials } from "../auth/credential-store.js";
 import { CacheManager } from "../cache/cache-manager.js";
 import { loadBeamConfig } from "../config/config-store.js";
 import { FigmaClient } from "../figma/figma-client.js";
+import { loadComponentMappings } from "../mappings/component-mappings.js";
+import { applyComponentMappings } from "../mappings/context-mapping-hints.js";
 import { parseFigmaUrl } from "../figma/url-parser.js";
 import { simplifyDesign } from "../simplify/design-simplifier.js";
 import { SnapshotStore } from "../snapshots/snapshot-store.js";
@@ -55,10 +57,14 @@ export async function createDesignContext(
   const document = extractDocument(rawPayload, source.nodeId);
   const simplified = simplifyDesign({ document });
   const planned = planImplementationBrief(simplified.brief, mode);
+  const mappedBrief = applyComponentMappings(
+    planned.brief,
+    (await loadComponentMappings({ cwd: input.cwd })).components,
+  );
   const brief = {
-    ...planned.brief,
+    ...mappedBrief,
     frame: {
-      ...planned.brief.frame,
+      ...mappedBrief.frame,
       mode,
     },
   };
