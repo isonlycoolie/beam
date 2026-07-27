@@ -22,15 +22,6 @@ export function registerBeamTools(
   context: BeamToolContext,
 ): void {
   server.tool(
-    "beam_ping",
-    "Check Beam MCP server availability.",
-    {},
-    async () => ({
-      content: [{ type: "text", text: "Beam MCP server is running." }],
-    }),
-  );
-
-  server.tool(
     "get_design_context",
     "Fetch agent-ready Beam design context for a Figma URL.",
     {
