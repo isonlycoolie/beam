@@ -1,0 +1,38 @@
+{
+  "frame": {
+    "id": "2:1",
+    "name": "Navigation Bar / Desktop",
+    "width": 1200,
+    "height": 88,
+    "background": "#ffffff",
+    "nodeCount": 5
+  },
+  "layout": {
+    "direction": "horizontal",
+    "spacing": 32,
+    "padding": { "top": 20, "right": 40, "bottom": 20, "left": 40 },
+    "sections": ["Logo Icon", "Home", "Docs", "Button"],
+    "repeatedGroups": []
+  },
+  "components": [
+    {
+      "nodeId": "2:5",
+      "name": "Button",
+      "type": "frame",
+      "reuseHint": "Component candidate"
+    }
+  ],
+  "tokens": {
+    "colors": ["#ffffff"],
+    "typography": [
+      { "fontFamily": "Inter", "fontSize": 14, "fontWeight": 500 }
+    ],
+    "radii": [8],
+    "text": ["Home", "Docs"]
+  },
+  "assets": [],
+  "implementationNotes": [
+    "Frame uses horizontal auto layout.",
+    "Primary sections: Logo Icon, Home, Docs, Button."
+  ]
+}

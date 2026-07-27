@@ -1,0 +1,53 @@
+{
+  "nodes": {
+    "2:1": {
+      "document": {
+        "id": "2:1",
+        "name": "Navigation Bar / Desktop",
+        "type": "FRAME",
+        "layoutMode": "HORIZONTAL",
+        "itemSpacing": 32,
+        "paddingLeft": 40,
+        "paddingRight": 40,
+        "paddingTop": 20,
+        "paddingBottom": 20,
+        "absoluteBoundingBox": { "width": 1200, "height": 88 },
+        "fills": [{ "type": "SOLID", "color": { "r": 1, "g": 1, "b": 1 } }],
+        "children": [
+          { "id": "2:2", "name": "Logo Icon", "type": "VECTOR" },
+          {
+            "id": "2:3",
+            "name": "Home",
+            "type": "TEXT",
+            "characters": "Home",
+            "style": {
+              "fontFamily": "Inter",
+              "fontSize": 14,
+              "fontWeight": 500
+            }
+          },
+          {
+            "id": "2:4",
+            "name": "Docs",
+            "type": "TEXT",
+            "characters": "Docs",
+            "style": {
+              "fontFamily": "Inter",
+              "fontSize": 14,
+              "fontWeight": 500
+            }
+          },
+          {
+            "id": "2:5",
+            "name": "Button",
+            "type": "FRAME",
+            "layoutMode": "HORIZONTAL",
+            "cornerRadius": 8
+          }
+        ]
+      },
+      "components": {},
+      "styles": {}
+    }
+  }
+}
