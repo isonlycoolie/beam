@@ -43,7 +43,6 @@ packages/cli           Beam command-line interface
 packages/mcp           MCP server surface
 packages/cloud-client  Placeholder for future cloud client work
 packages/test-kit      Shared testing utilities
-apps/                  Future cloud API and dashboard apps
 fixtures/              Deterministic local test fixtures
 ```
 
