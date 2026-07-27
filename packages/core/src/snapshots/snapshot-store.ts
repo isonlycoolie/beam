@@ -1,8 +1,12 @@
 import { beamSnapshotSchema, type BeamSnapshot } from "../contracts/index.js";
 import { createBeamPaths } from "../config/paths.js";
+import { join } from "node:path";
 import {
   absoluteSnapshotPath,
+  copySnapshotFile,
+  listSnapshotMetadata,
   readSnapshotMetadata,
+  snapshotPathExists,
   writeSnapshotJson,
 } from "./snapshot-files.js";
 import {
@@ -68,6 +72,56 @@ export class SnapshotStore {
       this.projectBeamDir,
       createSnapshotMetadataPath(id),
     );
+  }
+
+  async list(): Promise<BeamSnapshot[]> {
+    return listSnapshotMetadata(this.projectBeamDir);
+  }
+
+  async artifactStatus(snapshot: BeamSnapshot) {
+    return {
+      rawPayload: await snapshotPathExists(
+        this.projectBeamDir,
+        snapshot.paths.rawPayload,
+      ),
+      brief: await snapshotPathExists(
+        this.projectBeamDir,
+        snapshot.paths.brief,
+      ),
+      image: await snapshotPathExists(
+        this.projectBeamDir,
+        snapshot.paths.image,
+      ),
+      assetManifest: await snapshotPathExists(
+        this.projectBeamDir,
+        snapshot.paths.assetManifest,
+      ),
+    };
+  }
+
+  async restore(id: string, outDir = ".beam/restored") {
+    const snapshot = await this.read(id);
+    const out = absoluteSnapshotPath(this.projectBeamDir, outDir);
+    return {
+      snapshotId: id,
+      restoredPaths: {
+        brief: await copySnapshotFile(
+          this.projectBeamDir,
+          snapshot.paths.brief,
+          join(out, "brief.json"),
+        ),
+        image: await copySnapshotFile(
+          this.projectBeamDir,
+          snapshot.paths.image,
+          join(out, "frame.png"),
+        ),
+        assetManifest: await copySnapshotFile(
+          this.projectBeamDir,
+          snapshot.paths.assetManifest,
+          join(out, "assets.manifest.json"),
+        ),
+      },
+    };
   }
 
   metadataPath(id: string): string {
