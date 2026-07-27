@@ -2,7 +2,7 @@ import { mkdtemp, rm } from "node:fs/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { afterEach, describe, expect, it } from "vitest";
-import { createDesignContext } from "../src/index.js";
+import { createDesignContext, saveComponentMapping } from "../src/index.js";
 
 const roots: string[] = [];
 
@@ -50,6 +50,37 @@ describe("createDesignContext", () => {
 
     expect(cached.snapshot.fromCache).toBe(true);
   });
+
+  it("adds local component mapping hints to context", async () => {
+    const cwd = await tempRoot();
+    await saveComponentMapping(
+      {
+        figmaComponentId: "component_button",
+        figmaName: "Button / Primary",
+        codeReference: {
+          package: "app",
+          importPath: "@/components/button",
+          exportName: "Button",
+        },
+      },
+      { cwd },
+    );
+
+    const response = await createDesignContext({
+      cwd,
+      url: "https://www.figma.com/design/abc/File?node-id=1-2",
+      figmaClient: {
+        getFile: async () => ({ document: mappedFrame }),
+        getFileNodes: async () => ({
+          nodes: { "1:2": { document: mappedFrame } },
+        }),
+      },
+    });
+
+    expect(response.brief.components[0]).toMatchObject({
+      mapping: { exportName: "Button", importPath: "@/components/button" },
+    });
+  });
 });
 
 const frame = {
@@ -59,6 +90,18 @@ const frame = {
   layoutMode: "VERTICAL",
   absoluteBoundingBox: { width: 320, height: 240 },
   children: [],
+};
+
+const mappedFrame = {
+  ...frame,
+  children: [
+    {
+      id: "1:3",
+      name: "Button",
+      type: "INSTANCE",
+      componentId: "component_button",
+    },
+  ],
 };
 
 async function tempRoot(): Promise<string> {
