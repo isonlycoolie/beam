@@ -1,20 +1,34 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { createDesignContext, contextModeSchema } from "@beam/core";
+import {
+  createDesignContext,
+  contextModeSchema,
+  exportDesignAssets,
+  getFileVariables,
+} from "@beam/core";
 import { z } from "zod";
+import { registerAssetTools } from "./assets.js";
 import { jsonContent, toolError } from "./responses.js";
+import { registerVariableTools } from "./variables.js";
 
 export type BeamToolContext = {
   cwd: string;
   createDesignContext?: typeof createDesignContext;
+  exportDesignAssets?: typeof exportDesignAssets;
+  getFileVariables?: typeof getFileVariables;
 };
 
 export function registerBeamTools(
   server: McpServer,
   context: BeamToolContext,
 ): void {
-  server.tool("beam_ping", "Check Beam MCP server availability.", {}, async () => ({
-    content: [{ type: "text", text: "Beam MCP server is running." }],
-  }));
+  server.tool(
+    "beam_ping",
+    "Check Beam MCP server availability.",
+    {},
+    async () => ({
+      content: [{ type: "text", text: "Beam MCP server is running." }],
+    }),
+  );
 
   server.tool(
     "get_design_context",
@@ -41,4 +55,6 @@ export function registerBeamTools(
       }
     },
   );
+  registerAssetTools(server, context);
+  registerVariableTools(server, context);
 }
