@@ -37,6 +37,7 @@ describe("config store", () => {
         schemaVersion: "1.0",
         defaultContextMode: "full",
         assetsDir: ".beam/assets",
+        cache: { maxAgeMinutes: 30 },
       },
       { cwd },
     );
@@ -44,9 +45,47 @@ describe("config store", () => {
     const { config } = await loadBeamConfig({ cwd, homeDir });
 
     expect(config.defaultContextMode).toBe("full");
-    expect(config.cache?.maxAgeMinutes).toBe(60);
+    expect(config.cache?.maxAgeMinutes).toBe(30);
     expect(config.figma?.apiBaseUrl).toBe("https://api.figma.com/v1");
     expect(config.assetsDir).toBe(".beam/assets");
+  });
+
+  it("loads documented Free project defaults", async () => {
+    const root = await tempRoot();
+
+    const { config } = await loadBeamConfig({
+      cwd: join(root, "project"),
+      homeDir: join(root, "home"),
+    });
+
+    expect(config).toMatchObject({
+      schemaVersion: "1.0",
+      assetsDir: ".beam/cache/assets",
+      compareDir: ".beam/cache/compare",
+      defaultContextMode: "standard",
+      cache: { maxAgeMinutes: 1440 },
+    });
+  });
+
+  it("preserves unknown future-safe fields", async () => {
+    const root = await tempRoot();
+    const cwd = join(root, "project");
+
+    await writeProjectConfig(
+      {
+        schemaVersion: "1.0",
+        defaultContextMode: "summary",
+        futureFlag: true,
+      },
+      { cwd },
+    );
+
+    const { config } = await loadBeamConfig({ cwd });
+
+    expect(config).toMatchObject({
+      defaultContextMode: "summary",
+      futureFlag: true,
+    });
   });
 });
 

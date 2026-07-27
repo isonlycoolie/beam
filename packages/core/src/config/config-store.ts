@@ -26,14 +26,21 @@ export async function loadBeamConfig(
     join(paths.projectBeamDir, "config.json"),
     projectConfigSchema,
   );
+  const defaultConfig = {
+    schemaVersion: "1.0" as const,
+    assetsDir: ".beam/cache/assets",
+    compareDir: ".beam/cache/compare",
+    defaultContextMode: "standard" as const,
+    cache: { maxAgeMinutes: 1440 },
+  };
 
   return {
     paths,
     config: {
-      schemaVersion: "1.0",
+      ...defaultConfig,
       ...userConfig,
       ...projectConfig,
-      cache: userConfig?.cache,
+      cache: projectConfig?.cache ?? userConfig?.cache ?? defaultConfig.cache,
       figma: userConfig?.figma,
     },
   };
