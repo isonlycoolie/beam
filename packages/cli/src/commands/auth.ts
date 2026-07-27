@@ -3,6 +3,14 @@ import {
   saveFigmaCredentials,
   summarizeFigmaCredentials,
 } from "@beam/core";
+import {
+  heading,
+  jsonBlock,
+  label,
+  muted,
+  success,
+  warning,
+} from "../terminal.js";
 
 export type LoginCommandOptions = {
   token?: string;
@@ -22,14 +30,18 @@ export async function loginCommand(
   }
 
   const path = await saveFigmaCredentials(token, { homeDir: options.homeDir });
-  process.stdout.write(`Beam login saved credentials at ${path}\n`);
+  process.stdout.write(
+    `${heading("Beam login")}\n\n${success("Credentials saved")}\n${label("Path", path)}\n`,
+  );
 }
 
 export async function logoutCommand(
   options: { yes?: boolean; json?: boolean; homeDir?: string } = {},
 ): Promise<void> {
   if (!options.yes) {
-    process.stdout.write("Pass --yes to remove local Figma credentials.\n");
+    process.stdout.write(
+      `${heading("Beam logout")}\n\n${warning("Confirmation required")}\n${muted("Pass --yes to remove local Figma credentials.")}\n`,
+    );
     return;
   }
 
@@ -46,11 +58,11 @@ export async function whoamiCommand(
 
 function writeAuthOutput(value: unknown, json = false): void {
   if (json) {
-    process.stdout.write(`${JSON.stringify(value, null, 2)}\n`);
+    process.stdout.write(`${jsonBlock(value)}\n`);
     return;
   }
 
-  process.stdout.write(`Beam auth\n\n${JSON.stringify(value, null, 2)}\n`);
+  process.stdout.write(`${heading("Beam auth")}\n\n${jsonBlock(value)}\n`);
 }
 
 async function readStdin(): Promise<string> {

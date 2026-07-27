@@ -1,4 +1,5 @@
 import { exportDesignAssets } from "@beam/core";
+import { heading, label, path, success } from "../terminal.js";
 
 export async function exportCommand(
   url: string,
@@ -19,7 +20,7 @@ export async function exportCommand(
   }
 
   process.stdout.write(
-    `Beam export\n\nAssets: ${manifest.assets.length}\nManifest: ${manifest.manifestPath}\n`,
+    `${heading("Beam export")}\n\n${success("Assets exported")}\n${label("Assets", manifest.assets.length)}\n${label("Manifest", path(manifest.manifestPath))}\n`,
   );
 }
 

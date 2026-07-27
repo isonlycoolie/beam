@@ -5,6 +5,7 @@ import {
   setProjectSetting,
   unsetProjectSetting,
 } from "@beam/core";
+import { heading, jsonBlock } from "../terminal.js";
 
 export async function settingsCommand(
   action: string,
@@ -51,9 +52,9 @@ export async function settingsCommand(
 
 function writeSettingsOutput(value: unknown, json = false): void {
   if (json) {
-    process.stdout.write(`${JSON.stringify(value, null, 2)}\n`);
+    process.stdout.write(`${jsonBlock(value)}\n`);
     return;
   }
 
-  process.stdout.write(`Beam settings\n\n${JSON.stringify(value, null, 2)}\n`);
+  process.stdout.write(`${heading("Beam settings")}\n\n${jsonBlock(value)}\n`);
 }

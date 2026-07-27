@@ -3,6 +3,7 @@ import {
   removeComponentMapping,
   saveComponentMapping,
 } from "@beam/core";
+import { heading, jsonBlock } from "../terminal.js";
 
 export async function mappingsCommand(
   action: string,
@@ -67,9 +68,9 @@ function required(value: string | undefined, label: string): string {
 
 function writeMappingOutput(value: unknown, json = false): void {
   if (json) {
-    process.stdout.write(`${JSON.stringify(value, null, 2)}\n`);
+    process.stdout.write(`${jsonBlock(value)}\n`);
     return;
   }
 
-  process.stdout.write(`Beam mappings\n\n${JSON.stringify(value, null, 2)}\n`);
+  process.stdout.write(`${heading("Beam mappings")}\n\n${jsonBlock(value)}\n`);
 }

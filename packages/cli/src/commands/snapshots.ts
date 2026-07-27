@@ -1,4 +1,5 @@
 import { SnapshotStore } from "@beam/core";
+import { heading, jsonBlock } from "../terminal.js";
 
 export async function snapshotsCommand(
   action: string,
@@ -46,9 +47,9 @@ export async function snapshotsCommand(
 
 function writeSnapshotOutput(value: unknown, json = false): void {
   if (json) {
-    process.stdout.write(`${JSON.stringify(value, null, 2)}\n`);
+    process.stdout.write(`${jsonBlock(value)}\n`);
     return;
   }
 
-  process.stdout.write(`Beam snapshots\n\n${JSON.stringify(value, null, 2)}\n`);
+  process.stdout.write(`${heading("Beam snapshots")}\n\n${jsonBlock(value)}\n`);
 }

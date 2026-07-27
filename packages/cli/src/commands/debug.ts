@@ -1,4 +1,5 @@
 import { createDebugBundle } from "@beam/core";
+import { heading, label, path, success } from "../terminal.js";
 
 export async function debugCommand(
   action: string,
@@ -19,5 +20,7 @@ export async function debugCommand(
     return;
   }
 
-  process.stdout.write(`Beam debug bundle\n\n${result.path}\n`);
+  process.stdout.write(
+    `${heading("Beam debug bundle")}\n\n${success("Bundle written")}\n${label("Path", path(result.path))}\n`,
+  );
 }

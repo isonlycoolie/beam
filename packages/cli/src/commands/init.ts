@@ -3,6 +3,7 @@ import {
   getMcpClientAdapter,
   SUPPORTED_MCP_CLIENTS,
 } from "@beam/core";
+import { heading, jsonBlock, label, success, warning } from "../terminal.js";
 
 export type InitCommandOptions = {
   client?: string;
@@ -48,9 +49,16 @@ export async function initCommand(options: InitCommandOptions): Promise<void> {
 
 function writeInitOutput(value: unknown, options: InitCommandOptions): void {
   if (options.json || options.print) {
-    process.stdout.write(`${JSON.stringify(value, null, 2)}\n`);
+    process.stdout.write(`${jsonBlock(value)}\n`);
     return;
   }
 
-  process.stdout.write(`Beam init\n\n${JSON.stringify(value, null, 2)}\n`);
+  const record = value as {
+    client?: string;
+    configPath?: string;
+    message?: string;
+  };
+  process.stdout.write(
+    `${heading("Beam init")}\n\n${record.message?.includes("unavailable") ? warning(record.message) : success(record.message ?? "Ready")}\n${record.client ? `${label("Client", record.client)}\n` : ""}${record.configPath ? `${label("Config", record.configPath)}\n` : ""}`,
+  );
 }
