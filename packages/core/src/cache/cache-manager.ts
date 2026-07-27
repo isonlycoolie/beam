@@ -15,13 +15,18 @@ const cacheEntrySchema = z.object({
 
 export type CacheReadResult =
   | { hit: true; value: unknown; path: string; createdAt: string }
-  | { hit: false; path: string; reason: "missing" | "corrupt" | "refresh_requested" | "expired" };
+  | {
+      hit: false;
+      path: string;
+      reason: "missing" | "corrupt" | "refresh_requested" | "expired";
+    };
 
 export class CacheManager {
   private readonly cacheDir: string;
 
   constructor(input: { cwd?: string; cacheDir?: string } = {}) {
-    this.cacheDir = input.cacheDir ?? createBeamPaths({ cwd: input.cwd }).cacheDir;
+    this.cacheDir =
+      input.cacheDir ?? createBeamPaths({ cwd: input.cwd }).cacheDir;
   }
 
   async read(
@@ -88,6 +93,9 @@ export class CacheManager {
   }
 }
 
-function isNodeError(error: unknown, code: string): error is NodeJS.ErrnoException {
+function isNodeError(
+  error: unknown,
+  code: string,
+): error is NodeJS.ErrnoException {
   return error instanceof Error && "code" in error && error.code === code;
 }

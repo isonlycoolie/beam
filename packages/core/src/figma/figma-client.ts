@@ -34,7 +34,10 @@ export class FigmaClient {
   }
 
   async getFileNodes(fileKey: string, nodeIds: string[]): Promise<unknown> {
-    return this.request(fileNodesEndpoint(fileKey, nodeIds), "GET /v1/files/:file_key/nodes");
+    return this.request(
+      fileNodesEndpoint(fileKey, nodeIds),
+      "GET /v1/files/:file_key/nodes",
+    );
   }
 
   async getFile(fileKey: string): Promise<unknown> {
@@ -56,7 +59,10 @@ export class FigmaClient {
   }
 
   async getVariables(fileKey: string): Promise<unknown> {
-    return this.request(variablesEndpoint(fileKey), "GET /v1/files/:file_key/variables/local");
+    return this.request(
+      variablesEndpoint(fileKey),
+      "GET /v1/files/:file_key/variables/local",
+    );
   }
 
   private async request(path: string, endpointName: string): Promise<unknown> {
@@ -72,7 +78,9 @@ export class FigmaClient {
         });
 
         if (response.status === 401 || response.status === 403) {
-          throw new BeamAuthError("Figma authentication failed. Run beam login again.");
+          throw new BeamAuthError(
+            "Figma authentication failed. Run beam login again.",
+          );
         }
 
         if (response.status === 429) {

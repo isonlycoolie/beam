@@ -9,7 +9,10 @@ import {
 import { credentialsPath, isNodeError } from "./credential-paths.js";
 import { redactAccessToken } from "./redaction.js";
 
-export type { FigmaCredentialsFile, RedactedCredentialSummary } from "./credential-schema.js";
+export type {
+  FigmaCredentialsFile,
+  RedactedCredentialSummary,
+} from "./credential-schema.js";
 export { figmaCredentialsSchema } from "./credential-schema.js";
 export { redactAccessToken } from "./redaction.js";
 
