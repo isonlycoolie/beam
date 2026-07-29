@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { evidenceReviewSchema } from "./evidence.js";
 import { beamWarningSchema } from "./warning.js";
 
 export const contextModeSchema = z.enum(["summary", "standard", "full", "raw"]);
@@ -42,6 +43,7 @@ export const designContextResponseSchema = z.object({
     })
     .optional(),
   warnings: z.array(beamWarningSchema),
+  evidence: evidenceReviewSchema,
   estimatedTokens: z.number().int().nonnegative(),
 });
 

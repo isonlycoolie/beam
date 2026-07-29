@@ -4,6 +4,7 @@ import {
   beamWarningSchema,
   compareResultSchema,
   designContextRequestSchema,
+  evidenceReviewSchema,
 } from "../src/index.js";
 
 describe("contracts", () => {
@@ -84,5 +85,38 @@ describe("contracts", () => {
     });
 
     expect(result.differences).toHaveLength(1);
+  });
+
+  it("parses documented evidence reviews", () => {
+    const review = evidenceReviewSchema.parse({
+      summary: [
+        {
+          field: "Hero title",
+          status: "known",
+          source: "figma-node-tree",
+          message: "Text was extracted from a visible Figma text node.",
+        },
+      ],
+      confidence: {
+        score: 0.82,
+        level: "ready",
+        reasons: ["Frame image and node tree are available."],
+      },
+      buildReadiness: "ready",
+      clarificationRequests: [],
+    });
+
+    expect(review.confidence.score).toBe(0.82);
+  });
+
+  it("rejects unsupported evidence readiness values", () => {
+    expect(() =>
+      evidenceReviewSchema.parse({
+        summary: [],
+        confidence: { score: 0.5, level: "guessing", reasons: [] },
+        buildReadiness: "guessing",
+        clarificationRequests: [],
+      }),
+    ).toThrow();
   });
 });
