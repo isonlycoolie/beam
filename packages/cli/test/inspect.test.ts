@@ -32,6 +32,12 @@ describe("inspect command", () => {
           implementationNotes: [],
         },
         warnings: [],
+        evidence: {
+          summary: [],
+          confidence: { score: 0.9, level: "ready", reasons: ["Ready."] },
+          buildReadiness: "ready",
+          clarificationRequests: [],
+        },
         estimatedTokens: 120,
       }),
     );
@@ -44,6 +50,8 @@ describe("inspect command", () => {
     expect(output).toContain("Frame: Frame");
     expect(output).toContain("Cache: hit");
     expect(output).toContain("Snapshot: snapshot_test");
+    expect(output).toContain("Evidence");
+    expect(output).toContain("Readiness: ready");
   });
 });
 

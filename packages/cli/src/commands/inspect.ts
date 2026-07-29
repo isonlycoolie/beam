@@ -11,6 +11,8 @@ export async function inspectCommand(
     mode?: ContextMode;
     raw?: boolean;
     refresh?: boolean;
+    review?: boolean;
+    bestEffort?: boolean;
     json?: boolean;
   },
 ): Promise<void> {
@@ -18,6 +20,8 @@ export async function inspectCommand(
     url,
     cwd: process.cwd(),
     mode: options.raw ? "raw" : (options.mode ?? "standard"),
+    review: options.review ?? true,
+    bestEffort: options.bestEffort ?? false,
     refresh: options.refresh ?? false,
   });
 
@@ -88,7 +92,17 @@ export function formatInspectResponse(response: DesignContextResponse): string {
     section("Cache and snapshot"),
     label("Cache", response.snapshot.fromCache ? "hit" : "miss"),
     label("Snapshot", response.snapshot.id),
+    "",
+    section("Evidence"),
+    label("Readiness", response.evidence.buildReadiness),
+    label("Confidence", response.evidence.confidence.score),
   ];
+
+  if (response.evidence.clarificationRequests.length > 0) {
+    lines.push(
+      label("Clarifications", response.evidence.clarificationRequests.length),
+    );
+  }
 
   if (warnings.length > 0) {
     lines.push("", section("Warnings"), ...warnings);

@@ -81,6 +81,12 @@ describe("terminal output formatting", () => {
           message: "Review layout.",
         },
       ],
+      evidence: {
+        summary: [],
+        confidence: { score: 0.8, level: "ready", reasons: ["Ready."] },
+        buildReadiness: "ready",
+        clarificationRequests: [],
+      },
       estimatedTokens: 1200,
     });
 
