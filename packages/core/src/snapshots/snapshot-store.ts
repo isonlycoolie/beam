@@ -6,6 +6,7 @@ import {
   copySnapshotFile,
   listSnapshotMetadata,
   readSnapshotMetadata,
+  readSnapshotJson,
   snapshotPathExists,
   writeSnapshotJson,
 } from "./snapshot-files.js";
@@ -76,6 +77,21 @@ export class SnapshotStore {
 
   async list(): Promise<BeamSnapshot[]> {
     return listSnapshotMetadata(this.projectBeamDir);
+  }
+
+  async newestForSource(input: {
+    fileKey: string;
+    nodeId?: string;
+  }): Promise<BeamSnapshot | undefined> {
+    return (await this.list()).find(
+      (snapshot) =>
+        snapshot.source.fileKey === input.fileKey &&
+        snapshot.source.nodeId === input.nodeId,
+    );
+  }
+
+  async readBrief(snapshot: BeamSnapshot) {
+    return readSnapshotJson(this.projectBeamDir, snapshot.paths.brief);
   }
 
   async artifactStatus(snapshot: BeamSnapshot) {

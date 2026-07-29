@@ -35,6 +35,24 @@ export async function writeSnapshotJson(
   }
 }
 
+export async function readSnapshotJson(
+  projectBeamDir: string,
+  relativePath: string,
+): Promise<unknown> {
+  try {
+    const content = await readFile(
+      absoluteSnapshotPath(projectBeamDir, relativePath),
+      "utf8",
+    );
+    return JSON.parse(content);
+  } catch {
+    throw new BeamFilesystemError(
+      "BEAM_CACHE_READ_FAILED",
+      "Beam could not read local snapshot.",
+    );
+  }
+}
+
 export async function readSnapshotMetadata(
   projectBeamDir: string,
   relativePath: string,
