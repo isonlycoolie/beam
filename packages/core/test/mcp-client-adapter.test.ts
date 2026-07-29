@@ -8,6 +8,12 @@ describe("MCP client adapter helpers", () => {
     });
   });
 
+  it("creates local Beam MCP config with usebeam", () => {
+    expect(createBeamMcpConfig("local")).toEqual({
+      mcpServers: { beam: { command: "npx", args: ["usebeam", "mcp"] } },
+    });
+  });
+
   it("preserves unrelated MCP servers during merge", () => {
     const merged = mergeBeamMcpConfig(
       { mcpServers: { other: { command: "tool" } } },

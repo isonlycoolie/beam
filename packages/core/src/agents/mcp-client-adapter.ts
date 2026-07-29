@@ -32,7 +32,7 @@ export function createBeamMcpConfig(mode: "global" | "local"): McpServerConfig {
     mcpServers: {
       beam:
         mode === "local"
-          ? { command: "npx", args: ["@beam/client", "mcp"] }
+          ? { command: "npx", args: ["usebeam", "mcp"] }
           : { command: "beam", args: ["mcp"] },
     },
   };
