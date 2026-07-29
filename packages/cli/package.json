@@ -11,7 +11,7 @@
     ".": "./dist/index.js"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.json && node ../../scripts/build-cli-package.mjs",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
@@ -41,6 +41,9 @@
     "coding-agents"
   ],
   "dependencies": {
+    "playwright": "1.61.1"
+  },
+  "devDependencies": {
     "@beam/core": "workspace:*",
     "@beam/mcp": "workspace:*",
     "commander": "15.0.0",
