@@ -2,6 +2,7 @@ export { loginCommand, logoutCommand, whoamiCommand } from "./commands/auth.js";
 export { compareCommand, formatCompareResult } from "./commands/compare.js";
 export { debugCommand } from "./commands/debug.js";
 export { doctorCommand, formatDoctorChecks } from "./commands/doctor.js";
+export { evidenceCommand } from "./commands/evidence.js";
 export { exportCommand } from "./commands/export.js";
 export { initCommand } from "./commands/init.js";
 export { mappingsCommand } from "./commands/mappings.js";
