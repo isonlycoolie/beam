@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-describe("@beam/client scaffold", () => {
+describe("usebeam scaffold", () => {
   it("is ready for CLI implementation", () => {
     expect(true).toBe(true);
   });

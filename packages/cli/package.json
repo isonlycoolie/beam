@@ -1,8 +1,9 @@
 {
-  "name": "@beam/client",
+  "name": "usebeam",
   "version": "0.1.0",
+  "description": "Local-first Figma design context bridge for coding agents.",
+  "license": "MIT",
   "type": "module",
-  "private": true,
   "bin": {
     "beam": "./dist/cli.js"
   },
@@ -14,6 +15,31 @@
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ],
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/isonlycoolie/beam.git",
+    "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/isonlycoolie/beam/issues"
+  },
+  "homepage": "https://github.com/isonlycoolie/beam#readme",
+  "keywords": [
+    "figma",
+    "mcp",
+    "cli",
+    "design-to-code",
+    "coding-agents"
+  ],
   "dependencies": {
     "@beam/core": "workspace:*",
     "@beam/mcp": "workspace:*",
