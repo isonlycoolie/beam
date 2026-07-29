@@ -6,6 +6,8 @@ const root = process.cwd();
 const cliPackagePath = join(root, "packages", "cli", "package.json");
 const cliEntryPath = join(root, "packages", "cli", "dist", "cli.js");
 const cliIndexPath = join(root, "packages", "cli", "dist", "index.js");
+const cliReadmePath = join(root, "packages", "cli", "README.md");
+const cliLicensePath = join(root, "packages", "cli", "LICENSE");
 const readmePath = join(root, "README.md");
 
 function assert(condition, message) {
@@ -20,6 +22,14 @@ function readJson(path) {
 
 const cliPackage = readJson(cliPackagePath);
 
+assert(cliPackage.name === "usebeam", "CLI package name must be usebeam");
+assert(cliPackage.private === undefined, "CLI package must not be private");
+assert(cliPackage.license === "MIT", "CLI package must use MIT license");
+assert(
+  cliPackage.description ===
+    "Local-first Figma design context bridge for coding agents.",
+  "CLI package description does not match publishing plan",
+);
 assert(
   cliPackage.bin?.beam === "./dist/cli.js",
   "beam bin must point to dist/cli.js",
@@ -30,6 +40,12 @@ assert(
 );
 assert(existsSync(cliEntryPath), "built CLI entry is missing");
 assert(existsSync(cliIndexPath), "built package export is missing");
+assert(existsSync(cliReadmePath), "CLI package README is missing");
+assert(existsSync(cliLicensePath), "CLI package LICENSE is missing");
+
+for (const [name, version] of Object.entries(cliPackage.dependencies ?? {})) {
+  assert(!String(version).startsWith("workspace:"), `${name} is unpublished`);
+}
 
 const cliEntry = readFileSync(cliEntryPath, "utf8");
 assert(
@@ -58,6 +74,14 @@ assert(help.includes("inspect"), "CLI help is missing inspect");
 assert(help.includes("compare"), "CLI help is missing compare");
 assert(help.includes("mappings"), "CLI help is missing mappings");
 assert(help.includes("debug"), "CLI help is missing debug");
+
+for (const args of [
+  ["doctor", "--help"],
+  ["inspect", "--help"],
+  ["init", "--print"],
+]) {
+  execFileSync(process.execPath, [cliEntryPath, ...args], { encoding: "utf8" });
+}
 
 for (const path of [
   "docs/free-user-guide.md",
