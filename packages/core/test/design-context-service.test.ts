@@ -2,7 +2,11 @@ import { mkdtemp, rm } from "node:fs/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { afterEach, describe, expect, it } from "vitest";
-import { createDesignContext, saveComponentMapping } from "../src/index.js";
+import {
+  BeamRateLimitError,
+  createDesignContext,
+  saveComponentMapping,
+} from "../src/index.js";
 
 const roots: string[] = [];
 
@@ -31,6 +35,7 @@ describe("createDesignContext", () => {
       source: { fileKey: "abc", nodeId: "1:2" },
       snapshot: { fromCache: false },
       brief: { frame: { name: "Frame", mode: "summary" } },
+      evidence: { buildReadiness: "ready" },
     });
   });
 
@@ -49,6 +54,7 @@ describe("createDesignContext", () => {
     const cached = await createDesignContext(input);
 
     expect(cached.snapshot.fromCache).toBe(true);
+    expect(cached.evidence.buildReadiness).toBe("ready");
   });
 
   it("adds local component mapping hints to context", async () => {
@@ -80,6 +86,34 @@ describe("createDesignContext", () => {
     expect(response.brief.components[0]).toMatchObject({
       mapping: { exportName: "Button", importPath: "@/components/button" },
     });
+  });
+
+  it("falls back to newest snapshot on rate limits", async () => {
+    const cwd = await tempRoot();
+    const input = {
+      cwd,
+      url: "https://www.figma.com/design/abc/File?node-id=1-2",
+      figmaClient: {
+        getFile: async () => ({ document: frame }),
+        getFileNodes: async () => ({ nodes: { "1:2": { document: frame } } }),
+      },
+    };
+    const fresh = await createDesignContext(input);
+    const fallback = await createDesignContext({
+      ...input,
+      refresh: true,
+      figmaClient: {
+        getFile: async () => {
+          throw new BeamRateLimitError();
+        },
+        getFileNodes: async () => {
+          throw new BeamRateLimitError();
+        },
+      },
+    });
+
+    expect(fallback.snapshot.id).toBe(fresh.snapshot.id);
+    expect(fallback.evidence.buildReadiness).toBe("needs-user-evidence");
   });
 });
 
