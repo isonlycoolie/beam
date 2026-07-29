@@ -19,6 +19,9 @@ describe("FigmaClient", () => {
       nodes: { "1:2": {} },
     });
     expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(String(fetchMock.mock.calls[0]?.[0])).toBe(
+      "https://api.figma.com/v1/files/abc/nodes?ids=1%3A2",
+    );
     expect(fetchMock.mock.calls[0]?.[1]?.headers).toMatchObject({
       "X-Figma-Token": "figd_secret",
     });

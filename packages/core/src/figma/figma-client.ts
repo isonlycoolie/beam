@@ -66,7 +66,10 @@ export class FigmaClient {
   }
 
   private async request(path: string, endpointName: string): Promise<unknown> {
-    const url = new URL(path, `${this.apiBaseUrl.replace(/\/$/, "")}/`);
+    const url = new URL(
+      path.replace(/^\//, ""),
+      `${this.apiBaseUrl.replace(/\/$/, "")}/`,
+    );
     const scheduled = this.scheduler.schedule(
       url.toString(),
       async (requestId) => {
