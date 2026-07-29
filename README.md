@@ -71,8 +71,12 @@ The repository is TypeScript-first. Core behavior should stay deterministic, tes
 
 ## Status
 
-Beam is under active implementation. The current work is organized around MVP sprints for the local CLI, core contracts, cache, snapshots, asset export, and MCP server.
+Beam is early open-source software. The local Free path is the current focus: CLI, core contracts, cache, snapshots, asset export, visual compare, and MCP server.
 
 ## License
 
-License information has not been added yet.
+Beam is released under the MIT License. See [LICENSE](./LICENSE).
+
+## Contributing
+
+Issues and pull requests are welcome. Read [CONTRIBUTING.md](./CONTRIBUTING.md) and [SECURITY.md](./SECURITY.md) before sharing logs, screenshots, or Figma-related output.
