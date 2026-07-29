@@ -8,6 +8,8 @@ export type CreateDesignContextInput = {
   mode?: ContextMode;
   includeImage?: boolean;
   includeAssets?: boolean;
+  review?: boolean;
+  bestEffort?: boolean;
   refresh?: boolean;
   figmaClient?: Pick<FigmaClient, "getFile" | "getFileNodes">;
 };

@@ -5,6 +5,7 @@ import { loginCommand, logoutCommand, whoamiCommand } from "./commands/auth.js";
 import { compareCommand } from "./commands/compare.js";
 import { debugCommand } from "./commands/debug.js";
 import { doctorCommand } from "./commands/doctor.js";
+import { evidenceCommand } from "./commands/evidence.js";
 import { exportCommand } from "./commands/export.js";
 import { inspectCommand } from "./commands/inspect.js";
 import { initCommand } from "./commands/init.js";
@@ -72,6 +73,8 @@ program
   .option("--mode <mode>", "Context mode")
   .option("--raw", "Use raw context mode")
   .option("--refresh", "Bypass cache")
+  .option("--review", "Include evidence review")
+  .option("--best-effort", "Proceed with partial evidence")
   .option("--json", "Print structured JSON output")
   .action(
     async (
@@ -80,10 +83,41 @@ program
         mode?: "summary" | "standard" | "full" | "raw";
         raw?: boolean;
         refresh?: boolean;
+        review?: boolean;
+        bestEffort?: boolean;
         json?: boolean;
       },
     ) => {
       await inspectCommand(url, options);
+    },
+  );
+
+program
+  .command("evidence")
+  .argument("<action>")
+  .argument("<snapshot-id>")
+  .option("--image <path>", "Add screenshot evidence")
+  .option("--asset <path>", "Add source asset evidence")
+  .option("--reference <path>", "Add reference image evidence")
+  .option("--note <text>", "Add note evidence")
+  .option("--confirm <text>", "Add confirmation evidence")
+  .option("--label <label>", "Evidence label")
+  .option("--json", "Print structured JSON output")
+  .action(
+    async (
+      action: string,
+      snapshotId: string,
+      options: {
+        image?: string;
+        asset?: string;
+        reference?: string;
+        note?: string;
+        confirm?: string;
+        label?: string;
+        json?: boolean;
+      },
+    ) => {
+      await evidenceCommand(action, snapshotId, options);
     },
   );
 
