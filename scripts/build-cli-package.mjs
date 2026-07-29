@@ -14,7 +14,7 @@ const shared = {
   format: "esm",
   sourcemap: false,
   packages: "bundle",
-  external: ["playwright"],
+  external: ["pixelmatch", "playwright", "pngjs"],
   logLevel: "silent",
 };
 
@@ -24,7 +24,6 @@ await build({
   ...shared,
   entryPoints: [join(cliDir, "src", "cli.ts")],
   outfile: join(distDir, "cli.js"),
-  banner: { js: "#!/usr/bin/env node" },
 });
 
 await build({
