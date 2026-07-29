@@ -5,7 +5,7 @@ Beam Free is the local open-source product. It does not require a Beam account.
 ## Setup
 
 ```bash
-npm install -g @beam/client
+npm install -g usebeam
 beam login --token <figma-token>
 beam doctor
 ```

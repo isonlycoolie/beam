@@ -5,15 +5,15 @@ Beam is a local-first bridge from Figma frames to coding agents.
 ## Install
 
 ```bash
-npm install -g @beam/client
+npm install -g usebeam
 beam doctor
 ```
 
 Project-local usage is also supported:
 
 ```bash
-npm install --save-dev @beam/client
-npx @beam/client doctor
+npm install --save-dev usebeam
+npx usebeam doctor
 ```
 
 ## Authenticate
