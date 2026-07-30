@@ -398,3 +398,83 @@ export const sections: DocSection[] = [
       ".beam/cache/",
       ".beam/debug/",
       "Agent MCP settings file",
+    ],
+    nextStep:
+      "Before sharing any debug bundle or snapshot, review whether it contains customer design data.",
+    recovery: [
+      "If a token is printed or committed, rotate it immediately in Figma.",
+      "If a debug bundle includes raw payloads accidentally, delete it and regenerate without raw data.",
+      "If cloud sync is enabled later, provide deletion, retention, and export controls.",
+    ],
+  },
+  {
+    id: "reliability",
+    slug: "rate-limits",
+    kicker: "Rate Limits And Reliability",
+    title: "Beam respects Figma limits and permissions.",
+    body: "Caching, snapshots, request deduplication, retry metadata, and cached fallback behavior reduce repeated Figma calls without claiming unlimited upstream access.",
+    details: [
+      "When Figma returns a rate limit, Beam should report the endpoint, retry timing when available, whether cached data exists, and whether the agent can proceed from a snapshot.",
+      "If a cached snapshot is good enough, Beam can continue with a build-readiness review. If the snapshot is incomplete, Beam asks for specific user evidence instead of guessing silently.",
+      "Draft files, private files, missing node access, and limited token scopes are product states Beam must explain clearly rather than masking them as generic request failures.",
+    ],
+    sequence: [
+      "Make one deliberate Figma fetch instead of repeated blind retries.",
+      "Cache raw node data and rendered images from successful fetches.",
+      "On a `429`, read retry metadata and report when Beam can retry.",
+      "Offer cached snapshot fallback when available.",
+      "If cached evidence is insufficient, ask for the smallest useful user evidence.",
+    ],
+    expectedOutput:
+      "A rate-limit response should name the endpoint, retry timing when available, cache fallback status, snapshot age, and whether the build is ready, degraded, or blocked.",
+    files: [
+      ".beam/cache/raw/",
+      ".beam/cache/images/",
+      ".beam/cache/snapshots/",
+      ".beam/cache/logs/",
+    ],
+    nextStep:
+      "Proceed from cache when confidence is high enough, or wait for Figma retry timing when fresh data is required.",
+    recovery: [
+      "If the file is private, fix sharing rather than retrying.",
+      "If the token lacks access, log in with an account that can open the file.",
+      "If repeated fetches cause limits, reuse snapshots and avoid unnecessary refreshes.",
+    ],
+  },
+  {
+    id: "contracts",
+    slug: "contracts",
+    kicker: "Reference Contracts",
+    title: "Stable JSON shapes connect CLI, MCP, cache, and cloud.",
+    body: "Design context, snapshots, asset manifests, compare results, warnings, and evidence models use explicit schema versions and deterministic fields.",
+    details: [
+      "Design context responses include source metadata, snapshot summary, implementation brief, image path, warnings, estimated token count, confidence, and build readiness.",
+      "Snapshots persist source, hash, Beam version, mode, timestamps, and paths to raw payloads, briefs, images, and asset manifests.",
+      "Asset manifests list exported assets with node IDs, names, formats, scale, output paths, and source URLs. Compare results report score, target URL, differences, and artifact paths.",
+    ],
+    code:
+      '{\n  "schemaVersion": "1.0",\n  "source": {\n    "fileKey": "abc",\n    "nodeId": "1:2",\n    "url": "https://www.figma.com/file/..."\n  },\n  "snapshot": {\n    "id": "snapshot_01J...",\n    "fromCache": true\n  },\n  "brief": {\n    "frame": {},\n    "layout": {},\n    "components": [],\n    "tokens": {},\n    "assets": [],\n    "implementationNotes": []\n  },\n  "warnings": [],\n  "estimatedTokens": 18000\n}',
+    sequence: [
+      "Add `schemaVersion` to every shared object.",
+      "Keep CLI JSON, MCP responses, local cache files, and cloud sync shapes aligned.",
+      "Add warnings for omitted or uncertain data instead of dropping fields silently.",
+      "Preserve local file paths so agents can open exported images, assets, manifests, and compare artifacts.",
+    ],
+    expectedOutput:
+      "A contract response should be deterministic, parseable, credential-safe, and stable enough for agents and scripts to consume without scraping human text.",
+    files: [
+      ".beam/cache/briefs/<snapshot-id>.json",
+      ".beam/cache/snapshots/<snapshot-id>.json",
+      ".beam/cache/assets/<snapshot-id>.manifest.json",
+      ".beam/cache/compare/<compare-id>/result.json",
+    ],
+    nextStep:
+      "When a field changes, update CLI output, MCP output, tests, and docs together.",
+    recovery: [
+      "If a script breaks after a contract change, verify `schemaVersion` and migration behavior.",
+      "If a field contains a secret, remove it from the contract and rotate affected credentials.",
+      "If agents need more detail, add explicit fields rather than embedding prose-only instructions.",
+    ],
+  },
+];
+
