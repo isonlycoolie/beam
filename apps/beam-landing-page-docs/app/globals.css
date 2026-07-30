@@ -798,3 +798,13 @@ button {
 
   .docSection h1 {
     font-size: 1.35rem;
+  }
+
+  .docSection {
+    padding-top: 1.4rem;
+  }
+
+  .editionRow {
+    grid-template-columns: 1fr;
+  }
+}
