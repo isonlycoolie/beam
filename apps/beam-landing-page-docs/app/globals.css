@@ -718,3 +718,83 @@ button {
     inset: 0;
     position: fixed;
     z-index: 40;
+  }
+
+  .mobileNavBackdrop {
+    background: rgba(0, 0, 0, 0.55);
+    border: 0;
+    cursor: pointer;
+    inset: 0;
+    position: absolute;
+  }
+
+  .mobileNavDrawer {
+    background: #08090b;
+    border-right: 1px solid #242832;
+    box-shadow: 24px 0 60px rgba(0, 0, 0, 0.42);
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    left: 0;
+    max-width: min(22rem, calc(100vw - 2.5rem));
+    overflow-y: auto;
+    padding: 1rem;
+    position: absolute;
+    top: 0;
+    width: 86vw;
+  }
+
+  .mobileNavHeader {
+    align-items: center;
+    border-bottom: 1px solid #20242d;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .mobileNavHeader div {
+    display: grid;
+    gap: 0.15rem;
+  }
+
+  .mobileNavHeader span {
+    color: #8f96a3;
+    font-size: 0.78rem;
+  }
+
+  .mobileNavHeader strong {
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .docsGrid {
+    display: block;
+    height: auto;
+    overflow: visible;
+    padding: 1.5rem 1rem 4rem;
+  }
+
+  .leftSidebar {
+    display: none;
+  }
+
+  .leftSidebar.mobileVariant {
+    display: block;
+  }
+
+  .content {
+    border-right: 0;
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
+  }
+
+  .commandGrid,
+  .capabilityGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .docSection h1 {
+    font-size: 1.35rem;
