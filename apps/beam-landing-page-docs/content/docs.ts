@@ -238,3 +238,83 @@ export const sections: DocSection[] = [
   {
     id: "mcp",
     slug: "agent-setup",
+    kicker: "Agent Integration",
+    title: "MCP exposes the same Beam core to agents.",
+    body: "Agents call Beam tools for design context, node images, assets, variables, and visual comparison without duplicating Figma or cache behavior.",
+    details: [
+      "`beam init --print` emits MCP configuration that starts `beam mcp`. Supported clients can then launch Beam as a local MCP server.",
+      "The intended workflow is simple: the user gives an agent a Figma URL, the agent requests design context, downloads assets when needed, builds the UI, and asks Beam for comparison signals.",
+      "Beam does not assume a framework. It returns structured evidence, warnings, paths, and contracts so Codex, Claude Code, Cursor, Copilot, and other MCP clients can decide how to build.",
+    ],
+    code: '{\n  "mcpServers": {\n    "beam": {\n      "command": "beam",\n      "args": ["mcp"]\n    }\n  }\n}',
+    sequence: [
+      "Run `beam login` so MCP tools can access Figma when live fetches are needed.",
+      "Run `beam init --print` and review the MCP configuration.",
+      "Add the config to the coding agent or run a supported `beam init --client <name>` adapter.",
+      "Restart the agent so it loads the Beam server.",
+      "Ask the agent to build from a Figma frame URL using Beam.",
+    ],
+    expectedOutput:
+      "The agent should discover Beam tools, call `get_design_context`, optionally request node images and assets, build the UI, and call compare when a local URL is available.",
+    files: [
+      "Agent MCP settings file",
+      ".beam/cache/briefs/<snapshot-id>.json",
+      ".beam/cache/images/<snapshot-id>.png",
+      ".beam/cache/assets/<snapshot-id>.manifest.json",
+    ],
+    nextStep:
+      "Use the MCP tool grid to understand what the agent can request from Beam during implementation.",
+    recovery: [
+      "If the agent does not list Beam tools, verify its MCP config and restart the agent.",
+      "If Beam works in terminal but not inside the agent, check PATH differences between shell and agent process.",
+      "If an MCP response says data is missing, follow the clarification request instead of asking the agent to guess.",
+    ],
+  },
+  {
+    id: "capabilities",
+    slug: "capabilities",
+    kicker: "Capabilities",
+    title: "The Free product is durable and honest.",
+    body: "Beam focuses on Figma URL parsing, local credentials, rate-limit aware fetching, local cache, snapshots, simplification, token extraction, asset export, evidence scoring, visual compare, mappings, debug bundles, and local logs.",
+    details: [
+      "Free does not mean vague. Beam Free is the local product: inspect designs, export references, keep snapshots, explain missing evidence, and serve agents through MCP.",
+      "The evidence and confidence engine is designed for real Figma constraints. It distinguishes known Figma data, rendered-image inference, local snapshots, missing assets, user notes, and confirmation requests.",
+      "Visual compare is intentionally pragmatic in v1. It reports dimensions, pixel differences, dominant mismatches, and artifact paths rather than pretending to understand every semantic UI detail.",
+    ],
+    sequence: [
+      "Use Figma access capabilities first: URL parsing, auth, scheduler, and cache.",
+      "Use interpretation capabilities next: simplifier, tokens, assets, warnings, evidence, and confidence.",
+      "Use persistence capabilities after that: snapshots, manifests, mappings, logs, and debug bundles.",
+      "Use verification capabilities last: rendered references and visual compare.",
+    ],
+    expectedOutput:
+      "Every capability should either produce structured context, a local artifact path, a stable JSON contract, or an actionable warning. Silent guessing is a product bug.",
+    files: [
+      ".beam/cache/raw/",
+      ".beam/cache/briefs/",
+      ".beam/cache/assets/",
+      ".beam/mappings.json",
+      ".beam/debug/",
+    ],
+    nextStep:
+      "When documenting a new capability, include the command, expected output, files touched, and how it fails.",
+    recovery: [
+      "If a capability depends on Figma and Figma is unavailable, check whether a snapshot can satisfy the workflow.",
+      "If a capability produces uncertain output, inspect the evidence confidence section.",
+      "If a capability touches project files, make sure it does not write credentials or hidden cloud state.",
+    ],
+  },
+  {
+    id: "business",
+    slug: "open-source-vs-cloud",
+    kicker: "Business Architecture",
+    title: "Open source core, optional cloud control plane.",
+    body: "Free stays local. Pro, Team, and Enterprise add sync, history, sharing, governance, policy, audit, and optional self-hosting without bypassing Figma permissions or rate limits.",
+    details: [
+      "Free is for individual local usage: CLI, MCP, local cache, snapshots, asset export, evidence review, compare, mappings, logs, and debug bundles.",
+      "Pro is planned for personal continuity: cloud snapshot sync, saved implementation briefs, compare history, and convenience across machines.",
+      "Team is planned for shared handoff: shared snapshots, shared mappings, CI compare, team logs, and reusable design context across product teams.",
+      "Enterprise is planned for governance: SSO, RBAC, retention policy, audit logs, private artifact storage, self-hosting, and organization-managed MCP templates.",
+      "Paid plans improve workflow scale and reliability. They do not bypass Figma permissions, seat access, upstream rate limits, or file sharing rules.",
+    ],
+    sequence: [
