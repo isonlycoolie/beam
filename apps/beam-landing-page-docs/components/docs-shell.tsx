@@ -238,3 +238,83 @@ function ContentBlock({ block }: { block: DocBlock }) {
           ))}
         </ul>
       ) : null}
+      {block.code ? (
+        <CodeBlock code={block.code} language={block.codeLanguage ?? "bash"} />
+      ) : null}
+      {block.expected ? (
+        <GuidePanel
+          id={`${block.id}-expected`}
+          items={block.expected}
+          title="Expected Output"
+          tone="terminal"
+        />
+      ) : null}
+      {block.files ? (
+        <GuidePanel
+          icon={<FileJson size={17} />}
+          id={`${block.id}-files`}
+          items={block.files}
+          title="Files And Artifacts"
+        />
+      ) : null}
+    </section>
+  );
+}
+
+function CommandGrid() {
+  return (
+    <div className="commandGrid" id="commands">
+      {commands.map(([command, detail, slug]) => (
+        <SectionCard href={`/docs/${slug}`} key={command} title={command}>
+          <p>{detail}</p>
+        </SectionCard>
+      ))}
+    </div>
+  );
+}
+
+function GuidePanel({
+  children,
+  icon,
+  id,
+  items,
+  title,
+  tone,
+}: {
+  children?: ReactNode;
+  icon?: ReactNode;
+  id: string;
+  items?: string[];
+  title: string;
+  tone?: "terminal";
+}) {
+  return (
+    <section className={`guidePanel${tone ? ` ${tone}` : ""}`} id={id}>
+      <div className="guidePanelHeader">
+        <span>{icon ?? <Terminal size={17} />}</span>
+        <h2>{title}</h2>
+      </div>
+      {items ? (
+        <ol className="guideList">
+          {items.map((item) => (
+            <li key={item}>
+              <InlineText text={item} />
+            </li>
+          ))}
+        </ol>
+      ) : null}
+      {children}
+    </section>
+  );
+}
+
+function InlineText({ text }: { text: string }) {
+  return renderInlineText(text);
+}
+
+function renderInlineText(text: string): ReactNode[] {
+  return text.split(/(`[^`]+`)/g).map((part, index) => {
+    if (part.startsWith("`") && part.endsWith("`")) {
+      return (
+        <code className="inlineCode" key={`${part}-${index}`}>
+          {part.slice(1, -1)}
