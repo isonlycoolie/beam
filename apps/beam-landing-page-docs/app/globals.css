@@ -1,0 +1,80 @@
+﻿:root {
+  color-scheme: dark;
+  background: #08090b;
+  color: #f5f7fb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family:
+    "Segoe UI",
+    Arial,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: inherit;
+  margin: 0;
+  background: #08090b;
+}
+
+body.navLocked {
+  overflow: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+h1,
+h2,
+h3,
+p,
+a,
+span,
+li,
+strong,
+label,
+input,
+button {
+  font-family: inherit;
+}
+
+.siteShell {
+  min-height: 100vh;
+}
+
+.topNav {
+  align-items: center;
+  backdrop-filter: blur(18px);
+  background: rgba(8, 9, 11, 0.88);
+  border-bottom: 1px solid #1b1f28;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: auto 1fr minmax(18rem, 28rem) auto auto;
+  min-height: 4rem;
+  padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.brand,
+.topLinks,
+.searchBox {
+  align-items: center;
+  display: flex;
+}
