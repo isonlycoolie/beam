@@ -78,3 +78,83 @@ export const sections: DocSection[] = [
       },
       {
         id: "core-objects",
+        title: "Core Objects",
+        body: [
+          "Beam documentation uses a few repeated nouns. They appear throughout the product, so this page defines them once before the operational guides begin.",
+          "A frame is the Figma surface the user wants to build. A brief is Beam's simplified implementation context. A snapshot is the durable local record of a fetched design. An asset manifest is the index of exported files. A compare result is the visual check between Figma and a local page.",
+        ],
+        bullets: [
+          "Frame: the Figma node Beam targets.",
+          "Brief: the implementation summary Beam returns.",
+          "Snapshot: a reusable local record of a design fetch.",
+          "Asset manifest: a structured list of exported images, vectors, and paths.",
+          "Evidence: what Beam knows, inferred, or still needs from the user.",
+          "Compare result: local visual fidelity feedback against Figma ground truth.",
+        ],
+      },
+      {
+        id: "local-first-boundary",
+        title: "Local-First Boundary",
+        body: [
+          "Beam Free runs locally. Credentials stay in the user's Beam directory, design artifacts are written to local `.beam` paths, and coding agents connect through a local MCP server. Beam Cloud is an optional future control plane for sync, sharing, history, and governance.",
+          "This boundary is important because teams need to know which data is local, which data is customer design data, and which future features would require explicit cloud sync.",
+        ],
+      },
+      {
+        id: "human-and-agent-surfaces",
+        title: "Human And Agent Surfaces",
+        body: [
+          "Beam has two primary surfaces. Humans use the CLI to log in, inspect, export, compare, list snapshots, maintain mappings, and create debug bundles. Agents use MCP tools to request the same core context without duplicating Figma or cache logic.",
+          "The CLI and MCP server are intentionally thin over Beam Core. That keeps behavior consistent whether a developer runs `beam inspect` or an agent calls `get_design_context`.",
+        ],
+      },
+      {
+        id: "what-to-read-next",
+        title: "What To Read Next",
+        body: [
+          "If you are setting up Beam for the first time, go to Install Beam next. If Beam is already installed and authenticated, go to First Inspect. If you are connecting Codex or another MCP client, go to Agent Setup after the first CLI workflow succeeds.",
+        ],
+        bullets: [
+          "Next page for new users: Install Beam.",
+          "Next page for already-installed users: First Inspect.",
+          "Next page for agent users: Agent Setup.",
+          "Next page for platform teams: System Architecture.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "quickstart",
+    slug: "install-beam",
+    kicker: "Get Started",
+    title: "Install Beam and verify local readiness.",
+    body: "This page covers setup only: runtime requirements, package installation, Figma authentication, and the doctor check that confirms Beam is ready for design work.",
+    details: [
+      "The public npm package is `usebeam`, and the installed command is `beam`. This keeps the command short while avoiding unavailable npm scopes.",
+      "MVP authentication uses a Figma personal access token. OAuth is a later public-v1 direction, but PAT auth keeps the Free product useful while the core design pipeline matures.",
+      "After `beam doctor` passes, this page is complete. Move to First Inspect for the first Figma frame run.",
+    ],
+    bullets: [
+      "Credentials stay in the user Beam directory.",
+      "Project files should not contain tokens.",
+      "Use npx usebeam doctor for local project installs.",
+    ],
+    code:
+      "npm install -g usebeam\nbeam login\nbeam whoami\nbeam doctor",
+    sequence: [
+      "Install globally for the simplest personal workflow.",
+      "Use project-local installation only when a repository needs a pinned Beam version.",
+      "Log in before running live Figma commands.",
+      "Run doctor after login and inside the project where Beam artifacts will be written later.",
+      "Stop here when doctor passes; the next page owns the first Figma inspect workflow.",
+    ],
+    expectedOutput:
+      "`beam whoami` should confirm a saved local credential without printing the token. `beam doctor` should show a usable runtime, credential state, cache access, and project readiness.",
+    files: [
+      "~/.beam/credentials.json",
+      ".beam/cache/",
+    ],
+    nextStep:
+      "Open First Inspect and run `beam inspect <figma-url>` against a single Figma frame.",
+    recovery: [
+      "If install fails, verify Node.js 22.12 or newer and pnpm/npm availability.",
