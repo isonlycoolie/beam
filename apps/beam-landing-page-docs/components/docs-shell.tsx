@@ -158,3 +158,83 @@ function buildTocItems(section: DocSection) {
   if (section.blocks?.length) {
     return [
       ...items,
+      ...section.blocks.map((block) => ({
+        href: `#${block.id}`,
+        title: block.title,
+      })),
+    ];
+  }
+
+  if (section.details?.length) {
+    items.push({ href: "#details", title: "Details" });
+  }
+
+  if (section.bullets?.length) {
+    items.push({ href: "#principles", title: "Principles" });
+  }
+
+  if (section.code) {
+    items.push({ href: "#usage", title: "Usage" });
+  }
+
+  if (section.sequence?.length) {
+    items.push({ href: "#sequence", title: "Run sequence" });
+  }
+
+  if (section.expectedOutput) {
+    items.push({ href: "#expected-output", title: "Expected output" });
+  }
+
+  if (section.files?.length) {
+    items.push({ href: "#files", title: "Files and artifacts" });
+  }
+
+  if (section.nextStep) {
+    items.push({ href: "#next-step", title: "Next step" });
+  }
+
+  if (section.recovery?.length) {
+    items.push({ href: "#recovery", title: "Recovery paths" });
+  }
+
+  if (section.id === "cli") {
+    items.push({ href: "#commands", title: "Commands" });
+  }
+
+  if (section.id === "mcp") {
+    items.push({ href: "#tools", title: "MCP tools" });
+  }
+
+  if (section.id === "capabilities") {
+    items.push({ href: "#capability-list", title: "Capability list" });
+  }
+
+  if (section.id === "business") {
+    items.push({ href: "#editions", title: "Editions" });
+  }
+
+  if (section.id === "architecture") {
+    items.push({ href: "#diagram", title: "Architecture diagram" });
+  }
+
+  return items;
+}
+
+function ContentBlock({ block }: { block: DocBlock }) {
+  return (
+    <section className="contentBlock" id={block.id}>
+      <h2>{block.title}</h2>
+      {block.body?.map((paragraph) => (
+        <p key={paragraph}>
+          <InlineText text={paragraph} />
+        </p>
+      ))}
+      {block.bullets ? (
+        <ul>
+          {block.bullets.map((bullet) => (
+            <li key={bullet}>
+              <InlineText text={bullet} />
+            </li>
+          ))}
+        </ul>
+      ) : null}
