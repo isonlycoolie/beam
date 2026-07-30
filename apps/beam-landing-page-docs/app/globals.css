@@ -158,3 +158,83 @@ button {
   align-items: center;
   background: #12151b;
   border: 1px solid #2a303b;
+  border-radius: 0.55rem;
+  color: #d9deea;
+  display: inline-flex;
+  justify-content: center;
+  min-height: 2rem;
+  min-width: 2rem;
+}
+
+.docsGrid {
+  display: grid;
+  gap: 2.25rem;
+  grid-template-columns: 16rem minmax(0, 54rem) 17rem;
+  height: calc(100vh - 4rem);
+  margin: 0 auto;
+  max-width: 95rem;
+  overflow: hidden;
+  padding: 2.25rem 2rem;
+}
+
+.leftSidebar,
+.rightToc {
+  align-self: start;
+  max-height: calc(100vh - 8.5rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.leftSidebar {
+  border-right: 1px solid #20242d;
+  padding-right: 1rem;
+}
+
+.leftSidebar.mobileVariant {
+  border-right: 0;
+  max-height: none;
+  overflow: visible;
+  padding-right: 0;
+}
+
+.navGroup {
+  margin-bottom: 2.2rem;
+}
+
+.navGroup h2,
+.tocTitle {
+  color: #f1f4f9;
+  font-size: 0.92rem;
+  font-weight: 600;
+  margin: 0 0 1rem;
+}
+
+.navGroup a,
+.rightToc a {
+  border-radius: 0.55rem;
+  color: #8f96a3;
+  display: block;
+  font-size: 0.94rem;
+  line-height: 1.25;
+  padding: 0.55rem 0.7rem;
+}
+
+.navItem {
+  margin-bottom: 0.1rem;
+}
+
+.navChildren {
+  border-left: 1px solid #242832;
+  margin: 0.15rem 0 0.35rem 0.7rem;
+  padding-left: 0.55rem;
+}
+
+.navChildren a {
+  font-size: 0.86rem;
+  padding-bottom: 0.38rem;
+  padding-top: 0.38rem;
+}
+
+.navGroup a:hover,
+.rightToc a:hover {
+  color: #ffffff;
