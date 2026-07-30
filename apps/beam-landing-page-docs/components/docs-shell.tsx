@@ -78,3 +78,83 @@ export function DocsShell({ section }: DocsShellProps) {
               <div id="usage">
                 <CodeBlock
                   code={section.code}
+                  language={
+                    section.code.trim().startsWith("{") ? "json" : "bash"
+                  }
+                />
+              </div>
+            ) : null}
+            {section.sequence ? (
+              <GuidePanel
+                icon={<ListChecks size={17} />}
+                id="sequence"
+                items={section.sequence}
+                title="Run Sequence"
+              />
+            ) : null}
+            {section.expectedOutput ? (
+              <GuidePanel
+                id="expected-output"
+                title="Expected Output"
+                tone="terminal"
+              >
+                <p>
+                  <InlineText text={section.expectedOutput} />
+                </p>
+              </GuidePanel>
+            ) : null}
+            {section.files ? (
+              <GuidePanel
+                icon={<FileJson size={17} />}
+                id="files"
+                items={section.files}
+                title="Files And Artifacts"
+              />
+            ) : null}
+            {section.nextStep ? (
+              <GuidePanel id="next-step" title="Next Step">
+                <p>
+                  <InlineText text={section.nextStep} />
+                </p>
+              </GuidePanel>
+            ) : null}
+            {section.recovery ? (
+              <GuidePanel
+                icon={<RotateCcw size={17} />}
+                id="recovery"
+                items={section.recovery}
+                title="Recovery Paths"
+              />
+            ) : null}
+            {section.blocks?.length ? (
+              <div className="contentBlocks">
+                {section.blocks.map((block) => (
+                  <ContentBlock block={block} key={block.id} />
+                ))}
+              </div>
+            ) : null}
+            {section.id === "cli" ? <CommandGrid /> : null}
+            {section.id === "mcp" ? <ToolGrid /> : null}
+            {section.id === "capabilities" ? <CapabilityGrid /> : null}
+            {section.id === "business" ? <EditionTable /> : null}
+            {section.id === "architecture" ? <ArchitectureDiagram /> : null}
+            {section.id === "security" ? (
+              <Callout>
+                Tokens stay local by default. Cloud sync and enterprise policy
+                are explicit product boundaries, not hidden defaults.
+              </Callout>
+            ) : null}
+          </section>
+        </main>
+        <RightToc items={tocItems} />
+      </div>
+    </div>
+  );
+}
+
+function buildTocItems(section: DocSection) {
+  const items = [{ href: `#${section.id}`, title: "Overview" }];
+
+  if (section.blocks?.length) {
+    return [
+      ...items,
