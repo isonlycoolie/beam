@@ -158,3 +158,83 @@ export const sections: DocSection[] = [
       "Open First Inspect and run `beam inspect <figma-url>` against a single Figma frame.",
     recovery: [
       "If install fails, verify Node.js 22.12 or newer and pnpm/npm availability.",
+      "If doctor fails after login, run `beam whoami` to isolate credential state.",
+      "If doctor passes but inspect later fails, treat that as a Figma URL, file access, or rate-limit issue rather than an installation issue.",
+    ],
+  },
+  {
+    id: "workflow",
+    slug: "first-inspect",
+    kicker: "Core Workflow",
+    title: "From Figma URL to agent-ready context.",
+    body: "Beam parses the URL, authenticates locally, fetches Figma data, caches raw responses and images, creates snapshots, simplifies the node tree, and returns implementation guidance.",
+    details: [
+      "A Figma URL is parsed into file and node identifiers. Beam then resolves local credentials, schedules Figma requests, reads or writes cache entries, and stores snapshot metadata for later reuse.",
+      "The simplifier converts noisy Figma JSON into an implementation model that emphasizes layout intent, text, components, tokens, assets, warnings, and omitted fields.",
+      "When access is limited or rate limits are reached, Beam prefers the newest valid snapshot and explains what is known, what is inferred, and what evidence the user can provide.",
+    ],
+    code:
+      "beam inspect <figma-url> --json\nbeam snapshots list\nbeam export <figma-url>\nbeam compare <figma-url> http://localhost:3000",
+    sequence: [
+      "Start with a precise frame URL so Beam can target one buildable surface.",
+      "Inspect the frame to create a snapshot and implementation brief.",
+      "List snapshots to confirm the design can be reused offline.",
+      "Export references and assets when the implementation needs image or vector files.",
+      "After building locally, compare the local URL with the Figma reference.",
+    ],
+    expectedOutput:
+      "The sequence should create a traceable chain: source URL, snapshot id, brief path, rendered image path, asset manifest path, compare id, and local diff artifacts.",
+    files: [
+      ".beam/cache/snapshots/<snapshot-id>.json",
+      ".beam/cache/briefs/<snapshot-id>.json",
+      ".beam/cache/assets/<snapshot-id>.manifest.json",
+      ".beam/cache/compare/<compare-id>/result.json",
+    ],
+    nextStep:
+      "Use the compare result to iterate on spacing, sizing, typography, color, and asset mismatches.",
+    recovery: [
+      "If Figma fetch fails but a snapshot exists, continue from the snapshot and make cache age visible.",
+      "If the local URL does not load, start the app before compare.",
+      "If the brief is too large for an agent, request a smaller context mode and export assets separately.",
+    ],
+  },
+  {
+    id: "cli",
+    slug: "cli-commands",
+    kicker: "CLI Guide",
+    title: "Human commands stay thin over the core.",
+    body: "The CLI gives users a small set of direct commands for authentication, setup, design inspection, asset export, visual comparison, local reuse, diagnostics, and MCP startup.",
+    details: [
+      "`beam login` stores Figma credentials in the user Beam directory. Tokens are not written into project files or printed back to the terminal.",
+      "`beam doctor` checks the local environment before work begins. It validates Node, auth state, Beam directories, cache access, and project readiness.",
+      "`beam inspect` turns a Figma frame into implementation context. `beam export` writes visual references and the canonical asset manifest. `beam compare` checks a local page against Figma ground truth.",
+      "`beam snapshots` supports offline reuse. `beam mappings` connects known design components to local code. `beam debug bundle` creates sanitized diagnostics without requiring Beam Cloud.",
+    ],
+    code:
+      "beam login\nbeam doctor\nbeam inspect <figma-url>\nbeam export <figma-url>\nbeam compare <figma-url> <local-url>\nbeam snapshots list\nbeam debug bundle",
+    sequence: [
+      "Use auth commands first: `beam login`, then `beam whoami` if you need to verify identity.",
+      "Use readiness commands next: `beam doctor` before live fetches or support debugging.",
+      "Use design commands during implementation: `inspect`, `export`, and `compare`.",
+      "Use local reuse commands after successful fetches: `snapshots` and `mappings`.",
+      "Use support commands last: `debug bundle` when a workflow needs investigation.",
+    ],
+    expectedOutput:
+      "Each command should return a clear success state, a next action, and stable paths or JSON fields when artifacts are created.",
+    files: [
+      "~/.beam/credentials.json",
+      ".beam/cache/",
+      ".beam/mappings.json",
+      ".beam/debug/",
+    ],
+    nextStep:
+      "Open an individual command page from the command grid for exact usage, output, and recovery guidance.",
+    recovery: [
+      "If a CLI command fails, rerun it with `--json` when available to capture structured diagnostics.",
+      "If a design command fails, separate auth issues from Figma access issues with `beam doctor` and `beam whoami`.",
+      "If output paths are unclear, use command JSON output instead of scraping terminal text.",
+    ],
+  },
+  {
+    id: "mcp",
+    slug: "agent-setup",
