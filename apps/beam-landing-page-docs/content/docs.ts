@@ -478,3 +478,36 @@ export const sections: DocSection[] = [
   },
 ];
 
+export const commandSections: DocSection[] = commandDocs.map((command) => ({
+  id: command.slug,
+  slug: command.slug,
+  kicker: "CLI Command",
+  title: command.command,
+  body: command.summary,
+  details: command.notes,
+  code: command.usage,
+  sequence: command.sequence,
+  expectedOutput: command.expectedOutput,
+  files: command.files,
+  nextStep: command.nextStep,
+  recovery: command.recovery,
+}));
+
+export const allSections = [...sections, ...commandSections];
+
+export const sectionBySlug = new Map(
+  allSections.map((section) => [section.slug, section]),
+);
+
+export function getSectionBySlug(slug?: string) {
+  const defaultSection = sections[0];
+  if (!defaultSection) {
+    throw new Error("No documentation sections are configured.");
+  }
+
+  if (!slug) {
+    return defaultSection;
+  }
+
+  return sectionBySlug.get(slug) ?? defaultSection;
+}
