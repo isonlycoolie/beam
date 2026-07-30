@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./assets/beam-logo.png" alt="Beam" width="820" />
+</p>
+
 # Beam
 
 Beam is an open-source design intelligence bridge for coding agents. It turns Figma frames into structured implementation context, rendered design references, assets, tokens, and warnings so agents can build UI from inspectable data instead of screenshots and guesswork.
