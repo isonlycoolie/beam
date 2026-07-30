@@ -318,3 +318,21 @@ export const commandDocs: CommandDoc[] = [
     nextStep: "Ask the coding agent to build from a frame and compare the result against Figma.",
     recovery: [
       "If the agent cannot start the server, confirm `beam` is on PATH for the agent process.",
+      "If tools return auth errors, run `beam login` in the same user account.",
+      "If tool output is too large, request a smaller context mode or use cached snapshots.",
+    ],
+  },
+];
+
+export const commands = commandDocs.map(
+  ({ command, summary, slug }) => [command, summary, slug] as const,
+);
+
+export const mcpTools: string[] = [
+  "get_design_context",
+  "get_node_image",
+  "list_assets",
+  "download_assets",
+  "get_file_variables",
+  "compare_render",
+];
