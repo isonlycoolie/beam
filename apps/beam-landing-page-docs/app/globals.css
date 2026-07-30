@@ -638,3 +638,83 @@ button {
   padding-left: 1rem;
 }
 
+.rightToc a {
+  border-left: 2px solid transparent;
+  border-radius: 0;
+  font-size: 0.86rem;
+  line-height: 1.45;
+  margin-bottom: 0.15rem;
+  padding-bottom: 0.45rem;
+  padding-left: 0.7rem;
+  padding-top: 0.45rem;
+  transition:
+    border-color 160ms ease,
+    color 160ms ease,
+    opacity 160ms ease;
+}
+
+.rightToc a.active {
+  border-left-color: #ffffff;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.desktopIcon {
+  color: #89919f;
+}
+
+.mobileNavLayer {
+  display: none;
+}
+
+@media (max-width: 1180px) {
+  .docsGrid {
+    grid-template-columns: 15rem minmax(0, 1fr);
+  }
+
+  .rightToc {
+    display: none;
+  }
+}
+
+@media (max-width: 860px) {
+  .topNav {
+    gap: 0.8rem;
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding: 0 1rem;
+  }
+
+  .brand {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .brandIdentity {
+    margin-left: auto;
+  }
+
+  .brandIdentity span {
+    display: none;
+  }
+
+  .topLinks,
+  .githubLink {
+    display: none;
+  }
+
+  .searchBox {
+    grid-column: 1 / -1;
+    margin-bottom: 0.8rem;
+  }
+
+  .mobileNavButton,
+  .mobileNavClose {
+    display: inline-flex;
+  }
+
+  .mobileNavLayer {
+    display: block;
+    inset: 0;
+    position: fixed;
+    z-index: 40;
