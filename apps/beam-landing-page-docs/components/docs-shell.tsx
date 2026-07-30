@@ -318,3 +318,33 @@ function renderInlineText(text: string): ReactNode[] {
       return (
         <code className="inlineCode" key={`${part}-${index}`}>
           {part.slice(1, -1)}
+        </code>
+      );
+    }
+
+    return part;
+  });
+}
+
+function ToolGrid() {
+  return (
+    <div className="toolGrid" id="tools">
+      {mcpTools.map((tool) => (
+        <span key={tool}>{tool}</span>
+      ))}
+    </div>
+  );
+}
+
+function CapabilityGrid() {
+  return (
+    <div className="capabilityGrid" id="capability-list">
+      {capabilities.map((capability, index) => {
+        const Icon = icons[index % icons.length] ?? Terminal;
+        return (
+          <CapabilityCard icon={Icon} key={capability} label={capability} />
+        );
+      })}
+    </div>
+  );
+}
