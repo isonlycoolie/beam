@@ -158,3 +158,83 @@ export const commandDocs: CommandDoc[] = [
       ".beam/cache/assets/<asset-name>.<format>",
       ".beam/cache/assets/<snapshot-id>.manifest.json",
     ],
+    nextStep: "Use the manifest paths in the implementation and compare the local page afterwards.",
+    recovery: [
+      "If no assets export, confirm the selected frame actually contains exportable images, vectors, or fills.",
+      "If an asset is missing, provide the source file manually or ask Beam for a node image.",
+      "If output paths are unexpected, pass `--out <directory>` explicitly.",
+    ],
+  },
+  {
+    command: "beam compare",
+    slug: "beam-compare",
+    summary:
+      "Compare a local rendered page with Figma visual ground truth using practical image signals.",
+    usage:
+      "beam compare <figma-url> <local-url>\nbeam compare <figma-url> <local-url> --threshold 0.95\nbeam compare <figma-url> <local-url> --json",
+    notes: [
+      "`beam compare` helps users verify whether a local implementation is visually close to the Figma reference. It is useful after an agent builds a screen and the local app is running.",
+      "The v1 comparator is intentionally pragmatic. It can report screenshot dimensions, pixel differences, dominant mismatch signals, similarity score, local artifact paths, and structured differences.",
+      "It does not claim semantic design perfection. Typography meaning, responsive behavior, and component intent still need human or agent review when the visual signal is ambiguous.",
+      "Compare artifacts stay local. Results should follow Beam's Compare Result Contract so CLI JSON, MCP responses, and future history features share the same shape.",
+    ],
+    sequence: [
+      "Start the local application that contains the implemented screen.",
+      "Confirm the target page loads in a browser, for example `http://localhost:3000/pricing`.",
+      "Run `beam compare <figma-url> <local-url>`.",
+      "Review the score, dimensions, artifact paths, and differences before iterating.",
+    ],
+    expectedOutput:
+      "Beam should report a compare id, Figma snapshot id, target URL, score, screenshot paths, diff artifact path, and structured differences such as spacing, size, color, or image mismatch signals.",
+    files: [
+      ".beam/cache/compare/<compare-id>/local.png",
+      ".beam/cache/compare/<compare-id>/figma.png",
+      ".beam/cache/compare/<compare-id>/diff.png",
+      ".beam/cache/compare/<compare-id>/result.json",
+    ],
+    nextStep: "Fix the largest visual differences, rebuild the app, and run compare again.",
+    recovery: [
+      "If the local URL is unreachable, start the app dev server and retry.",
+      "If screenshots have different dimensions, match the viewport or frame size before trusting the score.",
+      "If visual output is ambiguous, use the diff image plus the Beam implementation brief together.",
+    ],
+  },
+  {
+    command: "beam snapshots",
+    slug: "beam-snapshots",
+    summary:
+      "List, inspect, and restore local snapshots from previous Beam design fetches.",
+    usage:
+      "beam snapshots list\nbeam snapshots show <snapshot-id>\nbeam snapshots restore <snapshot-id>",
+    notes: [
+      "Snapshots make one-shot Figma access durable. After Beam successfully fetches a frame, the snapshot records source metadata, hash, Beam version, mode, timestamps, and paths to raw payloads, briefs, images, and asset manifests.",
+      "`beam snapshots list` helps users find prior work without hitting Figma again. `beam snapshots show` explains what data exists, what paths are available, and whether the snapshot can support offline review.",
+      "`beam snapshots restore` materializes snapshot artifacts into local cache locations so inspect, evidence review, export, or agent workflows can continue from stored data.",
+      "Snapshot commands should not bypass permissions or pretend stale data is fresh. When using older data, Beam should make cache age and evidence confidence visible.",
+    ],
+    sequence: [
+      "Run `beam snapshots list` to see stored design captures.",
+      "Run `beam snapshots show <snapshot-id>` to inspect paths, age, source URL, and available artifacts.",
+      "Run `beam snapshots restore <snapshot-id>` when you need offline reuse.",
+      "Run inspect again only when you need fresh Figma data.",
+    ],
+    expectedOutput:
+      "`list` should show snapshot ids, frame names or source URLs, creation time, mode, and artifact availability. `show` should expose paths without printing secrets.",
+    files: [
+      ".beam/cache/snapshots/<snapshot-id>.json",
+      ".beam/cache/briefs/<snapshot-id>.json",
+      ".beam/cache/images/<snapshot-id>.png",
+    ],
+    nextStep: "Use restored snapshot artifacts with inspect, export, MCP tools, or compare.",
+    recovery: [
+      "If a snapshot is stale, rerun inspect with live Figma access.",
+      "If a snapshot is missing files, restore another snapshot or fetch the frame again.",
+      "If the snapshot cannot be trusted, check its source URL, hash, mode, and Beam version.",
+    ],
+  },
+  {
+    command: "beam mappings",
+    slug: "beam-mappings",
+    summary:
+      "Connect known Figma components to local code imports for better agent handoff.",
+    usage:
