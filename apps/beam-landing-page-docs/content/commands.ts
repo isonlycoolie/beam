@@ -238,3 +238,83 @@ export const commandDocs: CommandDoc[] = [
     summary:
       "Connect known Figma components to local code imports for better agent handoff.",
     usage:
+      'beam mappings add --figma-component-id 123:456 --figma-name "Button / Primary" --import "@/components/button" --export Button\nbeam mappings list\nbeam mappings remove 123:456',
+    notes: [
+      "Mappings help Beam explain that a Figma component already has a local code equivalent. This improves implementation guidance without turning Beam into a code generator.",
+      "Mappings are project-local and should contain no secrets. They can be committed when they only reference component names, Figma IDs, import paths, and package-safe metadata.",
+      "`beam mappings add` records a relationship. `beam mappings list` shows the current registry. `beam mappings remove` deletes a stale or incorrect relationship.",
+      "Core output remains framework-agnostic. A mapping can point to React, Vue, Svelte, or another local component style without Beam hardcoding framework behavior.",
+    ],
+    sequence: [
+      "Identify the Figma component id and its readable component name.",
+      "Identify the local component import path and exported symbol.",
+      "Run `beam mappings add` with those values.",
+      "Run `beam mappings list` and confirm the mapping appears before asking an agent to build.",
+    ],
+    expectedOutput:
+      "Beam should confirm the mapping was saved and list the Figma component id, Figma name, import path, export name, and project-local mapping file.",
+    files: [".beam/mappings.json"],
+    nextStep: "Run `beam inspect <figma-url>` so the brief can mention known local components.",
+    recovery: [
+      "If the import path changes, remove the old mapping and add the new one.",
+      "If an agent uses the wrong component, verify the Figma component id matches the design instance.",
+      "If mappings should not be shared, keep `.beam/mappings.json` out of commits.",
+    ],
+  },
+  {
+    command: "beam debug bundle",
+    slug: "beam-debug-bundle",
+    summary:
+      "Create a sanitized local support bundle for fetch, cache, simplify, and MCP issues.",
+    usage:
+      "beam debug bundle\nbeam debug bundle --out .beam/debug\nbeam debug bundle --include-raw",
+    notes: [
+      "`beam debug bundle` is for support and investigation. It should collect useful local diagnostics such as config without secrets, recent logs, snapshot metadata, MCP config state, environment information, and command outcomes.",
+      "Credentials are excluded by default. Tokens must not appear in bundle files, terminal output, logs, errors, or MCP responses.",
+      "Raw Figma payloads are customer data. They require explicit opt-in through `--include-raw`, and the command should make that choice visible before producing a bundle.",
+      "The bundle helps determine whether an issue came from Figma access, Beam fetching, cache state, simplification, asset export, MCP transport, or visual comparison.",
+    ],
+    sequence: [
+      "Run `beam doctor` first so the obvious setup state is captured separately.",
+      "Run `beam debug bundle` to create a redacted support bundle.",
+      "Inspect the bundle summary before sharing it.",
+      "Use `--include-raw` only when raw Figma payloads are required for debugging.",
+    ],
+    expectedOutput:
+      "Beam should print the bundle path, included diagnostic categories, redaction status, and any files that were intentionally skipped.",
+    files: [
+      ".beam/debug/<timestamp>/summary.json",
+      ".beam/debug/<timestamp>/logs/",
+      ".beam/debug/<timestamp>/snapshots/",
+    ],
+    nextStep: "Use the bundle to isolate whether the issue is auth, Figma access, cache, simplification, MCP, or compare.",
+    recovery: [
+      "If the bundle includes sensitive design data, delete it and rerun without `--include-raw`.",
+      "If logs are missing, reproduce the failing command and create the bundle again.",
+      "If the bundle cannot be written, pass `--out <directory>` to a writable location.",
+    ],
+  },
+  {
+    command: "beam mcp",
+    slug: "beam-mcp",
+    summary:
+      "Start Beam's MCP server over stdio so coding agents can call Beam tools.",
+    usage: "beam mcp",
+    notes: [
+      "`beam mcp` is normally launched by an MCP-compatible coding agent after `beam init` writes or prints the client configuration.",
+      "The server runs over stdio and exposes tools such as `get_design_context`, `get_node_image`, `list_assets`, `download_assets`, `get_file_variables`, and compare capability when available.",
+      "MCP tools must call the same Beam Core APIs as the CLI. This keeps human commands and agent tools aligned for Figma fetches, cache behavior, snapshots, assets, evidence, and errors.",
+      "Tool responses should be compact, structured, credential-safe, and actionable. If data is missing, rate-limited, or inaccessible, Beam should return warnings and clarification requests rather than guessing silently.",
+    ],
+    sequence: [
+      "Run `beam init --print` and confirm the MCP config points to `beam mcp`.",
+      "Start the agent or run `beam mcp` manually for transport verification.",
+      "Give the agent a Figma frame URL and ask it to use Beam.",
+      "Let the agent request context, images, assets, and compare results through MCP tools.",
+    ],
+    expectedOutput:
+      "When launched by an agent, Beam should expose its MCP tool list and return JSON-safe responses with paths, warnings, confidence, and build readiness. Manual startup should remain quiet unless the transport reports an error.",
+    files: ["No project file is required unless tools create cache, assets, snapshots, or compare artifacts"],
+    nextStep: "Ask the coding agent to build from a frame and compare the result against Figma.",
+    recovery: [
+      "If the agent cannot start the server, confirm `beam` is on PATH for the agent process.",
