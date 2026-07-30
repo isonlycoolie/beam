@@ -558,3 +558,83 @@ button {
 }
 
 .toolGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 1.25rem;
+}
+
+.toolGrid span {
+  background: #12151c;
+  border: 1px solid #28303b;
+  border-radius: 999px;
+  color: #e4e9f3;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.55rem 0.75rem;
+}
+
+.editionTable {
+  margin-top: 1.25rem;
+  overflow: hidden;
+}
+
+.editionRow {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 8rem 1fr;
+  padding: 1rem;
+}
+
+.editionRow + .editionRow {
+  border-top: 1px solid #242832;
+}
+
+.editionRow strong {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.editionRow span {
+  color: #a4aab6;
+}
+
+.architectureDiagram {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  padding: 1.2rem;
+  text-align: center;
+}
+
+.diagramNode,
+.diagramCore,
+.diagramCloud {
+  border: 1px solid #2a303b;
+  border-radius: 0.65rem;
+  color: #f7f9fd;
+  padding: 1rem;
+}
+
+.diagramCore {
+  background: rgba(102, 217, 239, 0.08);
+  border-color: rgba(102, 217, 239, 0.34);
+}
+
+.diagramCloud {
+  color: #a4aab6;
+  margin-top: 0.4rem;
+}
+
+.diagramLine {
+  background: #303745;
+  height: 1.6rem;
+  margin: 0 auto;
+  width: 1px;
+}
+
+.rightToc {
+  border-left: 1px solid #20242d;
+  padding-left: 1rem;
+}
+
