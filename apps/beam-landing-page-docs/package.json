@@ -1,0 +1,33 @@
+{
+  "name": "beam-landing-page-docs",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "clean:next": "node scripts/clean-next.mjs",
+    "dev": "next dev --turbo",
+    "build": "next build",
+    "start": "next start",
+    "lint": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "framer-motion": "12.23.24",
+    "lucide-react": "1.27.0",
+    "motion-dom": "12.23.23",
+    "motion-utils": "12.23.6",
+    "next": "15.5.22",
+    "prism-react-renderer": "2.4.1",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@types/node": "22",
+    "@types/react": "19",
+    "@types/react-dom": "19",
+    "@tailwindcss/postcss": "4.3.3",
+    "autoprefixer": "10.4.23",
+    "postcss": "8.5.6",
+    "tailwindcss": "4.3.3",
+    "typescript": "5.9.3"
+  }
+}
