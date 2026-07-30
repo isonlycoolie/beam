@@ -238,3 +238,83 @@ button {
 .navGroup a:hover,
 .rightToc a:hover {
   color: #ffffff;
+}
+
+.navGroup a.active {
+  background: #181b22;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.content {
+  border-right: 1px solid #20242d;
+  min-width: 0;
+  max-height: calc(100vh - 8.5rem);
+  overflow-y: auto;
+  padding-right: 1.4rem;
+}
+
+.leftSidebar,
+.rightToc,
+.content {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.leftSidebar::-webkit-scrollbar,
+.rightToc::-webkit-scrollbar,
+.content::-webkit-scrollbar {
+  display: none;
+}
+
+.sectionCard,
+.capabilityCard,
+.callout,
+.editionTable,
+.architectureDiagram,
+.guidePanel {
+  background: rgba(16, 18, 22, 0.78);
+  border: 1px solid #242832;
+  border-radius: 0.7rem;
+}
+
+.docSection {
+  border-bottom: 1px solid #1b1f28;
+  padding: 2.7rem 0;
+  scroll-margin-top: 6rem;
+}
+
+.kicker {
+  color: #9ca3af;
+  font-size: 0.78rem;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  margin: 0 0 0.7rem;
+  text-transform: none;
+}
+
+.docSection h1 {
+  color: #ffffff;
+  font-size: clamp(1.28rem, 1.55vw, 1.85rem);
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.24;
+  margin: 0;
+  max-width: 36rem;
+}
+
+.sectionBody {
+  color: #b5bbc7;
+  font-size: 0.96rem;
+  font-weight: 400;
+  line-height: 1.72;
+  margin: 1.15rem 0 0;
+  max-width: 48rem;
+}
+
+.sectionDetails {
+  display: grid;
+  gap: 0.95rem;
+  margin-top: 1.25rem;
+}
+
