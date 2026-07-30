@@ -318,3 +318,83 @@ export const sections: DocSection[] = [
       "Paid plans improve workflow scale and reliability. They do not bypass Figma permissions, seat access, upstream rate limits, or file sharing rules.",
     ],
     sequence: [
+      "Start with Free for local CLI, MCP, cache, snapshots, export, compare, and debug bundles.",
+      "Add Pro only when personal sync and cross-machine continuity matter.",
+      "Add Team when multiple developers need shared snapshots, mappings, and CI compare.",
+      "Add Enterprise when platform teams need SSO, RBAC, audit, retention, private storage, or self-hosting.",
+    ],
+    expectedOutput:
+      "The product boundary should be obvious: Free produces local artifacts; paid editions synchronize, share, govern, or retain those artifacts with explicit user or organization control.",
+    files: [
+      "Free: local `.beam/` artifacts",
+      "Pro/Team: planned cloud-synced Beam artifacts",
+      "Enterprise: planned private or self-hosted artifact storage",
+    ],
+    nextStep:
+      "Use the edition table to decide which business workflow the user is trying to solve before describing cloud features.",
+    recovery: [
+      "If a user expects paid Beam to bypass Figma rate limits, explain the hard boundary and offer caching or team proxy options.",
+      "If a team needs shared context, start with snapshot sharing rather than raw token sharing.",
+      "If an enterprise needs control, keep credentials, retention, and audit requirements separate from the local core.",
+    ],
+  },
+  {
+    id: "architecture",
+    slug: "system-architecture",
+    kicker: "System Architecture",
+    title: "One core engine, multiple interfaces.",
+    body: "The CLI serves humans, the MCP server serves agents, and both call Beam Core for parsing, Figma access, caching, snapshots, simplification, assets, compare, and observability.",
+    details: [
+      "Beam Core owns product intelligence: URL parsing, auth resolution, Figma client calls, cache management, snapshot storage, simplification, token planning, assets, compare, and logs.",
+      "No direct Figma calls should live outside the core Figma client. No CLI-specific or agent-specific behavior should leak into the core engine.",
+      "Cloud services are optional extensions. The Free core must stay useful without hosted accounts, dashboards, billing, or enterprise infrastructure.",
+    ],
+    sequence: [
+      "A human or agent sends a Figma URL to the CLI or MCP server.",
+      "Beam Core parses the URL and resolves local credentials.",
+      "The Figma client fetches node data and rendered images through scheduled, cache-aware requests.",
+      "The snapshot store records source metadata and artifact paths.",
+      "The simplifier produces the implementation brief, token summary, asset list, evidence, and warnings.",
+      "CLI or MCP returns the same core result in human or machine-friendly form.",
+    ],
+    expectedOutput:
+      "A healthy architecture keeps all Figma, cache, snapshot, simplification, asset, compare, and evidence behavior inside Beam Core, with thin CLI and MCP interfaces on top.",
+    files: [
+      "packages/core/src/",
+      "packages/cli/src/",
+      "packages/mcp/src/",
+      ".beam/cache/",
+    ],
+    nextStep:
+      "Use the contracts page when adding or changing a field shared by CLI, MCP, cache, or cloud.",
+    recovery: [
+      "If CLI and MCP behavior differ, move duplicated behavior back into Beam Core.",
+      "If Figma calls appear outside the core client, consolidate them before expanding features.",
+      "If cloud becomes required for Free workflows, restore the local-first boundary.",
+    ],
+  },
+  {
+    id: "security",
+    slug: "security",
+    kicker: "Security Model",
+    title: "Design data is customer data. Tokens are secrets.",
+    body: "Beam keeps credentials local by default, avoids writing secrets to project files, makes cloud sync explicit, and leaves enterprise controls for paid deployment boundaries.",
+    details: [
+      "Local credentials live in the user Beam directory and must never be committed. Tokens should not appear in logs, error messages, project config, debug bundles, or MCP responses.",
+      "Design data, rendered exports, assets, implementation briefs, and compare results are customer data. Beam Free keeps them local unless a future paid sync feature is explicitly enabled.",
+      "Enterprise controls are future product capabilities, not hidden defaults in the Free product. The local open-source workflow must remain transparent and cloud-optional.",
+    ],
+    sequence: [
+      "Store Figma credentials only in the user Beam directory.",
+      "Write project artifacts only under local `.beam/` paths unless the user chooses another output directory.",
+      "Redact secrets from terminal output, logs, debug bundles, JSON responses, and MCP responses.",
+      "Make cloud sync explicit when paid features exist.",
+      "Use enterprise controls for organization policy, not hidden behavior in Free.",
+    ],
+    expectedOutput:
+      "Security-sensitive commands should report what they changed without printing tokens. Debug and support outputs should identify redaction status and any customer-data opt-ins.",
+    files: [
+      "~/.beam/credentials.json",
+      ".beam/cache/",
+      ".beam/debug/",
+      "Agent MCP settings file",
