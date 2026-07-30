@@ -318,3 +318,83 @@ button {
   margin-top: 1.25rem;
 }
 
+.sectionDetails p {
+  color: #9da5b4;
+  font-size: 0.93rem;
+  font-weight: 400;
+  line-height: 1.78;
+  margin: 0;
+}
+
+.guidePanel {
+  margin-top: 1.25rem;
+  padding: 1rem;
+}
+
+.guidePanel.terminal {
+  background: #0a0f18;
+}
+
+.guidePanelHeader {
+  align-items: center;
+  display: flex;
+  gap: 0.55rem;
+  margin-bottom: 0.85rem;
+}
+
+.guidePanelHeader span {
+  align-items: center;
+  background: #151a23;
+  border: 1px solid #29313d;
+  border-radius: 0.45rem;
+  color: #f5f7fb;
+  display: inline-flex;
+  height: 1.85rem;
+  justify-content: center;
+  width: 1.85rem;
+}
+
+.guidePanel h2 {
+  color: #ffffff;
+  font-size: 0.96rem;
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.guidePanel p {
+  color: #aab2c0;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.guideList {
+  color: #aab2c0;
+  counter-reset: guide-step;
+  display: grid;
+  gap: 0.7rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.guideList li {
+  line-height: 1.65;
+  padding-left: 2.35rem;
+  position: relative;
+}
+
+.guideList li::before {
+  align-items: center;
+  background: #151a23;
+  border: 1px solid #303847;
+  border-radius: 999px;
+  color: #ffffff;
+  content: counter(guide-step);
+  counter-increment: guide-step;
+  display: inline-flex;
+  font-size: 0.74rem;
+  font-weight: 600;
+  height: 1.45rem;
+  justify-content: center;
