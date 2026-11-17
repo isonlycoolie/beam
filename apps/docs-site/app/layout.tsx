@@ -17,7 +17,8 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`${geist.variable} ${geistMono.variable} dark`} suppressHydrationWarning>
-      <body>
+      {/* The default palette on body, so portalled UI (menus, dialogs, tooltips) gets Beam tokens too. */}
+      <body data-theme="default">
         <RootProvider theme={{ defaultTheme: "dark", enableSystem: false }}>{children}</RootProvider>
       </body>
     </html>

@@ -233,3 +233,10 @@ code {
 #nd-page[data-full="true"] > * {
   max-width: 1240px;
 }
+
+/* body carries data-theme="default" so portalled previews get Beam tokens; the docs chrome keeps its own type. */
+body[data-theme] {
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-fd-foreground);
+}
