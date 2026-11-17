@@ -8,7 +8,7 @@ export default function PopoverDefault() {
         <Button variant="outline">Tax details</Button>
       </PopoverTrigger>
       <PopoverContent>
-        <p className="text-[14px] leading-[20px] text-text-2">Tax is calculated from the shipping address at checkout.</p>
+        <p className="text-[14px] leading-[20px] text-text-2">Tax is calculated from the shipping address when the order is placed.</p>
       </PopoverContent>
     </Popover>
   );

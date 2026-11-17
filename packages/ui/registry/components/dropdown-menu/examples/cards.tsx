@@ -8,11 +8,11 @@ export default function DropdownMenuCards() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button>
-          Start building <Icon icon={ArrowDown01Icon} size="sm" />
+          Get started <Icon icon={ArrowDown01Icon} size="sm" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="flex w-[514px] flex-col gap-4 p-4">
-        <DropdownMenuCardItem icon={<Icon icon={CodeIcon} />} title="Embed your prebuilt form" description="Follow the quickstart guide to add a checkout to your website." />
+        <DropdownMenuCardItem icon={<Icon icon={CodeIcon} />} title="Embed your prebuilt form" description="Follow the quickstart guide to add a payment form to your website." />
         <DropdownMenuCardItem icon={<Icon icon={Globe02Icon} />} title="Publish a hosted page without code" description="Create a payment link in the dashboard that you can share with your customers." />
       </DropdownMenuContent>
     </DropdownMenu>
