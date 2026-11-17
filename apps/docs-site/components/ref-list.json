@@ -14,5 +14,10 @@
   "ui-radio-cards": "stripe/ui/radio-cards",
   "ui-checkbox": "stripe/ui/checkbox",
   "ui-field": "stripe/ui/field-email",
-  "ui-menu-cards": "stripe/ui/menu-panel|[data-slot=dropdown-menu-content]"
+  "ui-menu-cards": "stripe/ui/menu-panel|[data-slot=dropdown-menu-content]",
+  "ui-breadcrumb": "stripe/ui/breadcrumb|[data-slot=breadcrumb-list]",
+  "ui-nav-active": "stripe/ui/nav-active",
+  "ui-nav-group": "stripe/ui/nav-group",
+  "ui-nav-section": "stripe/ui/nav-section",
+  "ui-table": "stripe/ui/table|[data-slot=table]"
 }

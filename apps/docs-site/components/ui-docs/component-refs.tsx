@@ -4,6 +4,7 @@ import { Icon } from "@beam/ui/icons";
 import type { ComponentType } from "react";
 import { CHOICE_REFS } from "./component-refs-choices";
 import { FORM_REFS } from "./component-refs-forms";
+import { NAV_REFS } from "./component-refs-nav";
 import { OVERLAY_REFS } from "./component-refs-overlays";
 
 /**
@@ -14,6 +15,7 @@ export const COMPONENT_REFS: Record<string, { mode: "light" | "dark"; Component:
   ...FORM_REFS,
   ...CHOICE_REFS,
   ...OVERLAY_REFS,
+  ...NAV_REFS,
   "ui-button-md": {
     mode: "light",
     Component: () => (
