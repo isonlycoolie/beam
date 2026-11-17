@@ -17,7 +17,7 @@ function DialogOverlay({ className, ...props }: React.ComponentProps<typeof Dial
   return <DialogPrimitive.Overlay data-slot="dialog-overlay" className={cn("fixed inset-0 z-50 bg-(--overlay)", className)} {...props} />;
 }
 
-function DialogContent({ className, children, showClose = true, ...props }: React.ComponentProps<typeof DialogPrimitive.Content> & { showClose?: boolean }) {
+function DialogContent({ className, children, showCloseButton = true, ...props }: React.ComponentProps<typeof DialogPrimitive.Content> & { showCloseButton?: boolean }) {
   return (
     <DialogPortal>
       <DialogOverlay />
@@ -30,7 +30,7 @@ function DialogContent({ className, children, showClose = true, ...props }: Reac
         {...props}
       >
         {children}
-        {showClose && (
+        {showCloseButton && (
           <DialogPrimitive.Close className="absolute end-4 top-4 grid size-7 place-items-center rounded-(--radius-md) text-text-3 outline-none hover:bg-secondary hover:text-text-1 focus-visible:shadow-(--focus-ring)">
             <Icon icon={Cancel01Icon} size="sm" label="Close" />
           </DialogPrimitive.Close>

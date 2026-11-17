@@ -32,6 +32,7 @@ const buttonVariants = cva(
         lg: "p-3 text-[14px] leading-[16.1px] font-medium",
         icon: "size-(--control-md) p-0",
         "icon-sm": "size-(--control-sm) p-0",
+        "icon-xs": "size-6 rounded-[4px] p-0 [&_svg]:size-3.5",
       },
     },
     defaultVariants: { variant: "default", size: "md" },
