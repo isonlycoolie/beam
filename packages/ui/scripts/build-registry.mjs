@@ -17,7 +17,7 @@ function rewrite(source) {
   return source
     .replaceAll(/from "(?:\.\.\/)+lib\/cn"/g, 'from "@/lib/beam"')
     .replaceAll(/from "(?:\.\.\/)+icons\/icon"/g, 'from "@/components/ui/icon"')
-    .replaceAll(/from "\.\.\/([a-z-]+)"/g, 'from "@/components/ui/$1"');
+    .replaceAll(/from "\.\.\/([a-z-]+)(?:\/\1)?"/g, 'from "@/components/ui/$1"');
 }
 
 /** npm packages and sibling components a file imports. */
@@ -25,7 +25,7 @@ function imports(source) {
   const specifiers = [...source.matchAll(/from "([^"]+)"/g)].map((m) => m[1]);
   return {
     packages: [...new Set(specifiers.filter((s) => !s.startsWith(".") && s !== "react").map((s) => (s.startsWith("@") ? s.split("/").slice(0, 2).join("/") : s.split("/")[0])))],
-    siblings: [...new Set(specifiers.map((s) => s.match(/^\.\.\/([a-z-]+)$/)?.[1]).filter(Boolean))],
+    siblings: [...new Set(specifiers.map((s) => s.match(/^\.\.\/([a-z-]+)(?:\/\1)?$/)?.[1]).filter(Boolean))],
     usesIcon: specifiers.some((s) => /icons\/icon$/.test(s)),
   };
 }
