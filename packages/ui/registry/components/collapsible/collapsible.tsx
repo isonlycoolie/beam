@@ -1,0 +1,10 @@
+/* Based on shadcn/ui (MIT). Design reference: Stripe, measured (Pictures/beam/references/stripe/ui). */
+"use client";
+
+import { Collapsible as CollapsiblePrimitive } from "radix-ui";
+
+const Collapsible = CollapsiblePrimitive.Root;
+const CollapsibleTrigger = CollapsiblePrimitive.Trigger;
+const CollapsibleContent = CollapsiblePrimitive.Content;
+
+export { Collapsible, CollapsibleContent, CollapsibleTrigger };
