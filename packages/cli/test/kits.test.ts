@@ -11,7 +11,7 @@ const output = (spy: { mock: { calls: unknown[][] } }) => spy.mock.calls.map((ca
 async function kitsDir(): Promise<string> {
   const dir = await temp();
   await mkdir(join(dir, "verify"));
-  await writeFile(join(dir, "verify", "kit.json"), JSON.stringify({ name: "verify", title: "Verify", summary: "Prove a build matches", version: "0.2.0", requires: ["browser"] }));
+  await writeFile(join(dir, "verify", "kit.json"), JSON.stringify({ name: "verify", title: "Verify", summary: "Prove a build matches", version: "0.2.0", requires: ["browser", "figma-token"] }));
   await writeFile(join(dir, "verify", "SKILL.md"), "---\nname: beam-verify\ndescription: verify\n---\n");
   return dir;
 }
@@ -28,7 +28,8 @@ describe("kit commands", () => {
 
     expect(await exists(join(cwd, ".agents", "skills", "beam-verify", "SKILL.md"))).toBe(true);
     expect(await exists(join(cwd, ".claude"))).toBe(false);
-    expect(output(write)).toContain("beam setup browser");
+    // The browser line depends on the machine; the token line always shows.
+    expect(output(write)).toContain("run beam login");
   });
 
   it("rejects unknown tools with a pointer to beam list", async () => {

@@ -20,6 +20,7 @@ export { createBeamPaths } from "./config/paths.js";
 export type { BeamPaths } from "./config/paths.js";
 export * from "./design-context/design-context-service.js";
 export * from "./doctor/doctor-service.js";
+export { checkBrowser } from "./doctor/checks.js";
 export * from "./evidence/evidence-reviewer.js";
 export * from "./evidence/evidence-store.js";
 export * from "./evidence/evidence-types.js";

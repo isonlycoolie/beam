@@ -1,6 +1,7 @@
 import { access } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import {
+  checkBrowser,
   detectAgents,
   installKit,
   listKits,
@@ -41,8 +42,10 @@ export async function addCommand(names: string[], options: KitOptions = {}): Pro
     const record = await installKit({ kit, cwd, targets, force: options.force });
     lines.push(success(`${kit.title} added`), ...record.skillDirs.map((dir) => label("Skill", dir)));
     if (record.components) lines.push(label("Components", record.components));
-    for (const need of kit.requires)
+    for (const need of kit.requires) {
+      if (need === "browser" && (await checkBrowser()).status === "pass") continue;
       lines.push(muted(need === "browser" ? "Needs Chromium: run beam setup browser once." : "Needs a Figma token: run beam login."));
+    }
     lines.push("");
   }
   lines.push(muted(agents.length ? `Agents: ${agents.join(", ")}` : "No agent found, so skills went to .claude/skills and .agents/skills."));
