@@ -188,3 +188,47 @@ function ComboboxChip({
       data-slot="combobox-chip"
       className={cn(
         "flex h-[calc(--spacing(5.5))] w-fit items-center justify-center gap-1 rounded-[4px] bg-surface-2 px-1.5 text-[12px] leading-[16px] font-medium whitespace-nowrap text-text-1 has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:opacity-50 has-data-[slot=combobox-chip-remove]:pr-0",
+        className,
+      )}
+      {...props}
+    >
+      {children}
+      {showRemove && (
+        <ComboboxPrimitive.ChipRemove
+          render={<Button variant="ghost" size="icon-xs" />}
+          className="-ml-1 opacity-50 hover:opacity-100"
+          data-slot="combobox-chip-remove"
+        >
+          <HugeiconsIcon icon={Cancel01Icon} strokeWidth={1.75} className="pointer-events-none" />
+        </ComboboxPrimitive.ChipRemove>
+      )}
+    </ComboboxPrimitive.Chip>
+  );
+}
+
+function ComboboxChipsInput({ className, children, ...props }: ComboboxPrimitive.Input.Props) {
+  return <ComboboxPrimitive.Input data-slot="combobox-chip-input" className={cn("min-w-16 flex-1 outline-none", className)} {...props} />;
+}
+
+function useComboboxAnchor() {
+  return React.useRef<HTMLDivElement | null>(null);
+}
+
+export {
+  Combobox,
+  ComboboxInput,
+  ComboboxContent,
+  ComboboxList,
+  ComboboxItem,
+  ComboboxGroup,
+  ComboboxLabel,
+  ComboboxCollection,
+  ComboboxEmpty,
+  ComboboxSeparator,
+  ComboboxChips,
+  ComboboxChip,
+  ComboboxChipsInput,
+  ComboboxTrigger,
+  ComboboxValue,
+  useComboboxAnchor,
+};
