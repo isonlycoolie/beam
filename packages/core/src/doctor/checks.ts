@@ -90,7 +90,7 @@ export async function checkCredentials(input: {
     id: "figma-credentials",
     label: "Figma credentials",
     status: "pass",
-    message:
-      `Configured ${summary.type} credential ${summary.redactedAccessToken ?? ""}`.trim(),
+    // Saved is not the same as accepted: Figma only rejects a revoked token on the first real request.
+    message: `Token ${summary.redactedAccessToken ?? ""} saved (Figma checks it on the first inspect)`.replace("  ", " "),
   };
 }
