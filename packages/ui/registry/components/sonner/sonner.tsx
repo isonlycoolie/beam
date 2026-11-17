@@ -3,10 +3,9 @@
 
 import { Alert02Icon, CancelCircleIcon, CheckmarkCircle02Icon, InformationCircleIcon, Loading03Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Toaster as Sonner, type ToasterProps } from "sonner"
+import { Toaster as Sonner, type ToasterProps } from "sonner";
 
 const Toaster = ({ theme = "system", ...props }: ToasterProps) => {
-
   return (
     <Sonner
       theme={theme}
@@ -28,7 +27,7 @@ const Toaster = ({ theme = "system", ...props }: ToasterProps) => {
       }
       {...props}
     />
-  )
-}
+  );
+};
 
-export { Toaster }
+export { Toaster };
