@@ -10,7 +10,8 @@
     "./themes/*": "./themes/*",
     "./lib/*": "./lib/*.ts",
     "./icons": "./icons/icon.tsx",
-    "./components/*": "./registry/components/*/index.ts"
+    "./components/*": "./registry/components/*/index.ts",
+    "./registry/*": "./registry/*"
   },
   "scripts": {
     "test": "vitest run",
