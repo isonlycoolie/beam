@@ -1,11 +1,9 @@
 {
-  "title": "Beam UI",
+  "title": "Components",
   "root": true,
   "pages": [
     "index",
     "foundations",
-    "palettes",
-    "icons",
     "---Components---",
     "button",
     "input",
