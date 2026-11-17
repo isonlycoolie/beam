@@ -7,7 +7,7 @@ coverage/
 
 # Local Beam runtime data
 .beam/
-docs/
+/docs/
 
 # Environment and secrets
 .env
