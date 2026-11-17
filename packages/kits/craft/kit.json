@@ -1,0 +1,8 @@
+{
+  "name": "craft",
+  "title": "Craft",
+  "summary": "Modern, fast, accessible UI without the generic AI look",
+  "version": "0.1.0",
+  "status": "draft",
+  "requires": ["browser"]
+}
