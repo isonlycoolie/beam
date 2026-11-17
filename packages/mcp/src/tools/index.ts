@@ -5,6 +5,7 @@ import {
   exportDesignAssets,
   getFileVariables,
   compareDesignToUrl,
+  verifyBuild,
 } from "@beam/core";
 import { z } from "zod";
 import { registerAssetTools } from "./assets.js";
@@ -12,6 +13,7 @@ import { registerFreeLocalTools } from "./free-local.js";
 import { registerCompareTools } from "./compare.js";
 import { jsonContent, toolError } from "./responses.js";
 import { registerVariableTools } from "./variables.js";
+import { registerVerifyTools } from "./verify.js";
 export { freeMcpCapabilities } from "./capabilities.js";
 
 export type BeamToolContext = {
@@ -20,6 +22,7 @@ export type BeamToolContext = {
   exportDesignAssets?: typeof exportDesignAssets;
   getFileVariables?: typeof getFileVariables;
   compareDesignToUrl?: typeof compareDesignToUrl;
+  verifyBuild?: typeof verifyBuild;
 };
 
 export function registerBeamTools(
@@ -55,4 +58,5 @@ export function registerBeamTools(
   registerVariableTools(server, context);
   registerFreeLocalTools(server, context);
   registerCompareTools(server, context);
+  registerVerifyTools(server, context);
 }
