@@ -1,0 +1,59 @@
+---
+title: Angular
+description: Install and use Beam Icons in Angular.
+---
+
+## Install
+
+<Tabs groupId="package-manager" items={["npm", "pnpm", "yarn", "bun"]}>
+  <Tab value="npm">
+
+```bash
+npm install @hugeicons/angular @hugeicons/core-free-icons
+```
+
+  </Tab>
+  <Tab value="pnpm">
+
+```bash
+pnpm add @hugeicons/angular @hugeicons/core-free-icons
+```
+
+  </Tab>
+  <Tab value="yarn">
+
+```bash
+yarn add @hugeicons/angular @hugeicons/core-free-icons
+```
+
+  </Tab>
+  <Tab value="bun">
+
+```bash
+bun add @hugeicons/angular @hugeicons/core-free-icons
+```
+
+  </Tab>
+</Tabs>
+
+## Use an icon
+
+`HugeiconsIconComponent` is a standalone component. Import it in the component that uses it:
+
+```ts title="search.component.ts"
+import { Component } from "@angular/core";
+import { HugeiconsIconComponent } from "@hugeicons/angular";
+import { Search01Icon } from "@hugeicons/core-free-icons";
+
+@Component({
+  selector: "app-search",
+  standalone: true,
+  imports: [HugeiconsIconComponent],
+  template: `<hugeicons-icon [icon]="Search01Icon" [size]="20" color="currentColor" [strokeWidth]="1.5" />`,
+})
+export class SearchComponent {
+  Search01Icon = Search01Icon;
+}
+```
+
+Every icon in [Browse](/docs/icons/browse) works the same way: copy its name and pass it as `icon`.
