@@ -4,6 +4,7 @@ import { Icon } from "@beam/ui/icons";
 import type { ComponentType } from "react";
 import { CHOICE_REFS } from "./component-refs-choices";
 import { FORM_REFS } from "./component-refs-forms";
+import { OVERLAY_REFS } from "./component-refs-overlays";
 
 /**
  * Components set up exactly like the Stripe instance they were measured from, for scripts/ref-compare.mjs.
@@ -12,6 +13,7 @@ import { FORM_REFS } from "./component-refs-forms";
 export const COMPONENT_REFS: Record<string, { mode: "light" | "dark"; Component: ComponentType }> = {
   ...FORM_REFS,
   ...CHOICE_REFS,
+  ...OVERLAY_REFS,
   "ui-button-md": {
     mode: "light",
     Component: () => (
