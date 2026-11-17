@@ -1,0 +1,47 @@
+{
+  "name": "empty-state",
+  "title": "Empty State",
+  "summary": "Explains what will appear here and offers the one step to start.",
+  "source": "Beam UI",
+  "use_when": [
+    "First use of a list or page",
+    "No search results",
+    "No permission"
+  ],
+  "avoid_when": [
+    "Errors: use an error state"
+  ],
+  "props": {
+    "icon": "a Hugeicons icon",
+    "illustration": "optional larger artwork",
+    "title": "what is missing",
+    "description": "one sentence",
+    "action": "one primary action",
+    "secondary": "an optional quiet link"
+  },
+  "variants": [
+    "default",
+    "bordered",
+    "no-results",
+    "with-illustration"
+  ],
+  "composes_with": [
+    "Button",
+    "Card"
+  ],
+  "copy": {
+    "title": "Names what will appear: No invoices yet",
+    "description": "One sentence on how to start"
+  },
+  "states": [
+    "default"
+  ],
+  "a11y": [
+    "The action is a real button or link"
+  ],
+  "rules": [
+    "empty.actionable",
+    "state.complete",
+    "copy.length-caps"
+  ]
+}

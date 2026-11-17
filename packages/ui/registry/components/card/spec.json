@@ -1,0 +1,46 @@
+{
+  "name": "card",
+  "title": "Card",
+  "summary": "Groups related content with a header, body and optional footer.",
+  "source": "shadcn/ui (MIT)",
+  "use_when": [
+    "A self-contained unit: a chart, a list, a form section"
+  ],
+  "avoid_when": [
+    "Wrapping the whole page",
+    "Nesting cards inside cards"
+  ],
+  "props": {
+    "CardHeader": "title, description, optional action",
+    "CardContent": "body",
+    "CardFooter": "actions or meta"
+  },
+  "variants": [
+    "default",
+    "with-action",
+    "with-footer"
+  ],
+  "composes_with": [
+    "Button",
+    "Badge",
+    "StatCard"
+  ],
+  "copy": {
+    "title": "Names the content and its period: Revenue, last 30 days"
+  },
+  "states": [
+    "loaded",
+    "loading",
+    "empty"
+  ],
+  "a11y": [
+    "Titles are h3 so the page outline stays correct"
+  ],
+  "rules": [
+    "row.equal-heights",
+    "row.aligned-insides",
+    "card.no-stretch",
+    "copy.sibling-parity",
+    "type.max-three"
+  ]
+}
