@@ -1,0 +1,37 @@
+{
+  "name": "label",
+  "title": "Label",
+  "summary": "Names a form control.",
+  "source": "shadcn/ui (MIT)",
+  "use_when": [
+    "Every form control"
+  ],
+  "avoid_when": [
+    "Headings: use the type scale"
+  ],
+  "props": {
+    "htmlFor": "the id of the control"
+  },
+  "variants": [
+    "default"
+  ],
+  "composes_with": [
+    "Field",
+    "Input",
+    "Checkbox"
+  ],
+  "copy": {
+    "text": "Sentence case, no colon"
+  },
+  "states": [
+    "default",
+    "disabled"
+  ],
+  "a11y": [
+    "htmlFor must point at the control"
+  ],
+  "rules": [
+    "form.labels-visible",
+    "copy.sentence-case"
+  ]
+}
