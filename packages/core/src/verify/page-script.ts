@@ -50,7 +50,7 @@ export const PAGE_SCRIPT = `(() => {
     .filter(({ r }) => r.height > 40 && r.width > 0)
     .map(({ el, r }, index) => ({
       index,
-      label: (el.id ? "#" + el.id : el.tagName.toLowerCase()) + (el.getAttribute("aria-label") ? " " + el.getAttribute("aria-label") : ""),
+      label: (el.id ? "#" + el.id : el.tagName.toLowerCase() + (el.classList[0] ? "." + el.classList[0] : "")) + (el.getAttribute("aria-label") ? " " + el.getAttribute("aria-label") : ""),
       top: Math.round(r.top + scrollY),
       height: Math.round(r.height),
     }));

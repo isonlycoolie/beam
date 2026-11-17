@@ -24,7 +24,7 @@ describe.skipIf(!hasBrowser)("verify in a real browser", () => {
     const report = await verifyBuild({ reference: fixture("reference.html"), target: fixture("target.html"), cwd, breakpoints: [1024] });
     const bp = report.breakpoints[0]!;
     expect(report.passed).toBe(false);
-    expect(bp.sections.map((s) => s.label)).toEqual(["header", "section", "footer"]);
+    expect(bp.sections.map((s) => s.label)).toEqual(["header", "section.hero", "footer"]);
     expect(bp.elements?.deltas).toContainEqual(expect.objectContaining({ tag: "h1", property: "fontSize", expected: "64px", actual: "56px" }));
     expect(bp.elements?.missing).toContainEqual({ path: "body>footer>a", tag: "a", text: "Contact" });
     const brief = await readFile(join(report.reportDir, "report.md"), "utf8");
