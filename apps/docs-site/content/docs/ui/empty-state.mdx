@@ -3,17 +3,25 @@ title: Empty State
 description: What will appear here, and the one step that makes it appear.
 ---
 
-<ComponentPreview name="empty-state" />
+<ComponentPreview name="empty-state" styles />
 
 ## Installation
 
 <InstallTabs name="empty-state" />
 
-## Examples
+## Usage
 
-### No results
+```tsx
+import { EmptyState } from "@/components/ui/empty-state";
+```
 
-<ComponentPreview name="empty-state" example="no-results" />
+```tsx
+<EmptyState
+  title="No invoices yet"
+  description="Invoices you send appear here."
+  action={<Button>Create invoice</Button>}
+/>
+```
 
 ## Rules for agents
 

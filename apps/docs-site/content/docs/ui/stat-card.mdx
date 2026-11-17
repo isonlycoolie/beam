@@ -3,21 +3,27 @@ title: Stat Card
 description: One metric with its change over a period, and a skeleton with the same layout.
 ---
 
-<ComponentPreview name="stat-card" />
+<ComponentPreview name="stat-card" styles />
 
 ## Installation
 
 <InstallTabs name="stat-card" />
+
+## Usage
+
+```tsx
+import { StatCard } from "@/components/ui/stat-card";
+```
+
+```tsx
+<StatCard label="Monthly revenue" value="TZS 48.2m" delta={12.4} period="last month" />
+```
 
 ## Examples
 
 ### A row of metrics
 
 <ComponentPreview name="stat-card" example="row" />
-
-### Loading
-
-<ComponentPreview name="stat-card" example="loading" />
 
 ## Rules for agents
 

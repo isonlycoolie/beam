@@ -9,6 +9,20 @@ description: A label, its control, and help or an error, stacked with the form r
 
 <InstallTabs name="field" />
 
+## Usage
+
+```tsx
+import { Field, FieldLabel, FieldDescription } from "@/components/ui/field";
+```
+
+```tsx
+<Field>
+  <FieldLabel htmlFor="email">Email</FieldLabel>
+  <Input id="email" type="email" />
+  <FieldDescription>We send receipts here.</FieldDescription>
+</Field>
+```
+
 ## Examples
 
 ### Invalid
