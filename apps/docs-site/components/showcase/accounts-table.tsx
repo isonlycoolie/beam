@@ -1,8 +1,8 @@
 /**
- * Design reference: Stripe (stripe.com, "Connected Accounts" dashboard illustration), captured 2026-11-18.
- * Rebuilt from measured values (Pictures/beam/references/stripe/connected-accounts.json): a 536px panel,
+ * Accounts table showcase, rebuilt from measured values (Pictures/beam/references/payments/connected-accounts.json):
+ * a 536px panel,
  * 24px sides, columns 127.812 / 116.312 / 153.391 / 89.469px, 31px rows with a 1px top rule.
- * Our code, Geist in place of Söhne, palette tokens in place of Stripe's colours, plain marks in place of its art.
+ * Our code, Geist type, palette tokens for every colour, plain marks for account art.
  */
 const COLUMNS = "127.812px 116.312px 153.391px 89.4688px";
 
@@ -26,7 +26,7 @@ const HIGHLIGHT = 1;
 // Measured mark heights: four of the reference's marks are 17px tall, which makes their rows 32px instead of 31px.
 const MARK_HEIGHT = [16, 16, 17, 17, 16, 17, 16, 16, 17, 16];
 
-export function StripeAccounts() {
+export function AccountsTable() {
   return (
     <div className="w-[536px] border-l border-border bg-card pb-[21px] font-[family-name:var(--theme-font-text)]" style={{ fontSize: 16 }}>
       <div className="px-6 pt-6 pb-[18px] text-[14px] leading-[23.38px] font-normal text-text-1">Connected Accounts</div>

@@ -1,12 +1,11 @@
 import { ArrowDown01Icon, InformationCircleIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { TIERS, type Tier } from "./neon-pricing-data";
+import { TIERS, type Tier } from "./pricing-plans-data";
 
 /**
- * Design reference: Neon (neon.com/pricing, plan columns), captured 2026-11-18.
- * Rebuilt from measured values (Pictures/beam/references/neon/pricing-tiers.json): three 320px columns with
+ * Pricing plans showcase, rebuilt from measured values (Pictures/beam/references/database/pricing-tiers.json): three 320px columns with
  * 1px rules, 24px padding, Geist Mono 14px plan labels, 28px prices at -1.12px, 38px pill buttons, 15px feature
- * rows 12px apart under 12px mono section labels. Our code; palette tokens in place of Neon's colours.
+ * rows 12px apart under 12px mono section labels. Our code; palette tokens for every colour.
  */
 const mono = "font-[family-name:var(--theme-font-mono)] font-medium uppercase";
 const body = "text-[15px] leading-[20.625px] tracking-[-0.3px]";
@@ -35,7 +34,7 @@ function Features({ label, items, featured, divided }: { label: string; items: T
   );
 }
 
-export function NeonPricing() {
+export function PricingPlans() {
   return (
     <ul className="grid w-[960px] grid-cols-3 border-y border-input bg-background font-[family-name:var(--theme-font-text)] text-text-1">
       {TIERS.map((t, i) => (

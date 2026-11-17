@@ -15,12 +15,7 @@ export function PaletteShowcase({ palette }: { palette: string }) {
               <s.Component />
             </FitScale>
           </div>
-          <figcaption className="flex items-center justify-between gap-4 border-t border-fd-border px-4 py-3 text-sm text-fd-muted-foreground">
-            <span className="text-fd-foreground">{s.title}</span>
-            <span>
-              Design reference: <a href={s.url} className="underline underline-offset-4 hover:text-fd-foreground">{s.reference}</a>
-            </span>
-          </figcaption>
+          <figcaption className="border-t border-fd-border px-4 py-3 text-sm text-fd-foreground">{s.title}</figcaption>
         </figure>
       ))}
     </div>

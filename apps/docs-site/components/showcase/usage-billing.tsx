@@ -2,16 +2,15 @@ import { AiMagicIcon, DashboardSpeed02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
 /**
- * Design reference: Stripe (stripe.com, "Enable any billing model" plan cards), captured 2026-11-18.
- * Rebuilt from measured values (Pictures/beam/references/stripe/billing-plan.json): a 366px column, 24px padding,
+ * Usage billing showcase, rebuilt from measured values (Pictures/beam/references/payments/billing-plan.json): a 366px column, 24px padding,
  * 14px gap; two 306px cards with a 6px radius and a 0 16px 32px shadow; 14px inside; 31 bars 3.2px apart.
- * Our code; Geist for Söhne, a Hugeicons mark for Stripe's art, palette tokens for its colours.
+ * Our code, Geist type, a Hugeicons mark, palette tokens for every colour.
  */
 const BARS = [7, 12, 23, 33, 47, 67, 37, 43, 19, 12, 50, 43, 61, 78, 63, 113, 149, 79, 60, 40, 50, 55, 48, 71, 88, 95, 111, 82, 60, 50, 58];
 
 const card = "relative w-[306px] rounded-[6px] bg-card shadow-[0_16px_32px_0_rgba(50,50,93,0.12)]";
 
-export function StripeBilling() {
+export function UsageBilling() {
   return (
     <div className="flex w-[366px] flex-col items-center gap-3.5 p-6 font-[family-name:var(--theme-font-text)]">
       <div className={`${card} flex h-[169px] flex-col gap-3.5 p-3.5`}>

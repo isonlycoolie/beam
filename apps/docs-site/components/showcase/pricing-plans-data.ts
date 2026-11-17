@@ -1,4 +1,4 @@
-// Plan content for the Neon pricing rebuild (neon-pricing.tsx), as shown on neon.com/pricing on 2026-11-18.
+// Plan content for the pricing plans showcase (pricing-plans.tsx).
 export type Tier = {
   name: string;
   featured?: boolean;
@@ -17,7 +17,7 @@ export const TIERS: Tier[] = [
     name: "Free",
     price: "$0",
     note: "Build and learn free with no time limits and no credit card required.",
-    action: "Try Neon",
+    action: "Try it free",
     postgres: [["100 projects", true], ["100 CU-hrs monthly per project", true], ["1 GB of storage per project"], ["Sizes up to 2 CU (8 GB RAM)"], ["Unlimited team members"]],
     backend: [["Managed Better Auth", true], ["5 GB of Object Storage", true], ["Functions", true], ["AI Gateway", true], ["Realtime (Beta)", true]],
   },
