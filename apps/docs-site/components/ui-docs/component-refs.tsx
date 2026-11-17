@@ -2,6 +2,7 @@ import { ArrowDown01Icon, ArrowUp01Icon, LinkSquare02Icon } from "@hugeicons/cor
 import { Button } from "@beam/ui/components/button";
 import { Icon } from "@beam/ui/icons";
 import type { ComponentType } from "react";
+import { CHOICE_REFS } from "./component-refs-choices";
 import { FORM_REFS } from "./component-refs-forms";
 
 /**
@@ -10,6 +11,7 @@ import { FORM_REFS } from "./component-refs-forms";
  */
 export const COMPONENT_REFS: Record<string, { mode: "light" | "dark"; Component: ComponentType }> = {
   ...FORM_REFS,
+  ...CHOICE_REFS,
   "ui-button-md": {
     mode: "light",
     Component: () => (
