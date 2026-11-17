@@ -1,0 +1,93 @@
+@import "tailwindcss";
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/preset.css";
+@import "lenis/dist/lenis.css";
+
+/* Next 16.2's CSS parser rejects ::highlight(); skip the two search-highlight classes that use it. */
+@source not inline("[&_::highlight(fd-search)]:{underline,text-fd-primary}");
+
+/* Tokens measured from the reference docs (dark theme, 1920px). */
+.dark {
+  --color-fd-background: #0f0f0f;
+  --color-fd-foreground: #f5f5f4;
+  --color-fd-muted: #1a1a1a;
+  --color-fd-muted-foreground: #a5a5a6;
+  --color-fd-card: #1a1a1a;
+  --color-fd-card-foreground: #f5f5f4;
+  --color-fd-popover: #141414;
+  --color-fd-popover-foreground: #f5f5f4;
+  --color-fd-border: #2a2a2a;
+  --color-fd-accent: rgb(245 245 244 / 0.08);
+  --color-fd-accent-foreground: #f5f5f4;
+  --color-fd-secondary: #1a1a1a;
+  --color-fd-secondary-foreground: #f5f5f4;
+  --color-fd-primary: #fafafa;
+  --color-fd-primary-foreground: #0f0f0f;
+  --color-fd-ring: #ff4fa3;
+}
+
+:root {
+  --beam-gradient: linear-gradient(90deg, #7c5cff, #ff4fa3 55%, #ffb547);
+  --font-sans: var(--font-text), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-code), ui-monospace, monospace;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: #0f0f0f;
+}
+
+/* Headings use the display face, like the reference (Sora 36/24/15). */
+.beam-title,
+.prose h2,
+.prose h3,
+#nd-toc h3 {
+  font-family: var(--font-display), var(--font-sans);
+}
+.beam-title {
+  font-size: 36px;
+  line-height: 41.4px;
+  font-weight: 500;
+  letter-spacing: normal;
+}
+.beam-lead {
+  font-size: 19px;
+  line-height: 29.45px;
+  color: #a5a5a6;
+}
+.prose {
+  --tw-prose-body: #f5f5f4;
+  font-size: 16px;
+  line-height: 28px;
+}
+.prose h2 {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 500;
+}
+.prose :where(code):not(:where(pre *)) {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  padding: 0.7px 3.5px;
+  border-radius: 4px;
+  background: rgb(245 245 244 / 0.06);
+  border: 1px solid #2a2a2a;
+}
+.prose a {
+  text-decoration-color: #f5f5f4;
+  text-underline-offset: 3px;
+}
+pre,
+code {
+  font-family: var(--font-mono);
+}
+
+/* Banner: a soft wash of the Beam gradient on the dark base, with a fine gradient line underneath. */
+.beam-banner {
+  background:
+    radial-gradient(60% 140% at 50% 0%, rgb(255 79 163 / 0.16), transparent 70%),
+    linear-gradient(90deg, rgb(124 92 255 / 0.22), rgb(255 79 163 / 0.14) 50%, rgb(255 181 71 / 0.16)),
+    #101014;
+  border-bottom: 1px solid transparent;
+  border-image: linear-gradient(90deg, transparent, #7c5cff 20%, #ff4fa3 50%, #ffb547 80%, transparent) 1;
+}
