@@ -1,4 +1,4 @@
-/* Based on shadcn/ui (MIT). Restyled for Beam UI: token heights, a clear focus ring, a real loading state. */
+/* Based on shadcn/ui (MIT). Design reference: Stripe (sizes, type, radius, shadows measured). Real loading state. */
 import { Loading03Icon } from "@hugeicons/core-free-icons";
 import { cva, type VariantProps } from "class-variance-authority";
 import { Slot } from "radix-ui";
@@ -6,29 +6,30 @@ import type * as React from "react";
 import { Icon } from "../../../icons/icon";
 import { cn } from "../../../lib/cn";
 
+// Measured from Stripe's public pages (Pictures/beam/references/stripe/ui): sm = Docs "Try it out" (28px, 4/8px,
+// 14/600), md = Checkout "Start building" (36px, 6/16px, 14/500/24px), lg = Checkout "Hide" (40px, 12px, 14/500).
 const buttonVariants = cva(
   [
-    "relative inline-flex shrink-0 select-none items-center justify-center gap-2 whitespace-nowrap rounded-(--radius-md) font-medium",
-    "transition-[background-color,border-color,color,box-shadow,transform] duration-(--dur-fast) ease-(--ease-out)",
-    "outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-    "active:translate-y-px disabled:pointer-events-none disabled:opacity-50",
-    "aria-invalid:ring-2 aria-invalid:ring-danger/40",
+    "relative inline-flex shrink-0 select-none items-center justify-center gap-1.5 whitespace-nowrap rounded-(--radius-md)",
+    "transition-[background-color,color,box-shadow] duration-(--dur-fast) ease-(--ease-out)",
+    "outline-none focus-visible:shadow-(--focus-ring) disabled:pointer-events-none disabled:opacity-50",
+    "aria-invalid:shadow-[0_0_0_1px_var(--danger)]",
   ],
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground shadow-(--shadow-1) hover:bg-primary/90",
-        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/70",
-        outline: "border border-input bg-transparent text-text-1 shadow-(--shadow-1) hover:bg-accent",
-        ghost: "text-text-1 hover:bg-accent",
+        default: "bg-primary text-primary-foreground shadow-(--shadow-button) hover:bg-primary/90",
+        secondary: "bg-secondary text-text-1 hover:bg-accent",
+        outline: "bg-card text-text-1 shadow-[0_0_0_1px_var(--input)] hover:bg-surface-2",
+        ghost: "text-text-2 hover:bg-secondary hover:text-text-1",
         // Soft, so one red never shouts over the page; danger on danger-soft is contrast-tested in every palette.
-        destructive: "bg-danger-soft text-danger hover:bg-danger-soft/70 focus-visible:ring-danger",
-        link: "h-auto px-0 text-text-1 underline-offset-4 hover:underline",
+        destructive: "bg-danger-soft text-danger hover:bg-danger-soft/70",
+        link: "h-auto px-0 py-0 text-link hover:underline underline-offset-4",
       },
       size: {
-        sm: "h-(--control-sm) px-3 text-small",
-        md: "h-(--control-md) px-4 text-body",
-        lg: "h-(--control-lg) px-5 text-body",
+        sm: "px-2 py-1 text-[14px] leading-[20px] font-semibold",
+        md: "px-4 py-1.5 text-[14px] leading-[24px] font-medium",
+        lg: "p-3 text-[14px] leading-[16.1px] font-medium",
         icon: "size-(--control-md) p-0",
         "icon-sm": "size-(--control-sm) p-0",
       },
@@ -59,7 +60,7 @@ function Button({ className, variant, size, asChild = false, loading = false, di
       {loading ? (
         <>
           {/* The label stays in the layout so the button keeps its width while loading. */}
-          <span className="invisible inline-flex items-center gap-2">{children}</span>
+          <span className="invisible inline-flex items-center gap-1.5">{children}</span>
           <Icon icon={Loading03Icon} size="sm" className="absolute animate-spin" label="Loading" />
         </>
       ) : (
