@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "rootDir": ".",
+    "jsx": "react-jsx",
+    "lib": ["ES2023", "DOM"],
+    "types": ["node"]
+  },
+  "include": ["lib/**/*.ts", "icons/**/*.tsx", "registry/**/*.ts", "registry/**/*.tsx", "test/**/*.ts"]
+}

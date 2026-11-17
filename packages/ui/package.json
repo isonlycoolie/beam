@@ -1,0 +1,37 @@
+{
+  "name": "@beam/ui",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Beam UI: shadcn/ui components restyled in Beam's design, with rules for agents.",
+  "license": "MIT",
+  "exports": {
+    "./styles/*": "./styles/*",
+    "./themes/*": "./themes/*",
+    "./lib/*": "./lib/*.ts",
+    "./icons": "./icons/icon.tsx",
+    "./components/*": "./registry/components/*/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@hugeicons/core-free-icons": "4.4.0",
+    "@hugeicons/react": "1.1.10",
+    "class-variance-authority": "0.7.1",
+    "clsx": "2.1.1",
+    "radix-ui": "1.8.1",
+    "tailwind-merge": "3.7.0"
+  },
+  "peerDependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  }
+}
