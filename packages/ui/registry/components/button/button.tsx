@@ -19,9 +19,10 @@ const buttonVariants = cva(
       variant: {
         default: "bg-primary text-primary-foreground shadow-(--shadow-1) hover:bg-primary/90",
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/70",
-        outline: "border border-border bg-background text-text-1 shadow-(--shadow-1) hover:bg-surface-2",
-        ghost: "text-text-2 hover:bg-surface-2 hover:text-text-1",
-        destructive: "bg-danger text-white shadow-(--shadow-1) hover:bg-danger/90 focus-visible:ring-danger",
+        outline: "border border-input bg-transparent text-text-1 shadow-(--shadow-1) hover:bg-accent",
+        ghost: "text-text-1 hover:bg-accent",
+        // Soft, so one red never shouts over the page; danger on danger-soft is contrast-tested in every palette.
+        destructive: "bg-danger-soft text-danger hover:bg-danger-soft/70 focus-visible:ring-danger",
         link: "h-auto px-0 text-text-1 underline-offset-4 hover:underline",
       },
       size: {
