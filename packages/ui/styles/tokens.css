@@ -14,17 +14,28 @@
   --space-12: 48px;
   --space-16: 64px;
 
-  /* Radius: nested elements use outer radius minus padding */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 20px;
+  /* Radius and elevation, measured from Stripe's public pages (2026-11-18, Pictures/beam/references/stripe/ui):
+     controls, chips, popovers and callouts 6px; menu items 10px; cards 12px; checkboxes 2px. */
+  --radius-sm: 2px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-xl: 12px;
   --radius: var(--radius-md);
+  /* Dashboard panels and Docs info cards: 8px. */
+  --radius-card: 8px;
 
-  /* Elevation: overlays use shadow-3 only */
-  --shadow-1: 0 1px 2px rgb(10 10 20 / 0.05);
-  --shadow-2: 0 4px 12px rgb(10 10 20 / 0.08), 0 1px 2px rgb(10 10 20 / 0.04);
-  --shadow-3: 0 16px 40px rgb(10 10 20 / 0.16), 0 2px 6px rgb(10 10 20 / 0.06);
+  /* shadow-1: a field at rest (Checkout); shadow-2: a card (Checkout chooser); shadow-3: a popover or dialog
+     (Start building menu). The 1px ring in shadow-1 takes the palette's --input colour. */
+  --shadow-1: 0 0 0 1px var(--input), 0 2px 4px rgb(0 0 0 / 0.07), 0 1px 1.5px rgb(0 0 0 / 0.05);
+  --shadow-2: 0 3px 6px rgb(0 0 0 / 0.12), 0 7px 14px rgb(48 49 61 / 0.08);
+  --shadow-3: 0 0 0 1px rgb(136 152 170 / 0.1), 0 15px 35px rgb(129 129 136 / 0.1), 0 5px 15px rgb(0 0 0 / 0.08);
+  /* Filled buttons (Checkout Pay) and compact controls (dashboard select). */
+  --shadow-button: inset 0 0 0 1px rgb(50 50 93 / 0.1), 0 2px 5px rgb(50 50 93 / 0.1), 0 1px 1px rgb(0 0 0 / 0.07);
+  --shadow-control: 0 1px 1px rgb(0 0 0 / 0.12);
+  /* A dashboard panel at rest (Checkout settings panel). */
+  --shadow-card: 0 1px 1px rgb(0 0 0 / 0.12), 0 2px 5px rgb(48 49 61 / 0.08);
+  /* Focus: a 1px ring plus a 3px halo in the ring colour (Checkout field focus). */
+  --focus-ring: 0 0 0 1px var(--ring), 0 1px 1px rgb(0 0 0 / 0.07), 0 0 0 3px color-mix(in oklab, var(--ring) 90%, transparent);
 
   /* Motion */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -32,17 +43,17 @@
   --dur-base: 220ms;
   --dur-slow: 320ms;
 
-  /* Controls: comfortable density */
-  --control-sm: 32px;
+  /* Controls, measured: 28px docs buttons, 36px dashboard buttons and selects, 44px Checkout fields. */
+  --control-sm: 28px;
   --control-md: 36px;
-  --control-lg: 40px;
+  --control-lg: 44px;
   --section-gap: var(--space-8);
 }
 
 [data-density="compact"] {
-  --control-sm: 28px;
+  --control-sm: 24px;
   --control-md: 32px;
-  --control-lg: 36px;
+  --control-lg: 40px;
   --section-gap: var(--space-6);
 }
 
