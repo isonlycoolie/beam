@@ -3,17 +3,27 @@ title: Card
 description: Groups related content with a header, body and footer that line up across a row.
 ---
 
-<ComponentPreview name="card" />
+<ComponentPreview name="card" styles />
 
 ## Installation
 
 <InstallTabs name="card" />
 
-## Examples
+## Usage
 
-### With action
+```tsx
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+```
 
-<ComponentPreview name="card" example="with-action" />
+```tsx
+<Card>
+  <CardHeader>
+    <CardTitle>Team plan</CardTitle>
+    <CardDescription>For teams that ship together.</CardDescription>
+  </CardHeader>
+  <CardContent>$24 per seat / month</CardContent>
+</Card>
+```
 
 ## Rules for agents
 
