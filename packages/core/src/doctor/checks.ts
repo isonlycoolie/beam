@@ -1,4 +1,4 @@
-import { access, mkdir, readFile } from "node:fs/promises";
+import { access, mkdir } from "node:fs/promises";
 import { constants } from "node:fs";
 import { summarizeFigmaCredentials } from "../auth/credential-store.js";
 import type { DoctorCheck } from "./types.js";
@@ -19,24 +19,35 @@ export function checkNodeVersion(version: string): DoctorCheck {
   };
 }
 
-export async function checkPackageVersion(): Promise<DoctorCheck> {
-  try {
-    const packageJson = JSON.parse(
-      await readFile(new URL("../../package.json", import.meta.url), "utf8"),
-    ) as { version?: string };
+export async function checkPackageVersion(
+  version?: string,
+): Promise<DoctorCheck> {
+  if (version) {
+    return { id: "beam-version", label: "Beam version", status: "pass", message: version };
+  }
+  return {
+    id: "beam-version",
+    label: "Beam version",
+    status: "warn",
+    message: "Beam package version is unavailable.",
+    fix: "Reinstall Beam with npm install -g usebeam or run it with npx usebeam.",
+  };
+}
 
-    return {
-      id: "beam-version",
-      label: "Beam version detected",
-      status: packageJson.version ? "pass" : "warn",
-      message: packageJson.version ?? "Version field is missing.",
-    };
+/** The screenshot-based tools (compare, verify, clone) need Playwright's Chromium. */
+export async function checkBrowser(): Promise<DoctorCheck> {
+  const base = { id: "browser", label: "Chromium for screenshots" };
+  try {
+    const { chromium } = await import("playwright");
+    const executable = chromium.executablePath();
+    await access(executable, constants.X_OK);
+    return { ...base, status: "pass", message: executable };
   } catch {
     return {
-      id: "beam-version",
-      label: "Beam version detected",
+      ...base,
       status: "warn",
-      message: "Beam package version is unavailable.",
+      message: "Chromium is not installed, so compare, verify and clone cannot take screenshots.",
+      fix: "Run beam setup browser (downloads about 150 MB once).",
     };
   }
 }

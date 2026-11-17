@@ -1,5 +1,6 @@
 import { createBeamPaths } from "../config/paths.js";
 import {
+  checkBrowser,
   checkCredentials,
   checkDirectory,
   checkNodeVersion,
@@ -11,12 +12,14 @@ export type { DoctorCheck, DoctorCheckStatus } from "./types.js";
 export async function runDoctorChecks(input: {
   cwd: string;
   homeDir?: string;
+  version?: string;
+  skipBrowser?: boolean;
 }): Promise<{ checks: DoctorCheck[] }> {
   const paths = createBeamPaths(input);
   const checks: DoctorCheck[] = [];
 
   checks.push(checkNodeVersion(process.version));
-  checks.push(await checkPackageVersion());
+  checks.push(await checkPackageVersion(input.version));
   checks.push(
     await checkDirectory(
       "user-beam-dir",
@@ -39,6 +42,8 @@ export async function runDoctorChecks(input: {
       paths.cacheDir,
     ),
   );
+
+  if (!input.skipBrowser) checks.push(await checkBrowser());
 
   return { checks };
 }
