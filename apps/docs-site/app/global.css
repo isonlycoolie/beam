@@ -91,3 +91,88 @@ code {
   border-bottom: 1px solid transparent;
   border-image: linear-gradient(90deg, transparent, #7c5cff 20%, #ff4fa3 50%, #ffb547 80%, transparent) 1;
 }
+
+/* Sidebar: a rounded card inset 12px inside its column (196x139, 252 wide, radius 16 at 1920px). */
+@media (min-width: 768px) {
+  #nd-sidebar::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 12px;
+    bottom: 12px;
+    right: 4px;
+    width: calc(var(--fd-sidebar-width) - 16px);
+    border-radius: 16px;
+    background: rgb(245 245 244 / 0.04);
+  }
+  /* Banner and footer sit 16px inside the card; the page list adds its own 16px, so it gets 12px here. */
+  #nd-sidebar > :first-child {
+    padding: 28px 20px 0 28px !important;
+  }
+  #nd-sidebar > :last-child {
+    padding: 0 20px 24px 28px !important;
+  }
+  #nd-sidebar > :not(:first-child, :last-child) {
+    padding-inline: 12px 4px !important;
+  }
+  /* Content starts at x536 and runs 848px, ending where the reference's cards end. */
+  #nd-page {
+    padding-inline-start: 84px !important;
+  }
+  #nd-page > * {
+    max-width: 848px !important;
+  }
+}
+
+/* Sidebar items: 36px tall, radius 10, active item at 8% white. */
+#nd-sidebar a[data-active] {
+  min-height: 36px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+#nd-sidebar a[data-active="true"] {
+  background: rgb(245 245 244 / 0.08);
+  color: #f5f5f4;
+  font-weight: 500;
+}
+#nd-sidebar a[data-active="false"] {
+  color: rgb(245 245 244 / 0.7);
+}
+
+/* "On this page" list: 14px, muted, active item white. */
+#nd-toc a[data-active] {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+/* Scroll reveal: content below the fold rises 8px and fades in once, on a soft ease-out. */
+.beam-reveal {
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 450ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 450ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.beam-reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Small, consistent motion on interactive pieces. */
+#nd-sidebar a,
+#nd-toc a,
+#nd-subnav a,
+#nd-subnav button {
+  transition:
+    background-color 180ms ease-out,
+    color 180ms ease-out,
+    border-color 180ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .beam-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
