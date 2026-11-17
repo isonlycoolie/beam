@@ -2,6 +2,16 @@
 @import "fumadocs-ui/css/neutral.css";
 @import "fumadocs-ui/css/preset.css";
 @import "lenis/dist/lenis.css";
+@import "@beam/ui/styles/tokens.css";
+@import "@beam/ui/styles/type.css";
+@import "@beam/ui/styles/tailwind.css";
+@import "@beam/ui/themes/beam.css";
+@import "@beam/ui/themes/ledger.css";
+@import "@beam/ui/themes/clinic.css";
+@import "@beam/ui/themes/studio.css";
+
+/* Beam UI components and examples use Tailwind classes. */
+@source "../../../packages/ui";
 
 /* Next 16.2's CSS parser rejects ::highlight(); skip the two search-highlight classes that use it. */
 @source not inline("[&_::highlight(fd-search)]:{underline,text-fd-primary}");
@@ -28,8 +38,8 @@
 
 :root {
   --beam-gradient: linear-gradient(90deg, #7c5cff, #ff4fa3 55%, #ffb547);
-  --font-sans: var(--font-text), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-code), ui-monospace, monospace;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mona-mono), ui-monospace, monospace;
 }
 
 body {
@@ -42,7 +52,7 @@ body {
 .prose h2,
 .prose h3,
 #nd-toc h3 {
-  font-family: var(--font-display), var(--font-sans);
+  font-family: var(--font-sora), var(--font-sans);
 }
 .beam-title {
   font-size: 36px;
@@ -65,7 +75,7 @@ body {
   line-height: 32px;
   font-weight: 500;
 }
-.prose :where(code):not(:where(pre *)) {
+.prose :where(code):not(:where(pre *, .not-prose *)) {
   font-family: var(--font-mono);
   font-size: 14px;
   padding: 0.7px 3.5px;
