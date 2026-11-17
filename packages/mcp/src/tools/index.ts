@@ -6,9 +6,11 @@ import {
   getFileVariables,
   compareDesignToUrl,
   verifyBuild,
+  captureForClone,
 } from "@beam/core";
 import { z } from "zod";
 import { registerAssetTools } from "./assets.js";
+import { registerCloneTools } from "./clone.js";
 import { registerFreeLocalTools } from "./free-local.js";
 import { registerCompareTools } from "./compare.js";
 import { jsonContent, toolError } from "./responses.js";
@@ -23,6 +25,7 @@ export type BeamToolContext = {
   getFileVariables?: typeof getFileVariables;
   compareDesignToUrl?: typeof compareDesignToUrl;
   verifyBuild?: typeof verifyBuild;
+  captureForClone?: typeof captureForClone;
 };
 
 export function registerBeamTools(
@@ -59,4 +62,5 @@ export function registerBeamTools(
   registerFreeLocalTools(server, context);
   registerCompareTools(server, context);
   registerVerifyTools(server, context);
+  registerCloneTools(server, context);
 }
