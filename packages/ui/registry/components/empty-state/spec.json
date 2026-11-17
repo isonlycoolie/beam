@@ -25,6 +25,10 @@
     "no-results",
     "with-illustration"
   ],
+  "styles": [
+    "default",
+    "no-results"
+  ],
   "composes_with": [
     "Button",
     "Card"

@@ -20,6 +20,12 @@
     "disabled",
     "with-icon"
   ],
+  "styles": [
+    "default",
+    "with-icon",
+    "invalid",
+    "disabled"
+  ],
   "composes_with": [
     "Field",
     "Label",

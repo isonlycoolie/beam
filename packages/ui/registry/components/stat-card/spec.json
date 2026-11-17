@@ -24,6 +24,10 @@
     "inverted-delta",
     "loading"
   ],
+  "styles": [
+    "default",
+    "loading"
+  ],
   "composes_with": [
     "PageHeader",
     "Card"

@@ -28,6 +28,14 @@
     "with-icon",
     "icon"
   ],
+  "styles": [
+    "default",
+    "secondary",
+    "outline",
+    "ghost",
+    "destructive",
+    "link"
+  ],
   "composes_with": [
     "PageHeader",
     "Card",

@@ -30,5 +30,7 @@ describe("component specs", () => {
       expect(spec.use_when.length).toBeGreaterThan(0);
       expect(spec.avoid_when.length).toBeGreaterThan(0);
       expect(spec.rules.filter((r: string) => !KNOWN_RULES.has(r))).toEqual([]);
+      // Every style tab on the docs page is one example file.
+      for (const style of spec.styles ?? []) expect(existsSync(join(root, name, "examples", `${style}.tsx`)), `${name}/${style}`).toBe(true);
     });
 });

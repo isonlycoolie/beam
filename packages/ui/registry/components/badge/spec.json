@@ -12,15 +12,23 @@
     "Long text"
   ],
   "props": {
-    "variant": "neutral | primary | success | warning | danger | outline"
+    "variant": "default | secondary | outline | success | warning | danger"
   },
   "variants": [
-    "neutral",
-    "primary",
+    "default",
+    "secondary",
+    "outline",
     "success",
     "warning",
-    "danger",
-    "outline"
+    "danger"
+  ],
+  "styles": [
+    "default",
+    "secondary",
+    "outline",
+    "success",
+    "warning",
+    "danger"
   ],
   "composes_with": [
     "Table",

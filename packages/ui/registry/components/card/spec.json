@@ -20,6 +20,10 @@
     "with-action",
     "with-footer"
   ],
+  "styles": [
+    "default",
+    "with-action"
+  ],
   "composes_with": [
     "Button",
     "Badge",
