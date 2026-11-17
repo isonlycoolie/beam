@@ -1,0 +1,52 @@
+---
+title: Vue
+description: Install and use Beam Icons in Vue.
+---
+
+## Install
+
+<Tabs groupId="package-manager" items={["npm", "pnpm", "yarn", "bun"]}>
+  <Tab value="npm">
+
+```bash
+npm install @hugeicons/vue @hugeicons/core-free-icons
+```
+
+  </Tab>
+  <Tab value="pnpm">
+
+```bash
+pnpm add @hugeicons/vue @hugeicons/core-free-icons
+```
+
+  </Tab>
+  <Tab value="yarn">
+
+```bash
+yarn add @hugeicons/vue @hugeicons/core-free-icons
+```
+
+  </Tab>
+  <Tab value="bun">
+
+```bash
+bun add @hugeicons/vue @hugeicons/core-free-icons
+```
+
+  </Tab>
+</Tabs>
+
+## Use an icon
+
+```vue title="App.vue"
+<template>
+  <HugeiconsIcon :icon="Search01Icon" :size="20" color="currentColor" :stroke-width="1.5" />
+</template>
+
+<script setup>
+import { HugeiconsIcon } from "@hugeicons/vue";
+import { Search01Icon } from "@hugeicons/core-free-icons";
+</script>
+```
+
+Every icon in [Browse](/docs/icons/browse) works the same way: copy its name and pass it as `icon`.
