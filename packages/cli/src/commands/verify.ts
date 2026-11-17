@@ -8,6 +8,7 @@ export type VerifyOptions = {
   breakpoints?: string;
   threshold?: string;
   pixelsOnly?: boolean;
+  sections?: string;
   json?: boolean;
   cwd?: string;
 };
@@ -33,6 +34,7 @@ export async function verifyCommand(options: VerifyOptions): Promise<void> {
     breakpoints: parseBreakpoints(options.breakpoints),
     threshold: options.threshold ? Number(options.threshold) : undefined,
     pixelsOnly: options.pixelsOnly,
+    sections: options.sections?.split(",").map((s) => Number(s.trim())).filter((n) => Number.isInteger(n) && n > 0),
   });
   process.stdout.write(options.json ? `${JSON.stringify(report, null, 2)}\n` : formatVerifyReport(report, cwd));
   // A failed check is a failed command, so CI and agent loops can stop on it.

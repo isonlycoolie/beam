@@ -16,6 +16,7 @@ export function registerVerifyTools(server: McpServer, context: BeamToolContext)
       breakpoints: z.array(z.number().int().min(200).max(4000)).default([1440, 768, 390]),
       threshold: z.number().min(0).max(1).default(0.98),
       pixelsOnly: z.boolean().default(false),
+      sections: z.array(z.number().int().min(1)).optional().describe("Only judge these sections (1-based) while building top-down"),
     },
     async (input) => {
       try {
