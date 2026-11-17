@@ -12,6 +12,7 @@ import {
   type AgentId,
 } from "@beam/core";
 import { heading, label, muted, success, warning } from "../terminal.js";
+import { uiAddCommand } from "./ui-add.js";
 
 export type KitOptions = { cwd?: string; kitsDir?: string; agent?: AgentId[]; force?: boolean; json?: boolean };
 
@@ -31,6 +32,11 @@ const fail = (message: string, fix: string, exitCode = 2) =>
   Object.assign(new Error(message), { payload: { code: "BEAM_INVALID_INPUT", message, fix, exitCode } });
 
 export async function addCommand(names: string[], options: KitOptions = {}): Promise<void> {
+  // ui/<component> installs Beam UI components; everything else is a tool kit.
+  const components = names.filter((name) => name.startsWith("ui/"));
+  if (components.length) await uiAddCommand(components);
+  names = names.filter((name) => !name.startsWith("ui/"));
+  if (names.length === 0) return;
   const cwd = options.cwd ?? process.cwd();
   const kitsDir = options.kitsDir ?? (await defaultKitsDir());
   const agents = options.agent?.length ? options.agent : await detectAgents(cwd);
