@@ -1,4 +1,8 @@
-import { BeamAuthError, BeamFigmaApiError } from "../errors.js";
+import {
+  BeamAuthError,
+  BeamAuthFailedError,
+  BeamFigmaApiError,
+} from "../errors.js";
 import {
   DEFAULT_FIGMA_API_BASE_URL,
   fileEndpoint,
@@ -81,9 +85,7 @@ export class FigmaClient {
         });
 
         if (response.status === 401 || response.status === 403) {
-          throw new BeamAuthError(
-            "Figma authentication failed. Run beam login again.",
-          );
+          throw new BeamAuthFailedError();
         }
 
         if (response.status === 429) {

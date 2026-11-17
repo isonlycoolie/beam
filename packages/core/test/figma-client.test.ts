@@ -1,9 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import {
-  BeamAuthError,
-  BeamRateLimitError,
-  FigmaClient,
-} from "../src/index.js";
+import { BeamRateLimitError, FigmaClient } from "../src/index.js";
 
 describe("FigmaClient", () => {
   it("fetches file nodes through the request wrapper", async () => {
@@ -27,13 +23,15 @@ describe("FigmaClient", () => {
     });
   });
 
-  it("maps auth failures to BeamAuthError", async () => {
+  it("maps rejected tokens to BEAM_AUTH_FAILED", async () => {
     const client = new FigmaClient({
       accessToken: "figd_secret",
       fetch: vi.fn(async () => new Response("", { status: 401 })),
     });
 
-    await expect(client.getFile("abc")).rejects.toBeInstanceOf(BeamAuthError);
+    await expect(client.getFile("abc")).rejects.toMatchObject({
+      payload: { code: "BEAM_AUTH_FAILED", exitCode: 3 },
+    });
   });
 
   it("maps rate limits to BeamRateLimitError", async () => {

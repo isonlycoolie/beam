@@ -28,3 +28,18 @@ export class BeamAuthError extends BeamError {
     this.name = "BeamAuthError";
   }
 }
+
+/** Figma rejected a stored token (401/403): it exists but is expired or revoked. */
+export class BeamAuthFailedError extends BeamError {
+  constructor(message = "Figma rejected your token. It may be expired or revoked.") {
+    super({
+      code: "BEAM_AUTH_FAILED",
+      message,
+      exitCode: 3,
+      retryable: false,
+      recoverable: true,
+      fix: "Create a new personal access token in Figma, then run beam login.",
+    });
+    this.name = "BeamAuthFailedError";
+  }
+}

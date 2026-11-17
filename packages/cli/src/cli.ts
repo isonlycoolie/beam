@@ -13,6 +13,7 @@ import { mappingsCommand } from "./commands/mappings.js";
 import { mcpCommand } from "./commands/mcp.js";
 import { settingsCommand } from "./commands/settings.js";
 import { snapshotsCommand } from "./commands/snapshots.js";
+import { formatError } from "./terminal.js";
 
 const program = new Command();
 
@@ -241,4 +242,10 @@ program
     await mcpCommand();
   });
 
-await program.parseAsync(process.argv);
+try {
+  await program.parseAsync(process.argv);
+} catch (error) {
+  const { text, exitCode } = formatError(error, { debug: Boolean(process.env.BEAM_DEBUG) });
+  console.error(text);
+  process.exitCode = exitCode;
+}
