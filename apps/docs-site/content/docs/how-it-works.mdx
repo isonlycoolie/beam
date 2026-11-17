@@ -1,0 +1,31 @@
+---
+title: How it works
+description: Measure the source, build from the numbers, check the result. Every Beam tool follows the same loop.
+---
+
+## Measure, do not guess
+
+Models fill gaps with taste. Beam fills them with data. Every tool starts by measuring the source in a real browser:
+
+- every visible element with its box and computed styles (`font-size`, `line-height`, `letter-spacing`, colours, paddings, radii, shadows)
+- the page's sections, so work can go one section at a time
+- the real fonts, images and stylesheets, saved as they were served
+
+The result is a brief your agent reads, plus `spec.json` with every value.
+
+## Build from the numbers
+
+The skills set strict rules: use the measured value, never the nearest design token, never a rounder number. When something is not in the spec, the agent asks instead of inventing it.
+
+## Check the result
+
+[Verify](/docs/verify) captures your build at the same widths and compares it two ways:
+
+1. **Pixels per section.** A section passes at 98% by default.
+2. **Element values.** Each element is paired with its twin and every difference is written out: `h1 "Ship exact UI": fontSize should be 64px, is 56px`.
+
+The agent fixes the list, runs verify again, and moves on only when it passes.
+
+## Local first
+
+Everything runs on your machine. Captures land in `.beam/`, nothing is uploaded, and the Figma plugin exports straight to a file.
