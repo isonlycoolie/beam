@@ -1,9 +1,9 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
-import { PNG } from "pngjs";
 import { openCaptureSession } from "./capture.js";
 import { diffElements, type ElementDiff } from "./element-diff.js";
 import { diffPngs, type SectionScore } from "./pixel-diff.js";
+import { loadReference } from "./reference.js";
 import { renderVerifyMarkdown } from "./verify-report.js";
 
 export type BreakpointResult = {
@@ -39,8 +39,6 @@ export type VerifyInput = {
   sections?: number[];
 };
 
-const isUrl = (value: string) => /^https?:\/\//i.test(value) || value.startsWith("file:");
-
 /**
  * Proves a build matches its source. A breakpoint passes only when every section reaches the threshold
  * and, for URL references, no element is missing and no colour, font or large layout delta remains.
@@ -51,21 +49,24 @@ export async function verifyBuild(input: VerifyInput): Promise<VerifyReport> {
   const reportDir = resolve(input.cwd, ".beam", "verify", id);
   await mkdir(reportDir, { recursive: true });
 
-  const referencePng = isUrl(input.reference) ? undefined : await readFile(resolve(input.cwd, input.reference));
-  const widths = referencePng ? [PNG.sync.read(referencePng).width] : (input.breakpoints ?? [1440, 768, 390]);
+  const source = await loadReference(input.reference, input.cwd);
+  const widths = source.kind === "web" ? (input.breakpoints ?? [1440, 768, 390]) : [source.width];
   const session = await openCaptureSession();
   const breakpoints: BreakpointResult[] = [];
   try {
     for (const width of widths) {
       const target = await session.capture(input.target, width);
-      const reference = referencePng ? undefined : await session.capture(input.reference, width);
-      const pixels = diffPngs({ reference: referencePng ?? reference!.png, target: target.png, sections: reference?.sections });
+      const reference = source.kind === "web" ? await session.capture(source.url, width) : source.kind === "figma" ? source : undefined;
+      const referencePng = source.kind === "web" ? reference!.png : source.png;
+      const pixels = diffPngs({ reference: referencePng, target: target.png, sections: reference?.sections });
       const chosen = input.sections?.length ? pixels.sections.filter((s) => input.sections!.includes(s.index + 1)) : pixels.sections;
       const inChosen = (y: number) => chosen.some((s) => y >= s.top && y < s.top + s.height);
       const referenceElements = reference?.elements.filter((el) => !input.sections?.length || inChosen(el.box.y));
-      const elements = reference && !input.pixelsOnly ? diffElements(referenceElements!, target.elements) : undefined;
+      // Figma text boxes hug their text while DOM blocks span their container, so only vertical layout is compared.
+      const boxKeys = source.kind === "figma" ? (["y", "height"] as const) : undefined;
+      const elements = reference && !input.pixelsOnly ? diffElements(referenceElements!, target.elements, { boxKeys: boxKeys && [...boxKeys] }) : undefined;
       const files = { reference: `${width}-reference.png`, target: `${width}-target.png`, diff: `${width}-diff.png` };
-      await writeFile(join(reportDir, files.reference), referencePng ?? reference!.png);
+      await writeFile(join(reportDir, files.reference), referencePng);
       await writeFile(join(reportDir, files.target), target.png);
       await writeFile(join(reportDir, files.diff), pixels.diffPng);
       const elementsClean = !elements || (elements.missing.length === 0 && !elements.deltas.some((d) => d.severity === "high"));

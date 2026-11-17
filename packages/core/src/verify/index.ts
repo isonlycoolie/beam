@@ -4,3 +4,4 @@ export * from "./pixel-diff.js";
 export * from "./types.js";
 export * from "./verify-report.js";
 export * from "./verify-service.js";
+export * from "./reference.js";
