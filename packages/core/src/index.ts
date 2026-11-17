@@ -8,6 +8,7 @@ export * from "./agents/client-adapters.js";
 export * from "./kits/index.js";
 export * from "./verify/index.js";
 export * from "./clone/index.js";
+export * from "./figma-bundle/index.js";
 export * from "./agents/mcp-client-adapter.js";
 export * from "./cache/cache-key.js";
 export * from "./cache/cache-manager.js";
