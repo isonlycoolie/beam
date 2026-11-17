@@ -8,6 +8,9 @@ export type CapturedElement = {
   style: Record<StyleKey, string>;
 };
 
+/** Tag of reference elements that have no DOM tag (Figma layers): pair them by text with any tag. */
+export const ANY_TAG = "*";
+
 export const STYLE_KEYS = [
   "color",
   "backgroundColor",

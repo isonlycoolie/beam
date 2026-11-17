@@ -1,4 +1,4 @@
-import { STYLE_KEYS, type CapturedElement, type StyleKey } from "./types.js";
+import { ANY_TAG, STYLE_KEYS, type CapturedElement, type StyleKey } from "./types.js";
 
 export type ElementDelta = {
   path: string;
@@ -16,9 +16,13 @@ export type ElementDiff = {
   deltas: ElementDelta[];
 };
 
-/** First font family only, unquoted: "Inter", Arial -> inter. Fallback stacks rarely matter visually. */
-const normalize = (key: StyleKey, value: string) =>
-  key === "fontFamily" ? (value.split(",")[0] ?? "").replace(/["']/g, "").trim().toLowerCase() : value.trim();
+const ALIGN: Record<string, string> = { start: "left", end: "right" };
+/** First font family only, unquoted ("Inter", Arial -> inter); logical text-align read as left/right. */
+const normalize = (key: StyleKey, value: string) => {
+  if (key === "fontFamily") return (value.split(",")[0] ?? "").replace(/["']/g, "").trim().toLowerCase();
+  if (key === "textAlign") return ALIGN[value.trim()] ?? value.trim();
+  return value.trim();
+};
 
 /** Pairs elements by DOM path first, then by tag + text, so a moved wrapper does not hide a real match. */
 export function pairElements(reference: CapturedElement[], target: CapturedElement[]) {
@@ -35,7 +39,8 @@ export function pairElements(reference: CapturedElement[], target: CapturedEleme
   }
   const missing: CapturedElement[] = [];
   for (const ref of unmatched) {
-    const twin = ref.text ? target.find((el) => !used.has(el) && el.tag === ref.tag && el.text === ref.text) : undefined;
+    const sameTag = (el: CapturedElement) => ref.tag === ANY_TAG || el.tag === ref.tag;
+    const twin = ref.text ? target.find((el) => !used.has(el) && sameTag(el) && el.text === ref.text) : undefined;
     if (twin) {
       used.add(twin);
       pairs.push([ref, twin]);
@@ -47,19 +52,22 @@ export function pairElements(reference: CapturedElement[], target: CapturedEleme
 export function diffElements(
   reference: CapturedElement[],
   target: CapturedElement[],
-  options: { tolerancePx?: number } = {},
+  /** boxKeys limits layout checks, for example to y and height when Figma text boxes hug their text. */
+  options: { tolerancePx?: number; boxKeys?: Array<"x" | "y" | "width" | "height"> } = {},
 ): ElementDiff {
   const tolerance = options.tolerancePx ?? 1;
   const { pairs, missing } = pairElements(reference, target);
   const deltas: ElementDelta[] = [];
   for (const [ref, got] of pairs) {
     const base = { path: ref.path, tag: ref.tag, text: ref.text };
-    for (const key of ["x", "y", "width", "height"] as const) {
+    for (const key of options.boxKeys ?? (["x", "y", "width", "height"] as const)) {
       const gap = Math.abs(ref.box[key] - got.box[key]);
       if (gap > tolerance)
         deltas.push({ ...base, property: key, expected: `${ref.box[key]}px`, actual: `${got.box[key]}px`, severity: gap > 8 ? "high" : "medium" });
     }
     for (const key of STYLE_KEYS) {
+      // An empty reference value means the source does not define the property (Figma layers).
+      if (!ref.style[key]) continue;
       const expected = normalize(key, ref.style[key] ?? "");
       const actual = normalize(key, got.style[key] ?? "");
       if (expected !== actual)
