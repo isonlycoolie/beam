@@ -1,7 +1,7 @@
 import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { chromium } from "playwright";
-import { measurePage, settlePage } from "../verify/capture.js";
+import { measurePage, settlePage, STILL_CSS } from "../verify/capture.js";
 import type { PageCapture } from "../verify/types.js";
 import { recordAssets, type RecordedAsset } from "./asset-recorder.js";
 import { renderCloneBrief } from "./clone-brief.js";
@@ -56,7 +56,9 @@ export async function captureForClone(input: { url: string; cwd: string; breakpo
         if (width === widths[0]) {
           title = await page.title();
           // Scripts are dropped: the structure is for reading, not for running someone else's code.
-          const html = (await page.content()).replace(/<script\b[\s\S]*?<\/script>/gi, "");
+          const html = (await page.content())
+            .replace(/<script\b[\s\S]*?<\/script>/gi, "")
+            .replace(/<style[^>]*>([^<]*)<\/style>/g, (tag, css: string) => (css === STILL_CSS ? "" : tag));
           await writeFile(join(dir, "structure.html"), html);
           css = await page.evaluate(() =>
             [...document.querySelectorAll("style")].map((s) => ({ text: s.textContent ?? "", baseUrl: location.href })),
