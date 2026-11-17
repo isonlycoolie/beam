@@ -213,3 +213,10 @@ code {
     scrollbar-color: rgb(245 245 244 / 0.18) transparent;
   }
 }
+
+/* Breadcrumb links are standalone targets, so they get the 24px minimum (WCAG 2.5.8). */
+#nd-page > div:first-child a {
+  display: inline-flex;
+  min-height: 24px;
+  align-items: center;
+}
