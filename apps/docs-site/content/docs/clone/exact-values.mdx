@@ -1,0 +1,34 @@
+---
+title: Exact values
+description: spec.json stores what the browser computed. Write code that computes to the same value.
+---
+
+```json title="spec.json"
+{
+  "tag": "h1",
+  "text": "I Engineer Systems That Hold Under Pressure",
+  "style": {
+    "fontSize": "55.44px",
+    "fontWeight": "500",
+    "lineHeight": "58.212px",
+    "letterSpacing": "-1.6632px"
+  }
+}
+```
+
+## Use the value, not the nearest token
+
+```html
+<h1 class="text-[55.44px] font-medium leading-[58.212px] tracking-[-1.6632px]">
+```
+
+`text-5xl` would be close. Close is what Clone exists to remove.
+
+## Values that need care
+
+| Computed | Meaning | Write |
+| --- | --- | --- |
+| `lineHeight: normal` | Font default | Leave it unset |
+| `backgroundColor: rgba(0, 0, 0, 0)` | Transparent | No background |
+| A size with many decimals | A fluid `clamp()` measured at that width | Use the value per breakpoint, or find the `clamp()` in `stylesheets/` |
+| `boxShadow` with layers | Layered shadow | Copy the whole string |

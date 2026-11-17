@@ -1,0 +1,13 @@
+---
+title: Dark mode
+description: Capture the page's dark theme as well as its light one.
+---
+
+Many sites follow the visitor's system theme. Capture each theme separately:
+
+```bash
+npx usebeam clone https://example.com            # light
+npx usebeam clone https://example.com --dark     # dark, saved to <site>-dark
+```
+
+Both folders have the same files, so you can build the light theme first and add the dark values as `dark:` variants or a `prefers-color-scheme: dark` block.

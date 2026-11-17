@@ -1,0 +1,45 @@
+---
+title: The workflow
+description: Capture once, build top-down, verify every section before moving on.
+---
+
+## 1. Capture
+
+```bash
+npx usebeam clone https://example.com
+```
+
+The brief lists the page's sections in order, for example:
+
+```md
+1. `section.perf-section Hero Section`: y 0, height 916px
+2. `div.flex`: y 964, height 130px
+3. `a.block`: y 1141, height 455px
+```
+
+## 2. Set up the project
+
+Copy `fonts/` and `images/` into your public folder and load `fonts.css`. Start your dev server.
+
+## 3. Build one section, then verify it
+
+```bash
+npx usebeam verify --reference https://example.com --target http://localhost:3000 --sections 1
+```
+
+`--sections` tells Verify to judge only what you have built so far. Add a section, widen the list (`--sections 1,2`), verify again.
+
+## 4. Fix what the brief says
+
+Verify writes the exact fixes:
+
+```md
+- <h1> "Ship exact UI": fontSize should be 64px, is 56px
+- <p> "Every value comes from the source.": y should be 252px, is 243px
+```
+
+Fix from the top down: a wrong height early on moves everything below it.
+
+## Ownership
+
+The source's text, images, logos and fonts belong to its owner, and font files carry their own licences. Clone your own sites and sites you have permission to copy, or swap in your own brand before you publish.
