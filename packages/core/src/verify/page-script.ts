@@ -38,16 +38,23 @@ export const PAGE_SCRIPT = `(() => {
       style,
     });
   }
-  // Sections: walk down single-child wrappers until a level has several tall blocks.
-  let level = document.body;
-  for (let i = 0; i < 6; i++) {
-    const kids = [...level.children].filter((c) => c.getBoundingClientRect().height > 40);
-    if (kids.length === 1) { level = kids[0]; continue; }
-    break;
-  }
-  const sections = [...level.children]
-    .map((c) => ({ el: c, r: c.getBoundingClientRect() }))
-    .filter(({ r }) => r.height > 40 && r.width > 0)
+  // Sections: in-flow blocks taller than 40px. Wrappers are opened when one block fills them or they are
+  // much taller than the screen and split into several blocks, so a long page yields its real sections.
+  const inFlow = (c) => {
+    const r = c.getBoundingClientRect();
+    const position = getComputedStyle(c).position;
+    return r.height > 40 && r.width > 0 && position !== "absolute" && position !== "fixed";
+  };
+  const expand = (el, depth) => [...el.children].filter(inFlow).flatMap((c) => {
+    const inner = [...c.children].filter(inFlow);
+    const height = c.getBoundingClientRect().height;
+    const wrapper = inner.length === 1 && inner[0].getBoundingClientRect().height >= height * 0.9;
+    const tall = height > innerHeight * 1.5 && inner.length >= 2;
+    return depth < 6 && (wrapper || tall) ? expand(c, depth + 1) : [c];
+  });
+  const sections = expand(document.body, 0)
+    .map((el) => ({ el, r: el.getBoundingClientRect() }))
+    .sort((a, b) => a.r.top - b.r.top)
     .map(({ el, r }, index) => ({
       index,
       label: (el.id ? "#" + el.id : el.tagName.toLowerCase() + (el.classList[0] ? "." + el.classList[0] : "")) + (el.getAttribute("aria-label") ? " " + el.getAttribute("aria-label") : ""),
