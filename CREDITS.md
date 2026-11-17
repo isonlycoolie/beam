@@ -25,8 +25,8 @@ Beam builds on excellent open-source work. Thank you to everyone behind these pr
 
 | Font | Licence | Used for |
 | --- | --- | --- |
-| [Sora](https://github.com/sora-xor/sora-font) | SIL Open Font License 1.1 | Wordmark and display type |
-| [Inter](https://github.com/rsms/inter) | SIL Open Font License 1.1 | Text |
-| [Mona Sans Mono](https://github.com/github/mona-sans) | SIL Open Font License 1.1 | Code and numbers |
+| [Sora](https://github.com/sora-xor/sora-font) | SIL Open Font License 1.1 | Wordmark (outlined in the logo files) |
+| [Geist](https://github.com/vercel/geist-font) | SIL Open Font License 1.1 | Docs and Beam UI text, headings and numbers |
+| [Geist Mono](https://github.com/vercel/geist-font) | SIL Open Font License 1.1 | Code |
 
 Licences were read from each package's own licence file on 2026-11-17.
