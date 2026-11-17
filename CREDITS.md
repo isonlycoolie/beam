@@ -13,6 +13,17 @@ Beam builds on excellent open-source work. Thank you to everyone behind these pr
 | [tailwind-merge](https://github.com/dcastil/tailwind-merge) 3.7.0 | MIT | Class merging |
 | [clsx](https://github.com/lukeed/clsx) 2.1.1 | MIT | Class joining |
 
+## Design references (visual only)
+
+Beam UI's component sizes, spacing, radius, shadows and type, and the palette showcases, were measured from these
+products' public pages and rebuilt in Beam's own code. No code, logos, images or fonts from them are used. This is the
+only place they are credited.
+
+| Product | What was measured |
+| --- | --- |
+| [Stripe](https://stripe.com) (public Checkout demo, Stripe Docs, stripe.com) | Component sizes and states, the accounts table and usage billing showcases |
+| [Neon](https://neon.com/pricing) (public pricing page) | The pricing plans showcase |
+
 ## Docs site
 
 | Project | Licence | Used for |
