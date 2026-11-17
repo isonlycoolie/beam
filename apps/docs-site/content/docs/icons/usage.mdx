@@ -1,0 +1,49 @@
+---
+title: Usage
+description: Sizes, weight and colour, and icons inside buttons and inputs.
+---
+
+## Sizes
+
+Beam UI's `Icon` has three sizes. Each one has the stroke that keeps it optically even.
+
+| Size | Pixels | Stroke | Use |
+| --- | --- | --- | --- |
+| `sm` | 16 | 1.75 | Inside buttons, inputs, badges and table rows |
+| `md` | 20 | 1.75 | Navigation and toolbars (default) |
+| `lg` | 24 | 1.5 | Empty states and feature callouts |
+
+```tsx
+<Icon icon={Search01Icon} size="sm" />
+```
+
+## Weight
+
+Leave `weight` out to use the size's own stroke. Set it when a design calls for lighter or bolder icons; use one weight across a product.
+
+```tsx
+<Icon icon={Search01Icon} weight={2} />
+```
+
+## Colour
+
+Icons use `currentColor`. Colour the text, not the icon, so the icon and its label always match:
+
+```tsx
+<span className="text-text-2">
+  <Icon icon={Mail01Icon} size="sm" /> Inbox
+</span>
+```
+
+## In buttons and inputs
+
+```tsx
+<Button>
+  <Icon icon={Add01Icon} size="sm" /> New invoice
+</Button>
+
+<div className="relative">
+  <Icon icon={Search01Icon} size="sm" className="absolute start-3 top-1/2 -translate-y-1/2 text-text-3" />
+  <Input className="ps-9" placeholder="Search invoices" aria-label="Search invoices" />
+</div>
+```

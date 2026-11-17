@@ -1,0 +1,34 @@
+---
+title: Accessibility
+description: When an icon needs a label, and when it must stay silent.
+---
+
+## Decorative icons
+
+An icon next to a text label adds nothing for a screen reader. `Icon` hides it by default (`aria-hidden`).
+
+```tsx
+<Button>
+  <Icon icon={Add01Icon} size="sm" /> New invoice
+</Button>
+```
+
+## Icon-only controls
+
+A button with only an icon needs a name. Put it on the button:
+
+```tsx
+<Button size="icon" aria-label="Search">
+  <Icon icon={Search01Icon} size="sm" />
+</Button>
+```
+
+## Meaningful icons
+
+When the icon itself carries meaning (a status, a warning), give it a `label`. It becomes an image with that name:
+
+```tsx
+<Icon icon={Alert02Icon} label="Payment failed" />
+```
+
+Never use an icon's colour alone to carry meaning: pair it with a word.
