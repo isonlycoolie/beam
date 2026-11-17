@@ -1,0 +1,56 @@
+{
+  "name": "button",
+  "title": "Button",
+  "summary": "Runs an action or submits a form.",
+  "source": "shadcn/ui (MIT)",
+  "use_when": [
+    "Triggering an action: save, create, send",
+    "Submitting a form"
+  ],
+  "avoid_when": [
+    "Navigating to another page: use a link",
+    "More than one primary button in a view: demote the rest to secondary or ghost"
+  ],
+  "props": {
+    "variant": "default | secondary | outline | ghost | destructive | link",
+    "size": "sm | md | lg | icon | icon-sm",
+    "loading": "boolean, keeps the width and blocks clicks",
+    "asChild": "boolean, render as the child element (for links)"
+  },
+  "variants": [
+    "default",
+    "secondary",
+    "outline",
+    "ghost",
+    "destructive",
+    "link",
+    "loading",
+    "with-icon",
+    "icon"
+  ],
+  "composes_with": [
+    "PageHeader",
+    "Card",
+    "Field"
+  ],
+  "copy": {
+    "label": "Starts with a verb that names the result: Create invoice, not Submit. At most 3 words."
+  },
+  "states": [
+    "default",
+    "hover",
+    "focus",
+    "active",
+    "disabled",
+    "loading"
+  ],
+  "a11y": [
+    "Icon-only buttons need an aria-label",
+    "Loading sets aria-busy"
+  ],
+  "rules": [
+    "action.one-primary",
+    "copy.verbs-on-actions",
+    "copy.length-caps"
+  ]
+}
