@@ -1,0 +1,9 @@
+{
+  "name": "glass",
+  "title": "Glass",
+  "summary": "Apple-style liquid glass components, copied into your project",
+  "version": "0.1.0",
+  "status": "preview",
+  "requires": [],
+  "components": { "from": "components", "to": "components/beam" }
+}
