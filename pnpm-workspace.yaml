@@ -1,6 +1,11 @@
 packages:
   - "packages/*"
+  - "apps/docs-site"
 onlyBuiltDependencies:
   - esbuild
 allowBuilds:
   esbuild: true
+  sharp: true
+minimumReleaseAgeExclude:
+  - fumadocs-core@16.19.4
+  - fumadocs-ui@16.19.4
