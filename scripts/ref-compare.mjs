@@ -7,7 +7,7 @@
 // 2. Pixels: the rebuild is screenshot at the reference's size; a side-by-side and a diff image are written next
 //    to the reference so a person can see both. Colours differ on purpose (palette tokens), so pixels are shown,
 //    not scored; the layout check is the gate.
-import { readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { chromium } from "playwright";
 import pixelmatch from "pixelmatch";
@@ -20,6 +20,9 @@ const TOLERANCE = 2;
 const FONT_SHARE = 0.15;
 const FONT = 12;
 const reference = JSON.parse(readFileSync(join(dir, `${name}.json`), "utf8"));
+// Rebuilds use neutral copy; <name>.rename.json (kept with the capture, outside the repo) maps it to the captured words.
+const renamePath = join(dir, `${name}.rename.json`);
+const rename = existsSync(renamePath) ? JSON.parse(readFileSync(renamePath, "utf8")) : {};
 
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: reference.width, height: 1000 } });
@@ -46,6 +49,7 @@ const ours = await root.evaluate((rootEl) => {
   walk(rootEl);
   return { size: { w: Math.round(base.width), h: Math.round(base.height) }, elements: out };
 });
+for (const e of ours.elements) if (rename[e.text]) e.text = rename[e.text];
 const pad = reference.pad ?? 0;
 const box = await root.boundingBox();
 await page.screenshot({ path: join(dir, `${name}.rebuild.png`), clip: { x: box.x - pad, y: box.y - pad, width: box.width + pad * 2, height: box.height + pad * 2 } });
