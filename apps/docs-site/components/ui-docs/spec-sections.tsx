@@ -46,13 +46,15 @@ export function AgentRules({ name }: { name: string }) {
           <strong>Accessibility:</strong> {spec.a11y.join("; ")}.
         </p>
       )}
-      <div className="not-prose my-4 flex flex-wrap gap-2">
-        {spec.rules.map((rule) => (
-          <code key={rule} className="rounded-md border border-[#2a2a2a] bg-white/[0.04] px-2 py-1 text-xs text-[#d4d4d4]">
-            {rule}
-          </code>
+      <p>
+        <strong>Checked by Beam:</strong> {spec.rules.map((rule, i) => (
+          <span key={rule}>
+            {i > 0 && ", "}
+            <code>{rule}</code>
+          </span>
         ))}
-      </div>
+        .
+      </p>
     </>
   );
 }

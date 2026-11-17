@@ -8,16 +8,17 @@ export function DoDont({ name, doNote, dontNote }: { name: string; doNote: strin
   const Dont = EXAMPLES[`${name}/dont`]?.Component;
   if (!Do || !Dont) throw new Error(`Add do.tsx and dont.tsx to ${name}/do-dont.`);
   const panel = (ok: boolean, Example: typeof Do, note: string) => (
-    <figure className="flex flex-col overflow-hidden rounded-2xl border border-[#2a2a2a] bg-[#121212]">
-      <div data-theme="beam" className="light flex min-h-[200px] flex-1 items-center justify-center bg-background p-8">
+    <figure className="flex flex-col overflow-hidden rounded-xl border border-fd-border">
+      {/* Same stage as every preview: the page's colour, following the site's light or dark mode. */}
+      <div data-theme="default" className="flex min-h-[200px] flex-1 items-center justify-center p-8">
         <Example />
       </div>
-      <figcaption className="flex items-start gap-2 border-t border-[#2a2a2a] px-4 py-3 text-sm">
-        <span className={ok ? "text-[#3ccf8e]" : "text-[#ff5c75]"}>
+      <figcaption className="flex items-start gap-2 border-t border-fd-border px-4 py-3 text-sm">
+        <span className={ok ? "text-fd-foreground" : "text-fd-muted-foreground"}>
           <HugeiconsIcon icon={ok ? CheckmarkCircle02Icon : Cancel01Icon} size={18} strokeWidth={1.75} />
         </span>
-        <span className="text-[#d4d4d4]">
-          <strong className="text-[#f5f5f4]">{ok ? "Do." : "Don't."}</strong> {note}
+        <span className="text-fd-muted-foreground">
+          <strong className="font-medium text-fd-foreground">{ok ? "Do." : "Don't."}</strong> {note}
         </span>
       </figcaption>
     </figure>

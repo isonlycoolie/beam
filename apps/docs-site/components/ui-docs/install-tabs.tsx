@@ -18,7 +18,7 @@ export function InstallTabs({ name, dependencies = [] }: { name: string; depende
         <DynamicCodeBlock lang="bash" code={`npm install ${deps.join(" ")}`} />
         <p className="text-sm">
           Copy <code>{`${name}.tsx`}</code> from <code>{`packages/ui/registry/components/${name}`}</code> into{" "}
-          <code>components/ui</code>, and the Beam tokens and a theme into your global CSS. {spec.title} is based on {spec.source}.
+          <code>components/ui</code>, and the Beam tokens and a palette into your global CSS. {spec.title} is based on {spec.source}.
         </p>
       </Tab>
     </Tabs>
