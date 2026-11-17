@@ -13,5 +13,6 @@
   "ui-tag": "stripe/ui/tag",
   "ui-radio-cards": "stripe/ui/radio-cards",
   "ui-checkbox": "stripe/ui/checkbox",
-  "ui-field": "stripe/ui/field-email"
+  "ui-field": "stripe/ui/field-email",
+  "ui-menu-cards": "stripe/ui/menu-panel|[data-slot=dropdown-menu-content]"
 }
