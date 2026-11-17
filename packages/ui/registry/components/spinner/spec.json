@@ -1,0 +1,37 @@
+{
+  "name": "spinner",
+  "title": "Spinner",
+  "summary": "Something is happening; the length is unknown.",
+  "source": "shadcn/ui (MIT)",
+  "use_when": [
+    "Waits under a few seconds with no known end"
+  ],
+  "avoid_when": [
+    "Content loading in place: use a Skeleton shaped like it"
+  ],
+  "props": {
+    "label": "string"
+  },
+  "variants": [
+    "default"
+  ],
+  "styles": [
+    "default"
+  ],
+  "composes_with": [],
+  "copy": {},
+  "states": [
+    "default"
+  ],
+  "a11y": [
+    "role=status with a label"
+  ],
+  "rules": [
+    "loader.timing"
+  ],
+  "reference": {
+    "site": "Stripe",
+    "captured": "2026-11-18",
+    "folder": "Pictures/beam/references/stripe/ui"
+  }
+}
