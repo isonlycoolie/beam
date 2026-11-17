@@ -5,6 +5,7 @@ import { Command } from "commander";
 import { loginCommand, logoutCommand, whoamiCommand } from "./commands/auth.js";
 import { cloneCommand } from "./commands/clone.js";
 import { compareCommand } from "./commands/compare.js";
+import { craftReviewCommand } from "./commands/craft.js";
 import { debugCommand } from "./commands/debug.js";
 import { doctorCommand } from "./commands/doctor.js";
 import { evidenceCommand } from "./commands/evidence.js";
@@ -83,6 +84,18 @@ figma
   .option("--json", "Print a JSON summary")
   .action(async (file: string, options: { json?: boolean }) => {
     await figmaImportCommand(file, options);
+  });
+
+program
+  .command("craft")
+  .description("UI quality checks for pages you build")
+  .command("review")
+  .description("Review a running page: contrast, touch targets, overflow, type, spacing, weight, generic-AI patterns")
+  .argument("<url>", "The page to review, for example http://localhost:3000")
+  .option("--breakpoints <widths>", "Comma-separated widths", "1440,390")
+  .option("--json", "Print the review as JSON")
+  .action(async (url: string, options: { breakpoints?: string; json?: boolean }) => {
+    await craftReviewCommand(url, options);
   });
 
 program
