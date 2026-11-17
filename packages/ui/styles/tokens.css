@@ -1,0 +1,56 @@
+/* Beam UI tokens. Theme files set the colour values; this file sets everything themes share. */
+
+:root,
+[data-theme] {
+  /* 4px spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Radius: nested elements use outer radius minus padding */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius: var(--radius-md);
+
+  /* Elevation: overlays use shadow-3 only */
+  --shadow-1: 0 1px 2px rgb(10 10 20 / 0.05);
+  --shadow-2: 0 4px 12px rgb(10 10 20 / 0.08), 0 1px 2px rgb(10 10 20 / 0.04);
+  --shadow-3: 0 16px 40px rgb(10 10 20 / 0.16), 0 2px 6px rgb(10 10 20 / 0.06);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 150ms;
+  --dur-base: 220ms;
+  --dur-slow: 320ms;
+
+  /* Controls: comfortable density */
+  --control-sm: 32px;
+  --control-md: 36px;
+  --control-lg: 40px;
+  --section-gap: var(--space-8);
+}
+
+[data-density="compact"] {
+  --control-sm: 28px;
+  --control-md: 32px;
+  --control-lg: 36px;
+  --section-gap: var(--space-6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root,
+  [data-theme] {
+    --dur-fast: 0ms;
+    --dur-base: 0ms;
+    --dur-slow: 0ms;
+  }
+}
