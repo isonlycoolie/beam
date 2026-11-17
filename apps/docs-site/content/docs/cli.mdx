@@ -1,0 +1,42 @@
+---
+title: CLI reference
+description: Every Beam command. Run them with npx usebeam, no global install needed.
+---
+
+## Tools
+
+| Command | Does |
+| --- | --- |
+| `add <tools...>` | Add tools as agent skills (`--agent`, `--force`) |
+| `list` | Show every tool and which are installed |
+| `remove <tool>` | Remove a tool's skills; copied components stay |
+| `update` | Refresh installed tools to this Beam version |
+
+## Capture and check
+
+| Command | Does |
+| --- | --- |
+| `clone <url>` | Capture a page for exact rebuilding (`--breakpoints`, `--dark`) |
+| `verify` | Prove a build matches (`--reference`, `--target`, `--sections`) |
+| `craft review <url>` | Review UI quality |
+| `figma import <file>` | Unpack a Beam plugin export |
+
+## Figma with a token
+
+| Command | Does |
+| --- | --- |
+| `login`, `logout`, `whoami` | Manage the saved Figma token |
+| `inspect <url>` | Implementation context for a frame |
+| `export <url>` | Rendered images and assets |
+| `compare <url> <local>` | Pixel compare against a frame |
+
+## Setup
+
+| Command | Does |
+| --- | --- |
+| `doctor` | Check Node, folders, token and browser |
+| `setup browser` | Download Chromium once |
+| `init` | Register the MCP server with your agents |
+| `mcp` | Start the MCP server |
+
+Errors always say what went wrong and how to fix it, and exit with a non-zero code. Set `BEAM_DEBUG=1` to see the full trace.

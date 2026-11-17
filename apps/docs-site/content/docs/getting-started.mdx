@@ -1,0 +1,51 @@
+---
+title: Getting started
+description: Add a Beam tool to your project and let your agent use it. Two minutes, no global install.
+---
+
+Beam runs with `npx`, so there is nothing to install globally. You need Node.js 22.12 or newer.
+
+## 1. Add a tool
+
+Pick the tool you need and add it to your project:
+
+```bash
+npx usebeam add clone
+```
+
+Beam looks for the agents your project already uses and puts the tool's skill where each one reads it:
+
+| Agent | Skill folder |
+| --- | --- |
+| Claude Code | `.claude/skills/beam-clone/` |
+| Codex | `.agents/skills/beam-clone/` |
+| Cursor | `.cursor/skills/beam-clone/` (or the Claude folder, which Cursor also reads) |
+
+Add several at once with `npx usebeam add clone verify`, or see them all with `npx usebeam list`.
+
+## 2. Set up the browser once
+
+Clone, Verify and Craft take real screenshots, so they need Chromium. Beam tells you when it is missing:
+
+```bash
+npx usebeam doctor
+npx usebeam setup browser
+```
+
+The browser is a one-time download of about 150 MB.
+
+## 3. Ask your agent
+
+That is it. The skill teaches your agent when and how to use the tool. Try:
+
+> Clone https://example.com into this project, section by section, and verify each one.
+
+## Optional: connect the MCP server
+
+If you prefer tools over skills, register Beam's MCP server with your agent:
+
+```bash
+npx usebeam init
+```
+
+It writes `.mcp.json` for Claude Code and `.cursor/mcp.json` for Cursor. Codex keeps one global config, so it is only changed when you ask: `npx usebeam init --client codex`.
