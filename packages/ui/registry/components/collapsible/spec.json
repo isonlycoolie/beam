@@ -1,0 +1,38 @@
+{
+  "name": "collapsible",
+  "title": "Collapsible",
+  "summary": "Shows and hides one region.",
+  "source": "shadcn/ui (MIT)",
+  "use_when": [
+    "One region a person may want out of the way"
+  ],
+  "avoid_when": [
+    "Several sections: use an Accordion"
+  ],
+  "props": {
+    "open": "boolean"
+  },
+  "variants": [
+    "default"
+  ],
+  "styles": [
+    "default"
+  ],
+  "composes_with": [],
+  "copy": {},
+  "states": [
+    "closed",
+    "open"
+  ],
+  "a11y": [
+    "The trigger has aria-expanded (Radix)"
+  ],
+  "rules": [
+    "state.complete"
+  ],
+  "reference": {
+    "site": "Stripe",
+    "captured": "2026-11-18",
+    "folder": "Pictures/beam/references/stripe/ui"
+  }
+}
