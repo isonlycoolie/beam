@@ -1,0 +1,36 @@
+{
+  "name": "direction",
+  "title": "Direction",
+  "summary": "Sets left-to-right or right-to-left for components inside.",
+  "source": "shadcn/ui (MIT)",
+  "use_when": [
+    "Apps in right-to-left languages"
+  ],
+  "avoid_when": [
+    "Single-direction apps"
+  ],
+  "props": {},
+  "variants": [
+    "default"
+  ],
+  "styles": [
+    "default"
+  ],
+  "composes_with": [],
+  "copy": {},
+  "states": [
+    "default",
+    "hover",
+    "focus",
+    "disabled"
+  ],
+  "a11y": [],
+  "rules": [
+    "state.complete"
+  ],
+  "reference": {
+    "site": "Stripe",
+    "captured": "2026-11-18",
+    "folder": "Pictures/beam/references/stripe/ui"
+  }
+}
