@@ -8,8 +8,8 @@
     "build": "next build",
     "start": "next start -p 3100",
     "postinstall": "fumadocs-mdx && node scripts/gen-ui-examples.mjs",
-    "predev": "node ../../packages/ui/palettes/build.ts && node scripts/gen-ui-examples.mjs && node scripts/gen-icon-index.mjs && node ../../packages/ui/scripts/build-registry.mjs public/r",
-    "prebuild": "node ../../packages/ui/palettes/build.ts && node scripts/gen-ui-examples.mjs && node scripts/gen-icon-index.mjs && node ../../packages/ui/scripts/build-registry.mjs public/r",
+    "predev": "node ../../packages/ui/palettes/build.ts && node scripts/check-showcases.mjs && node scripts/gen-ui-examples.mjs && node scripts/gen-icon-index.mjs && node ../../packages/ui/scripts/build-registry.mjs public/r",
+    "prebuild": "node ../../packages/ui/palettes/build.ts && node scripts/check-showcases.mjs && node scripts/gen-ui-examples.mjs && node scripts/gen-icon-index.mjs && node ../../packages/ui/scripts/build-registry.mjs public/r",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
