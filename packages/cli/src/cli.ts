@@ -12,15 +12,17 @@ import { initCommand } from "./commands/init.js";
 import { mappingsCommand } from "./commands/mappings.js";
 import { mcpCommand } from "./commands/mcp.js";
 import { settingsCommand } from "./commands/settings.js";
+import { setupCommand } from "./commands/setup.js";
 import { snapshotsCommand } from "./commands/snapshots.js";
 import { formatError } from "./terminal.js";
+import { BEAM_VERSION } from "./version.js";
 
 const program = new Command();
 
 program
   .name("beam")
   .description("Beam design intelligence CLI")
-  .version("0.1.0");
+  .version(BEAM_VERSION);
 
 program
   .command("login")
@@ -234,6 +236,14 @@ program
       await settingsCommand(action, key, value, options);
     },
   );
+
+program
+  .command("setup")
+  .description("Install optional runtime pieces, for example the screenshot browser")
+  .argument("<target>", "What to set up: browser")
+  .action(async (target: string) => {
+    await setupCommand(target);
+  });
 
 program
   .command("mcp")
