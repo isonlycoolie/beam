@@ -9,6 +9,7 @@ import { debugCommand } from "./commands/debug.js";
 import { doctorCommand } from "./commands/doctor.js";
 import { evidenceCommand } from "./commands/evidence.js";
 import { exportCommand } from "./commands/export.js";
+import { figmaImportCommand } from "./commands/figma.js";
 import { inspectCommand } from "./commands/inspect.js";
 import { addCommand, listCommand, removeCommand, updateCommand } from "./commands/kits.js";
 import { initCommand } from "./commands/init.js";
@@ -69,6 +70,19 @@ program
   .option("--json", "Print a JSON summary")
   .action(async (url: string, options: { breakpoints?: string; json?: boolean }) => {
     await cloneCommand(url, options);
+  });
+
+const figma = program
+  .command("figma")
+  .description("Work with exports from the Beam Figma plugin (no token, any Figma plan)");
+
+figma
+  .command("import")
+  .description("Unpack a .beam.json export into a brief, renders, images, SVGs and variables")
+  .argument("<file>", "The .beam.json file the plugin saved")
+  .option("--json", "Print a JSON summary")
+  .action(async (file: string, options: { json?: boolean }) => {
+    await figmaImportCommand(file, options);
   });
 
 program
