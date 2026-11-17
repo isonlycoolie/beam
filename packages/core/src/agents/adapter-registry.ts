@@ -1,9 +1,10 @@
+import { createClientAdapter, type AdapterContext } from "./client-adapters.js";
 import type { McpClientAdapter } from "./mcp-client-adapter.js";
 
 export const SUPPORTED_MCP_CLIENTS = [
-  "codex",
-  "cursor",
   "claude-code",
+  "cursor",
+  "codex",
 ] as const;
 export type SupportedMcpClient = (typeof SUPPORTED_MCP_CLIENTS)[number];
 
@@ -26,6 +27,9 @@ export function createUnsupportedAdapter(id: string): McpClientAdapter {
   };
 }
 
-export function getMcpClientAdapter(id: string): McpClientAdapter {
-  return createUnsupportedAdapter(id);
+export function getMcpClientAdapter(
+  id: string,
+  context: AdapterContext = { cwd: process.cwd() },
+): McpClientAdapter {
+  return createClientAdapter(id, context) ?? createUnsupportedAdapter(id);
 }
