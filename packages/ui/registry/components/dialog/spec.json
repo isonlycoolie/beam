@@ -1,0 +1,44 @@
+{
+  "name": "dialog",
+  "title": "Dialog",
+  "summary": "A focused task over the page; the page waits until it closes.",
+  "source": "shadcn/ui (MIT)",
+  "use_when": [
+    "A short task that needs the whole attention: confirm, choose, edit one thing"
+  ],
+  "avoid_when": [
+    "Long forms or reading: use a page or a Sheet"
+  ],
+  "props": {
+    "open": "boolean",
+    "onOpenChange": "(open) => void"
+  },
+  "variants": [
+    "default"
+  ],
+  "styles": [
+    "default"
+  ],
+  "composes_with": [],
+  "copy": {
+    "title": "Names the task",
+    "action": "A verb that names the result"
+  },
+  "states": [
+    "closed",
+    "open"
+  ],
+  "a11y": [
+    "Focus is trapped and returns to the trigger (Radix)",
+    "Always has a DialogTitle"
+  ],
+  "rules": [
+    "action.one-primary",
+    "state.complete"
+  ],
+  "reference": {
+    "site": "Stripe",
+    "captured": "2026-11-18",
+    "folder": "Pictures/beam/references/stripe/ui"
+  }
+}
