@@ -1,0 +1,42 @@
+{
+  "name": "alert-dialog",
+  "title": "Alert Dialog",
+  "summary": "Asks to confirm a step that cannot be undone.",
+  "source": "shadcn/ui (MIT)",
+  "use_when": [
+    "Confirming a destructive or irreversible step"
+  ],
+  "avoid_when": [
+    "Anything reversible: just do it and offer Undo"
+  ],
+  "props": {
+    "open": "boolean"
+  },
+  "variants": [
+    "default"
+  ],
+  "styles": [
+    "default"
+  ],
+  "composes_with": [],
+  "copy": {
+    "title": "A question naming the action",
+    "action": "Repeats the verb: Void invoice, not OK"
+  },
+  "states": [
+    "closed",
+    "open"
+  ],
+  "a11y": [
+    "Focus starts on Cancel (Radix)"
+  ],
+  "rules": [
+    "copy.verbs-on-actions",
+    "state.complete"
+  ],
+  "reference": {
+    "site": "Stripe",
+    "captured": "2026-11-18",
+    "folder": "Pictures/beam/references/stripe/ui"
+  }
+}
