@@ -1,0 +1,36 @@
+{
+  "name": "drawer",
+  "title": "Drawer",
+  "summary": "A panel that slides up from the bottom, for phones.",
+  "source": "shadcn/ui (MIT)",
+  "use_when": [
+    "Phone-first tasks and filters"
+  ],
+  "avoid_when": [
+    "Desktop: use a Sheet or Dialog"
+  ],
+  "props": {},
+  "variants": [
+    "default"
+  ],
+  "styles": [
+    "default"
+  ],
+  "composes_with": [],
+  "copy": {},
+  "states": [
+    "default",
+    "hover",
+    "focus",
+    "disabled"
+  ],
+  "a11y": [],
+  "rules": [
+    "state.complete"
+  ],
+  "reference": {
+    "site": "Stripe",
+    "captured": "2026-11-18",
+    "folder": "Pictures/beam/references/stripe/ui"
+  }
+}
