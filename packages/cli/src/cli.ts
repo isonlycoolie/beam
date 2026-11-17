@@ -3,6 +3,7 @@
 import type { AgentId } from "@beam/core";
 import { Command } from "commander";
 import { loginCommand, logoutCommand, whoamiCommand } from "./commands/auth.js";
+import { cloneCommand } from "./commands/clone.js";
 import { compareCommand } from "./commands/compare.js";
 import { debugCommand } from "./commands/debug.js";
 import { doctorCommand } from "./commands/doctor.js";
@@ -61,6 +62,16 @@ program
   });
 
 program
+  .command("clone")
+  .description("Capture a live page (measured styles, real fonts and images) so an agent can rebuild it exactly")
+  .argument("<url>", "The page to clone, for example https://example.com/pricing")
+  .option("--breakpoints <widths>", "Comma-separated widths to capture", "1440,768,390")
+  .option("--json", "Print a JSON summary")
+  .action(async (url: string, options: { breakpoints?: string; json?: boolean }) => {
+    await cloneCommand(url, options);
+  });
+
+program
   .command("verify")
   .description("Prove a build matches its source: pixels per section plus exact element values")
   .requiredOption("--reference <url|png>", "The source: a live URL or a PNG of the design")
@@ -68,6 +79,7 @@ program
   .option("--breakpoints <widths>", "Comma-separated widths for URL references", "1440,768,390")
   .option("--threshold <score>", "Minimum score every section must reach", "0.98")
   .option("--pixels-only", "Skip the element check and compare pixels only")
+  .option("--sections <numbers>", "Only judge these sections, 1-based, for example 1,2 while building top-down")
   .option("--json", "Print the full report as JSON")
   .action(async (options) => {
     await verifyCommand(options);
