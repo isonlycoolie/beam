@@ -1,0 +1,67 @@
+/* Beam UI type scale. Every text size in an app comes from one of these steps (rule type.from-scale). */
+
+[data-theme] {
+  --type-display: 56px;
+  --type-display-lh: 60px;
+  --type-h1: 32px;
+  --type-h1-lh: 38px;
+  --type-h2: 24px;
+  --type-h2-lh: 32px;
+  --type-h3: 16px;
+  --type-h3-lh: 24px;
+  --type-body: 14px;
+  --type-body-lh: 22px;
+  --type-small: 13px;
+  --type-small-lh: 20px;
+  --type-caption: 12px;
+  --type-caption-lh: 16px;
+  font-family: var(--theme-font-text), ui-sans-serif, system-ui, sans-serif;
+  font-size: var(--type-body);
+  line-height: var(--type-body-lh);
+  color: var(--text-1);
+}
+
+@utility text-display {
+  font-family: var(--theme-font-display), var(--theme-font-text), ui-sans-serif, system-ui, sans-serif;
+  font-size: var(--type-display);
+  line-height: var(--type-display-lh);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+@utility text-h1 {
+  font-family: var(--theme-font-display), var(--theme-font-text), ui-sans-serif, system-ui, sans-serif;
+  font-size: var(--type-h1);
+  line-height: var(--type-h1-lh);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+@utility text-h2 {
+  font-family: var(--theme-font-display), var(--theme-font-text), ui-sans-serif, system-ui, sans-serif;
+  font-size: var(--type-h2);
+  line-height: var(--type-h2-lh);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+@utility text-h3 {
+  font-size: var(--type-h3);
+  line-height: var(--type-h3-lh);
+  font-weight: 600;
+}
+@utility text-body {
+  font-size: var(--type-body);
+  line-height: var(--type-body-lh);
+}
+@utility text-small {
+  font-size: var(--type-small);
+  line-height: var(--type-small-lh);
+}
+@utility text-caption {
+  font-size: var(--type-caption);
+  line-height: var(--type-caption-lh);
+  font-weight: 500;
+}
+/* Numbers line up in tables and KPIs. */
+@utility text-numeric {
+  font-family: var(--theme-font-numeric), var(--theme-font-text), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+}
