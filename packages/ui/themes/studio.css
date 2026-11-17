@@ -3,7 +3,7 @@
 [data-theme="studio"] {
   --theme-font-display: var(--font-bricolage, 'Bricolage Grotesque');
   --theme-font-text: var(--font-inter, 'Inter');
-  --theme-font-numeric: var(--font-mona-mono, ui-monospace);
+  --theme-font-numeric: var(--font-inter, 'Inter');
   color-scheme: light;
   --background: #fffaf6;
   --foreground: #1c1410;

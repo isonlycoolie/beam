@@ -3,7 +3,7 @@
 [data-theme="beam"] {
   --theme-font-display: var(--font-sora, 'Sora');
   --theme-font-text: var(--font-inter, 'Inter');
-  --theme-font-numeric: var(--font-mona-mono, ui-monospace);
+  --theme-font-numeric: var(--font-inter, 'Inter');
   color-scheme: light;
   --background: #ffffff;
   --foreground: #0b0b12;
