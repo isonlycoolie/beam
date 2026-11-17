@@ -35,6 +35,8 @@ export type VerifyInput = {
   threshold?: number;
   /** Count only pixels; skip element pairing (useful for design PNGs or canvas-heavy pages). */
   pixelsOnly?: boolean;
+  /** Only judge these sections (1-based, in page order). Lets a page be built and checked top-down. */
+  sections?: number[];
 };
 
 const isUrl = (value: string) => /^https?:\/\//i.test(value) || value.startsWith("file:");
@@ -58,7 +60,10 @@ export async function verifyBuild(input: VerifyInput): Promise<VerifyReport> {
       const target = await session.capture(input.target, width);
       const reference = referencePng ? undefined : await session.capture(input.reference, width);
       const pixels = diffPngs({ reference: referencePng ?? reference!.png, target: target.png, sections: reference?.sections });
-      const elements = reference && !input.pixelsOnly ? diffElements(reference.elements, target.elements) : undefined;
+      const chosen = input.sections?.length ? pixels.sections.filter((s) => input.sections!.includes(s.index + 1)) : pixels.sections;
+      const inChosen = (y: number) => chosen.some((s) => y >= s.top && y < s.top + s.height);
+      const referenceElements = reference?.elements.filter((el) => !input.sections?.length || inChosen(el.box.y));
+      const elements = reference && !input.pixelsOnly ? diffElements(referenceElements!, target.elements) : undefined;
       const files = { reference: `${width}-reference.png`, target: `${width}-target.png`, diff: `${width}-diff.png` };
       await writeFile(join(reportDir, files.reference), referencePng ?? reference!.png);
       await writeFile(join(reportDir, files.target), target.png);
@@ -68,10 +73,10 @@ export async function verifyBuild(input: VerifyInput): Promise<VerifyReport> {
         width,
         score: pixels.score,
         size: pixels.size,
-        sections: pixels.sections,
+        sections: chosen,
         elements,
         files,
-        passed: pixels.sections.every((s) => s.score >= threshold) && elementsClean,
+        passed: chosen.every((s) => s.score >= threshold) && elementsClean,
       });
     }
   } finally {

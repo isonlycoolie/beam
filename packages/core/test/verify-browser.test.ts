@@ -30,4 +30,11 @@ describe.skipIf(!hasBrowser)("verify in a real browser", () => {
     const brief = await readFile(join(report.reportDir, "report.md"), "utf8");
     expect(brief).toContain('<h1> "Ship exact UI": fontSize should be 64px, is 56px');
   }, 60_000);
+
+  it("judges only the chosen sections so a page can be checked top-down", async () => {
+    const cwd = await mkdtemp(join(tmpdir(), "beam-verify-"));
+    const report = await verifyBuild({ reference: fixture("reference.html"), target: fixture("target.html"), cwd, breakpoints: [1024], sections: [1] });
+    expect(report.breakpoints[0]?.sections.map((s) => s.label)).toEqual(["header"]);
+    expect(report.passed).toBe(true);
+  }, 60_000);
 });
