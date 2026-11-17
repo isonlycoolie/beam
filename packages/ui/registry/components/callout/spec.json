@@ -1,0 +1,41 @@
+{
+  "name": "callout",
+  "title": "Callout",
+  "summary": "A short note that sits in the flow of a page.",
+  "source": "shadcn/ui (MIT)",
+  "use_when": [
+    "A short aside the reader should not miss"
+  ],
+  "avoid_when": [
+    "Errors from an action: use a toast or field error"
+  ],
+  "props": {
+    "variant": "muted | rule"
+  },
+  "variants": [
+    "default",
+    "rule"
+  ],
+  "styles": [
+    "default",
+    "rule"
+  ],
+  "composes_with": [],
+  "copy": {
+    "body": "One or two sentences"
+  },
+  "states": [
+    "default"
+  ],
+  "a11y": [
+    "role=note"
+  ],
+  "rules": [
+    "state.complete"
+  ],
+  "reference": {
+    "site": "Stripe",
+    "captured": "2026-11-18",
+    "folder": "Pictures/beam/references/stripe/ui"
+  }
+}
