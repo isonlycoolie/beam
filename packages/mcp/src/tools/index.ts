@@ -8,10 +8,12 @@ import {
   verifyBuild,
   captureForClone,
   importFigmaBundle,
+  reviewPage,
 } from "@beam/core";
 import { z } from "zod";
 import { registerAssetTools } from "./assets.js";
 import { registerCloneTools } from "./clone.js";
+import { registerCraftTools } from "./craft.js";
 import { registerFigmaImportTools } from "./figma-import.js";
 import { registerFreeLocalTools } from "./free-local.js";
 import { registerCompareTools } from "./compare.js";
@@ -29,6 +31,7 @@ export type BeamToolContext = {
   verifyBuild?: typeof verifyBuild;
   captureForClone?: typeof captureForClone;
   importFigmaBundle?: typeof importFigmaBundle;
+  reviewPage?: typeof reviewPage;
 };
 
 export function registerBeamTools(
@@ -67,4 +70,5 @@ export function registerBeamTools(
   registerVerifyTools(server, context);
   registerCloneTools(server, context);
   registerFigmaImportTools(server, context);
+  registerCraftTools(server, context);
 }
