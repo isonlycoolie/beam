@@ -1,0 +1,39 @@
+{
+  "name": "popover",
+  "title": "Popover",
+  "summary": "Extra content anchored to a control.",
+  "source": "shadcn/ui (MIT)",
+  "use_when": [
+    "Help or a small form next to the control it belongs to"
+  ],
+  "avoid_when": [
+    "A list of actions: use a Dropdown Menu"
+  ],
+  "props": {
+    "open": "boolean",
+    "side": "top | right | bottom | left"
+  },
+  "variants": [
+    "default"
+  ],
+  "styles": [
+    "default"
+  ],
+  "composes_with": [],
+  "copy": {},
+  "states": [
+    "closed",
+    "open"
+  ],
+  "a11y": [
+    "Escape closes and focus returns to the trigger"
+  ],
+  "rules": [
+    "state.complete"
+  ],
+  "reference": {
+    "site": "Stripe",
+    "captured": "2026-11-18",
+    "folder": "Pictures/beam/references/stripe/ui"
+  }
+}
