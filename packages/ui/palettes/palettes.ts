@@ -1,57 +1,57 @@
 /**
- * Beam UI palettes: few colours, muted, built for products people work in all day.
- * Each palette is a neutral tint, one primary and one accent. Every token is derived from those in OKLCH,
- * then nudged until each text pair reaches 4.5:1, so a palette can't ship unreadable.
+ * Beam UI palettes: established open-source palettes (Radix Colors, IBM Carbon, Catppuccin, Rosé Pine, Flexoki)
+ * mapped onto Beam's tokens with the role each source documents for every colour (sources.ts).
+ * Where an official colour misses 4.5:1 for a text pair, only its lightness moves until it reads, and the change
+ * is recorded so the docs show both the official and the used value.
  */
-import { contrast, hex, readable, type Lch } from "./colour.ts";
-
+import { contrast, hex, readable, toLch, type Lch } from "./colour.ts";
 import { PALETTES, type PaletteSource } from "./sources.ts";
 
 export { contrast, hex, PALETTES, type Lch, type PaletteSource };
 
-/** Shared status colours: muted, and only for meaning. */
-const STATUS = { success: 155, warning: 75, danger: 25 } as const;
+export type Adjustment = { mode: "light" | "dark"; token: string; official: string; used: string };
 
-function tokens(p: PaletteSource, mode: "light" | "dark"): Record<string, string> {
-  const n = (l: number) => hex([l, p.tint, p.hue]);
-  const dark = mode === "dark";
-  const t: Record<string, string> = dark
-    ? {
-        background: n(0.16), card: n(0.195), popover: n(0.22), muted: n(0.23), secondary: n(0.25), accent: n(0.26),
-        border: n(0.29), input: n(0.33), "surface-1": n(0.16), "surface-2": n(0.195), "surface-3": n(0.22),
-      }
-    : {
-        background: n(0.99), card: "#ffffff", popover: "#ffffff", muted: n(0.965), secondary: n(0.955), accent: n(0.955),
-        border: n(0.91), input: n(0.88), "surface-1": n(0.99), "surface-2": n(0.97), "surface-3": "#ffffff",
-      };
-  // Text holds 4.5:1 on the darkest surface it sits on (light) or the lightest (dark).
-  const worst = dark ? t.accent! : t.secondary!;
-  t["text-1"] = readable([dark ? 0.97 : 0.2, p.tint, p.hue], worst);
-  t["text-2"] = readable([dark ? 0.8 : 0.44, p.tint, p.hue], worst);
-  t["text-3"] = readable([dark ? 0.7 : 0.52, p.tint, p.hue], worst);
+// Each text token and every background it must read on.
+const PAIRS: Array<[string, string[]]> = [
+  ["text-1", ["background", "surface-2", "card", "secondary", "accent"]],
+  ["text-2", ["background", "surface-2", "card", "muted"]],
+  ["text-3", ["background", "surface-2", "card"]],
+  // The accent as text: links and "featured" labels.
+  ["link", ["background", "surface-2", "card"]],
+  ["success", ["success-soft"]],
+  ["warning", ["warning-soft"]],
+  ["danger", ["danger-soft"]],
+];
+
+/** Moves `token` only as far as it must to read on every background in `on`. */
+function settle(t: Record<string, string>, token: string, on: string[], mode: "light" | "dark", log: Adjustment[]) {
+  const official = t[token]!;
+  let used = official;
+  for (let i = 0; i < 3; i++) {
+    const worst = on.map((bg) => t[bg]!).sort((a, b) => contrast(used, a) - contrast(used, b))[0]!;
+    if (contrast(used, worst) >= 4.5) break;
+    used = readable(toLch(used), worst);
+  }
+  if (used !== official) {
+    t[token] = used;
+    log.push({ mode, token, official, used });
+  }
+}
+
+function tokens(p: PaletteSource, mode: "light" | "dark", log: Adjustment[]): Record<string, string> {
+  const t = { ...p[mode] };
+  // On the primary: the official candidate with the best contrast; if none reaches 4.5:1, the primary moves.
+  const on = p.onPrimary[mode].slice().sort((a, b) => contrast(b, t.primary!) - contrast(a, t.primary!))[0]!;
+  t["primary-foreground"] = on;
+  settle(t, "primary", ["primary-foreground"], mode, log);
+  for (const [token, backgrounds] of PAIRS) settle(t, token, backgrounds, mode, log);
   for (const key of ["foreground", "card-foreground", "popover-foreground", "secondary-foreground", "accent-foreground"]) t[key] = t["text-1"]!;
   t["muted-foreground"] = t["text-2"]!;
-
-  const primary = dark ? p.primary.dark : p.primary.light;
-  t.primary = hex(primary);
-  const onLight = hex([0.17, p.tint, p.hue]);
-  t["primary-foreground"] = contrast("#ffffff", t.primary) >= contrast(onLight, t.primary) ? "#ffffff" : onLight;
-  t.primary = readable(primary, t["primary-foreground"]);
-  t.ring = p.id === "default" ? n(dark ? 0.6 : 0.65) : t.primary;
-
-  for (const [name, h] of Object.entries(STATUS)) {
-    t[`${name}-soft`] = hex(dark ? [0.25, 0.04, h] : [0.96, 0.03, h]);
-    t[name] = readable(dark ? [0.8, 0.12, h] : [0.5, name === "danger" ? 0.16 : 0.11, h], t[`${name}-soft`]!);
-  }
   t.destructive = t.danger!;
-
-  t["chart-1"] = t.primary;
-  t["chart-2"] = hex(dark ? [Math.max(p.accent[0], 0.7), p.accent[1], p.accent[2]] : p.accent);
-  for (const [i, l] of (dark ? [0.6, 0.45, 0.35] : [0.6, 0.75, 0.86]).entries()) t[`chart-${i + 3}`] = n(l);
   return t;
 }
 
-export type Palette = PaletteSource & { display: string[]; light: Record<string, string>; dark: Record<string, string>; css: string };
+export type Palette = PaletteSource & { css: string; adjustments: Adjustment[] };
 
 const block = (selector: string, vars: Record<string, string>, scheme: string) =>
   `${selector} {\n  color-scheme: ${scheme};\n${Object.entries(vars)
@@ -59,22 +59,17 @@ const block = (selector: string, vars: Record<string, string>, scheme: string) =
     .join("\n")}\n}\n`;
 
 export function buildPalette(p: PaletteSource): Palette {
-  const light = tokens(p, "light");
-  const dark = tokens(p, "dark");
+  const adjustments: Adjustment[] = [];
+  const light = tokens(p, "light", adjustments);
+  const dark = tokens(p, "dark", adjustments);
   const sel = `[data-theme="${p.id}"]`;
   const css = [
-    `/* Beam UI palette: ${p.name}. ${p.description} Generated by palettes/build.ts; edit palettes.ts instead. */\n`,
+    `/* Beam UI palette: ${p.name}. ${p.description} Source: ${p.source} (${p.licence}), ${p.url}. */\n`,
     block(sel, light, "light"),
     "/* Dark: on the element itself (.dark) or inside a .dark ancestor, unless the element asks for .light. */",
     block(`${sel}.dark,\n.dark ${sel}:not(.light)`, dark, "dark"),
   ].join("\n");
-  // The strip people see on the Palettes page: deep neutral, primary, accent, light neutral, near white.
-  // A grey palette shows its grey ramp instead.
-  const grey = p.tint === 0 && p.primary.light[1] === 0;
-  const display = grey
-    ? [0.2, 0.37, 0.56, 0.86, 0.965].map((l) => hex([l, 0, 0]))
-    : [hex([0.25, p.tint * 3, p.hue]), light.primary!, hex(p.accent), hex([0.86, p.tint * 2.5, p.hue]), hex([0.965, p.tint * 2, p.hue])];
-  return { ...p, display, light, dark, css };
+  return { ...p, light, dark, css, adjustments };
 }
 
 export const buildPalettes = (): Palette[] => PALETTES.map(buildPalette);
