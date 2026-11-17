@@ -5,6 +5,7 @@ import { useSearchContext } from "fumadocs-ui/contexts/search";
 import { Menu, MessageSquare, Search } from "lucide-react";
 import Link from "next/link";
 import type { ComponentProps } from "react";
+import { SectionTabs } from "./section-tabs";
 
 function GitHubIcon() {
   return (
@@ -28,18 +29,19 @@ export function SiteHeader(props: ComponentProps<"header">) {
       {...props}
       className="sticky top-(--fd-docs-row-1) z-20 [grid-area:header] bg-[#0f0f0f]/95 layout:[--fd-header-height:75px]"
     >
-      <div className="mx-auto flex h-[74px] max-w-[1552px] items-center gap-4 px-4 py-2 md:px-6">
+      <div className="mx-auto flex h-[74px] max-w-[1552px] items-center gap-4 px-4 md:px-6">
         <Link href="/docs" className="flex shrink-0 items-center gap-2.5">
           <img src="/brand/mark.svg" alt="" className="size-8" />
           <img src="/brand/wordmark-white.svg" alt="beam" className="h-[24px] w-auto" />
           <span className="text-lg font-light text-[#a5a5a6]">/</span>
           <span className="font-mono text-lg font-medium text-white">docs</span>
         </Link>
-        <div className="flex flex-1 justify-center max-md:hidden">
+        <SectionTabs className="ms-6 self-stretch max-md:hidden" />
+        <div className="flex flex-1 justify-end max-md:hidden">
           <button
             type="button"
             onClick={() => setOpenSearch(true)}
-            className="flex h-9 w-[360px] items-center gap-2.5 rounded-full border border-[#2a2a2a] bg-[#0f0f0f] ps-4 pe-1.5 text-sm text-[#a5a5a6] transition-colors hover:border-[#3a3a3a]"
+            className="flex h-9 w-[300px] items-center gap-2.5 rounded-full border border-[#2a2a2a] bg-[#0f0f0f] ps-4 pe-1.5 text-sm text-[#a5a5a6] transition-colors hover:border-[#3a3a3a]"
           >
             <Search className="size-4" />
             <span className="flex-1 text-start">Search or ask AI...</span>
@@ -64,6 +66,10 @@ export function SiteHeader(props: ComponentProps<"header">) {
         </div>
       </div>
       <div className="mx-auto max-w-[1552px] border-b border-[#2a2a2a]" />
+      {/* Phones: the sections scroll in a row under the header. */}
+      <div className="overflow-x-auto border-b border-[#2a2a2a] px-4 md:hidden">
+        <SectionTabs className="h-11" />
+      </div>
     </header>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { Blocks, Check, ChevronDown, ChevronLeft, Copy, Frame, Layers, Paintbrush, ScanEye, Sparkles } from "lucide-react";
+import { Check, ChevronDown, ChevronLeft, Copy, Frame, Layers, Paintbrush, ScanEye, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ComponentType } from "react";
@@ -9,7 +9,6 @@ type Tool = { slug: string; name: string; icon: ComponentType<{ className?: stri
 
 /** Each tool is its own section of the docs, the way the reference splits products. */
 export const TOOLS: Tool[] = [
-  { slug: "ui", name: "Beam UI", icon: Blocks },
   { slug: "clone", name: "Clone", icon: Copy },
   { slug: "figma", name: "Figma", icon: Frame },
   { slug: "craft", name: "Craft", icon: Paintbrush },
@@ -34,6 +33,8 @@ export function SidebarTop() {
     return () => document.removeEventListener("mousedown", close);
   }, []);
   const Icon = tool?.icon ?? Sparkles;
+  // Components, Palettes and Icons are their own sections with their own sidebars; the tool picker is Docs only.
+  if (/^\/docs\/(components|palettes|icons)(\/|$)/.test(pathname)) return null;
   return (
     <div className="flex flex-col gap-2 pb-2">
       <Link href="/docs" className="flex h-9 items-center gap-2 rounded-[10px] px-2 text-sm font-medium text-[#f5f5f4]/90 hover:bg-white/[0.06]">
