@@ -7,7 +7,7 @@ import { RadioCard, RadioGroup } from "@beam/ui/components/radio-group";
 import { Icon } from "@beam/ui/icons";
 import type { ComponentType } from "react";
 
-/** Chips, choices and fields set up like their Stripe Checkout captures (Pictures/beam/references/stripe/ui). */
+/** Chips, choices and fields set up like their measured captures (Pictures/beam/references/payments/ui). */
 export const CHOICE_REFS: Record<string, { mode: "light" | "dark"; Component: ComponentType }> = {
   "ui-chip": {
     mode: "light",

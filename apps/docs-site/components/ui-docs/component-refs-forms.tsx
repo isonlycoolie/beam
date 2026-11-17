@@ -9,7 +9,7 @@ import type { ComponentType } from "react";
 
 const row = "text-[14px] leading-[20px] font-normal text-text-1";
 
-/** Form controls set up like their Stripe Checkout captures (Pictures/beam/references/stripe/ui). */
+/** Form controls set up like their measured captures (Pictures/beam/references/payments/ui). */
 export const FORM_REFS: Record<string, { mode: "light" | "dark"; Component: ComponentType }> = {
   "ui-switch": {
     mode: "light",

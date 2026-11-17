@@ -8,7 +8,7 @@ import { NAV_REFS } from "./component-refs-nav";
 import { OVERLAY_REFS } from "./component-refs-overlays";
 
 /**
- * Components set up exactly like the Stripe instance they were measured from, for scripts/ref-compare.mjs.
+ * Components set up exactly like the instance they were measured from, for scripts/ref-compare.mjs.
  * Rendered alone at /ref/ui-<id>; each id maps to its capture in components/ref-list.json.
  */
 export const COMPONENT_REFS: Record<string, { mode: "light" | "dark"; Component: ComponentType }> = {
@@ -20,7 +20,7 @@ export const COMPONENT_REFS: Record<string, { mode: "light" | "dark"; Component:
     mode: "light",
     Component: () => (
       <Button>
-        Start building <Icon icon={ArrowDown01Icon} size="sm" />
+        Get started <Icon icon={ArrowDown01Icon} size="sm" />
       </Button>
     ),
   },

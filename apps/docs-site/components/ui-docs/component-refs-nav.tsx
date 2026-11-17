@@ -5,14 +5,14 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Icon } from "@beam/ui/icons";
 import type { ComponentType } from "react";
 
-// The Docs test-card table rows, as captured (Pictures/beam/references/stripe/ui/table.json).
+// The table rows, as captured (Pictures/beam/references/payments/ui/table.json).
 const ROWS = [
   ["Visa FSA", ["4000", "0512", "3000", "0072"]],
   ["Visa HSA", ["4000", "0512", "3000", "0072"]],
   ["Mastercard FSA", ["5200", "8282", "8282", "8897"]],
 ] as const;
 
-/** Navigation and data components set up like their Stripe Docs captures. */
+/** Navigation and data components set up like their measured captures. */
 export const NAV_REFS: Record<string, { mode: "light" | "dark"; Component: ComponentType }> = {
   "ui-breadcrumb": {
     mode: "light",
