@@ -72,6 +72,12 @@ importers:
         specifier: 4.4.3
         version: 4.4.3
 
+  packages/figma-plugin:
+    devDependencies:
+      '@figma/plugin-typings':
+        specifier: 1.142.0
+        version: 1.142.0
+
   packages/mcp:
     dependencies:
       '@beam/core':
@@ -256,6 +262,9 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
+
+  '@figma/plugin-typings@1.142.0':
+    resolution: {integrity: sha512-Loa9P4bUZi/pQejic8OYQSU4Zz9izJdIiDUkkKddq5Bfc5JPRV6pCeg3C8owovbX9lKshaFym86PlMhKZgLeBw==}
 
   '@hono/node-server@1.19.19':
     resolution: {integrity: sha512-Fy9R7PACOzHU9LDpfnuzVyuVYevKQRcEG2mZhmfc+DRdmayEd3RVfa2XOt2IgGcPNgA77Yk63KBszepcMFK5Ng==}
@@ -1320,6 +1329,8 @@ snapshots:
 
   '@esbuild/win32-x64@0.28.1':
     optional: true
+
+  '@figma/plugin-typings@1.142.0': {}
 
   '@hono/node-server@1.19.19(hono@4.13.19)':
     dependencies:
