@@ -9,7 +9,7 @@ import { InstallTabs } from "@/components/ui-docs/install-tabs";
 import { AgentRules, PropsTable } from "@/components/ui-docs/spec-sections";
 import { ColorSwatches, TypeScale } from "@/components/ui-docs/token-swatches";
 import { IconBrowser } from "@/components/ui-docs/icon-browser";
-import { Palettes } from "@/components/ui-docs/palettes";
+import { PaletteGrid } from "@/components/ui-docs/palette-grid";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { source } from "@/lib/source";
 
@@ -32,7 +32,7 @@ export default async function Page({ params }: Props) {
       <h1 className="beam-title">{page.data.title}</h1>
       {page.data.description && <p className="beam-lead mb-2">{page.data.description}</p>}
       <DocsBody>
-        <Body components={{ ...defaultMdxComponents, ComponentPreview, DoDont, InstallTabs, PropsTable, AgentRules, ColorSwatches, TypeScale, IconBrowser, Palettes, Tab, Tabs }} />
+        <Body components={{ ...defaultMdxComponents, ComponentPreview, DoDont, InstallTabs, PropsTable, AgentRules, ColorSwatches, TypeScale, IconBrowser, PaletteGrid, Tab, Tabs }} />
       </DocsBody>
     </DocsPage>
   );
