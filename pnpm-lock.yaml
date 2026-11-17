@@ -14,9 +14,15 @@ importers:
       esbuild:
         specifier: 0.28.1
         version: 0.28.1
+      pixelmatch:
+        specifier: 7.2.0
+        version: 7.2.0
       playwright:
         specifier: 1.61.1
         version: 1.61.1
+      pngjs:
+        specifier: 7.0.0
+        version: 7.0.0
       prettier:
         specifier: 3.9.5
         version: 3.9.5
