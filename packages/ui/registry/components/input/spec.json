@@ -1,0 +1,44 @@
+{
+  "name": "input",
+  "title": "Input",
+  "summary": "A single-line text field.",
+  "source": "shadcn/ui (MIT)",
+  "use_when": [
+    "Short free text: names, emails, search"
+  ],
+  "avoid_when": [
+    "Long text: use Textarea",
+    "Choosing from a known list: use Select"
+  ],
+  "props": {
+    "type": "any HTML input type",
+    "aria-invalid": "boolean, shows the invalid state"
+  },
+  "variants": [
+    "default",
+    "invalid",
+    "disabled",
+    "with-icon"
+  ],
+  "composes_with": [
+    "Field",
+    "Label",
+    "Button"
+  ],
+  "copy": {
+    "placeholder": "An example value, never the label"
+  },
+  "states": [
+    "default",
+    "hover",
+    "focus",
+    "invalid",
+    "disabled"
+  ],
+  "a11y": [
+    "Always paired with a visible label through Field"
+  ],
+  "rules": [
+    "form.labels-visible"
+  ]
+}
