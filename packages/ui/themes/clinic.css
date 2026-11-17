@@ -1,0 +1,84 @@
+/* Beam UI theme: clinic. Health, education and public services. High legibility, calm blue. */
+
+[data-theme="clinic"] {
+  --theme-font-display: var(--font-inter, 'Inter');
+  --theme-font-text: var(--font-inter, 'Inter');
+  --theme-font-numeric: var(--font-mona-mono, ui-monospace);
+  color-scheme: light;
+  --background: #ffffff;
+  --foreground: #0d1b2a;
+  --card: #ffffff;
+  --card-foreground: #0d1b2a;
+  --popover: #ffffff;
+  --popover-foreground: #0d1b2a;
+  --primary: #1d5fd6;
+  --primary-foreground: #ffffff;
+  --secondary: #eef3fb;
+  --secondary-foreground: #0d1b2a;
+  --muted: #f2f5fa;
+  --muted-foreground: #4d5d70;
+  --accent: #e8f0fd;
+  --accent-foreground: #143f8f;
+  --destructive: #c42b3b;
+  --border: #dfe5ee;
+  --input: #cdd6e3;
+  --ring: #1d5fd6;
+  --surface-1: #ffffff;
+  --surface-2: #f5f8fc;
+  --surface-3: #ffffff;
+  --text-1: #0d1b2a;
+  --text-2: #45556a;
+  --text-3: #637082;
+  --success: #167a4a;
+  --success-soft: #e4f4eb;
+  --warning: #955a07;
+  --warning-soft: #fbf0dd;
+  --danger: #c42b3b;
+  --danger-soft: #fbe7e9;
+  --chart-1: #1d5fd6;
+  --chart-2: #5b8def;
+  --chart-3: #a9c4f7;
+  --chart-4: #16a3a3;
+  --chart-5: #b6c2d1;
+}
+
+/* Dark: on the element itself (.dark) or inside a .dark ancestor, unless the element asks for .light. */
+[data-theme="clinic"].dark,
+.dark [data-theme="clinic"]:not(.light) {
+  color-scheme: dark;
+  --background: #0b1220;
+  --foreground: #eef3fa;
+  --card: #111a2b;
+  --card-foreground: #eef3fa;
+  --popover: #152036;
+  --popover-foreground: #eef3fa;
+  --primary: #6aa1ff;
+  --primary-foreground: #071733;
+  --secondary: #16213a;
+  --secondary-foreground: #eef3fa;
+  --muted: #131d31;
+  --muted-foreground: #9fb0c8;
+  --accent: #1a2742;
+  --accent-foreground: #eef3fa;
+  --destructive: #ff6b78;
+  --border: #22304a;
+  --input: #2c3c5a;
+  --ring: #6aa1ff;
+  --surface-1: #0b1220;
+  --surface-2: #111a2b;
+  --surface-3: #162138;
+  --text-1: #eef3fa;
+  --text-2: #aab9ce;
+  --text-3: #7d8ea6;
+  --success: #4ccf8f;
+  --success-soft: #0f2a1e;
+  --warning: #f2b955;
+  --warning-soft: #2b2312;
+  --danger: #ff6b78;
+  --danger-soft: #2f1519;
+  --chart-1: #6aa1ff;
+  --chart-2: #3d7bf0;
+  --chart-3: #b7d0ff;
+  --chart-4: #3ccfcf;
+  --chart-5: #3a4a66;
+}
