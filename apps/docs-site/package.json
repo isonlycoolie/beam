@@ -7,10 +7,15 @@
     "dev": "next dev -p 3100",
     "build": "next build",
     "start": "next start -p 3100",
-    "postinstall": "fumadocs-mdx",
+    "postinstall": "fumadocs-mdx && node scripts/gen-ui-examples.mjs",
+    "predev": "node scripts/gen-ui-examples.mjs && node scripts/gen-icon-index.mjs && node ../../packages/ui/scripts/build-registry.mjs public/r",
+    "prebuild": "node scripts/gen-ui-examples.mjs && node scripts/gen-icon-index.mjs && node ../../packages/ui/scripts/build-registry.mjs public/r",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@beam/ui": "workspace:*",
+    "@hugeicons/core-free-icons": "4.4.0",
+    "@hugeicons/react": "1.1.10",
     "fumadocs-core": "16.19.4",
     "fumadocs-mdx": "15.6.3",
     "fumadocs-ui": "16.19.4",

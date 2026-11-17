@@ -2,3 +2,6 @@
 .source/
 next-env.d.ts
 *.tsbuildinfo
+components/ui-docs/examples.gen.tsx
+public/ui/icons.json
+public/r/
