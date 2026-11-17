@@ -1,0 +1,39 @@
+---
+title: Verify
+description: Prove a build matches its source, section by section. Not by eye, by measurement.
+---
+
+"Looks right to me" is how pixel drift ships. Verify compares your build with its source in a real browser and tells you exactly what differs.
+
+```bash
+npx usebeam add verify
+npx usebeam verify --reference https://example.com --target http://localhost:3000
+```
+
+## What it compares
+
+| Reference | Breakpoints | Checks |
+| --- | --- | --- |
+| A URL (`https://` or `file:`) | 1440, 768, 390 by default | Pixels per section and every element's values |
+| A PNG | The image's width | Pixels per section |
+| `figma:<folder>` | The frame's width | Pixels plus every text layer ([drift check](/docs/figma/drift-check)) |
+
+## When it passes
+
+A breakpoint passes when every section reaches the threshold (98% by default) and, for URL and Figma references, no element is missing and no colour, font or large layout difference remains.
+
+```txt
+PASS  1440px  100.0% of pixels match
+PASS  768px  100.0% of pixels match
+PASS  390px  99.8% of pixels match
+```
+
+## Options
+
+| Flag | Default | Use |
+| --- | --- | --- |
+| `--breakpoints` | `1440,768,390` | Widths to check |
+| `--threshold` | `0.98` | Score every section must reach |
+| `--sections` | all | Judge only some sections while you build top-down |
+| `--pixels-only` | off | Skip the element check |
+| `--json` | off | Print the full report |

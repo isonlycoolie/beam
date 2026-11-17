@@ -1,0 +1,13 @@
+---
+title: Verify in CI
+description: A failed check is a failed command, so pipelines and agent loops can stop on it.
+---
+
+`beam verify` exits with code 1 when any breakpoint fails, and `--json` prints the full report:
+
+```bash
+npx usebeam setup browser
+npx usebeam verify --reference https://staging.example.com --target http://localhost:3000 --json > verify.json
+```
+
+Keep `.beam/verify/` as a build artifact to look at the diff images when a run fails.

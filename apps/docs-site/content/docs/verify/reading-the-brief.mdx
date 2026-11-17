@@ -1,0 +1,25 @@
+---
+title: Reading the brief
+description: Every verify run writes report.md with the exact fixes, most important first.
+---
+
+```md title=".beam/verify/<id>/report.md"
+## 1024px: fail (99.1% of pixels match)
+
+Missing from the build (1):
+- <a> "Contact"
+
+Values to fix (4, most important first):
+- <h1> "Ship exact UI": height should be 74px, is 65px
+- <h1> "Ship exact UI": fontSize should be 64px, is 56px
+- <p> "Every value comes from the source.": y should be 252px, is 243px
+```
+
+| Line | Means | Do |
+| --- | --- | --- |
+| `fontSize should be 64px, is 56px` | The computed size differs | Use exactly 64px |
+| `y should be 252px, is 243px` | The element sits higher | Usually caused above it: fix earlier deltas first |
+| Missing `<a> "Contact"` | Not built yet | Add it with the same text |
+| `Page size differs` | The build is taller or shorter | Look at the lowest-scoring section |
+
+Each run also saves `<width>-reference.png`, `<width>-target.png` and `<width>-diff.png`. Opaque pixels in the diff are the differences.
