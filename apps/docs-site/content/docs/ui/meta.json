@@ -1,0 +1,21 @@
+{
+  "title": "Beam UI",
+  "root": true,
+  "pages": [
+    "index",
+    "foundations",
+    "icons",
+    "---Components---",
+    "button",
+    "input",
+    "label",
+    "field",
+    "card",
+    "badge",
+    "skeleton",
+    "---Beam additions---",
+    "stat-card",
+    "empty-state",
+    "page-header"
+  ]
+}
