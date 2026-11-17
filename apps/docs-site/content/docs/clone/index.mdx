@@ -1,0 +1,33 @@
+---
+title: Clone
+description: Rebuild any live page exactly. Beam measures it, your agent copies the numbers, Verify proves the match.
+---
+
+Give your agent a URL and ask for a copy, and you usually get a page that is *inspired by* it. Clone is for when you need the real thing: the same type, the same spacing, the same colours, at every breakpoint.
+
+```bash
+npx usebeam add clone
+npx usebeam clone https://example.com/pricing
+```
+
+## What you get
+
+`beam clone` opens the page in Chromium at 1440, 768 and 390px wide and writes `.beam/clone/<site>/`:
+
+| File | Use it for |
+| --- | --- |
+| `brief.md` | Build order, type styles, colours, spacing, radii and shadows |
+| `spec.json` | Every visible element per breakpoint with its box and computed styles |
+| `structure.html` | The rendered HTML, scripts removed: structure and exact copy |
+| `1440.png`, `768.png`, `390.png` | What it must look like |
+| `fonts.css`, `fonts/` | The real font files and their `@font-face` rules |
+| `images/`, `stylesheets/` | The original images and CSS |
+
+## Real result
+
+Beam cloned `example.com` and rebuilt it from the brief alone. Verify scored it 100% at 1440px, 100% at 768px and 99.8% at 390px on the first run.
+
+## Next
+
+- [The workflow](/docs/clone/workflow): how the skill builds section by section
+- [Exact values](/docs/clone/exact-values): turning computed styles into CSS and Tailwind

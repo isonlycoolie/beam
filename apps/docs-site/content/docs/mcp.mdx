@@ -1,0 +1,25 @@
+---
+title: MCP reference
+description: The same tools as the CLI, for agents that prefer MCP.
+---
+
+Register the server with `npx usebeam init`, or add it by hand:
+
+```json title=".mcp.json"
+{
+  "mcpServers": {
+    "beam": { "command": "npx", "args": ["-y", "usebeam", "mcp"] }
+  }
+}
+```
+
+On native Windows, use `"command": "cmd"` with `"args": ["/c", "npx", "-y", "usebeam", "mcp"]`.
+
+| Tool | Does |
+| --- | --- |
+| `clone_capture` | Capture a page; returns the clone brief |
+| `verify_build` | Compare a build with its source; returns the fix list |
+| `craft_review` | Review UI quality; returns findings |
+| `figma_import_bundle` | Unpack a Beam plugin export; returns the design brief |
+| `get_design_context` | Figma context from a link (needs a token) |
+| `compare_render` | Pixel compare against a Figma frame (needs a token) |
