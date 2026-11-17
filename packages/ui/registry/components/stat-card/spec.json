@@ -1,0 +1,47 @@
+{
+  "name": "stat-card",
+  "title": "Stat Card",
+  "summary": "One metric with its change over a period.",
+  "source": "Beam UI",
+  "use_when": [
+    "Overview KPI rows of 3 or 4 metrics that compare"
+  ],
+  "avoid_when": [
+    "More than 4 metrics: use a table",
+    "A metric with no comparison period"
+  ],
+  "props": {
+    "label": "string, at most 24 characters",
+    "value": "the formatted number",
+    "unit": "optional unit",
+    "delta": "percent change",
+    "invertDelta": "true when down is good",
+    "period": "the comparison period"
+  },
+  "variants": [
+    "default",
+    "with-delta",
+    "inverted-delta",
+    "loading"
+  ],
+  "composes_with": [
+    "PageHeader",
+    "Card"
+  ],
+  "copy": {
+    "label": "Noun phrase, sentence case, no verbs, same length as its siblings"
+  },
+  "states": [
+    "loaded",
+    "loading"
+  ],
+  "a11y": [
+    "Direction is read out as Up or Down, not shown by colour alone"
+  ],
+  "rules": [
+    "grid.no-orphans",
+    "copy.sibling-parity",
+    "copy.length-caps",
+    "skeleton.fidelity"
+  ]
+}
