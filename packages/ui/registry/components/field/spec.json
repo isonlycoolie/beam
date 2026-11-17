@@ -1,0 +1,43 @@
+{
+  "name": "field",
+  "title": "Field",
+  "summary": "A label, a control, and its help or error, stacked with the form rhythm.",
+  "source": "shadcn/ui Field (MIT), simplified",
+  "use_when": [
+    "Every form control in a form"
+  ],
+  "avoid_when": [
+    "Inline filters in a toolbar"
+  ],
+  "props": {
+    "invalid": "boolean, swaps help for the error",
+    "FieldGroup.columns": "1 | 2, use 2 only for short related pairs"
+  },
+  "variants": [
+    "default",
+    "with-description",
+    "invalid",
+    "two-columns"
+  ],
+  "composes_with": [
+    "Input",
+    "Label",
+    "Button"
+  ],
+  "copy": {
+    "description": "One line on how to fill it",
+    "error": "What went wrong and how to fix it, in one sentence"
+  },
+  "states": [
+    "default",
+    "invalid",
+    "disabled"
+  ],
+  "a11y": [
+    "Errors use role=alert"
+  ],
+  "rules": [
+    "form.labels-visible",
+    "form.single-column"
+  ]
+}
