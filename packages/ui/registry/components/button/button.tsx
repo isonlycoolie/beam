@@ -1,4 +1,4 @@
-/* Based on shadcn/ui (MIT). Design reference: Stripe (sizes, type, radius, shadows measured). Real loading state. */
+/* Based on shadcn/ui (MIT). Sizes, type, radius and shadows are measured references (see CREDITS.md). */
 import { Loading03Icon } from "@hugeicons/core-free-icons";
 import { cva, type VariantProps } from "class-variance-authority";
 import { Slot } from "radix-ui";
@@ -6,8 +6,7 @@ import type * as React from "react";
 import { Icon } from "../../../icons/icon";
 import { cn } from "../../../lib/cn";
 
-// Measured from Stripe's public pages (Pictures/beam/references/stripe/ui): sm = Docs "Try it out" (28px, 4/8px,
-// 14/600), md = Checkout "Start building" (36px, 6/16px, 14/500/24px), lg = Checkout "Hide" (40px, 12px, 14/500).
+// Measured sizes: sm 28px (4/8px padding, 14/600), md 36px (6/16px, 14/500/24px), lg 40px (12px, 14/500).
 const buttonVariants = cva(
   [
     "relative inline-flex shrink-0 select-none items-center justify-center gap-1.5 whitespace-nowrap rounded-(--radius-md)",

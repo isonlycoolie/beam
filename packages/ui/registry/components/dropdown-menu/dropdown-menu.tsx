@@ -1,4 +1,4 @@
-/* Based on shadcn/ui (MIT). Design reference: Stripe, measured (Pictures/beam/references/stripe/ui). */
+/* Based on shadcn/ui (MIT). Sizes, type and shadows are measured references (see CREDITS.md). */
 "use client";
 
 import { ArrowRight01Icon, CircleIcon, Tick02Icon } from "@hugeicons/core-free-icons";
@@ -12,7 +12,7 @@ const DropdownMenuGroup = DropdownMenuPrimitive.Group;
 const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup;
 const DropdownMenuSub = DropdownMenuPrimitive.Sub;
 const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;
-// Surface measured from the Start building menu (--popover, 1px --input, 6px radius, the menu shadow). Rows are
+// Measured menu surface (--popover, 1px --input, 6px radius, the menu shadow). Rows are
 // composed from measured parts: 14/20px text, 6px radius, --secondary when focused.
 const surface = "z-50 rounded-(--radius-md) border border-input bg-popover text-popover-foreground shadow-(--shadow-3) min-w-48 overflow-hidden p-1";
 const item = "relative flex cursor-default select-none items-center gap-2 rounded-(--radius-md) px-2 py-1.5 text-[14px] leading-[20px] text-text-1 outline-none focus:bg-secondary data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:shrink-0";
@@ -78,7 +78,7 @@ function DropdownMenuSubContent({ className, ...props }: React.ComponentProps<ty
   return <DropdownMenuPrimitive.SubContent data-slot="dropdown-menu-sub-content" className={cn(surface, className)} {...props} />;
 }
 
-// The Start building item: 1px --input border, 10px radius, 16px padding and gap, a 48px round icon tile in
+// Card item: 1px --input border, 10px radius, 16px padding and gap, a 48px round icon tile in
 // --secondary, a 16/600/24px title and a 14/20px description 4px below.
 function DropdownMenuCardItem({ className, icon, title, description, ...props }: Omit<React.ComponentProps<typeof DropdownMenuPrimitive.Item>, "title"> & { icon: React.ReactNode; title: string; description: string }) {
   return (

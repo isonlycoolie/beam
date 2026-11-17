@@ -1,11 +1,11 @@
-/* Based on shadcn/ui (MIT). Design reference: Stripe, measured (Pictures/beam/references/stripe/ui). */
+/* Based on shadcn/ui (MIT). Sizes, type and shadows are measured references (see CREDITS.md). */
 import { cva, type VariantProps } from "class-variance-authority";
 import { Slot } from "radix-ui";
 import type * as React from "react";
 import { cn } from "../../../lib/cn";
 
-// Checkout chooser chip: 22px, 12/500/16px, 2/8px padding, 6px radius, 1px --input border. Status tones are the
-// palette's soft pairs. lg is the Checkout discount tag (14/500/18.2px, 8/12px, --secondary fill).
+// Chip: 22px, 12/500/16px, 2/8px padding, 6px radius, 1px --input border. Status tones are the
+// palette's soft pairs. lg is the discount tag (14/500/18.2px, 8/12px, --secondary fill).
 const badgeVariants = cva(
   "inline-flex w-fit shrink-0 items-center gap-1.5 whitespace-nowrap rounded-(--radius-md) font-medium [&_svg]:size-3.5",
   {

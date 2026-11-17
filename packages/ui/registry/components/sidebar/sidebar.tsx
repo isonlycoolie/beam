@@ -1,9 +1,9 @@
-/* Based on shadcn/ui (MIT). Design reference: Stripe, measured (Pictures/beam/references/stripe/ui). */
+/* Based on shadcn/ui (MIT). Sizes, type and shadows are measured references (see CREDITS.md). */
 import { Slot } from "radix-ui";
 import type * as React from "react";
 import { cn } from "../../../lib/cn";
 
-// Stripe Docs navigation: section labels 14/600 uppercase in --text-2; items 28px, 4/8px padding (16px when
+// Docs navigation: section labels 14/600 uppercase in --text-2; items 28px, 4/8px padding (16px when
 // nested), 14/500/20px, 4px radius; the active item is --link on a 10% --link fill. On phones, put the
 // Sidebar inside a Sheet.
 function Sidebar({ className, ...props }: React.ComponentProps<"nav">) {

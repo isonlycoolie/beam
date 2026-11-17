@@ -1,11 +1,11 @@
-/* Based on shadcn/ui (MIT). Design reference: Stripe, measured (Pictures/beam/references/stripe/ui). */
+/* Based on shadcn/ui (MIT). Sizes, type and shadows are measured references (see CREDITS.md). */
 "use client";
 
 import { Label as LabelPrimitive } from "radix-ui";
 import type * as React from "react";
 import { cn } from "../../../lib/cn";
 
-// Checkout field label: 13px, 500, 16.9px line, secondary text colour.
+// Field label: 13px, 500, 16.9px line, secondary text colour.
 function Label({ className, ...props }: React.ComponentProps<typeof LabelPrimitive.Root>) {
   return (
     <LabelPrimitive.Root

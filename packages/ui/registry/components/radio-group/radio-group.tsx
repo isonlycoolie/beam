@@ -1,4 +1,4 @@
-/* Based on shadcn/ui (MIT). Design reference: Stripe, measured (Pictures/beam/references/stripe/ui). */
+/* Based on shadcn/ui (MIT). Sizes, type and shadows are measured references (see CREDITS.md). */
 "use client";
 
 import { RadioGroup as RadioGroupPrimitive } from "radix-ui";
@@ -26,7 +26,7 @@ function RadioGroupItem({ className, ...props }: React.ComponentProps<typeof Rad
   );
 }
 
-// Checkout currency choice: 44px cards, 12px padding, 6px radius, 16/500/18.4px; the chosen card's 1px border
+// Radio cards: 44px, 12px padding, 6px radius, 16/500/18.4px; the chosen card's 1px border
 // turns --text-1, the others stay --input.
 function RadioCard({ className, ...props }: React.ComponentProps<typeof RadioGroupPrimitive.Item>) {
   return (

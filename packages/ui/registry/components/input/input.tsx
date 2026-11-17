@@ -1,10 +1,10 @@
-/* Based on shadcn/ui (MIT). Design reference: Stripe, measured (Pictures/beam/references/stripe/ui). */
+/* Based on shadcn/ui (MIT). Sizes, type and shadows are measured references (see CREDITS.md). */
 import { cva, type VariantProps } from "class-variance-authority";
 import type * as React from "react";
 import { cn } from "../../../lib/cn";
 
-// Checkout field: 6px radius, a 1px --input ring with two soft shadows, 12px sides; focus adds a 3px halo.
-// lg is the Checkout size (44px, 16/24); md is the dashboard size (36px, 14/20).
+// Field: 6px radius, a 1px --input ring with two soft shadows, 12px sides; focus adds a 3px halo.
+// lg is the large field (44px, 16/24); md is the dashboard size (36px, 14/20).
 const inputVariants = cva(
   [
         "w-full min-w-0 rounded-(--radius-md) bg-card text-text-1 shadow-(--shadow-1) outline-none",

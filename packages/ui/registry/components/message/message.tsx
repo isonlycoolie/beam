@@ -1,4 +1,4 @@
-/* Based on shadcn/ui (MIT), converted to Beam's Stripe-measured tokens (radius, shadows, focus, type). */
+/* Based on shadcn/ui (MIT), converted to Beam's measured tokens (radius, shadows, focus, type). */
 import * as React from "react";
 import { cn } from "../../../lib/cn";
 

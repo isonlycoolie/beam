@@ -1,10 +1,10 @@
-/* Based on shadcn/ui (MIT). Design reference: Stripe, measured (Pictures/beam/references/stripe/ui). */
+/* Based on shadcn/ui (MIT). Sizes, type and shadows are measured references (see CREDITS.md). */
 import { cva, type VariantProps } from "class-variance-authority";
 import type * as React from "react";
 import { cn } from "../../../lib/cn";
 
-// default: Checkout settings panel (1px --border, 8px radius, a 1px + 2/5px shadow).
-// muted: Docs info card (--surface-2 fill, 1px --border, 8px radius). elevated: Checkout chooser (12px, no border).
+// default: settings panel (1px --border, 8px radius, a 1px + 2/5px shadow).
+// muted: info card (--surface-2 fill, 1px --border, 8px radius). elevated: chooser card (12px, no border).
 const cardVariants = cva("flex flex-col text-card-foreground", {
   variants: {
     variant: {

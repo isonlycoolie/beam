@@ -1,10 +1,10 @@
-/* Based on shadcn/ui (MIT). Design reference: Stripe, measured (Pictures/beam/references/stripe/ui). */
+/* Based on shadcn/ui (MIT). Sizes, type and shadows are measured references (see CREDITS.md). */
 import { cva, type VariantProps } from "class-variance-authority";
 import type * as React from "react";
 import { cn } from "../../../lib/cn";
 
-// muted: Checkout panel note (--secondary fill, 6px radius, 12/16px padding, 14/20px, 4px gap).
-// rule: Docs note (a 4px --border rule on the left, 12px in, a 12/600 title, 4px gap).
+// muted: panel note (--secondary fill, 6px radius, 12/16px padding, 14/20px, 4px gap).
+// rule: docs note (a 4px --border rule on the left, 12px in, a 12/600 title, 4px gap).
 const calloutVariants = cva("flex flex-col gap-1 text-[14px] leading-[20px] text-text-2", {
   variants: {
     variant: {

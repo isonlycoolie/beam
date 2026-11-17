@@ -1,4 +1,4 @@
-/* Based on shadcn/ui (MIT). Design reference: Stripe, measured (Pictures/beam/references/stripe/ui). */
+/* Based on shadcn/ui (MIT). Sizes, type and shadows are measured references (see CREDITS.md). */
 import { UnfoldMoreIcon } from "@hugeicons/core-free-icons";
 import type * as React from "react";
 import { Icon } from "../../../icons/icon";

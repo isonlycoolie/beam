@@ -1,4 +1,4 @@
-/* Based on shadcn/ui (MIT). Design reference: Stripe, measured (Pictures/beam/references/stripe/ui). */
+/* Based on shadcn/ui (MIT). Sizes, type and shadows are measured references (see CREDITS.md). */
 "use client";
 
 import { Tick02Icon } from "@hugeicons/core-free-icons";
@@ -7,7 +7,7 @@ import type * as React from "react";
 import { Icon } from "../../../icons/icon";
 import { cn } from "../../../lib/cn";
 
-// Checkout: a 16px box, 2px radius, a 1px ring in --text-3 with two soft drop shadows; 12px to its label.
+// A 16px box, 2px radius, a 1px ring in --text-3 with two soft drop shadows; 12px to its label.
 function Checkbox({ className, ...props }: React.ComponentProps<typeof CheckboxPrimitive.Root>) {
   return (
     <CheckboxPrimitive.Root

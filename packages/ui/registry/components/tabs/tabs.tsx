@@ -1,4 +1,4 @@
-/* Based on shadcn/ui (MIT). Design reference: Stripe, measured (Pictures/beam/references/stripe/ui). */
+/* Based on shadcn/ui (MIT). Sizes, type and shadows are measured references (see CREDITS.md). */
 "use client";
 
 import { cva, type VariantProps } from "class-variance-authority";
@@ -8,9 +8,9 @@ import { cn } from "../../../lib/cn";
 
 const Tabs = TabsPrimitive.Root;
 
-// underline: Checkout settings tabs (equal width, 32px, 14/600, 8px icon gap; 12px under them, a 1px rule, and a
+// underline: settings tabs (equal width, 32px, 14/600, 8px icon gap; 12px under them, a 1px rule, and a
 // 2px --link bar on the rule under the active one).
-// segmented: Docs integration picker (28px boxes, 4px radius, 14px; the chosen one gets a 2px --primary ring).
+// segmented: integration picker (28px boxes, 4px radius, 14px; the chosen one gets a 2px --primary ring).
 const listVariants = cva("inline-flex items-center", {
   variants: {
     variant: {

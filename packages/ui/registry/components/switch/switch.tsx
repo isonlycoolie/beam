@@ -1,11 +1,11 @@
-/* Based on shadcn/ui (MIT). Design reference: Stripe, measured (Pictures/beam/references/stripe/ui). */
+/* Based on shadcn/ui (MIT). Sizes, type and shadows are measured references (see CREDITS.md). */
 "use client";
 
 import { Switch as SwitchPrimitive } from "radix-ui";
 import type * as React from "react";
 import { cn } from "../../../lib/cn";
 
-// Checkout settings: a 32 x 20 track, 10px radius, 1px inset; on is --primary, off is --input.
+// A 32 x 20 track, 10px radius, 1px inset; on is --primary, off is --input.
 function Switch({ className, ...props }: React.ComponentProps<typeof SwitchPrimitive.Root>) {
   return (
     <SwitchPrimitive.Root

@@ -1,4 +1,4 @@
-/* Based on shadcn/ui (MIT). Design reference: Stripe, measured (Pictures/beam/references/stripe/ui). */
+/* Based on shadcn/ui (MIT). Sizes, type and shadows are measured references (see CREDITS.md). */
 "use client";
 
 import { ArrowRight01Icon, CircleIcon, Tick02Icon } from "@hugeicons/core-free-icons";
@@ -13,7 +13,7 @@ const ContextMenuRadioGroup = ContextMenuPrimitive.RadioGroup;
 const ContextMenuSub = ContextMenuPrimitive.Sub;
 const ContextMenuTrigger = ContextMenuPrimitive.Trigger;
 
-// Surface measured from the Start building menu (--popover, 1px --input, 6px radius, the menu shadow). Rows are
+// Measured menu surface (--popover, 1px --input, 6px radius, the menu shadow). Rows are
 // composed from measured parts: 14/20px text, 6px radius, --secondary when focused.
 const surface = "z-50 rounded-(--radius-md) border border-input bg-popover text-popover-foreground shadow-(--shadow-3) min-w-48 overflow-hidden p-1";
 const item = "relative flex cursor-default select-none items-center gap-2 rounded-(--radius-md) px-2 py-1.5 text-[14px] leading-[20px] text-text-1 outline-none focus:bg-secondary data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:shrink-0";

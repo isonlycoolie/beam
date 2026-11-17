@@ -1,4 +1,4 @@
-/* Based on shadcn/ui (MIT). Design reference: Stripe, measured (Pictures/beam/references/stripe/ui). */
+/* Based on shadcn/ui (MIT). Sizes, type and shadows are measured references (see CREDITS.md). */
 "use client";
 
 import { Cancel01Icon } from "@hugeicons/core-free-icons";
@@ -12,7 +12,7 @@ const DialogTrigger = DialogPrimitive.Trigger;
 const DialogClose = DialogPrimitive.Close;
 const DialogPortal = DialogPrimitive.Portal;
 
-// Checkout chooser: a 20% black overlay; the panel is --card, 12px radius, 40px padding, a 0 40px 100px shadow.
+// A 20% black overlay; the panel is --card, 12px radius, 40px padding, a 0 40px 100px shadow.
 function DialogOverlay({ className, ...props }: React.ComponentProps<typeof DialogPrimitive.Overlay>) {
   return <DialogPrimitive.Overlay data-slot="dialog-overlay" className={cn("fixed inset-0 z-50 bg-(--overlay)", className)} {...props} />;
 }
@@ -48,7 +48,7 @@ function DialogFooter({ className, ...props }: React.ComponentProps<"div">) {
   return <div data-slot="dialog-footer" className={cn("flex flex-col-reverse gap-2 sm:flex-row sm:justify-end", className)} {...props} />;
 }
 
-// Checkout chooser title: 24/700/32px.
+// Title: 24/700/32px.
 function DialogTitle({ className, ...props }: React.ComponentProps<typeof DialogPrimitive.Title>) {
   return <DialogPrimitive.Title data-slot="dialog-title" className={cn("text-[24px] leading-[32px] font-bold text-text-1", className)} {...props} />;
 }
