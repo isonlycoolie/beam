@@ -21,8 +21,10 @@ export async function reviewPage(input: { url: string; cwd: string; breakpoints?
     for (const [i, width] of (input.breakpoints ?? [1440, 390]).entries()) {
       const page = await browser.newPage({ viewport: { width, height: 900 } });
       const sizes: number[] = [];
-      // Page weight is measured once, on the first (desktop) load, from the bytes each response delivered.
-      if (i === 0) page.on("response", (r) => void r.body().then((b) => sizes.push(b.length), () => undefined));
+      // Page weight is measured once, on the first (desktop) load, as the bytes transferred (compressed),
+      // which is what a visitor actually downloads.
+      if (i === 0)
+        page.on("requestfinished", (request) => void request.sizes().then((s) => sizes.push(s.responseBodySize), () => undefined));
       try {
         await settlePage(page, input.url);
         findings.push(...judge(width, (await page.evaluate(REVIEW_SCRIPT)) as ReviewFacts));
