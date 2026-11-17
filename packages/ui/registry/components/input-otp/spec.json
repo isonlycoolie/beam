@@ -1,0 +1,36 @@
+{
+  "name": "input-otp",
+  "title": "Input OTP",
+  "summary": "A one-time code, one box per digit.",
+  "source": "shadcn/ui (MIT)",
+  "use_when": [
+    "Codes sent by SMS or email"
+  ],
+  "avoid_when": [
+    "Passwords"
+  ],
+  "props": {},
+  "variants": [
+    "default"
+  ],
+  "styles": [
+    "default"
+  ],
+  "composes_with": [],
+  "copy": {},
+  "states": [
+    "default",
+    "hover",
+    "focus",
+    "disabled"
+  ],
+  "a11y": [],
+  "rules": [
+    "state.complete"
+  ],
+  "reference": {
+    "site": "Stripe",
+    "captured": "2026-11-18",
+    "folder": "Pictures/beam/references/stripe/ui"
+  }
+}
