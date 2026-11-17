@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { SHOWCASES } from "@/components/showcase/registry";
+import { COMPONENT_REFS } from "@/components/ui-docs/component-refs";
 
 type Props = { params: Promise<{ id: string }>; searchParams: Promise<{ palette?: string; mode?: string }> };
 
@@ -10,7 +11,7 @@ type Props = { params: Promise<{ id: string }>; searchParams: Promise<{ palette?
 export default async function Page({ params, searchParams }: Props) {
   const { id } = await params;
   const { palette = "default", mode } = await searchParams;
-  const showcase = SHOWCASES[id];
+  const showcase = SHOWCASES[id] ?? COMPONENT_REFS[id];
   if (!showcase) notFound();
   const { Component } = showcase;
   return (
@@ -23,5 +24,5 @@ export default async function Page({ params, searchParams }: Props) {
 }
 
 export function generateStaticParams() {
-  return Object.keys(SHOWCASES).map((id) => ({ id }));
+  return [...Object.keys(SHOWCASES), ...Object.keys(COMPONENT_REFS)].map((id) => ({ id }));
 }
