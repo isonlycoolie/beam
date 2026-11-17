@@ -25,7 +25,7 @@ function EmptyState({ icon = InboxIcon, illustration, title, description, action
       data-slot="empty-state"
       className={cn(
         "flex flex-col items-center justify-center px-6 py-12 text-center",
-        bordered && "rounded-lg border border-dashed border-border",
+        bordered && "rounded-(--radius-lg) border border-dashed border-border",
         className,
       )}
       {...props}

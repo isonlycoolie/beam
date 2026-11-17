@@ -23,7 +23,7 @@ function StatCard({ label, value, unit, delta, invertDelta = false, period, clas
   const up = (delta ?? 0) >= 0;
   const good = invertDelta ? !up : up;
   return (
-    <div data-slot="stat-card" className={cn("flex flex-col gap-3 rounded-lg border border-border bg-card p-5 shadow-1", className)} {...props}>
+    <div data-slot="stat-card" className={cn("flex flex-col gap-3 rounded-(--radius-lg) border border-border bg-card p-5 shadow-(--shadow-1)", className)} {...props}>
       <p className="truncate text-small text-text-2" title={label.length > STAT_LABEL_MAX ? label : undefined}>
         {label}
       </p>
@@ -48,7 +48,7 @@ function StatCard({ label, value, unit, delta, invertDelta = false, period, clas
 /** Same box, same rows, same heights as a loaded StatCard (rule skeleton.fidelity). */
 function StatCardSkeleton({ withDelta = true, className }: { withDelta?: boolean; className?: string }) {
   return (
-    <div data-slot="stat-card" aria-busy className={cn("flex flex-col gap-3 rounded-lg border border-border bg-card p-5 shadow-1", className)}>
+    <div data-slot="stat-card" aria-busy className={cn("flex flex-col gap-3 rounded-(--radius-lg) border border-border bg-card p-5 shadow-(--shadow-1)", className)}>
       <Skeleton className="h-5 w-28" />
       <Skeleton className="h-8 w-24" />
       {withDelta && <Skeleton className="h-4 w-32" />}

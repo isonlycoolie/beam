@@ -8,7 +8,7 @@ import { cn } from "../../../lib/cn";
 
 const buttonVariants = cva(
   [
-    "relative inline-flex shrink-0 select-none items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium",
+    "relative inline-flex shrink-0 select-none items-center justify-center gap-2 whitespace-nowrap rounded-(--radius-md) font-medium",
     "transition-[background-color,border-color,color,box-shadow,transform] duration-(--dur-fast) ease-(--ease-out)",
     "outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
     "active:translate-y-px disabled:pointer-events-none disabled:opacity-50",
@@ -17,11 +17,11 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground shadow-1 hover:bg-primary/90",
+        default: "bg-primary text-primary-foreground shadow-(--shadow-1) hover:bg-primary/90",
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/70",
-        outline: "border border-border bg-background text-text-1 shadow-1 hover:bg-surface-2",
+        outline: "border border-border bg-background text-text-1 shadow-(--shadow-1) hover:bg-surface-2",
         ghost: "text-text-2 hover:bg-surface-2 hover:text-text-1",
-        destructive: "bg-danger text-white shadow-1 hover:bg-danger/90 focus-visible:ring-danger",
+        destructive: "bg-danger text-white shadow-(--shadow-1) hover:bg-danger/90 focus-visible:ring-danger",
         link: "h-auto px-0 text-text-1 underline-offset-4 hover:underline",
       },
       size: {
