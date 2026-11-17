@@ -1,0 +1,8 @@
+{
+  "name": "figma",
+  "title": "Figma",
+  "summary": "Build Figma frames exactly, on any Figma plan",
+  "version": "0.2.0",
+  "status": "stable",
+  "requires": ["browser"]
+}
