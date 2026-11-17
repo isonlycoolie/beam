@@ -1,0 +1,24 @@
+---
+title: With a Figma token
+description: On a paid Figma plan you can read frames straight from a link.
+---
+
+Save a personal access token once:
+
+```bash
+npx usebeam login --token-stdin
+```
+
+Then pass any frame link:
+
+```bash
+npx usebeam inspect "https://www.figma.com/design/<file>/<name>?node-id=1-2"
+npx usebeam export "https://www.figma.com/design/<file>/<name>?node-id=1-2"
+```
+
+If Figma rejects the token, Beam says so plainly:
+
+```txt
+Error Figma rejected your token. It may be expired or revoked.
+Fix: Create a new personal access token in Figma, then run beam login.
+```

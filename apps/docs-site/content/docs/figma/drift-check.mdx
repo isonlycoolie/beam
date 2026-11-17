@@ -1,0 +1,26 @@
+---
+title: Design drift check
+description: Compare your running page with the Figma frame and get every value that drifted.
+---
+
+Figma MCP servers read designs. None of them check what you built. The drift check does:
+
+```bash
+npx usebeam verify --reference figma:.beam/figma/landing-1024 --target http://localhost:3000
+```
+
+It compares pixels per section with the frame's render, and pairs every text layer with the element on your page that has the same text. Then it checks font, size, weight, line height, letter spacing, colour and vertical position.
+
+```md
+## 1024px: fail (98.9% of pixels match)
+
+Values to fix (2, most important first):
+- <*> "Ship exact UI": fontSize should be 64px, is 56px
+- <*> "Ship exact UI": height should be 74px, is 65px
+```
+
+Text boxes in Figma hug their text while page elements fill their container, so the check compares vertical position and height, not width.
+
+<Callout title="Beam Pro">
+The drift check is part of Beam Pro. It is free for everyone while Pro is in preview.
+</Callout>
