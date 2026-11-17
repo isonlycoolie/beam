@@ -1,0 +1,41 @@
+{
+  "name": "badge",
+  "title": "Badge",
+  "summary": "A short status or label.",
+  "source": "shadcn/ui (MIT)",
+  "use_when": [
+    "Status of a row or item",
+    "Counts and tags"
+  ],
+  "avoid_when": [
+    "Actions: use Button",
+    "Long text"
+  ],
+  "props": {
+    "variant": "neutral | primary | success | warning | danger | outline"
+  },
+  "variants": [
+    "neutral",
+    "primary",
+    "success",
+    "warning",
+    "danger",
+    "outline"
+  ],
+  "composes_with": [
+    "Table",
+    "Card"
+  ],
+  "copy": {
+    "text": "One or two words"
+  },
+  "states": [
+    "default"
+  ],
+  "a11y": [
+    "Never rely on colour alone: the word carries the meaning"
+  ],
+  "rules": [
+    "copy.length-caps"
+  ]
+}
