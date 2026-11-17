@@ -1,0 +1,8 @@
+{
+  "name": "clone",
+  "title": "Clone",
+  "summary": "Rebuild any live page exactly from measured values",
+  "version": "0.2.0",
+  "status": "stable",
+  "requires": ["browser"]
+}
