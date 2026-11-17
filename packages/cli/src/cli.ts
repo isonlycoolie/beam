@@ -16,6 +16,7 @@ import { mcpCommand } from "./commands/mcp.js";
 import { settingsCommand } from "./commands/settings.js";
 import { setupCommand } from "./commands/setup.js";
 import { snapshotsCommand } from "./commands/snapshots.js";
+import { verifyCommand } from "./commands/verify.js";
 import { formatError } from "./terminal.js";
 import { BEAM_VERSION } from "./version.js";
 
@@ -57,6 +58,19 @@ program
   .description("Refresh installed Beam tools to this Beam version")
   .action(async () => {
     await updateCommand();
+  });
+
+program
+  .command("verify")
+  .description("Prove a build matches its source: pixels per section plus exact element values")
+  .requiredOption("--reference <url|png>", "The source: a live URL or a PNG of the design")
+  .requiredOption("--target <url>", "Your build, for example http://localhost:3000")
+  .option("--breakpoints <widths>", "Comma-separated widths for URL references", "1440,768,390")
+  .option("--threshold <score>", "Minimum score every section must reach", "0.98")
+  .option("--pixels-only", "Skip the element check and compare pixels only")
+  .option("--json", "Print the full report as JSON")
+  .action(async (options) => {
+    await verifyCommand(options);
   });
 
 program
