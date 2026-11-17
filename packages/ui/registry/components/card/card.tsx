@@ -1,15 +1,23 @@
-/* Based on shadcn/ui (MIT). Restyled for Beam UI: one padding, fixed header and footer zones so sibling cards line up. */
+/* Based on shadcn/ui (MIT). Design reference: Stripe, measured (Pictures/beam/references/stripe/ui). */
+import { cva, type VariantProps } from "class-variance-authority";
 import type * as React from "react";
 import { cn } from "../../../lib/cn";
 
-function Card({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card"
-      className={cn("flex flex-col rounded-(--radius-lg) border border-border bg-card text-card-foreground shadow-(--shadow-1)", className)}
-      {...props}
-    />
-  );
+// default: Checkout settings panel (1px --border, 8px radius, a 1px + 2/5px shadow).
+// muted: Docs info card (--surface-2 fill, 1px --border, 8px radius). elevated: Checkout chooser (12px, no border).
+const cardVariants = cva("flex flex-col text-card-foreground", {
+  variants: {
+    variant: {
+      default: "rounded-(--radius-card) border border-border bg-card shadow-(--shadow-card)",
+      muted: "rounded-(--radius-card) border border-border bg-surface-2",
+      elevated: "rounded-(--radius-xl) bg-card shadow-(--shadow-2)",
+    },
+  },
+  defaultVariants: { variant: "default" },
+});
+
+function Card({ className, variant, ...props }: React.ComponentProps<"div"> & VariantProps<typeof cardVariants>) {
+  return <div data-slot="card" data-variant={variant ?? "default"} className={cn(cardVariants({ variant }), className)} {...props} />;
 }
 
 function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
@@ -17,7 +25,7 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="card-header"
       className={cn(
-        "grid auto-rows-min items-start gap-1 px-5 pt-5 has-data-[slot=card-action]:grid-cols-[1fr_auto]",
+        "grid auto-rows-min items-start gap-1 px-6 pt-6 has-data-[slot=card-action]:grid-cols-[1fr_auto]",
         className,
       )}
       {...props}
@@ -27,11 +35,11 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
 
 /** Card titles use the h3 step. Keep sibling titles to the same line count (rule copy.sibling-parity). */
 function CardTitle({ className, ...props }: React.ComponentProps<"h3">) {
-  return <h3 data-slot="card-title" className={cn("text-h3 text-text-1", className)} {...props} />;
+  return <h3 data-slot="card-title" className={cn("text-[16px] leading-[24px] font-semibold text-text-1", className)} {...props} />;
 }
 
 function CardDescription({ className, ...props }: React.ComponentProps<"p">) {
-  return <p data-slot="card-description" className={cn("text-small text-text-2", className)} {...props} />;
+  return <p data-slot="card-description" className={cn("text-[14px] leading-[20px] text-text-2", className)} {...props} />;
 }
 
 function CardAction({ className, ...props }: React.ComponentProps<"div">) {
@@ -45,14 +53,14 @@ function CardAction({ className, ...props }: React.ComponentProps<"div">) {
 }
 
 function CardContent({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="card-content" className={cn("flex-1 px-5 py-5", className)} {...props} />;
+  return <div data-slot="card-content" className={cn("flex-1 px-6 py-6", className)} {...props} />;
 }
 
 function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="card-footer"
-      className={cn("flex items-center gap-2 border-t border-border px-5 py-3.5", className)}
+      className={cn("flex items-center gap-2 border-t border-border px-6 py-4", className)}
       {...props}
     />
   );
