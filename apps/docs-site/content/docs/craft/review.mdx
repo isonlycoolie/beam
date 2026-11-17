@@ -1,0 +1,36 @@
+---
+title: Craft review
+description: Measure a running page at desktop and phone widths and get findings with concrete fixes.
+---
+
+```bash
+npx usebeam craft review http://localhost:3000
+```
+
+```txt
+HIGH  4 elements like span "01" have contrast 2.37:1, needs 4.5:1 @1440px
+HIGH  3 elements like button are 58x1px @390px
+HIGH  4 elements like a are 20x20px @390px
+MED   12 different font sizes @1440px
+LOW   18 spacing values, 18 off a 4px grid (7.92px, 5.94px, 9.9px) @1440px
+
+Weight: 2103 KB in 33 requests
+```
+
+That is a real review of a live portfolio site.
+
+## What it measures
+
+| Area | Check |
+| --- | --- |
+| Contrast | Text against the real painted background, 4.5:1 for body and 3:1 for large text |
+| Touch | Interactive targets under 24px (high on phones) |
+| Layout | Sideways scrolling |
+| Accessibility | Images without alt, missing `lang` |
+| Structure | One `h1`, no skipped heading levels |
+| Type | More than 2 families or 8 sizes |
+| Spacing | Values off a 4px grid |
+| Weight | Pages over 2.5 MB, over 80 requests |
+| Taste | Gradient text, a common tell of generated UI |
+
+Fix every high finding before calling the work done. The command exits with code 1 while high findings remain, so it works in CI too.
