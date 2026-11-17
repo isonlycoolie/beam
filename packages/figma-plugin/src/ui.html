@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+  body { margin: 0; padding: 16px; font: 12px/1.5 Inter, system-ui, sans-serif; color: var(--figma-color-text); background: var(--figma-color-bg); }
+  h1 { margin: 0 0 4px; font-size: 13px; font-weight: 600; }
+  p { margin: 0 0 12px; color: var(--figma-color-text-secondary); }
+  button { width: 100%; height: 32px; border: 0; border-radius: 6px; font: inherit; font-weight: 600; cursor: pointer;
+    color: #fff; background: linear-gradient(90deg, #7c5cff, #ff4fa3, #ffb547); }
+  button:disabled { opacity: 0.5; cursor: wait; }
+  code { font-family: ui-monospace, monospace; font-size: 11px; }
+  #status { margin-top: 10px; min-height: 36px; }
+  .error { color: var(--figma-color-text-danger); }
+</style>
+</head>
+<body>
+  <h1>Beam export</h1>
+  <p>Select one frame, then export it for your coding agent. Nothing leaves your computer.</p>
+  <button id="export">Export selection</button>
+  <div id="status"></div>
+  <script>
+    const button = document.getElementById("export");
+    const status = document.getElementById("status");
+    button.onclick = () => {
+      button.disabled = true;
+      status.textContent = "Exporting...";
+      status.className = "";
+      parent.postMessage({ pluginMessage: { type: "export" } }, "*");
+    };
+    onmessage = (event) => {
+      const message = event.data.pluginMessage;
+      button.disabled = false;
+      if (message.type === "error") {
+        status.textContent = message.message;
+        status.className = "error";
+        return;
+      }
+      const file = message.name.replace(/[^a-z0-9-]+/gi, "-").replace(/^-|-$/g, "").toLowerCase() + ".beam.json";
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(new Blob([message.json], { type: "application/json" }));
+      link.download = file;
+      link.click();
+      status.innerHTML = "Saved <code>" + file + "</code>. In your project run:<br><code>npx usebeam figma import " + file + "</code>";
+    };
+  </script>
+</body>
+</html>
