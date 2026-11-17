@@ -1,0 +1,65 @@
+---
+title: React
+description: Install and use Beam Icons in React.
+---
+
+## Install
+
+<Tabs groupId="package-manager" items={["npm", "pnpm", "yarn", "bun"]}>
+  <Tab value="npm">
+
+```bash
+npm install @hugeicons/react @hugeicons/core-free-icons
+```
+
+  </Tab>
+  <Tab value="pnpm">
+
+```bash
+pnpm add @hugeicons/react @hugeicons/core-free-icons
+```
+
+  </Tab>
+  <Tab value="yarn">
+
+```bash
+yarn add @hugeicons/react @hugeicons/core-free-icons
+```
+
+  </Tab>
+  <Tab value="bun">
+
+```bash
+bun add @hugeicons/react @hugeicons/core-free-icons
+```
+
+  </Tab>
+</Tabs>
+
+## Use an icon
+
+```tsx title="app/page.tsx"
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Search01Icon } from "@hugeicons/core-free-icons";
+
+export default function Page() {
+  return <HugeiconsIcon icon={Search01Icon} size={20} color="currentColor" strokeWidth={1.5} />;
+}
+```
+
+### With Beam UI
+
+Beam UI wraps the same icons in one `Icon` component with fixed sizes:
+
+```bash
+npx usebeam add ui/icon
+```
+
+```tsx
+import { Search01Icon } from "@hugeicons/core-free-icons";
+import { Icon } from "@/components/ui/icon";
+
+<Icon icon={Search01Icon} size="sm" />
+```
+
+Every icon in [Browse](/docs/icons/browse) works the same way: copy its name and pass it as `icon`.
