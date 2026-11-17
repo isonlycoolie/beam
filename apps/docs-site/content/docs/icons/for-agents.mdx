@@ -1,0 +1,18 @@
+---
+title: For agents
+description: How a coding agent finds, picks and places Beam Icons.
+---
+
+Agents follow the same rules as people, and Beam checks them.
+
+1. **One set.** Use only Beam Icons (Hugeicons free, Stroke Rounded). Never mix in another set.
+2. **Find by name.** The full index is at `/ui/icons.json`: every icon name with its category. Search names by meaning (`Invoice`, `Search`, `Delete`) and import the exact export, for example `Invoice01Icon`.
+3. **Size from context.** `sm` inside controls and rows, `md` in navigation, `lg` in empty states.
+4. **Label or hide.** Icon-only buttons get `aria-label`; icons next to text stay hidden.
+5. **No colour-only meaning.** A status icon always sits next to its word.
+
+Install what an agent needs in one step:
+
+```bash
+npx usebeam add ui/icon
+```
