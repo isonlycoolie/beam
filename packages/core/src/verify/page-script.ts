@@ -14,12 +14,13 @@ export const PAGE_SCRIPT = `(() => {
       const same = node.parentElement ? [...node.parentElement.children].filter((c) => c.tagName === node.tagName) : [node];
       parts.unshift(node.tagName.toLowerCase() + (same.length > 1 ? ":" + (same.indexOf(node) + 1) : ""));
     }
-    return parts.join(">");
+    return parts.join(">") || "html";
   };
   const ownText = (el) => [...el.childNodes].filter((n) => n.nodeType === 3).map((n) => n.textContent).join(" ").replace(/\\s+/g, " ").trim();
   const media = new Set(["IMG", "SVG", "VIDEO", "CANVAS", "PICTURE", "INPUT", "BUTTON", "SELECT", "TEXTAREA", "IFRAME"]);
   const elements = [];
-  for (const el of document.body.querySelectorAll("*")) {
+  // html and body carry the page background and base font, so they are measured too.
+  for (const el of [document.documentElement, document.body, ...document.body.querySelectorAll("*")]) {
     if (elements.length >= MAX) break;
     const cs = getComputedStyle(el);
     if (cs.display === "none" || cs.visibility === "hidden" || Number(cs.opacity) === 0) continue;
@@ -27,7 +28,8 @@ export const PAGE_SCRIPT = `(() => {
     if (r.width < 1 || r.height < 1) continue;
     const text = ownText(el);
     const painted = cs.backgroundColor !== "rgba(0, 0, 0, 0)" || cs.backgroundImage !== "none" || parseFloat(cs.borderTopWidth) > 0 || cs.boxShadow !== "none";
-    if (!text && !painted && !media.has(el.tagName.toUpperCase())) continue;
+    const root = el === document.body || el === document.documentElement;
+    if (!root && !text && !painted && !media.has(el.tagName.toUpperCase())) continue;
     const style = {};
     for (const key of KEYS) style[key] = cs[key];
     elements.push({

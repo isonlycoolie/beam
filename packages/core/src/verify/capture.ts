@@ -3,7 +3,7 @@ import { PAGE_SCRIPT } from "./page-script.js";
 import type { CapturedElement, CapturedSection, PageCapture } from "./types.js";
 
 /** Freezes motion so two captures of the same page give the same pixels. */
-const STILL_CSS = `*,*::before,*::after{animation:none!important;transition:none!important;caret-color:transparent!important;scroll-behavior:auto!important}`;
+export const STILL_CSS = `*,*::before,*::after{animation:none!important;transition:none!important;caret-color:transparent!important;scroll-behavior:auto!important}`;
 
 /** Loads a page, freezes motion and scrolls it once so lazy images and on-scroll content are in place. */
 export async function settlePage(page: Page, url: string): Promise<void> {
