@@ -7,7 +7,7 @@ shadcn/ui means nobody builds an input from scratch any more. But hand those com
 
 Beam UI fixes the second half of the problem:
 
-- **The parts.** shadcn/ui components restyled in a calm, precise design, Hugeicons, and four complete themes.
+- **The parts.** shadcn/ui components restyled in a calm, monochrome design, set in Geist, with the free Hugeicons set and twelve enterprise palettes.
 - **The rules.** Every component ships a spec that tells agents when to use it, when not to, how long its copy can be and which layout rules apply. Beam checks the result.
 
 ## Use only what you need
@@ -16,13 +16,14 @@ Beam UI fixes the second half of the problem:
 | --- | --- |
 | One component | `npx usebeam add ui/button` |
 | The same with the shadcn CLI | `npx shadcn@latest add https://beam.dev/r/button.json` |
-| A theme | Import `@beam/ui/themes/ledger.css` and set `data-theme="ledger"` |
+| A palette | `npx usebeam add ui/palette-navy`, then set `data-theme="navy"` |
 | Icons | `npm install @hugeicons/react @hugeicons/core-free-icons` and Beam's `<Icon>` |
 
 ## What's here
 
-- [Foundations](/docs/ui/foundations): tokens, the type scale and the four themes.
-- [Icons](/docs/ui/icons): 6,000+ free Hugeicons, searchable.
+- [Foundations](/docs/ui/foundations): tokens, type and space.
+- [Palettes](/docs/ui/palettes): twelve enterprise palettes. Pick one, copy its tokens.
+- [Icons](/docs/ui/icons): all 6,791 free Hugeicons, by category.
 - Components: Button, Input, Label, Field, Card, Badge, Skeleton, and Beam's own Stat Card, Empty State and Page Header.
 
 Beam UI is built on [shadcn/ui](https://ui.shadcn.com), [Radix UI](https://www.radix-ui.com) and the free [Hugeicons](https://hugeicons.com) set, all MIT licensed. See `CREDITS.md`.
