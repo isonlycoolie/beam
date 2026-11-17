@@ -1,0 +1,39 @@
+{
+  "name": "skeleton",
+  "title": "Skeleton",
+  "summary": "A placeholder shaped like the content that is loading.",
+  "source": "shadcn/ui (MIT)",
+  "use_when": [
+    "Loads longer than 300ms"
+  ],
+  "avoid_when": [
+    "Inside buttons: use the button's loading state",
+    "Short loads: show nothing"
+  ],
+  "props": {
+    "className": "size it exactly like the content"
+  },
+  "variants": [
+    "text",
+    "avatar",
+    "card"
+  ],
+  "composes_with": [
+    "StatCard",
+    "Card",
+    "Table"
+  ],
+  "copy": {},
+  "states": [
+    "animating",
+    "reduced-motion"
+  ],
+  "a11y": [
+    "aria-hidden; the container sets aria-busy"
+  ],
+  "rules": [
+    "skeleton.fidelity",
+    "loader.no-shift",
+    "loader.timing"
+  ]
+}
