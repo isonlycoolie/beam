@@ -1,0 +1,42 @@
+{
+  "name": "page-header",
+  "title": "Page Header",
+  "summary": "The top of every page: title, one-line description and the main action.",
+  "source": "Beam UI",
+  "use_when": [
+    "The top of every app page"
+  ],
+  "avoid_when": [
+    "Inside cards"
+  ],
+  "props": {
+    "title": "the page name (h1)",
+    "description": "one line",
+    "eyebrow": "breadcrumbs or a back link",
+    "actions": "one primary action, at most one secondary"
+  },
+  "variants": [
+    "default",
+    "with-actions",
+    "with-breadcrumb"
+  ],
+  "composes_with": [
+    "Button",
+    "Breadcrumb"
+  ],
+  "copy": {
+    "title": "The thing, not the verb: Invoices",
+    "description": "What this page is for, in one line"
+  },
+  "states": [
+    "default"
+  ],
+  "a11y": [
+    "The only h1 on the page"
+  ],
+  "rules": [
+    "type.one-h1",
+    "action.one-primary",
+    "copy.length-caps"
+  ]
+}
