@@ -1,0 +1,86 @@
+// Builds shadcn-compatible registry items from packages/ui.
+// Usage: node scripts/build-registry.mjs <outDir> [baseUrl]
+// Every item installs on its own: `npx shadcn add <baseUrl>/<name>.json` pulls exactly its files and dependencies.
+import { mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const root = fileURLToPath(new URL("..", import.meta.url));
+const outDir = process.argv[2] ?? join(root, "dist", "r");
+const base = (process.argv[3] ?? process.env.BEAM_REGISTRY_URL ?? "https://beam.dev/r").replace(/\/$/, "");
+const read = (...p) => readFileSync(join(root, ...p), "utf8");
+const url = (name) => `${base}/${name}.json`;
+
+/** Package imports become app paths (shadcn's layout: @/lib, @/components/ui). */
+function rewrite(source) {
+  return source
+    .replaceAll(/from "(?:\.\.\/)+lib\/cn"/g, 'from "@/lib/beam"')
+    .replaceAll(/from "(?:\.\.\/)+icons\/icon"/g, 'from "@/components/ui/icon"')
+    .replaceAll(/from "\.\.\/([a-z-]+)"/g, 'from "@/components/ui/$1"');
+}
+
+/** npm packages and sibling components a file imports. */
+function imports(source) {
+  const specifiers = [...source.matchAll(/from "([^"]+)"/g)].map((m) => m[1]);
+  return {
+    packages: [...new Set(specifiers.filter((s) => !s.startsWith(".") && s !== "react").map((s) => (s.startsWith("@") ? s.split("/").slice(0, 2).join("/") : s.split("/")[0])))],
+    siblings: [...new Set(specifiers.map((s) => s.match(/^\.\.\/([a-z-]+)$/)?.[1]).filter(Boolean))],
+    usesIcon: specifiers.some((s) => /icons\/icon$/.test(s)),
+  };
+}
+
+const items = [];
+items.push({
+  name: "beam-utils",
+  type: "registry:lib",
+  title: "Beam utils",
+  description: "cn() that knows Beam's type steps, so text sizes and colours merge correctly.",
+  dependencies: ["clsx", "tailwind-merge"],
+  files: [{ path: "lib/beam.ts", type: "registry:lib", target: "lib/beam.ts", content: read("lib", "cn.ts") }],
+});
+items.push({
+  name: "beam-tokens",
+  type: "registry:file",
+  title: "Beam tokens and themes",
+  description: "Tokens, type scale, Tailwind mapping and the Beam, Ledger, Clinic and Studio themes. Import them in your global CSS.",
+  files: [
+    ...["tokens.css", "type.css", "tailwind.css"].map((f) => ({ path: `styles/${f}`, type: "registry:file", target: `styles/beam/${f}`, content: read("styles", f) })),
+    ...readdirSync(join(root, "themes")).map((f) => ({ path: `themes/${f}`, type: "registry:file", target: `styles/beam/themes/${f}`, content: read("themes", f) })),
+  ],
+});
+items.push({
+  name: "icon",
+  type: "registry:ui",
+  title: "Icon",
+  description: "Beam's single icon component over the free Hugeicons set (MIT).",
+  dependencies: ["@hugeicons/react", "@hugeicons/core-free-icons"],
+  registryDependencies: [url("beam-utils")],
+  files: [{ path: "icons/icon.tsx", type: "registry:ui", target: "components/ui/icon.tsx", content: rewrite(read("icons", "icon.tsx")) }],
+});
+
+for (const name of readdirSync(join(root, "registry", "components")).sort()) {
+  const source = read("registry", "components", name, `${name}.tsx`);
+  const spec = JSON.parse(read("registry", "components", name, "spec.json"));
+  const used = imports(source);
+  items.push({
+    name,
+    type: "registry:ui",
+    title: spec.title,
+    description: spec.summary,
+    dependencies: used.packages,
+    registryDependencies: [url("beam-utils"), url("beam-tokens"), ...(used.usesIcon ? [url("icon")] : []), ...used.siblings.map(url)],
+    files: [{ path: `registry/components/${name}/${name}.tsx`, type: "registry:ui", target: `components/ui/${name}.tsx`, content: rewrite(source) }],
+    // Agents installing through shadcn still get the rules: when to use it, copy limits, rule ids.
+    meta: { beam: spec },
+  });
+}
+
+mkdirSync(outDir, { recursive: true });
+for (const item of items) {
+  writeFileSync(join(outDir, `${item.name}.json`), `${JSON.stringify({ $schema: "https://ui.shadcn.com/schema/registry-item.json", ...item }, null, 2)}\n`);
+}
+writeFileSync(
+  join(outDir, "registry.json"),
+  `${JSON.stringify({ $schema: "https://ui.shadcn.com/schema/registry.json", name: "beam", homepage: "https://beam.dev", items: items.map(({ files, ...rest }) => ({ ...rest, files: files.map(({ content, ...f }) => f) })) }, null, 2)}\n`,
+);
+console.log(`registry: ${items.length} items -> ${outDir} (${base})`);
