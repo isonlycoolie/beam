@@ -21,11 +21,12 @@ const program = new Command();
 
 program
   .name("beam")
-  .description("Beam design intelligence CLI")
+  .description("Design tools for coding agents: Figma context, visual checks and more")
   .version(BEAM_VERSION);
 
 program
   .command("login")
+  .description("Save a Figma personal access token on this machine")
   .option("--token <token>", "Figma personal access token")
   .option("--token-stdin", "Read Figma token from stdin")
   .action(async (options: { token?: string; tokenStdin?: boolean }) => {
@@ -34,6 +35,7 @@ program
 
 program
   .command("logout")
+  .description("Remove the saved Figma token")
   .option("--yes", "Confirm credential removal")
   .option("--json", "Print structured JSON output")
   .action(async (options: { yes?: boolean; json?: boolean }) => {
@@ -42,6 +44,7 @@ program
 
 program
   .command("whoami")
+  .description("Show which Figma token Beam is using")
   .option("--json", "Print structured JSON output")
   .action(async (options: { json?: boolean }) => {
     await whoamiCommand(options);
@@ -49,7 +52,8 @@ program
 
 program
   .command("debug")
-  .argument("<action>")
+  .description("Write a debug bundle to share when reporting a problem")
+  .argument("<action>", "bundle")
   .option("--out <path>", "Debug bundle output directory")
   .option("--include-raw", "Record explicit raw payload inclusion")
   .option("--json", "Print structured JSON output")
@@ -72,6 +76,7 @@ program
 
 program
   .command("inspect")
+  .description("Turn a Figma frame into implementation context for your agent")
   .argument("<figma-url>")
   .option("--mode <mode>", "Context mode")
   .option("--raw", "Use raw context mode")
@@ -97,7 +102,8 @@ program
 
 program
   .command("evidence")
-  .argument("<action>")
+  .description("List or add evidence that a build matches its design")
+  .argument("<action>", "list or add")
   .argument("<snapshot-id>")
   .option("--image <path>", "Add screenshot evidence")
   .option("--asset <path>", "Add source asset evidence")
@@ -126,6 +132,7 @@ program
 
 program
   .command("export")
+  .description("Export rendered images and assets from a Figma frame")
   .argument("<figma-url>")
   .option("--out <path>", "Output directory")
   .option("--scale <scale>", "Image scale")
@@ -147,6 +154,7 @@ program
 
 program
   .command("compare")
+  .description("Compare a running page with a Figma frame, pixel by pixel")
   .argument("<figma-url>")
   .argument("<local-url>")
   .option("--threshold <threshold>", "Minimum passing score")
@@ -182,7 +190,8 @@ program
 
 program
   .command("mappings")
-  .argument("<action>")
+  .description("Link Figma components to components in your code")
+  .argument("<action>", "list, add or remove")
   .option("--figma-component-id <id>", "Figma component id")
   .option("--figma-name <name>", "Figma component name")
   .option("--import <path>", "Code import path")
@@ -207,7 +216,8 @@ program
 
 program
   .command("snapshots")
-  .argument("<action>")
+  .description("List, show or restore saved Figma snapshots")
+  .argument("<action>", "list, show or restore")
   .argument("[snapshot-id]")
   .option("--out <path>", "Restore output directory")
   .option("--json", "Print structured JSON output")
@@ -223,7 +233,8 @@ program
 
 program
   .command("settings")
-  .argument("<action>")
+  .description("Read and change Beam settings for this project")
+  .argument("<action>", "list, get, set or unset")
   .argument("[key]")
   .argument("[value]")
   .option("--json", "Print structured JSON output")
