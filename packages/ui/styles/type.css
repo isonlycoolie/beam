@@ -1,6 +1,11 @@
 /* Beam UI type scale. Every text size in an app comes from one of these steps (rule type.from-scale). */
 
 [data-theme] {
+  /* Geist and Geist Mono (Vercel, SIL OFL 1.1), the faces shadcn/ui uses. Load them as --font-geist and --font-geist-mono. */
+  --theme-font-display: var(--font-geist, 'Geist');
+  --theme-font-text: var(--font-geist, 'Geist');
+  --theme-font-numeric: var(--font-geist, 'Geist');
+  --theme-font-mono: var(--font-geist-mono, 'Geist Mono');
   --type-display: 56px;
   --type-display-lh: 60px;
   --type-h1: 32px;

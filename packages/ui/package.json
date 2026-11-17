@@ -7,7 +7,7 @@
   "license": "MIT",
   "exports": {
     "./styles/*": "./styles/*",
-    "./themes/*": "./themes/*",
+    "./palettes/*": "./palettes/*",
     "./lib/*": "./lib/*.ts",
     "./icons": "./icons/icon.tsx",
     "./components/*": "./registry/components/*/index.ts",

@@ -7,7 +7,8 @@
     "rootDir": ".",
     "jsx": "react-jsx",
     "lib": ["ES2023", "DOM"],
-    "types": ["node"]
+    "types": ["node"],
+    "allowImportingTsExtensions": true
   },
-  "include": ["lib/**/*.ts", "icons/**/*.tsx", "registry/**/*.ts", "registry/**/*.tsx", "test/**/*.ts"]
+  "include": ["palettes/**/*.ts", "lib/**/*.ts", "icons/**/*.tsx", "registry/**/*.ts", "registry/**/*.tsx", "test/**/*.ts"]
 }
