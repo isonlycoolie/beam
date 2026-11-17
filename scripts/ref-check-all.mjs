@@ -10,7 +10,9 @@ const root = process.env.BEAM_REFERENCES ?? join(homedir(), "Pictures", "beam", 
 // Every rebuild: harness id -> reference capture (<site>/<path>/<name>).
 const list = JSON.parse(readFileSync(new URL("../apps/docs-site/components/ref-list.json", import.meta.url), "utf8"));
 const rows = [];
-for (const [id, ref] of Object.entries(list)) {
+for (const [id, entry] of Object.entries(list)) {
+  // "site/path/name" or "site/path/name|css selector" when the rebuild renders elsewhere (portals: menus, dialogs).
+  const [ref, selector] = entry.split("|");
   const dir = join(root, ref.slice(0, ref.lastIndexOf("/")));
   const name = ref.slice(ref.lastIndexOf("/") + 1);
   if (!existsSync(join(dir, `${name}.json`))) {
@@ -18,7 +20,7 @@ for (const [id, ref] of Object.entries(list)) {
     continue;
   }
   try {
-    const out = execFileSync("node", [new URL("./ref-compare.mjs", import.meta.url).pathname.replace(/^\/([A-Z]:)/, "$1"), dir, name, `${base}/ref/${id}`], { encoding: "utf8" });
+    const out = execFileSync("node", [new URL("./ref-compare.mjs", import.meta.url).pathname.replace(/^\/([A-Z]:)/, "$1"), dir, name, `${base}/ref/${id}`, ...(selector ? ["--selector", selector] : [])], { encoding: "utf8" });
     rows.push([id, out.split("\n")[0].replace(`${name}: `, "")]);
   } catch (error) {
     rows.push([id, `FAIL ${String(error.stdout ?? error.message).split("\n").slice(0, 4).join(" | ")}`]);

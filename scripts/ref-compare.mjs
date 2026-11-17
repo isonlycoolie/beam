@@ -58,7 +58,9 @@ const used = new Set();
 const problems = [];
 let matched = 0;
 for (const r of refText) {
-  const i = ours.elements.findIndex((o, k) => !used.has(k) && norm(o.text) === norm(r.text));
+  // ref-capture keeps the first 80 characters of long text; those match as a prefix.
+  const same = (o) => norm(o.text) === norm(r.text) || (r.text.length >= 80 && norm(o.text).startsWith(norm(r.text)));
+  const i = ours.elements.findIndex((o, k) => !used.has(k) && same(o));
   if (i === -1) {
     problems.push(`missing   "${r.text}"`);
     continue;
