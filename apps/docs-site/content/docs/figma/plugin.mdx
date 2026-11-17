@@ -1,0 +1,34 @@
+---
+title: The Beam plugin
+description: Export a frame to a file. No token, no rate limits, nothing leaves your computer.
+---
+
+## Export
+
+1. Select one frame, component or section in Figma.
+2. Run the **Beam** plugin and click **Export selection**.
+3. Save `<frame>.beam.json` into your project.
+
+The file holds the layer tree in CSS units (boxes, fills, strokes, radii, shadows, auto layout and text styles), renders at 1x and 2x, image fills, icons as SVG, and the file's local variables.
+
+## Import
+
+```bash
+npx usebeam figma import landing.beam.json
+```
+
+```txt
+Imported Landing 1024
+Frame: 1024x780, 3 sections, 41 layers
+Files: 2 images, 6 SVGs, 18 variable values
+Brief: .beam/figma/landing-1024/brief.md
+```
+
+## Auto layout maps to flexbox
+
+| Figma | CSS |
+| --- | --- |
+| `mode: row` / `column` | `flex-direction: row` / `column` |
+| `gap: 12` | `gap: 12px` |
+| `padding: [32, 24, 32, 24]` | `padding: 32px 24px` |
+| `justify: space_between` | `justify-content: space-between` |

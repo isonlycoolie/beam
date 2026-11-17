@@ -1,0 +1,23 @@
+---
+title: Figma
+description: Build Figma frames exactly, on any Figma plan. The design is the spec.
+---
+
+Free Figma accounts get only a handful of API calls a month, which is not enough to build a real screen through an API-based tool. Beam does not need the API: its Figma plugin exports the frame straight to a file.
+
+```bash
+npx usebeam add figma
+```
+
+## Two ways in
+
+| You have | Use |
+| --- | --- |
+| Any Figma plan | The [Beam plugin](/docs/figma/plugin): export a frame, then `beam figma import` |
+| A paid plan and a token | [`beam inspect`](/docs/figma/with-a-token) with your Figma link |
+
+Either way your agent gets a brief with the build order, every text style, colours, auto layout spacing, radii, shadows and the file's variables.
+
+## Then check it
+
+The [design drift check](/docs/figma/drift-check) compares your running page with the frame, layer by layer, and lists every value that drifted.
