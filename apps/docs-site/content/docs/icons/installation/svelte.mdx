@@ -1,0 +1,50 @@
+---
+title: Svelte
+description: Install and use Beam Icons in Svelte.
+---
+
+## Install
+
+<Tabs groupId="package-manager" items={["npm", "pnpm", "yarn", "bun"]}>
+  <Tab value="npm">
+
+```bash
+npm install @hugeicons/svelte @hugeicons/core-free-icons
+```
+
+  </Tab>
+  <Tab value="pnpm">
+
+```bash
+pnpm add @hugeicons/svelte @hugeicons/core-free-icons
+```
+
+  </Tab>
+  <Tab value="yarn">
+
+```bash
+yarn add @hugeicons/svelte @hugeicons/core-free-icons
+```
+
+  </Tab>
+  <Tab value="bun">
+
+```bash
+bun add @hugeicons/svelte @hugeicons/core-free-icons
+```
+
+  </Tab>
+</Tabs>
+
+## Use an icon
+
+```svelte title="App.svelte"
+<script>
+  import { HugeiconsIcon } from "@hugeicons/svelte";
+  import { Search01Icon } from "@hugeicons/core-free-icons";
+</script>
+
+<HugeiconsIcon icon={Search01Icon} size={20} color="currentColor" strokeWidth={1.5} />
+```
+
+Every icon in [Browse](/docs/icons/browse) works the same way: copy its name and pass it as `icon`.
