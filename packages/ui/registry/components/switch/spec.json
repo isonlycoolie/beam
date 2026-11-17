@@ -1,0 +1,46 @@
+{
+  "name": "switch",
+  "title": "Switch",
+  "summary": "Turns a setting on or off, and the change applies at once.",
+  "source": "shadcn/ui (MIT)",
+  "use_when": [
+    "A setting that takes effect immediately"
+  ],
+  "avoid_when": [
+    "A choice submitted with a form: use a Checkbox"
+  ],
+  "props": {
+    "checked": "boolean",
+    "onCheckedChange": "(checked) => void"
+  },
+  "variants": [
+    "default",
+    "off"
+  ],
+  "styles": [
+    "default",
+    "off"
+  ],
+  "composes_with": [],
+  "copy": {
+    "label": "Names the setting, not the action"
+  },
+  "states": [
+    "default",
+    "hover",
+    "focus",
+    "disabled"
+  ],
+  "a11y": [
+    "Pair with a Label through id and htmlFor"
+  ],
+  "rules": [
+    "form.labels-visible",
+    "state.complete"
+  ],
+  "reference": {
+    "site": "Stripe",
+    "captured": "2026-11-18",
+    "folder": "Pictures/beam/references/stripe/ui"
+  }
+}
