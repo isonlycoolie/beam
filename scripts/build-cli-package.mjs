@@ -1,5 +1,5 @@
 import { build } from "esbuild";
-import { chmod, mkdir } from "node:fs/promises";
+import { chmod, cp, mkdir, rm } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -33,3 +33,7 @@ await build({
 });
 
 await chmod(join(distDir, "cli.js"), 0o755);
+
+// Tools ship inside the package so beam add works offline and matches the CLI version.
+await rm(join(distDir, "kits"), { recursive: true, force: true });
+await cp(join(root, "packages", "kits"), join(distDir, "kits"), { recursive: true });

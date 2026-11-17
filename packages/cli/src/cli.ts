@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import type { AgentId } from "@beam/core";
 import { Command } from "commander";
 import { loginCommand, logoutCommand, whoamiCommand } from "./commands/auth.js";
 import { compareCommand } from "./commands/compare.js";
@@ -8,6 +9,7 @@ import { doctorCommand } from "./commands/doctor.js";
 import { evidenceCommand } from "./commands/evidence.js";
 import { exportCommand } from "./commands/export.js";
 import { inspectCommand } from "./commands/inspect.js";
+import { addCommand, listCommand, removeCommand, updateCommand } from "./commands/kits.js";
 import { initCommand } from "./commands/init.js";
 import { mappingsCommand } from "./commands/mappings.js";
 import { mcpCommand } from "./commands/mcp.js";
@@ -23,6 +25,39 @@ program
   .name("beam")
   .description("Design tools for coding agents: Figma context, visual checks and more")
   .version(BEAM_VERSION);
+
+program
+  .command("add")
+  .description("Add Beam tools to this project as agent skills: clone, figma, craft, glass, verify")
+  .argument("<tools...>", "One or more tool names")
+  .option("--agent <agent...>", "Only these agents: claude-code, codex, cursor")
+  .option("--force", "Overwrite components you already have")
+  .action(async (tools: string[], options: { agent?: AgentId[]; force?: boolean }) => {
+    await addCommand(tools, options);
+  });
+
+program
+  .command("list")
+  .description("Show every Beam tool and which ones this project has")
+  .option("--json", "Print structured JSON output")
+  .action(async (options: { json?: boolean }) => {
+    await listCommand(options);
+  });
+
+program
+  .command("remove")
+  .description("Remove a Beam tool's skills from this project")
+  .argument("<tool>")
+  .action(async (tool: string) => {
+    await removeCommand(tool);
+  });
+
+program
+  .command("update")
+  .description("Refresh installed Beam tools to this Beam version")
+  .action(async () => {
+    await updateCommand();
+  });
 
 program
   .command("login")
