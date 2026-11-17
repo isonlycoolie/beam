@@ -1,0 +1,33 @@
+---
+title: Icons
+description: 6,000+ free Hugeicons, one Icon component, three sizes. Search, click, paste.
+---
+
+Beam UI uses the free Stroke Rounded set from [Hugeicons](https://hugeicons.com), MIT licensed. Every icon below is in it. Hugeicons Pro is never used or redistributed.
+
+<IconBrowser />
+
+## Use an icon
+
+```bash
+npm install @hugeicons/react @hugeicons/core-free-icons
+```
+
+```tsx
+import { Search01Icon } from "@hugeicons/core-free-icons";
+import { Icon } from "@/components/ui/icon";
+
+<Icon icon={Search01Icon} size="sm" />
+```
+
+| Size | Pixels | Stroke | Use |
+| --- | --- | --- | --- |
+| `sm` | 16 | 1.75 | Inside buttons, inputs, badges, table rows |
+| `md` | 20 | 1.75 | Navigation and toolbars (default) |
+| `lg` | 24 | 1.5 | Empty states and feature callouts |
+
+## Rules
+
+- Icons follow the text colour (`currentColor`), so they always match their label.
+- An icon that is the only content of a button needs a label: `<Button size="icon" aria-label="Search">`.
+- One icon style per product. Do not mix Hugeicons with other sets.

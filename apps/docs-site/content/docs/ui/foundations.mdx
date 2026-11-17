@@ -1,0 +1,47 @@
+---
+title: Foundations
+description: Tokens, type scale and themes. Every colour, size and space in Beam UI comes from here.
+---
+
+Change the theme, mode and density in any preview toolbar: every preview on the page follows.
+
+## Colour
+
+Components never use raw colours. They use these tokens, and each theme fills them in. Every text pair is tested to reach 4.5:1 contrast in light and dark.
+
+<ColorSwatches />
+
+## Type scale
+
+Seven steps, fixed per theme. Every size in an app comes from one of them, and a single card uses at most three.
+
+<TypeScale />
+
+## Themes
+
+| Theme | For | Fonts |
+| --- | --- | --- |
+| Beam | Developer tools and SaaS | Sora and Inter |
+| Ledger | Fintech, payments, banking | Inter, Mona Sans Mono for numbers |
+| Clinic | Health, education, public services | Inter |
+| Studio | Creative, marketing, consumer | Bricolage Grotesque and Inter |
+
+```css title="globals.css"
+@import "@beam/ui/styles/tokens.css";
+@import "@beam/ui/styles/type.css";
+@import "@beam/ui/styles/tailwind.css";
+@import "@beam/ui/themes/ledger.css";
+```
+
+```tsx title="app/layout.tsx"
+<body data-theme="ledger" className="dark">
+```
+
+## Space, radius and motion
+
+| Token | Values |
+| --- | --- |
+| Space | `--space-1` 4px up to `--space-16` 64px, on a 4px grid |
+| Radius | `--radius-sm` 6, `--radius-md` 10, `--radius-lg` 14, `--radius-xl` 20 |
+| Controls | 32, 36 and 40px; 28, 32 and 36px with `data-density="compact"` |
+| Motion | `--dur-fast` 150ms, `--dur-base` 220ms, `--ease-out`; zero for reduced motion |
