@@ -176,3 +176,30 @@ code {
     transition: none;
   }
 }
+
+/* Scrollbars: a slim rounded thumb on a clear track, brighter on hover. */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background: rgb(245 245 244 / 0.14) padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(245 245 244 / 0.28) padding-box;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+/* Firefox has no ::-webkit-scrollbar, so it gets the standard properties instead. */
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(245 245 244 / 0.18) transparent;
+  }
+}
