@@ -53,7 +53,7 @@ export function SiteHeader(props: ComponentProps<"header">) {
           <a href="https://github.com/isonlycoolie/beam/discussions" aria-label="Community" className="grid size-9 place-items-center rounded-full text-[#d4d4d4] hover:text-white max-sm:hidden">
             <MessageSquare className="size-[18px]" />
           </a>
-          <Link href="/docs/getting-started" className="ms-2 inline-flex h-8 items-center rounded-full bg-[#fafafa] px-4 text-sm font-medium text-[#0f0f0f] hover:bg-white">
+          <Link href="/docs/getting-started" className="ms-2 inline-flex h-8 shrink-0 items-center whitespace-nowrap rounded-full bg-[#fafafa] px-4 text-sm font-medium text-[#0f0f0f] hover:bg-white">
             Get started
           </Link>
           {SidebarTrigger && (

@@ -12,7 +12,7 @@ export function Announcement() {
       </p>
       <Link
         href="/docs"
-        className="ms-3 inline-flex items-center gap-1 rounded-lg border border-[#fafafa]/80 px-2 py-1 text-xs font-medium text-[#fafafa] transition-colors hover:bg-white/10"
+        className="ms-3 inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-lg border border-[#fafafa]/80 px-2 py-1 text-xs font-medium text-[#fafafa] transition-colors hover:bg-white/10"
       >
         Read the docs <ArrowRight className="size-3.5" />
       </Link>
