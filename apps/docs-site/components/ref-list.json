@@ -1,0 +1,17 @@
+{
+  "stripe-accounts": "stripe/connected-accounts",
+  "stripe-billing": "stripe/billing-plan",
+  "neon-pricing": "neon/pricing-tiers",
+  "ui-button-md": "stripe/ui/button-primary",
+  "ui-button-sm": "stripe/ui/button-outline",
+  "ui-button-lg": "stripe/ui/button-secondary",
+  "ui-switch": "stripe/ui/switch-on",
+  "ui-select": "stripe/ui/select-compact",
+  "ui-callout": "stripe/ui/callout",
+  "ui-tabs": "stripe/ui/tabs",
+  "ui-chip": "stripe/ui/chip",
+  "ui-tag": "stripe/ui/tag",
+  "ui-radio-cards": "stripe/ui/radio-cards",
+  "ui-checkbox": "stripe/ui/checkbox",
+  "ui-field": "stripe/ui/field-email"
+}

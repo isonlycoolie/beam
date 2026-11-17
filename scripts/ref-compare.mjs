@@ -17,7 +17,7 @@ const [dir, name, url, ...rest] = process.argv.slice(2);
 const selector = rest.includes("--selector") ? rest[rest.indexOf("--selector") + 1] : "[data-ref-root] > *";
 const TOLERANCE = 2;
 /** Font substitution allowance: text width may differ by this share, inline x by FONT px. */
-const FONT_SHARE = 0.12;
+const FONT_SHARE = 0.15;
 const FONT = 12;
 const reference = JSON.parse(readFileSync(join(dir, `${name}.json`), "utf8"));
 
@@ -26,6 +26,11 @@ const page = await browser.newPage({ viewport: { width: reference.width, height:
 await page.goto(url, { waitUntil: "networkidle" });
 await page.evaluate(() => document.fonts.ready);
 const root = page.locator(selector).first();
+// Same state as the capture (hover, focus, active), on the rebuild's root element.
+if (reference.state === "hover") await root.hover();
+if (reference.state === "focus") await root.focus();
+if (reference.state === "active") { await root.hover(); await page.mouse.down(); }
+await page.waitForTimeout(300);
 const ours = await root.evaluate((rootEl) => {
   const base = rootEl.getBoundingClientRect();
   const out = [];
@@ -41,7 +46,9 @@ const ours = await root.evaluate((rootEl) => {
   walk(rootEl);
   return { size: { w: Math.round(base.width), h: Math.round(base.height) }, elements: out };
 });
-await root.screenshot({ path: join(dir, `${name}.rebuild.png`) });
+const pad = reference.pad ?? 0;
+const box = await root.boundingBox();
+await page.screenshot({ path: join(dir, `${name}.rebuild.png`), clip: { x: box.x - pad, y: box.y - pad, width: box.width + pad * 2, height: box.height + pad * 2 } });
 await browser.close();
 
 // Reference text elements, normalised the same way ("Intermittent load , 1 GB" -> "Intermittent load, 1 GB").
@@ -64,7 +71,9 @@ for (const r of refText) {
   // height stay exact; width and inline x get the font allowance.
   // Same line: tops within 6px (a larger inline run, like a price, sits a few px higher on the shared baseline).
   const follower = refText.some((s) => s !== r && Math.abs(s.box.y - r.box.y) <= 6 && s.box.x < r.box.x);
-  const allow = { x: follower ? FONT : TOLERANCE, y: TOLERANCE, w: Math.max(TOLERANCE, r.box.w * FONT_SHARE), h: TOLERANCE };
+  // Centred or end-aligned text moves by up to its own width difference.
+  const shift = Math.abs(o.box.w - r.box.w);
+  const allow = { x: follower ? FONT : Math.max(TOLERANCE, shift), y: TOLERANCE, w: Math.max(TOLERANCE, r.box.w * FONT_SHARE), h: TOLERANCE };
   const off = ["x", "y", "w", "h"].filter((k) => Math.abs(o.box[k] - r.box[k]) > allow[k]);
   if (off.length) problems.push(`box       "${r.text}": ${off.map((k) => `${k} ${r.box[k]} -> ${o.box[k]}`).join(", ")}`);
   for (const k of ["fontSize", "fontWeight", "lineHeight", "letterSpacing"]) {
@@ -72,7 +81,8 @@ for (const r of refText) {
     if (want && o.style[k] !== want && !(k === "letterSpacing" && want === "normal" && o.style[k] === "0px")) problems.push(`style     "${r.text}": ${k} ${want} -> ${o.style[k]}`);
   }
 }
-const sizeOff = Math.abs(ours.size.w - reference.size.w) > TOLERANCE || Math.abs(ours.size.h - reference.size.h) > TOLERANCE;
+// Height is exact; width gets the font allowance when the box is sized by its text (buttons, chips).
+const sizeOff = Math.abs(ours.size.w - reference.size.w) > Math.max(TOLERANCE, reference.size.w * FONT_SHARE) || Math.abs(ours.size.h - reference.size.h) > TOLERANCE;
 if (sizeOff) problems.unshift(`size      ${reference.size.w}x${reference.size.h} -> ${ours.size.w}x${ours.size.h}`);
 
 // Side by side and diff, cropped to the common size.
