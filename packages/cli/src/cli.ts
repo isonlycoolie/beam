@@ -68,8 +68,9 @@ program
   .description("Capture a live page (measured styles, real fonts and images) so an agent can rebuild it exactly")
   .argument("<url>", "The page to clone, for example https://example.com/pricing")
   .option("--breakpoints <widths>", "Comma-separated widths to capture", "1440,768,390")
+  .option("--dark", "Capture the page's dark theme")
   .option("--json", "Print a JSON summary")
-  .action(async (url: string, options: { breakpoints?: string; json?: boolean }) => {
+  .action(async (url: string, options: { breakpoints?: string; dark?: boolean; json?: boolean }) => {
     await cloneCommand(url, options);
   });
 

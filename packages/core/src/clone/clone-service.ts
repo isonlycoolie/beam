@@ -32,9 +32,15 @@ export function cloneFolderName(url: string): string {
  * Captures everything needed to rebuild a page exactly: screenshots and measured elements per breakpoint,
  * the real font, image and CSS files, @font-face rules, design tokens and the rendered HTML structure.
  */
-export async function captureForClone(input: { url: string; cwd: string; breakpoints?: number[] }): Promise<CloneResult> {
+export async function captureForClone(input: {
+  url: string;
+  cwd: string;
+  breakpoints?: number[];
+  /** Capture the page's dark theme (prefers-color-scheme: dark) instead of its light one. */
+  colorScheme?: "light" | "dark";
+}): Promise<CloneResult> {
   const widths = [...(input.breakpoints ?? [1440, 768, 390])].sort((a, b) => b - a);
-  const dir = resolve(input.cwd, ".beam", "clone", cloneFolderName(input.url));
+  const dir = resolve(input.cwd, ".beam", "clone", cloneFolderName(input.url) + (input.colorScheme === "dark" ? "-dark" : ""));
   await rm(dir, { recursive: true, force: true });
   await mkdir(dir, { recursive: true });
 
@@ -45,7 +51,7 @@ export async function captureForClone(input: { url: string; cwd: string; breakpo
   let css: Array<{ text: string; baseUrl: string }> = [];
   try {
     for (const width of widths) {
-      const page = await browser.newPage({ viewport: { width, height: 900 }, deviceScaleFactor: 1 });
+      const page = await browser.newPage({ viewport: { width, height: 900 }, deviceScaleFactor: 1, colorScheme: input.colorScheme ?? "light" });
       const recorder = recordAssets(page, dir);
       try {
         await settlePage(page, input.url);

@@ -13,6 +13,7 @@ export function registerCloneTools(server: McpServer, context: BeamToolContext):
     {
       url: z.string().url().describe("The page to clone"),
       breakpoints: z.array(z.number().int().min(200).max(4000)).default([1440, 768, 390]),
+      colorScheme: z.enum(["light", "dark"]).default("light").describe("Which theme of the page to capture"),
     },
     async (input) => {
       try {

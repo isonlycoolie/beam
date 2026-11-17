@@ -3,7 +3,7 @@ import { captureForClone, type CloneResult } from "@beam/core";
 import { heading, label, muted, path, success } from "../terminal.js";
 import { parseBreakpoints } from "./verify.js";
 
-export type CloneOptions = { breakpoints?: string; json?: boolean; cwd?: string };
+export type CloneOptions = { breakpoints?: string; dark?: boolean; json?: boolean; cwd?: string };
 
 /** Captures a live page so an agent can rebuild it from measured values instead of guesses. */
 export async function cloneCommand(url: string, options: CloneOptions = {}): Promise<void> {
@@ -19,7 +19,7 @@ export async function cloneCommand(url: string, options: CloneOptions = {}): Pro
     });
 
   const cwd = options.cwd ?? process.cwd();
-  const result = await captureForClone({ url: parsed.href, cwd, breakpoints: parseBreakpoints(options.breakpoints) });
+  const result = await captureForClone({ url: parsed.href, cwd, breakpoints: parseBreakpoints(options.breakpoints), colorScheme: options.dark ? "dark" : "light" });
   process.stdout.write(options.json ? `${JSON.stringify(summary(result), null, 2)}\n` : formatClone(result, cwd));
 }
 
