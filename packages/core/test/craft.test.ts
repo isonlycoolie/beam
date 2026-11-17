@@ -37,5 +37,10 @@ describe.skipIf(!existsSync(chromium.executablePath()))("craft review in a real 
     expect(review.passed).toBe(false);
     for (const area of ["contrast", "layout", "touch", "a11y", "structure", "taste"]) expect(areas).toContain(area);
     expect(review.findings.find((f) => f.area === "contrast")?.message).toContain('p "Low contrast copy"');
+    // Skip links, inline links and code samples are not flagged.
+    const messages = review.findings.map((f) => f.message).join(" | ");
+    expect(messages).not.toContain("Skip to content");
+    expect(messages).not.toContain('a "guide"');
+    expect(messages).not.toMatch(/font families/);
   }, 60_000);
 });

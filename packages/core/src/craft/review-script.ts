@@ -21,11 +21,16 @@ export const REVIEW_SCRIPT = `(() => {
     const cs = getComputedStyle(el);
     const r = el.getBoundingClientRect();
     if (cs.display === "none" || cs.visibility === "hidden" || r.width === 0 || r.height === 0) continue;
+    // Visually hidden helpers (sr-only, skip links until focused) are not on screen, so they are not judged.
+    const hidden = (r.width <= 1 && r.height <= 1) || cs.clip === "rect(0px, 0px, 0px, 0px)" || cs.clipPath === "inset(50%)";
+    if (hidden) continue;
+    const code = el.closest("pre, code, kbd, samp");
     const own = [...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim());
     if (own) {
       sizes[cs.fontSize] = (sizes[cs.fontSize] || 0) + 1;
+      // Code samples use a monospace face by convention; it is not a design font family.
       const family = cs.fontFamily.split(",")[0].replace(/["']/g, "").trim();
-      families[family] = (families[family] || 0) + 1;
+      if (!code) families[family] = (families[family] || 0) + 1;
       const fg = parse(cs.color), bg = backgroundOf(el);
       if (fg && bg && Number(cs.opacity) > 0) {
         const value = ratio(fg, bg);
@@ -37,7 +42,9 @@ export const REVIEW_SCRIPT = `(() => {
       const v = cs[side];
       if (v && v !== "0px" && v !== "normal" && v.endsWith("px")) spacing[v] = (spacing[v] || 0) + 1;
     }
-    if (el.matches("a[href],button,input,select,textarea,[role=button]") && (r.width < 24 || r.height < 24))
+    // WCAG 2.5.8 exempts targets inside a line of text (inline links, breadcrumbs).
+    const inline = cs.display === "inline";
+    if (!inline && el.matches("a[href],button,input,select,textarea,[role=button]") && (r.width < 24 || r.height < 24))
       targets.push({ element: label(el), width: Math.round(r.width), height: Math.round(r.height) });
   }
   const headings = [...document.querySelectorAll("h1,h2,h3,h4,h5,h6")].map((h) => Number(h.tagName[1]));
