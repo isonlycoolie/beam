@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, ChevronDown, ChevronLeft, Copy, Frame, Layers, Paintbrush, ScanEye, Sparkles } from "lucide-react";
+import { Blocks, Check, ChevronDown, ChevronLeft, Copy, Frame, Layers, Paintbrush, ScanEye, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ComponentType } from "react";
@@ -9,6 +9,7 @@ type Tool = { slug: string; name: string; icon: ComponentType<{ className?: stri
 
 /** Each tool is its own section of the docs, the way the reference splits products. */
 export const TOOLS: Tool[] = [
+  { slug: "ui", name: "Beam UI", icon: Blocks },
   { slug: "clone", name: "Clone", icon: Copy },
   { slug: "figma", name: "Figma", icon: Frame },
   { slug: "craft", name: "Craft", icon: Paintbrush },
