@@ -1,0 +1,45 @@
+---
+title: Glass
+description: Apple-style liquid glass for React. Copied into your project, so it is your code from day one.
+---
+
+```bash
+npx usebeam add glass
+```
+
+Beam copies three components into `components/beam/glass/` and a skill that teaches your agent where glass belongs.
+
+## Set up once
+
+```tsx title="app/layout.tsx"
+import { GlassFilter } from "@/components/beam/glass/glass";
+
+<body>
+  <GlassFilter />
+  {children}
+</body>
+```
+
+## Use
+
+```tsx
+import { GlassBar, GlassButton, GlassPanel } from "@/components/beam/glass/glass";
+
+<GlassBar tone="dark">
+  <a href="/">Home</a>
+  <a href="/pricing">Pricing</a>
+</GlassBar>
+
+<GlassPanel tone="dark" className="p-8">
+  <h2>Ship faster</h2>
+  <GlassButton>Get started</GlassButton>
+</GlassPanel>
+```
+
+## How it renders
+
+- **Every browser** gets frosted glass: blur, saturation, a tint, an inner edge and a top sheen.
+- **Chromium** also gets refraction from an SVG displacement filter on the backdrop.
+- **Reduced transparency** turns glass into a solid, readable surface. Reduced motion removes button motion.
+
+Tune any surface with `--glass-radius`, `--glass-blur`, `--glass-tint`, `--glass-edge` and `--glass-shadow`.
