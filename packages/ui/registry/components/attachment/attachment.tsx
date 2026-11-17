@@ -93,3 +93,74 @@ function AttachmentDescription({ className, ...props }: React.ComponentProps<"sp
   return (
     <span
       data-slot="attachment-description"
+      className={cn(
+        "mt-0.5 block min-w-0 truncate text-[12px] leading-[16px] text-text-2 group-data-[state=error]/attachment:text-danger/80",
+        "max-w-full",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+function AttachmentActions({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="attachment-actions"
+      className={cn(
+        "relative z-20 flex shrink-0 items-center group-data-[orientation=vertical]/attachment:absolute group-data-[orientation=vertical]/attachment:top-3 group-data-[orientation=vertical]/attachment:right-3 group-data-[orientation=vertical]/attachment:gap-1",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+function AttachmentAction({ className, variant, size = "icon-xs", ...props }: React.ComponentProps<typeof Button>) {
+  return <Button data-slot="attachment-action" variant={variant ?? "ghost"} size={size} className={cn(className)} {...props} />;
+}
+
+function AttachmentTrigger({
+  className,
+  asChild = false,
+  type,
+  ...props
+}: React.ComponentProps<"button"> & {
+  asChild?: boolean;
+}) {
+  const Comp = asChild ? Slot.Root : "button";
+
+  return (
+    <Comp
+      data-slot="attachment-trigger"
+      type={asChild ? undefined : (type ?? "button")}
+      className={cn("absolute inset-0 z-10 outline-none", className)}
+      {...props}
+    />
+  );
+}
+
+function AttachmentGroup({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="attachment-group"
+      className={cn(
+        "flex min-w-0 scroll-fade-x snap-x snap-mandatory scroll-px-1 scrollbar-none gap-3 overflow-x-auto overscroll-x-contain py-1 *:data-[slot=attachment]:flex-none *:data-[slot=attachment]:snap-start",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+export {
+  Attachment,
+  AttachmentGroup,
+  AttachmentMedia,
+  AttachmentContent,
+  AttachmentTitle,
+  AttachmentDescription,
+  AttachmentActions,
+  AttachmentAction,
+  AttachmentTrigger,
+};
