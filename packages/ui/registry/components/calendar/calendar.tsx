@@ -93,3 +93,55 @@ function Calendar({
         Chevron: ({ className, orientation, ...props }) => {
           if (orientation === "left") {
             return <HugeiconsIcon icon={ArrowLeft01Icon} strokeWidth={1.75} className={cn("size-4", className)} {...props} />;
+          }
+
+          if (orientation === "right") {
+            return <HugeiconsIcon icon={ArrowRight01Icon} strokeWidth={1.75} className={cn("size-4", className)} {...props} />;
+          }
+
+          return <HugeiconsIcon icon={ArrowDown01Icon} strokeWidth={1.75} className={cn("size-4", className)} {...props} />;
+        },
+        DayButton: CalendarDayButton,
+        WeekNumber: ({ children, ...props }) => {
+          return (
+            <td {...props}>
+              <div className="flex size-(--cell-size) items-center justify-center text-center">{children}</div>
+            </td>
+          );
+        },
+        ...components,
+      }}
+      {...props}
+    />
+  );
+}
+
+function CalendarDayButton({ className, day, modifiers, ...props }: React.ComponentProps<typeof DayButton>) {
+  const defaultClassNames = getDefaultClassNames();
+
+  const ref = React.useRef<HTMLButtonElement>(null);
+  React.useEffect(() => {
+    if (modifiers.focused) ref.current?.focus();
+  }, [modifiers.focused]);
+
+  return (
+    <Button
+      ref={ref}
+      variant="ghost"
+      size="icon"
+      data-day={day.date.toLocaleDateString()}
+      data-selected-single={modifiers.selected && !modifiers.range_start && !modifiers.range_end && !modifiers.range_middle}
+      data-range-start={modifiers.range_start}
+      data-range-end={modifiers.range_end}
+      data-range-middle={modifiers.range_middle}
+      className={cn(
+        "flex aspect-square size-auto w-full min-w-(--cell-size) flex-col gap-1 leading-none font-normal group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-[3px] group-data-[focused=true]/day:ring-ring/50 data-[range-end=true]:rounded-(--radius-md) data-[range-end=true]:rounded-r-md data-[range-end=true]:bg-primary data-[range-end=true]:text-primary-foreground data-[range-middle=true]:rounded-none data-[range-middle=true]:bg-secondary data-[range-middle=true]:text-text-1 data-[range-start=true]:rounded-(--radius-md) data-[range-start=true]:rounded-l-md data-[range-start=true]:bg-primary data-[range-start=true]:text-primary-foreground data-[selected-single=true]:bg-primary data-[selected-single=true]:text-primary-foreground [&>span]:text-[12px] leading-[16px] [&>span]:opacity-70",
+        defaultClassNames.day,
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+export { Calendar, CalendarDayButton };
