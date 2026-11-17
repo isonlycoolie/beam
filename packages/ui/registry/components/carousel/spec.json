@@ -1,0 +1,36 @@
+{
+  "name": "carousel",
+  "title": "Carousel",
+  "summary": "A row of slides people swipe through.",
+  "source": "shadcn/ui (MIT)",
+  "use_when": [
+    "Optional media people browse"
+  ],
+  "avoid_when": [
+    "Anything people must read: lay it out"
+  ],
+  "props": {},
+  "variants": [
+    "default"
+  ],
+  "styles": [
+    "default"
+  ],
+  "composes_with": [],
+  "copy": {},
+  "states": [
+    "default",
+    "hover",
+    "focus",
+    "disabled"
+  ],
+  "a11y": [],
+  "rules": [
+    "state.complete"
+  ],
+  "reference": {
+    "site": "Stripe",
+    "captured": "2026-11-18",
+    "folder": "Pictures/beam/references/stripe/ui"
+  }
+}
