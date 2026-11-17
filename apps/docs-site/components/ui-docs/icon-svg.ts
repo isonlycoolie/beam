@@ -1,15 +1,15 @@
 export type Element = [string, Record<string, string>];
-export type IconEntry = [string, Element[]];
 
 /** Same defaults scripts/gen-icon-index.mjs strips out. */
 const DEFAULTS: Record<string, string> = { stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "1.5" };
 
 const kebab = (key: string) => key.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`);
 
-export function toSvg(elements: Element[], size: number): string {
+/** Builds the SVG; `weight` replaces the set's 1.5 stroke, as the Icon component's strokeWidth does. */
+export function toSvg(elements: Element[], size: number, weight = 1.5): string {
   const children = elements
     .map(([tag, attrs]) => {
-      const all = tag === "path" && !attrs.fill ? { ...DEFAULTS, ...attrs } : attrs;
+      const all = tag === "path" && !attrs.fill ? { ...DEFAULTS, ...attrs, strokeWidth: String(weight) } : attrs;
       return `<${tag} ${Object.entries(all).map(([k, v]) => `${kebab(k)}="${v}"`).join(" ")}/>`;
     })
     .join("");
