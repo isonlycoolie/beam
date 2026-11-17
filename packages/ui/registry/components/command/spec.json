@@ -1,0 +1,36 @@
+{
+  "name": "command",
+  "title": "Command",
+  "summary": "Search and run commands from the keyboard.",
+  "source": "shadcn/ui (MIT)",
+  "use_when": [
+    "Fast keyboard navigation and actions"
+  ],
+  "avoid_when": [
+    "The only way to reach something"
+  ],
+  "props": {},
+  "variants": [
+    "default"
+  ],
+  "styles": [
+    "default"
+  ],
+  "composes_with": [],
+  "copy": {},
+  "states": [
+    "default",
+    "hover",
+    "focus",
+    "disabled"
+  ],
+  "a11y": [],
+  "rules": [
+    "state.complete"
+  ],
+  "reference": {
+    "site": "Stripe",
+    "captured": "2026-11-18",
+    "folder": "Pictures/beam/references/stripe/ui"
+  }
+}
