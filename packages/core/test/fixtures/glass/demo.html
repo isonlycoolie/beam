@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<link rel="stylesheet" href="../../../../kits/glass/components/glass/glass.css">
+<style>
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; font-family: system-ui, sans-serif;
+    background: radial-gradient(circle at 20% 30%, #ff4fa3 0, transparent 40%), radial-gradient(circle at 80% 60%, #7c5cff 0, transparent 45%),
+      repeating-linear-gradient(45deg, #101828 0 18px, #1d2939 18px 36px); }
+  .card { width: 420px; padding: 32px; color: #fff; }
+  h1 { margin: 0 0 8px; font-size: 32px; letter-spacing: -0.02em; }
+  p { margin: 0 0 24px; opacity: 0.85; line-height: 1.5; }
+</style></head>
+<body>
+  <svg aria-hidden width="0" height="0" style="position:absolute"><filter id="beam-glass-distortion" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.008 0.008" numOctaves="2" seed="7" result="noise"/><feGaussianBlur in="noise" stdDeviation="2" result="soft"/><feDisplacementMap in="SourceGraphic" in2="soft" scale="42" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
+  <div class="beam-glass beam-glass--liquid beam-glass--dark card" id="panel">
+    <h1>Liquid glass</h1>
+    <p>Frosted, refracting surface with a specular edge. Text stays readable on busy backgrounds.</p>
+    <button class="beam-glass beam-glass--liquid beam-glass-button" id="button">Get started</button>
+  </div>
+</body></html>
