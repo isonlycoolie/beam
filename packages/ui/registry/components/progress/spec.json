@@ -1,0 +1,37 @@
+{
+  "name": "progress",
+  "title": "Progress",
+  "summary": "How far along something is.",
+  "source": "shadcn/ui (MIT)",
+  "use_when": [
+    "A task or quota with a known end"
+  ],
+  "avoid_when": [
+    "Unknown duration: use a Spinner"
+  ],
+  "props": {
+    "value": "number, 0 to 100"
+  },
+  "variants": [
+    "default"
+  ],
+  "styles": [
+    "default"
+  ],
+  "composes_with": [],
+  "copy": {},
+  "states": [
+    "default"
+  ],
+  "a11y": [
+    "Give it an aria-label or a visible label"
+  ],
+  "rules": [
+    "state.complete"
+  ],
+  "reference": {
+    "site": "Stripe",
+    "captured": "2026-11-18",
+    "folder": "Pictures/beam/references/stripe/ui"
+  }
+}
