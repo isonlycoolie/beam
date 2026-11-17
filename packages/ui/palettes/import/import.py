@@ -51,3 +51,87 @@ radix_palette('mauve', 'Mauve & Violet', 'mauve', 'violet', 'Radix Mauve greys w
 radix_palette('olive', 'Olive & Grass', 'olive', 'grass', 'Radix Olive greys with a Grass primary. For finance and ledgers.')
 radix_palette('crimson', 'Gray & Crimson', 'gray', 'crimson', 'Radix Gray with a Crimson primary. Bold, for media.')
 
+w, d = js_consts('carbon-white.js'), js_consts('carbon-g100.js')
+cc = js_consts('carbon-colors.js')
+def carbon(t, mode):
+    return {
+        'background': t['background'], 'surface-1': t['background'], 'surface-2': t['layer01'], 'surface-3': t['layer02'], 'card': t['layer01'], 'popover': t['layer02'],
+        'muted': t['layer01'], 'secondary': t['layerAccent01'], 'accent': t['layerHover01'], 'border': t['borderSubtle01'], 'input': t['borderStrong01'],
+        'text-1': t['textPrimary'], 'text-2': t['textSecondary'], 'text-3': t['textHelper'],
+        'primary': cc['blue60'], 'on-primary': [t['textOnColor']], 'ring': t['focus'], 'link': t['linkPrimary'],
+        # Carbon's support colours are for icons; on light layers, text takes the darker official step of the same hue.
+        'success': cc['green60'] if mode == 'light' else t['supportSuccess'], 'success-soft': cc['green10'] if mode == 'light' else cc['gray90'],
+        'warning': cc['yellow60'] if mode == 'light' else t['supportWarning'], 'warning-soft': cc['yellow10'] if mode == 'light' else cc['gray90'],
+        'danger': t['textError'], 'danger-soft': cc['red10'] if mode == 'light' else cc['gray90'],
+        'chart-1': cc['blue60'], 'chart-2': cc['purple60'], 'chart-3': cc['teal60'], 'chart-4': cc['cyan50'], 'chart-5': cc['gray50'],
+    }
+palettes.append(dict(id='carbon', name='Carbon', description="IBM's Carbon: the White and Gray 100 themes with Blue 60.", source='IBM Carbon Design System',
+    licence='Apache-2.0', url='https://github.com/carbon-design-system/carbon', version='@carbon/themes 11.85.0, @carbon/colors 11.62.0',
+    light=carbon(w, 'light'), dark=carbon(d, 'dark'), display=[cc['gray100'], cc['blue60'], cc['blue40'], cc['gray30'], cc['gray10']]))
+
+ct = css_vars('catppuccin.css')
+def ctp(f):
+    g = lambda k: ct[f'ctp-{f}-{k}']
+    return {
+        'background': g('base'), 'surface-1': g('base'), 'surface-2': g('mantle'), 'surface-3': g('mantle'), 'card': g('mantle'), 'popover': g('mantle'),
+        'muted': g('surface0'), 'secondary': g('surface0'), 'accent': g('surface1'), 'border': g('surface1'), 'input': g('surface2'),
+        'text-1': g('text'), 'text-2': g('subtext1'), 'text-3': g('subtext0'),
+        'primary': g('blue'), 'on-primary': [g('base'), ct['ctp-latte-base'], ct['ctp-mocha-crust']], 'ring': g('lavender'), 'link': g('blue'),
+        'success': g('green'), 'success-soft': g('crust'), 'warning': g('yellow'), 'warning-soft': g('crust'), 'danger': g('red'), 'danger-soft': g('crust'),
+        'chart-1': g('blue'), 'chart-2': g('mauve'), 'chart-3': g('teal'), 'chart-4': g('peach'), 'chart-5': g('overlay0'),
+    }
+palettes.append(dict(id='catppuccin', name='Catppuccin', description='Catppuccin Latte for light and Mocha for dark, with Blue.', source='Catppuccin',
+    licence='MIT', url='https://github.com/catppuccin/palette', version='@catppuccin/palette 1.8.0', light=ctp('latte'), dark=ctp('mocha'),
+    display=[ct['ctp-mocha-base'], ct['ctp-mocha-mauve'], ct['ctp-mocha-blue'], ct['ctp-mocha-peach'], ct['ctp-latte-base']]))
+
+rp_t = open(f'{P}/rosepine.css', encoding='utf-8').read()
+def rp(theme):
+    block = re.search(r'\.' + re.escape(theme) + r'\s*\{([^}]*)\}', rp_t).group(1)
+    v = {k: h.lower() for k, h in re.findall(r'--rp-([\w-]+):\s*(#[0-9a-fA-F]{6})', block)}
+    return {
+        'background': v['base'], 'surface-1': v['base'], 'surface-2': v['surface'], 'surface-3': v['overlay'], 'card': v['surface'], 'popover': v['surface'],
+        'muted': v['overlay'], 'secondary': v['overlay'], 'accent': v['highlight-low'], 'border': v['highlight-med'], 'input': v['highlight-high'],
+        'text-1': v['text'], 'text-2': v['subtle'], 'text-3': v['muted'],
+        'primary': v['pine'], 'on-primary': ['#ffffff', v['base']], 'ring': v['iris'], 'link': v['foam'],
+        'success': v['pine'], 'success-soft': v['overlay'], 'warning': v['gold'], 'warning-soft': v['overlay'], 'danger': v['love'], 'danger-soft': v['overlay'],
+        'chart-1': v['pine'], 'chart-2': v['iris'], 'chart-3': v['foam'], 'chart-4': v['rose'], 'chart-5': v['muted'],
+    }, v
+rl, rpl = rp('theme-rp-dawn'); rd, rpd = rp('theme-rp')
+palettes.append(dict(id='rose-pine', name='Rosé Pine', description='Rosé Pine Dawn for light and the main theme for dark, with Pine.', source='Rosé Pine',
+    licence='MIT', url='https://github.com/rose-pine/palette', version='@rose-pine/palette 4.0.1', light=rl, dark=rd,
+    display=[rpd['base'], rpd['love'], rpd['gold'], rpd['pine'], rpd['iris']]))
+
+fx = {k.replace('flexoki-', ''): v for k, v in css_vars('flexoki.css').items()}
+def flexoki(dark):
+    s = (lambda k: fx[k]) 
+    bg, bg2, ui, ui2, ui3, tx3, tx2, tx = (('black', '950', '900', '850', '800', '700', '500', '200') if dark else ('paper', '50', '100', '150', '200', '300', '600', 'black'))
+    tone = '400' if dark else '600'
+    soft = '950' if dark else '50'
+    return {
+        'background': fx[bg], 'surface-1': fx[bg], 'surface-2': fx[bg2], 'surface-3': fx[bg2], 'card': fx[bg2], 'popover': fx[bg2],
+        'muted': fx[bg2], 'secondary': fx[ui], 'accent': fx[ui], 'border': fx[ui], 'input': fx[ui2],
+        'text-1': fx[tx], 'text-2': fx[tx2], 'text-3': fx[tx2],
+        # Flexoki: cy is "links, active states".
+        'primary': fx[f'blue-{tone}'], 'on-primary': [fx['paper'], fx['black']], 'ring': fx[f'cyan-{tone}'], 'link': fx[f'cyan-{tone}'],
+        'success': fx[f'green-{tone}'], 'success-soft': fx[f'green-{soft}'], 'warning': fx[f'orange-{tone}'], 'warning-soft': fx[f'orange-{soft}'],
+        'danger': fx[f'red-{tone}'], 'danger-soft': fx[f'red-{soft}'],
+        'chart-1': fx[f'blue-{tone}'], 'chart-2': fx[f'cyan-{tone}'], 'chart-3': fx[f'purple-{tone}'], 'chart-4': fx[f'orange-{tone}'], 'chart-5': fx[tx3],
+    }
+palettes.append(dict(id='flexoki', name='Flexoki', description='Flexoki: an inky palette for prose and code, on paper or black, with Blue.', source='Flexoki by Steph Ango',
+    licence='MIT', url='https://github.com/kepano/flexoki', version='kepano/flexoki @ 8d723ba', light=flexoki(False), dark=flexoki(True),
+    display=[fx['black'], fx['red-600'], fx['yellow-400'], fx['blue-600'], fx['paper']]))
+
+lines = ['// Generated from the official palette sources by Beam\'s palette import. Edit the mapping there, not these values.',
+         '// Each palette: its source, licence and version, the official colour each token takes in light and dark,',
+         '// and "on-primary": the official colours that may sit on the primary, best contrast first chosen at build time.',
+         'export type PaletteSource = {', '  id: string;', '  name: string;', '  description: string;', '  source: string;', '  licence: string;',
+         '  url: string;', '  version: string;', '  display: string[];', '  light: Record<string, string>;', '  dark: Record<string, string>;',
+         '  onPrimary: { light: string[]; dark: string[] };', '};', '', 'export const PALETTES: PaletteSource[] = [']
+for p in palettes:
+    on = {m: p[m].pop('on-primary') for m in ('light', 'dark')}
+    entry = {k: p[k] for k in ('id', 'name', 'description', 'source', 'licence', 'url', 'version', 'display')}
+    entry.update(light=p['light'], dark=p['dark'], onPrimary=on)
+    lines.append('  ' + json.dumps(entry, ensure_ascii=False) + ',')
+lines += ['];', '']
+open(OUT, 'w', encoding='utf-8', newline='\n').write('\n'.join(lines))
+print(len(palettes), 'palettes')
