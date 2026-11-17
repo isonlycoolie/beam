@@ -7,10 +7,12 @@ import {
   compareDesignToUrl,
   verifyBuild,
   captureForClone,
+  importFigmaBundle,
 } from "@beam/core";
 import { z } from "zod";
 import { registerAssetTools } from "./assets.js";
 import { registerCloneTools } from "./clone.js";
+import { registerFigmaImportTools } from "./figma-import.js";
 import { registerFreeLocalTools } from "./free-local.js";
 import { registerCompareTools } from "./compare.js";
 import { jsonContent, toolError } from "./responses.js";
@@ -26,6 +28,7 @@ export type BeamToolContext = {
   compareDesignToUrl?: typeof compareDesignToUrl;
   verifyBuild?: typeof verifyBuild;
   captureForClone?: typeof captureForClone;
+  importFigmaBundle?: typeof importFigmaBundle;
 };
 
 export function registerBeamTools(
@@ -63,4 +66,5 @@ export function registerBeamTools(
   registerCompareTools(server, context);
   registerVerifyTools(server, context);
   registerCloneTools(server, context);
+  registerFigmaImportTools(server, context);
 }
