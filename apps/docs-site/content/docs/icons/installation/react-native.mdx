@@ -1,0 +1,57 @@
+---
+title: React Native
+description: Install and use Beam Icons in React Native.
+---
+
+## Install
+
+<Tabs groupId="package-manager" items={["npm", "pnpm", "yarn", "bun"]}>
+  <Tab value="npm">
+
+```bash
+npm install @hugeicons/react-native @hugeicons/core-free-icons react-native-svg
+```
+
+  </Tab>
+  <Tab value="pnpm">
+
+```bash
+pnpm add @hugeicons/react-native @hugeicons/core-free-icons react-native-svg
+```
+
+  </Tab>
+  <Tab value="yarn">
+
+```bash
+yarn add @hugeicons/react-native @hugeicons/core-free-icons react-native-svg
+```
+
+  </Tab>
+  <Tab value="bun">
+
+```bash
+bun add @hugeicons/react-native @hugeicons/core-free-icons react-native-svg
+```
+
+  </Tab>
+</Tabs>
+
+## Use an icon
+
+`react-native-svg` is a peer dependency. Expo includes it; in a bare React Native app, follow the [react-native-svg setup](https://github.com/react-native-svg/react-native-svg#installation).
+
+```tsx title="App.tsx"
+import { View } from "react-native";
+import { HugeiconsIcon } from "@hugeicons/react-native";
+import { Search01Icon } from "@hugeicons/core-free-icons";
+
+export default function App() {
+  return (
+    <View>
+      <HugeiconsIcon icon={Search01Icon} size={20} color="#0f0f0f" strokeWidth={1.5} />
+    </View>
+  );
+}
+```
+
+Every icon in [Browse](/docs/icons/browse) works the same way: copy its name and pass it as `icon`.
