@@ -4,6 +4,7 @@
 import { mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { buildPalettes } from "../palettes/palettes.ts";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 const outDir = process.argv[2] ?? join(root, "dist", "r");
@@ -38,16 +39,29 @@ items.push({
   dependencies: ["clsx", "tailwind-merge"],
   files: [{ path: "lib/beam.ts", type: "registry:lib", target: "lib/beam.ts", content: read("lib", "cn.ts") }],
 });
+const palettes = buildPalettes();
+const paletteFile = (p) => ({ path: `palettes/${p.id}.css`, type: "registry:file", target: `styles/beam/palettes/${p.id}.css`, content: p.css });
 items.push({
   name: "beam-tokens",
   type: "registry:file",
-  title: "Beam tokens and themes",
-  description: "Tokens, type scale, Tailwind mapping and the Beam, Ledger, Clinic and Studio themes. Import them in your global CSS.",
+  title: "Beam tokens",
+  description: "Tokens, the Geist type scale, the Tailwind mapping and the default Graphite palette. Import them in your global CSS.",
   files: [
     ...["tokens.css", "type.css", "tailwind.css"].map((f) => ({ path: `styles/${f}`, type: "registry:file", target: `styles/beam/${f}`, content: read("styles", f) })),
-    ...readdirSync(join(root, "themes")).map((f) => ({ path: `themes/${f}`, type: "registry:file", target: `styles/beam/themes/${f}`, content: read("themes", f) })),
+    paletteFile(palettes[0]),
   ],
 });
+// One item per palette: `npx usebeam add ui/palette-navy`, then set data-theme="navy".
+for (const p of palettes.slice(1))
+  items.push({
+    name: `palette-${p.id}`,
+    type: "registry:theme",
+    title: `${p.name} palette`,
+    description: p.description,
+    registryDependencies: [url("beam-tokens")],
+    files: [paletteFile(p)],
+    meta: { beam: { display: p.display } },
+  });
 items.push({
   name: "icon",
   type: "registry:ui",
