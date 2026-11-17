@@ -1,0 +1,45 @@
+{
+  "name": "select",
+  "title": "Select",
+  "summary": "Picks one value from a list in a popover.",
+  "source": "shadcn/ui (MIT)",
+  "use_when": [
+    "One choice from five or more options"
+  ],
+  "avoid_when": [
+    "Two to four options: use a Radio Group or Tabs"
+  ],
+  "props": {
+    "value": "string",
+    "onValueChange": "(value) => void",
+    "defaultValue": "string"
+  },
+  "variants": [
+    "default"
+  ],
+  "styles": [
+    "default"
+  ],
+  "composes_with": [],
+  "copy": {
+    "items": "Short nouns, sentence case"
+  },
+  "states": [
+    "default",
+    "hover",
+    "focus",
+    "disabled"
+  ],
+  "a11y": [
+    "Give the trigger a label (Label or aria-label)"
+  ],
+  "rules": [
+    "form.labels-visible",
+    "state.complete"
+  ],
+  "reference": {
+    "site": "Stripe",
+    "captured": "2026-11-18",
+    "folder": "Pictures/beam/references/stripe/ui"
+  }
+}
