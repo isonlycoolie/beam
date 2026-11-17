@@ -1,64 +1,66 @@
 import {
-  createBeamMcpConfig,
+  beamServerCommand,
   getMcpClientAdapter,
   SUPPORTED_MCP_CLIENTS,
 } from "@beam/core";
-import { heading, jsonBlock, label, success, warning } from "../terminal.js";
+import { heading, jsonBlock, label, muted, success, warning } from "../terminal.js";
 
 export type InitCommandOptions = {
   client?: string;
   print?: boolean;
   json?: boolean;
+  cwd?: string;
+  homeDir?: string;
 };
 
+type InitResult = { client: string; configPath?: string; written: boolean; message: string };
+
+/** Clients whose config lives in the project. Codex keeps one global config, so it is only written on request. */
+const PROJECT_CLIENTS = ["claude-code", "cursor"] as const;
+
+/** Registers the Beam MCP server with the chosen agent, or with every agent found in this project. */
 export async function initCommand(options: InitCommandOptions): Promise<void> {
-  const client = options.client ?? "codex";
-  const config = createBeamMcpConfig("global");
-
+  const manual = { mcpServers: { beam: beamServerCommand() } };
   if (options.print) {
-    writeInitOutput(config, options);
+    process.stdout.write(`${jsonBlock(manual)}\n`);
     return;
   }
 
-  const adapter = getMcpClientAdapter(client);
-  const detection = await adapter.detect();
+  const context = { cwd: options.cwd ?? process.cwd(), homeDir: options.homeDir };
+  const results: InitResult[] = [];
+  for (const client of options.client ? [options.client] : PROJECT_CLIENTS) {
+    const adapter = getMcpClientAdapter(client, context);
+    const detection = await adapter.detect();
+    // An explicit --client is a request to set it up even before the agent has touched the project.
+    if (!detection.detected && !options.client) continue;
+    try {
+      await adapter.writeBeamConfig("local");
+      results.push({ client, configPath: detection.configPath, written: true, message: "Beam MCP server registered." });
+    } catch {
+      results.push({ client, written: false, message: `${client} is not supported. Use the manual config.` });
+    }
+  }
 
-  if (!detection.detected) {
-    writeInitOutput(
-      {
-        ...config,
-        client,
-        supportedClients: [...SUPPORTED_MCP_CLIENTS],
-        message: "Automatic MCP config is unavailable. Use this manual config.",
-      },
-      options,
+  if (options.json) {
+    process.stdout.write(`${jsonBlock({ results, manual })}\n`);
+    return;
+  }
+
+  const lines = [heading("Beam init"), ""];
+  for (const result of results) {
+    lines.push(result.written ? success(result.message) : warning(result.message), label("Client", result.client));
+    if (result.configPath) lines.push(label("Config", result.configPath));
+    lines.push("");
+  }
+  if (results.length === 0) {
+    lines.push(
+      warning("No supported agent found in this project."),
+      muted(`Run beam init --client <${SUPPORTED_MCP_CLIENTS.join("|")}> or add this to your agent's MCP config:`),
+      jsonBlock(manual),
     );
-    return;
+  } else {
+    lines.push(muted("Restart your agent so it picks up the Beam MCP server."));
+    if (!options.client) lines.push(muted("Using Codex? Run beam init --client codex to add Beam to ~/.codex/config.toml."));
   }
-
-  await adapter.writeBeamConfig("global");
-  writeInitOutput(
-    {
-      client,
-      configPath: detection.configPath,
-      message: "Beam MCP config updated.",
-    },
-    options,
-  );
-}
-
-function writeInitOutput(value: unknown, options: InitCommandOptions): void {
-  if (options.json || options.print) {
-    process.stdout.write(`${jsonBlock(value)}\n`);
-    return;
-  }
-
-  const record = value as {
-    client?: string;
-    configPath?: string;
-    message?: string;
-  };
-  process.stdout.write(
-    `${heading("Beam init")}\n\n${record.message?.includes("unavailable") ? warning(record.message) : success(record.message ?? "Ready")}\n${record.client ? `${label("Client", record.client)}\n` : ""}${record.configPath ? `${label("Config", record.configPath)}\n` : ""}`,
-  );
+  process.stdout.write(`${lines.join("\n")}\n`);
 }

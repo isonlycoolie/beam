@@ -7,6 +7,7 @@ vi.mock("@beam/mcp", () => ({
 }));
 
 vi.mock("@beam/core", () => ({
+  beamServerCommand: () => ({ command: "npx", args: ["-y", "usebeam", "mcp"] }),
   createBeamMcpConfig: () => ({
     mcpServers: { beam: { command: "beam", args: ["mcp"] } },
   }),
@@ -58,7 +59,7 @@ describe("release CLI smoke paths", () => {
 
     const output = String(write.mock.calls[0]?.[0]);
 
-    expect(output).toContain('"command": "beam"');
+    expect(output).toContain('"usebeam"');
     expect(output).toContain('"args"');
     expect(output).toContain('"mcp"');
   });

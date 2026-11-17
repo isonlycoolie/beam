@@ -170,7 +170,8 @@ program
 
 program
   .command("init")
-  .option("--client <client>", "MCP client to configure")
+  .description("Register the Beam MCP server with Claude Code, Cursor or Codex")
+  .option("--client <client>", "Only configure this client: claude-code, cursor or codex")
   .option("--print", "Print manual MCP config without writing files")
   .option("--json", "Print structured JSON output")
   .action(
