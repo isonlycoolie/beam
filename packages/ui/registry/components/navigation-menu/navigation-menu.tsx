@@ -93,3 +93,37 @@ function NavigationMenuLink({ className, ...props }: React.ComponentProps<typeof
     <NavigationMenuPrimitive.Link
       data-slot="navigation-menu-link"
       className={cn(
+        "flex flex-col gap-1 rounded-[4px] p-2 text-[14px] leading-[20px] transition-all outline-none hover:bg-secondary hover:text-text-1 focus:bg-secondary focus:text-text-1 focus-visible:shadow-(--focus-ring) focus-visible:outline-1 data-[active=true]:bg-secondary/50 data-[active=true]:text-text-1 data-[active=true]:hover:bg-secondary data-[active=true]:focus:bg-secondary [&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='text-'])]:text-text-2",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+function NavigationMenuIndicator({ className, ...props }: React.ComponentProps<typeof NavigationMenuPrimitive.Indicator>) {
+  return (
+    <NavigationMenuPrimitive.Indicator
+      data-slot="navigation-menu-indicator"
+      className={cn(
+        "top-full z-[1] flex h-1.5 items-end justify-center overflow-hidden data-[state=hidden]:animate-out data-[state=hidden]:fade-out data-[state=visible]:animate-in data-[state=visible]:fade-in",
+        className,
+      )}
+      {...props}
+    >
+      <div className="relative top-[60%] h-2 w-2 rotate-45 rounded-tl-sm bg-border shadow-(--shadow-3)" />
+    </NavigationMenuPrimitive.Indicator>
+  );
+}
+
+export {
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuContent,
+  NavigationMenuTrigger,
+  NavigationMenuLink,
+  NavigationMenuIndicator,
+  NavigationMenuViewport,
+  navigationMenuTriggerStyle,
+};
