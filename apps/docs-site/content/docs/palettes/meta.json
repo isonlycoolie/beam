@@ -1,0 +1,22 @@
+{
+  "title": "Palettes",
+  "root": true,
+  "pages": [
+    "index",
+    "usage",
+    "---Radix Colors---",
+    "[Graphite](/docs/palettes/default)",
+    "[Slate & Indigo](/docs/palettes/slate)",
+    "[Sage & Teal](/docs/palettes/sage)",
+    "[Sand & Amber](/docs/palettes/sand)",
+    "[Mauve & Violet](/docs/palettes/mauve)",
+    "[Olive & Grass](/docs/palettes/olive)",
+    "[Gray & Crimson](/docs/palettes/crimson)",
+    "---Design systems---",
+    "[Carbon](/docs/palettes/carbon)",
+    "---Themes---",
+    "[Catppuccin](/docs/palettes/catppuccin)",
+    "[Rosé Pine](/docs/palettes/rose-pine)",
+    "[Flexoki](/docs/palettes/flexoki)"
+  ]
+}

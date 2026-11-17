@@ -1,0 +1,50 @@
+---
+title: Use a palette
+description: Install a palette, switch it on, and switch between light and dark.
+---
+
+## Install
+
+```bash
+npx usebeam add ui/palette-carbon
+```
+
+This adds `styles/beam/palettes/carbon.css`. Import it after the Beam tokens:
+
+```css title="globals.css"
+@import "./beam/tokens.css";
+@import "./beam/type.css";
+@import "./beam/tailwind.css";
+@import "./beam/palettes/carbon.css";
+```
+
+## Switch it on
+
+Set the palette on any element. Everything inside it uses the palette's tokens:
+
+```tsx title="app/layout.tsx"
+<body data-theme="carbon">
+```
+
+## Light and dark
+
+Every palette has both. Add `dark` to the element or any ancestor; add `light` to force light inside a dark area:
+
+```tsx
+<html className="dark">
+  <body data-theme="carbon">
+```
+
+## Tokens
+
+All palettes fill the same tokens, so components never name a colour. The main ones:
+
+| Token | Use |
+| --- | --- |
+| `--background`, `--card` | Page and card surfaces |
+| `--text-1`, `--text-2`, `--text-3` | Primary, secondary and faint text |
+| `--primary`, `--primary-foreground` | The main action and the text on it |
+| `--link` | The accent as text: links and featured labels, readable on every surface |
+| `--border`, `--input` | Dividers and field borders |
+| `--success`, `--warning`, `--danger` | Status text, each on its `-soft` background |
+| `--chart-1` to `--chart-5` | Data series |
