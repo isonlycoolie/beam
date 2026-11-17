@@ -10,6 +10,8 @@ export type ComponentSpec = {
   avoid_when: string[];
   props: Record<string, string>;
   variants: string[];
+  /** Style tabs on the docs page, one example file each. */
+  styles?: string[];
   composes_with: string[];
   copy: Record<string, string>;
   states: string[];
