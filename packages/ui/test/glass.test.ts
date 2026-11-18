@@ -28,6 +28,8 @@ const SLOTS: Record<string, string[]> = {
   tabs: ["tabs-list", "tabs-trigger"],
   button: ["button"],
   badge: ["badge"],
+  chip: ["chip"],
+  toolbar: ["toolbar"],
 };
 
 describe("glass mode", () => {
