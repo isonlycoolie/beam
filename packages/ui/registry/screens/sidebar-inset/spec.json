@@ -1,0 +1,15 @@
+{
+  "id": "sidebar-inset",
+  "group": "Sidebar",
+  "title": "Sidebar \u00b7 Inset with secondary navigation",
+  "summary": "The page sits inset in a card; secondary links sit at the bottom.",
+  "source": "shadcn/ui (MIT)",
+  "files": [
+    "components/app-sidebar.tsx",
+    "components/nav-main.tsx",
+    "components/nav-projects.tsx",
+    "components/nav-secondary.tsx",
+    "components/nav-user.tsx",
+    "page.tsx"
+  ]
+}
