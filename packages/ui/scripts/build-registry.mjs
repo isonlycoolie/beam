@@ -47,9 +47,9 @@ items.push({
   name: "beam-tokens",
   type: "registry:file",
   title: "Beam tokens",
-  description: "Tokens, the Geist type scale, the Tailwind mapping and the default Graphite palette. Import them in your global CSS.",
+  description: "Tokens, the Geist type scale, the Tailwind mapping, glass mode and the default Graphite palette. Import them in your global CSS.",
   files: [
-    ...["tokens.css", "type.css", "tailwind.css"].map((f) => ({ path: `styles/${f}`, type: "registry:file", target: `styles/beam/${f}`, content: read("styles", f) })),
+    ...["tokens.css", "type.css", "tailwind.css", "glass.css"].map((f) => ({ path: `styles/${f}`, type: "registry:file", target: `styles/beam/${f}`, content: read("styles", f) })),
     paletteFile(palettes[0]),
   ],
 });
@@ -91,7 +91,13 @@ for (const name of readdirSync(join(root, "registry", "components")).sort()) {
       ...(used.usesMobile ? [url("use-mobile")] : []),
       ...used.siblings.map(url),
     ],
-    files: [{ path: `registry/components/${name}/${name}.tsx`, type: "registry:ui", target: `components/ui/${name}.tsx`, content: rewrite(source) }],
+    files: [
+      { path: `registry/components/${name}/${name}.tsx`, type: "registry:ui", target: `components/ui/${name}.tsx`, content: rewrite(source) },
+      // Helpers next to the component (liquid-glass-map.ts): installed beside it, so its "./" import still resolves.
+      ...readdirSync(join(root, "registry", "components", name))
+        .filter((f) => /\.tsx?$/.test(f) && f !== "index.ts" && f !== `${name}.tsx`)
+        .map((f) => ({ path: `registry/components/${name}/${f}`, type: "registry:ui", target: `components/ui/${f}`, content: rewrite(read("registry", "components", name, f)) })),
+    ],
     // Agents installing through shadcn still get the rules: when to use it, copy limits, rule ids.
     meta: { beam: spec },
   });
