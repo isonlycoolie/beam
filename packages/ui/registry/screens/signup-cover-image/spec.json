@@ -1,0 +1,11 @@
+{
+  "id": "signup-cover-image",
+  "group": "Sign up",
+  "title": "Sign up \u00b7 Cover image",
+  "summary": "Two columns: the form and a full-height image.",
+  "source": "shadcn/ui (MIT)",
+  "files": [
+    "components/signup-form.tsx",
+    "page.tsx"
+  ]
+}
