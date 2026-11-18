@@ -1,21 +1,15 @@
-import Link from "next/link";
 import { buildPalettes } from "@beam/ui/palettes/palettes.ts";
-import { PaletteStrip } from "./palette-strip";
+import { PaletteBrowser, type PaletteCard } from "./palette-browser";
 
-/** Every palette as a colour strip, its name and source; the name opens the palette's page. */
+/** Every palette, filterable by colour family and harmony scheme; each card opens the palette's page. */
 export function PaletteGrid() {
-  const palettes = buildPalettes();
-  return (
-    <div className="not-prose my-8 grid grid-cols-1 gap-x-6 gap-y-7 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {palettes.map((p) => (
-        <div key={p.id}>
-          <PaletteStrip colors={p.display} />
-          <Link href={`/docs/palettes/${p.id}`} className="group mt-2.5 flex flex-col gap-0.5 px-1">
-            <span className="text-[15px] text-fd-foreground group-hover:underline group-hover:underline-offset-4">{p.name}</span>
-            <span className="text-xs text-fd-muted-foreground">{p.source}</span>
-          </Link>
-        </div>
-      ))}
-    </div>
-  );
+  const cards: PaletteCard[] = buildPalettes().map((p) => ({
+    id: p.id,
+    name: p.name,
+    source: p.harmony ? `${p.harmony.scheme[0]!.toUpperCase()}${p.harmony.scheme.slice(1)}` : p.source,
+    family: p.harmony?.family ?? "Curated",
+    scheme: p.harmony?.scheme ?? "curated",
+    display: p.display,
+  }));
+  return <PaletteBrowser cards={cards} />;
 }
