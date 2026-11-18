@@ -1,0 +1,11 @@
+{
+  "id": "login-email-only",
+  "group": "Login",
+  "title": "Login \u00b7 Email only",
+  "summary": "A magic-link style login with one email field.",
+  "source": "shadcn/ui (MIT)",
+  "files": [
+    "components/login-form.tsx",
+    "page.tsx"
+  ]
+}
