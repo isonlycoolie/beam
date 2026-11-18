@@ -95,7 +95,7 @@
 }
 /* Legibility on glass: white text with Apple's soft shadow, set where the components render. */
 [data-surface="glass"] [data-preview],
-[data-surface="glass"] [data-slot$="-content"],
+[data-surface="glass"] :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"], [data-slot="sheet-content"], [data-slot="drawer-content"], [data-slot="popover-content"], [data-slot="hover-card-content"], [data-slot="tooltip-content"], [data-slot="dropdown-menu-content"], [data-slot="dropdown-menu-sub-content"], [data-slot="context-menu-content"], [data-slot="context-menu-sub-content"], [data-slot="menubar-content"], [data-slot="menubar-sub-content"], [data-slot="select-content"], [data-slot="combobox-content"]),
 [data-surface="glass"] [data-slot="command"] {
   color: var(--text-1);
   text-shadow: 0 1px 2px rgb(0 0 0 / 0.22);
@@ -110,7 +110,6 @@
     [data-slot="accordion-item"],
     [data-slot="table"],
     [data-slot="sidebar-inner"],
-    [data-slot="sidebar-inset"],
     [data-slot="menubar"],
     [data-slot="navigation-menu-list"],
     [data-slot="stat-card"],
@@ -148,8 +147,7 @@
 }
 /* Floating layers: the same clear glass, a little denser and frostier, so it reads over the page. */
 :where([data-surface="glass"], [data-surface="glass"] *):is(
-    [data-slot$="-content"]:not([data-slot="tabs-content"]):not([data-slot="accordion-content"]):not([data-slot="collapsible-content"]):not([data-slot="card-content"]),
-    [data-slot$="-sub-content"],
+    :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"], [data-slot="sheet-content"], [data-slot="drawer-content"], [data-slot="popover-content"], [data-slot="hover-card-content"], [data-slot="tooltip-content"], [data-slot="dropdown-menu-content"], [data-slot="dropdown-menu-sub-content"], [data-slot="context-menu-content"], [data-slot="context-menu-sub-content"], [data-slot="menubar-content"], [data-slot="menubar-sub-content"], [data-slot="select-content"], [data-slot="combobox-content"]),
     [data-slot="command"],
     [data-slot="navigation-menu-viewport"],
     [data-sonner-toast]
@@ -161,16 +159,61 @@
   -webkit-backdrop-filter: blur(calc(var(--beam-glass-frost) * 8)) saturate(var(--beam-glass-saturate)) brightness(1.05);
   backdrop-filter: blur(calc(var(--beam-glass-frost) * 8)) saturate(var(--beam-glass-saturate)) brightness(1.05);
 }
-/* Refraction: where the browser bends the backdrop through an SVG filter (Chromium), glass bends at its edges. The
-   filter is <GlassFilter />, mounted once (components/liquid-glass). Elsewhere glass keeps its frost. */
+/* Refraction for inputs and textareas, which can't hold a GlassBackdrop child: one generic map (<GlassFilter />). */
 @supports (backdrop-filter: url(#beam-glass)) {
-  :where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="card"], [data-slot="button"], [data-slot="input"], [data-slot="textarea"], [data-slot="select-trigger"], [data-slot="tabs-list"][data-variant="segmented"], [data-slot="badge"], [data-slot="alert"], [data-slot="item"]) {
-    backdrop-filter: url(#beam-glass) blur(calc(var(--beam-glass-frost) * 4)) saturate(var(--beam-glass-saturate)) brightness(1.05);
-  }
-  :where([data-surface="glass"], [data-surface="glass"] *):is([data-slot$="-content"]:not([data-slot="tabs-content"]):not([data-slot="accordion-content"]):not([data-slot="collapsible-content"]):not([data-slot="card-content"]), [data-slot="command"]) {
-    backdrop-filter: url(#beam-glass) blur(calc(var(--beam-glass-frost) * 8)) saturate(var(--beam-glass-saturate)) brightness(1.05);
+  :where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="input"], [data-slot="textarea"]) {
+    backdrop-filter: url(#beam-glass) blur(calc(var(--beam-glass-frost) * 2)) saturate(var(--beam-glass-saturate)) brightness(1.05);
   }
 }
+
+/* Surfaces that carry a GlassBackdrop (components/liquid-glass): the backdrop is drawn by that layer, bent for the
+   surface's own size, so the surface itself stops filtering (a filter on it would leave the layer nothing to bend)
+   and becomes its own stacking context, so the layer sits above its tint and below its content. */
+:where([data-surface="glass"], [data-surface="glass"] *):has(> [data-slot="glass-backdrop"]) {
+  isolation: isolate;
+  /* Important: the floating-layer rule above is more specific, and this must always win. */
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+:where([data-surface="glass"], [data-surface="glass"] *):is(
+    [data-slot="card"],
+    [data-slot="alert"],
+    [data-slot="item"],
+    [data-slot="sidebar"],
+    [data-slot="sidebar-inner"],
+    [data-slot="menubar"],
+    [data-slot="tabs-list"],
+    [data-slot="toggle-group"],
+    [data-slot="badge"],
+    [data-slot="button"],
+    [data-slot="input-group"],
+    [data-slot="select-trigger"],
+    [data-slot="command"],
+    [data-slot="popover-content"],
+    [data-slot="hover-card-content"],
+    [data-slot="tooltip-content"],
+    [data-slot="select-content"],
+    [data-slot="dropdown-menu-content"],
+    [data-slot="dropdown-menu-sub-content"],
+    [data-slot="context-menu-content"],
+    [data-slot="context-menu-sub-content"],
+    [data-slot="menubar-content"],
+    [data-slot="menubar-sub-content"]
+  ):not(.fixed):not(.absolute) {
+  position: relative;
+}
+/* Frost per tier: floating layers frostier than surfaces, controls lightest. */
+:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="dialog-content"], [data-slot="alert-dialog-content"], [data-slot="sheet-content"], [data-slot="drawer-content"], [data-slot="popover-content"], [data-slot="hover-card-content"], [data-slot="tooltip-content"], [data-slot="dropdown-menu-content"], [data-slot="dropdown-menu-sub-content"], [data-slot="context-menu-content"], [data-slot="context-menu-sub-content"], [data-slot="menubar-content"], [data-slot="menubar-sub-content"], [data-slot="select-content"], [data-slot="combobox-content"], [data-slot="command"]) > [data-slot="glass-backdrop"] {
+  --glass-frost-scale: 8;
+}
+:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="button"], [data-slot="badge"], [data-slot="select-trigger"], [data-slot="input-group"], [data-slot="toggle-group"], [data-slot="tabs-list"]) > [data-slot="glass-backdrop"] {
+  --glass-frost-scale: 2;
+}
+/* Where a part should not be glass, it drops the layer: underline tabs, ghost and link buttons. */
+:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="tabs-list"][data-variant="underline"], [data-slot="button"][data-variant="ghost"], [data-slot="button"][data-variant="link"]) > [data-slot="glass-backdrop"] {
+  display: none;
+}
+
 /* No glass on glass: a command list inside a dialog, an input inside an input group. */
 :where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="dialog-content"]) [data-slot="command"],
 :where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="input-group"]) [data-slot="input-group-input"] {
@@ -205,7 +248,7 @@
 :where([data-surface="glass"], [data-surface="glass"] *):is(
     [data-slot="card"],
     [data-slot="alert"],
-    [data-slot$="-content"]:not([data-slot="tabs-content"]):not([data-slot="accordion-content"]):not([data-slot="collapsible-content"]):not([data-slot="card-content"]),
+    :is([data-slot="dialog-content"], [data-slot="alert-dialog-content"], [data-slot="sheet-content"], [data-slot="drawer-content"], [data-slot="popover-content"], [data-slot="hover-card-content"], [data-slot="tooltip-content"], [data-slot="dropdown-menu-content"], [data-slot="dropdown-menu-sub-content"], [data-slot="context-menu-content"], [data-slot="context-menu-sub-content"], [data-slot="menubar-content"], [data-slot="menubar-sub-content"], [data-slot="select-content"], [data-slot="combobox-content"]),
     [data-slot="command"],
     [data-slot="input"],
     [data-slot="textarea"],
@@ -236,8 +279,8 @@
   -webkit-mask-composite: xor;
   mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
 }
-/* Anything that carries a rim needs a box to hang it on. */
-:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="card"], [data-slot="alert"], [data-slot="input"], [data-slot="textarea"], [data-slot="input-group"], [data-slot="select-trigger"], [data-slot="badge"], [data-slot="button"], [data-slot="item"]) {
+/* Inputs and textareas carry a rim too. */
+:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="input"], [data-slot="textarea"]) {
   position: relative;
 }
 

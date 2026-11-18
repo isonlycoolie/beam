@@ -9,7 +9,7 @@ const source = (name: string) => readFileSync(join(root, "registry", "components
 // Every surface glass mode styles, and the component that renders it: a renamed data-slot would silently drop glass.
 const SLOTS: Record<string, string[]> = {
   card: ["card"],
-  sidebar: ["sidebar-inner", "sidebar-inset"],
+  sidebar: ["sidebar-inner"],
   menubar: ["menubar", "menubar-content", "menubar-sub-content"],
   "navigation-menu": ["navigation-menu-list", "navigation-menu-viewport"],
   dialog: ["dialog-content"],
