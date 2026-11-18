@@ -3,10 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-/** The docs' top-level sections. Each one has its own sidebar; Blocks joins when its first blocks ship. */
+/** The docs' top-level sections. Each one has its own sidebar. */
 export const SECTIONS = [
   { href: "/docs", name: "Docs" },
   { href: "/docs/components", name: "Components" },
+  { href: "/docs/screens", name: "Screens" },
   { href: "/docs/palettes", name: "Palettes" },
   { href: "/docs/icons", name: "Icons" },
 ] as const;
