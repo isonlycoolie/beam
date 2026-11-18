@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { SCREENS } from "@/components/screens/screens.gen";
-import { GLASS_PHOTO } from "@/components/ui-docs/surface-toggle";
+import { GLASS_STAGE } from "@/components/ui-docs/surface-toggle";
 
 /** Glass follows the docs' Normal · Glass switch, which lives in the parent page's storage (same origin). */
 function useGlass() {
@@ -31,8 +31,9 @@ export function ScreenRoot({ id }: { id: string }) {
   if (!Screen) return null;
   return (
     <div
+      data-preview=""
       className="min-h-svh bg-background bg-cover bg-fixed bg-center font-text text-[14px] leading-[20px] text-foreground"
-      style={glass ? { backgroundImage: `url(${GLASS_PHOTO})` } : undefined}
+      style={glass ? { backgroundImage: GLASS_STAGE } : undefined}
     >
       <Screen />
     </div>

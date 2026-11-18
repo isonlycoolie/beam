@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
-import { GLASS_PHOTO, SurfaceToggle, useSurface } from "./surface-toggle";
+import { GLASS_STAGE, SurfaceToggle, useSurface } from "./surface-toggle";
 
 export type PreviewPanel = { id: string; label: string; preview: ReactNode; code?: ReactNode };
 
@@ -45,8 +45,9 @@ export function PreviewStage({ panels, tabs = false, minHeight = 350 }: { panels
           <div key={p.id} hidden={p.id !== current?.id} role={tabs ? "tabpanel" : undefined}>
             <div
               data-theme="default"
+              data-preview=""
               className="flex items-center justify-center bg-cover bg-center p-8 sm:p-10"
-              style={{ minHeight, backgroundImage: glass ? `url(${GLASS_PHOTO})` : undefined }}
+              style={{ minHeight, backgroundImage: glass ? GLASS_STAGE : undefined }}
             >
               {p.preview}
             </div>

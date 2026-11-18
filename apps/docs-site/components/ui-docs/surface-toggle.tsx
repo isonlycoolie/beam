@@ -1,9 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { flushSync } from "react-dom";
 
 /** The photo every glass preview sits on: glass needs something behind it to blur and bend. Unsplash License. */
-export const GLASS_PHOTO = "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=70&auto=format";
+export const GLASS_PHOTO = "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1280&q=55&auto=format&fit=crop";
+
+/** The photo under a light black veil, so components on it separate from it (stronger in dark mode). */
+export const GLASS_STAGE = `linear-gradient(var(--glass-stage-veil, rgb(0 0 0 / 0.12)), var(--glass-stage-veil, rgb(0 0 0 / 0.12))), url(${GLASS_PHOTO})`;
+
+/** Runs a change as a cross-fade of the whole page where the browser can, so the switch is barely noticed. */
+function crossFade(change: () => void) {
+  const doc = document as Document & { startViewTransition?: (cb: () => void) => unknown };
+  if (!doc.startViewTransition || window.matchMedia("(prefers-reduced-motion: reduce)").matches) change();
+  else doc.startViewTransition(change);
+}
 
 const KEY = "beam-surface";
 const EVENT = "beam-surface";
@@ -33,18 +44,19 @@ export function useSurface(): [boolean, (glass: boolean) => void] {
     window.addEventListener(EVENT, sync);
     return () => window.removeEventListener(EVENT, sync);
   }, []);
-  const set = (on: boolean) => {
-    try {
-      localStorage.setItem(KEY, on ? "glass" : "normal");
-    } catch {
-      // Storage blocked: the switch still works for this page.
+  const set = (on: boolean) =>
+    crossFade(() => {
+      try {
+        localStorage.setItem(KEY, on ? "glass" : "normal");
+      } catch {
+        // Storage blocked: the switch still works for this page.
+      }
       if (on) document.documentElement.dataset.surface = "glass";
       else delete document.documentElement.dataset.surface;
-      setGlass(on);
-      return;
-    }
-    window.dispatchEvent(new Event(EVENT));
-  };
+      // Render the new stage inside the transition, so the photo cross-fades with the components.
+      flushSync(() => setGlass(on));
+      window.dispatchEvent(new Event(EVENT));
+    });
   return [glass, set];
 }
 
