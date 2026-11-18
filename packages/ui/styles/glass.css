@@ -283,3 +283,46 @@
 /* Underline tabs keep their underline, in white; only segmented tabs are a glass track with a lens. */
 :where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="tabs-list"][data-variant="underline"]) [data-slot="tabs-trigger"][data-state="active"] {
   background: transparent;
+  box-shadow: inset 0 -2px 0 #fff;
+}
+
+/* Menu items: a soft lens under the pointer. */
+:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot$="-item"]):is([data-highlighted], :focus) {
+  background-color: rgb(255 255 255 / 0.18);
+}
+@media (prefers-reduced-motion: reduce) {
+  :where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="button"]) {
+    transition: none;
+  }
+}
+
+/* ---------- Switching ---------- */
+/* Normal and Glass cross-fade through a view transition (docs: surface-toggle.tsx). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 420ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* People who ask for less transparency get solid, readable surfaces. */
+@media (prefers-reduced-transparency: reduce) {
+  [data-surface="glass"] [data-theme][data-theme][data-theme],
+  [data-surface="glass"][data-theme][data-theme][data-theme] {
+    --card: rgb(44 44 46);
+    --popover: rgb(44 44 46);
+    --secondary: rgb(58 58 60);
+    --glass-sheen: none;
+  }
+  :root,
+  .dark {
+    --beam-glass-tint: var(--card);
+    --beam-glass-frost: 0px;
+    --beam-glass-saturate: 1;
+    --tab-bar-tint: var(--popover);
+  }
+  [data-liquid-warp] {
+    filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+}
