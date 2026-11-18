@@ -13,12 +13,18 @@ const SelectValue = SelectPrimitive.Value;
 
 // Compact select: 34px, 1px --input border, 6px radius, one 1px shadow, 4/8px padding, 14/500/16px,
 // the up-down chevron right after the value.
-function SelectTrigger({ className, children, ...props }: React.ComponentProps<typeof SelectPrimitive.Trigger>) {
+function SelectTrigger({
+  className,
+  size = "default",
+  children,
+  ...props
+}: React.ComponentProps<typeof SelectPrimitive.Trigger> & { size?: "sm" | "default" }) {
   return (
     <SelectPrimitive.Trigger
       data-slot="select-trigger"
+      data-size={size}
       className={cn(
-        "flex h-[34px] w-fit items-center justify-between gap-0 whitespace-nowrap rounded-(--radius-md) border border-input bg-card px-2 py-1",
+        "flex h-[34px] data-[size=sm]:h-(--control-sm) w-fit items-center justify-between gap-0 whitespace-nowrap rounded-(--radius-md) border border-input bg-card px-2 py-1",
         "text-[14px] leading-[16px] font-medium text-text-1 shadow-(--shadow-control) outline-none",
         "focus-visible:shadow-(--focus-ring) data-[placeholder]:text-text-3 disabled:cursor-not-allowed disabled:opacity-50",
         "aria-invalid:border-danger *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2",
@@ -51,7 +57,9 @@ function SelectContent({ className, children, position = "popper", ...props }: R
         <SelectPrimitive.ScrollUpButton className="flex items-center justify-center py-1">
           <Icon icon={ArrowUp01Icon} size="sm" />
         </SelectPrimitive.ScrollUpButton>
-        <SelectPrimitive.Viewport className={cn("p-1", position === "popper" && "w-full min-w-(--radix-select-trigger-width)")}>{children}</SelectPrimitive.Viewport>
+        <SelectPrimitive.Viewport className={cn("p-1", position === "popper" && "w-full min-w-(--radix-select-trigger-width)")}>
+          {children}
+        </SelectPrimitive.Viewport>
         <SelectPrimitive.ScrollDownButton className="flex items-center justify-center py-1">
           <Icon icon={ArrowDown01Icon} size="sm" />
         </SelectPrimitive.ScrollDownButton>
@@ -61,7 +69,9 @@ function SelectContent({ className, children, position = "popper", ...props }: R
 }
 
 function SelectLabel({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.Label>) {
-  return <SelectPrimitive.Label data-slot="select-label" className={cn("px-2 py-1.5 text-[12px] leading-[16px] font-medium text-text-3", className)} {...props} />;
+  return (
+    <SelectPrimitive.Label data-slot="select-label" className={cn("px-2 py-1.5 text-[12px] leading-[16px] font-medium text-text-3", className)} {...props} />
+  );
 }
 
 function SelectItem({ className, children, ...props }: React.ComponentProps<typeof SelectPrimitive.Item>) {

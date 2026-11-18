@@ -13,6 +13,8 @@ const buttonVariants = cva(
     "transition-[background-color,color,box-shadow] duration-(--dur-fast) ease-(--ease-out)",
     "outline-none focus-visible:shadow-(--focus-ring) disabled:pointer-events-none disabled:opacity-50",
     "aria-invalid:shadow-[0_0_0_1px_var(--danger)]",
+    // As in shadcn: bare SVGs (provider logos) sit at 16px; Beam icons carry their own width and keep it.
+    "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([width])]:size-4",
   ],
   {
     variants: {

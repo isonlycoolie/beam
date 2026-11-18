@@ -10,5 +10,5 @@
     "types": ["node"],
     "allowImportingTsExtensions": true
   },
-  "include": ["palettes/**/*.ts", "lib/**/*.ts", "icons/**/*.tsx", "registry/**/*.ts", "registry/**/*.tsx", "test/**/*.ts"]
+  "include": ["palettes/**/*.ts", "lib/**/*.ts", "icons/**/*.tsx", "registry/**/*.ts", "registry/**/*.tsx", "registry/**/*.json", "test/**/*.ts"]
 }
