@@ -1,51 +1,94 @@
-/* Based on shadcn/ui (MIT). Sizes, type and shadows are measured references (see CREDITS.md). */
-import { Slot } from "radix-ui";
-import type * as React from "react";
+/* Based on shadcn/ui (MIT), converted to Beam's Stripe-measured tokens (radius, shadows, focus, type). */
+"use client";
+
+import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../../lib/cn";
+import { PanelLeftIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Slot } from "radix-ui";
 
-// Docs navigation: section labels 14/600 uppercase in --text-2; items 28px, 4/8px padding (16px when
-// nested), 14/500/20px, 4px radius; the active item is --link on a 10% --link fill. On phones, put the
-// Sidebar inside a Sheet.
-function Sidebar({ className, ...props }: React.ComponentProps<"nav">) {
-  return <nav data-slot="sidebar" className={cn("flex w-[260px] shrink-0 flex-col gap-6 text-[14px] leading-[20px]", className)} {...props} />;
+import { useIsMobile } from "../../../lib/use-mobile";
+import { Button } from "../button/button";
+import { Input } from "../input/input";
+import { Separator } from "../separator/separator";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "../sheet/sheet";
+import { Skeleton } from "../skeleton/skeleton";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../tooltip/tooltip";
+
+const SIDEBAR_COOKIE_NAME = "sidebar_state";
+const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
+const SIDEBAR_WIDTH = "16rem";
+const SIDEBAR_WIDTH_MOBILE = "18rem";
+const SIDEBAR_WIDTH_ICON = "3rem";
+const SIDEBAR_KEYBOARD_SHORTCUT = "b";
+
+type SidebarContextProps = {
+  state: "expanded" | "collapsed";
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  openMobile: boolean;
+  setOpenMobile: (open: boolean) => void;
+  isMobile: boolean;
+  toggleSidebar: () => void;
+};
+
+const SidebarContext = React.createContext<SidebarContextProps | null>(null);
+
+function useSidebar() {
+  const context = React.useContext(SidebarContext);
+  if (!context) {
+    throw new Error("useSidebar must be used within a SidebarProvider.");
+  }
+
+  return context;
 }
 
-function SidebarGroup({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="sidebar-group" className={cn("flex flex-col gap-1", className)} {...props} />;
-}
+function SidebarProvider({
+  defaultOpen = true,
+  open: openProp,
+  onOpenChange: setOpenProp,
+  className,
+  style,
+  children,
+  ...props
+}: React.ComponentProps<"div"> & {
+  defaultOpen?: boolean;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+}) {
+  const isMobile = useIsMobile();
+  const [openMobile, setOpenMobile] = React.useState(false);
 
-function SidebarGroupLabel({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="sidebar-group-label" className={cn("text-[14px] leading-[20px] font-semibold uppercase text-text-2", className)} {...props} />;
-}
+  // This is the internal state of the sidebar.
+  // We use openProp and setOpenProp for control from outside the component.
+  const [_open, _setOpen] = React.useState(defaultOpen);
+  const open = openProp ?? _open;
+  const setOpen = React.useCallback(
+    (value: boolean | ((value: boolean) => boolean)) => {
+      const openState = typeof value === "function" ? value(open) : value;
+      if (setOpenProp) {
+        setOpenProp(openState);
+      } else {
+        _setOpen(openState);
+      }
 
-function SidebarMenu({ className, ...props }: React.ComponentProps<"ul">) {
-  return <ul data-slot="sidebar-menu" className={cn("flex flex-col gap-0.5", className)} {...props} />;
-}
-
-function SidebarMenuItem({ className, ...props }: React.ComponentProps<"li">) {
-  return <li data-slot="sidebar-menu-item" className={cn("relative", className)} {...props} />;
-}
-
-function SidebarMenuButton({ asChild, isActive, nested, className, ...props }: React.ComponentProps<"a"> & { asChild?: boolean; isActive?: boolean; nested?: boolean }) {
-  const Comp = asChild ? Slot.Root : "a";
-  return (
-    <Comp
-      data-slot="sidebar-menu-button"
-      data-active={isActive || undefined}
-      aria-current={isActive ? "page" : undefined}
-      className={cn(
-        "flex h-7 w-full items-center gap-2 rounded-[4px] py-1 pe-2 text-[14px] leading-[20px] font-medium text-text-1 outline-none",
-        nested ? "ps-4" : "ps-2",
-        "hover:text-link focus-visible:shadow-(--focus-ring) data-[active]:bg-link/10 data-[active]:text-link [&_svg]:size-3 [&_svg]:shrink-0",
-        className,
-      )}
-      {...props}
-    />
+      // This sets the cookie to keep the sidebar state.
+      document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
+    },
+    [setOpenProp, open],
   );
-}
 
-function SidebarMenuSub({ className, ...props }: React.ComponentProps<"ul">) {
-  return <ul data-slot="sidebar-menu-sub" className={cn("flex flex-col gap-0.5", className)} {...props} />;
-}
+  // Helper to toggle the sidebar.
+  const toggleSidebar = React.useCallback(() => {
+    return isMobile ? setOpenMobile((open) => !open) : setOpen((open) => !open);
+  }, [isMobile, setOpen, setOpenMobile]);
 
-export { Sidebar, SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub };
+  // Adds a keyboard shortcut to toggle the sidebar.
+  React.useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === SIDEBAR_KEYBOARD_SHORTCUT && (event.metaKey || event.ctrlKey)) {
+        event.preventDefault();
+        toggleSidebar();
+      }
+    };
