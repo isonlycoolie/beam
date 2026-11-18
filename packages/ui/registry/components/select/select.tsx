@@ -1,5 +1,6 @@
 /* Based on shadcn/ui (MIT). Sizes, type and shadows are measured references (see CREDITS.md). */
 "use client";
+import { GlassBackdrop } from "../liquid-glass/liquid-glass";
 
 import { ArrowDown01Icon, ArrowUp01Icon, Tick02Icon, UnfoldMoreIcon } from "@hugeicons/core-free-icons";
 import { Select as SelectPrimitive } from "radix-ui";
@@ -32,6 +33,7 @@ function SelectTrigger({
       )}
       {...props}
     >
+      <GlassBackdrop />
       {children}
       <SelectPrimitive.Icon asChild>
         <Icon icon={UnfoldMoreIcon} size="sm" className="text-text-1" />
@@ -54,6 +56,7 @@ function SelectContent({ className, children, position = "popper", ...props }: R
         )}
         {...props}
       >
+        <GlassBackdrop />
         <SelectPrimitive.ScrollUpButton className="flex items-center justify-center py-1">
           <Icon icon={ArrowUp01Icon} size="sm" />
         </SelectPrimitive.ScrollUpButton>

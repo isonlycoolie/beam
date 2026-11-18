@@ -1,4 +1,5 @@
 /* Based on shadcn/ui (MIT). Sizes, type and shadows are measured references (see CREDITS.md). */
+import { GlassBackdrop } from "../liquid-glass/liquid-glass";
 import type * as React from "react";
 import { cn } from "../../../lib/cn";
 import { Button } from "../button/button";
@@ -13,12 +14,21 @@ function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
         className,
       )}
       {...props}
-    />
+    >
+      <GlassBackdrop />
+      {props.children}
+    </div>
   );
 }
 
 function InputGroupInput({ className, ...props }: React.ComponentProps<"input">) {
-  return <input data-slot="input-group-input" className={cn("h-full min-w-0 flex-1 bg-transparent px-3 text-[14px] leading-[20px] text-text-1 outline-none placeholder:text-text-3", className)} {...props} />;
+  return (
+    <input
+      data-slot="input-group-input"
+      className={cn("h-full min-w-0 flex-1 bg-transparent px-3 text-[14px] leading-[20px] text-text-1 outline-none placeholder:text-text-3", className)}
+      {...props}
+    />
+  );
 }
 
 function InputGroupAddon({ className, align = "inline-start", ...props }: React.ComponentProps<"div"> & { align?: "inline-start" | "inline-end" }) {
@@ -26,7 +36,11 @@ function InputGroupAddon({ className, align = "inline-start", ...props }: React.
     <div
       data-slot="input-group-addon"
       data-align={align}
-      className={cn("flex items-center gap-1 px-3 text-[14px] text-text-3 [&_svg]:size-4", align === "inline-start" ? "order-first pe-0" : "order-last ps-0 pe-1", className)}
+      className={cn(
+        "flex items-center gap-1 px-3 text-[14px] text-text-3 [&_svg]:size-4",
+        align === "inline-start" ? "order-first pe-0" : "order-last ps-0 pe-1",
+        className,
+      )}
       {...props}
     />
   );

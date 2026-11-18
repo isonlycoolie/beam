@@ -1,4 +1,5 @@
 /* Based on shadcn/ui (MIT). Sizes, type, radius and shadows are measured references (see CREDITS.md). */
+import { GlassBackdrop } from "../liquid-glass/liquid-glass";
 import { Loading03Icon } from "@hugeicons/core-free-icons";
 import { cva, type VariantProps } from "class-variance-authority";
 import { Slot } from "radix-ui";
@@ -59,14 +60,22 @@ function Button({ className, variant, size, asChild = false, loading = false, di
       className={cn(buttonVariants({ variant, size }), className)}
       {...props}
     >
-      {loading ? (
-        <>
-          {/* The label stays in the layout so the button keeps its width while loading. */}
-          <span className="invisible inline-flex items-center gap-1.5">{children}</span>
-          <Icon icon={Loading03Icon} size="sm" className="absolute animate-spin" label="Loading" />
-        </>
-      ) : (
+      {asChild ? (
+        // Slot takes exactly one child: with asChild the child element is the button, without a glass layer.
         children
+      ) : (
+        <>
+          <GlassBackdrop />
+          {loading ? (
+            <>
+              {/* The label stays in the layout so the button keeps its width while loading. */}
+              <span className="invisible inline-flex items-center gap-1.5">{children}</span>
+              <Icon icon={Loading03Icon} size="sm" className="absolute animate-spin" label="Loading" />
+            </>
+          ) : (
+            children
+          )}
+        </>
       )}
     </Comp>
   );
