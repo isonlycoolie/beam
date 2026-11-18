@@ -93,3 +93,29 @@ function Tree({ item }: { item: TreeItem }) {
     return (
       <SidebarMenuButton isActive={name === "button.tsx"} className="data-[active=true]:bg-transparent">
         <HugeiconsIcon icon={FileIcon} strokeWidth={1.75} />
+        {name}
+      </SidebarMenuButton>
+    );
+  }
+
+  return (
+    <SidebarMenuItem>
+      <Collapsible className="group/collapsible [&[data-state=open]>button>svg:first-child]:rotate-90" defaultOpen={name === "components" || name === "ui"}>
+        <CollapsibleTrigger asChild>
+          <SidebarMenuButton>
+            <HugeiconsIcon icon={ChevronRightIcon} strokeWidth={1.75} className="transition-transform" />
+            <HugeiconsIcon icon={Folder01Icon} strokeWidth={1.75} />
+            {name}
+          </SidebarMenuButton>
+        </CollapsibleTrigger>
+        <CollapsibleContent>
+          <SidebarMenuSub>
+            {items.map((subItem, index) => (
+              <Tree key={index} item={subItem} />
+            ))}
+          </SidebarMenuSub>
+        </CollapsibleContent>
+      </Collapsible>
+    </SidebarMenuItem>
+  );
+}
