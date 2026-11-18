@@ -16,6 +16,7 @@ const url = (name) => `${base}/${name}.json`;
 function rewrite(source) {
   return source
     .replaceAll(/from "(?:\.\.\/)+lib\/cn"/g, 'from "@/lib/beam"')
+    .replaceAll(/from "(?:\.\.\/)+lib\/use-mobile"/g, 'from "@/hooks/use-mobile"')
     .replaceAll(/from "(?:\.\.\/)+icons\/icon"/g, 'from "@/components/ui/icon"')
     .replaceAll(/from "\.\.\/([a-z-]+)(?:\/\1)?"/g, 'from "@/components/ui/$1"');
 }
@@ -27,6 +28,7 @@ function imports(source) {
     packages: [...new Set(specifiers.filter((s) => !s.startsWith(".") && s !== "react").map((s) => (s.startsWith("@") ? s.split("/").slice(0, 2).join("/") : s.split("/")[0])))],
     siblings: [...new Set(specifiers.map((s) => s.match(/^\.\.\/([a-z-]+)(?:\/\1)?$/)?.[1]).filter(Boolean))],
     usesIcon: specifiers.some((s) => /icons\/icon$/.test(s)),
+    usesMobile: specifiers.some((s) => /lib\/use-mobile$/.test(s)),
   };
 }
 
@@ -82,11 +84,76 @@ for (const name of readdirSync(join(root, "registry", "components")).sort()) {
     title: spec.title,
     description: spec.summary,
     dependencies: used.packages,
-    registryDependencies: [url("beam-utils"), url("beam-tokens"), ...(used.usesIcon ? [url("icon")] : []), ...used.siblings.map(url)],
+    registryDependencies: [
+      url("beam-utils"),
+      url("beam-tokens"),
+      ...(used.usesIcon ? [url("icon")] : []),
+      ...(used.usesMobile ? [url("use-mobile")] : []),
+      ...used.siblings.map(url),
+    ],
     files: [{ path: `registry/components/${name}/${name}.tsx`, type: "registry:ui", target: `components/ui/${name}.tsx`, content: rewrite(source) }],
     // Agents installing through shadcn still get the rules: when to use it, copy limits, rule ids.
     meta: { beam: spec },
   });
+}
+
+items.push({
+  name: "use-mobile",
+  type: "registry:hook",
+  title: "useIsMobile",
+  description: "True below the 768px breakpoint. The Sidebar uses it to open as a sheet on phones.",
+  files: [{ path: "lib/use-mobile.ts", type: "registry:hook", target: "hooks/use-mobile.ts", content: read("lib", "use-mobile.ts") }],
+});
+
+// Screens: whole pages from packages/ui/registry/screens, installed as a page plus its components.
+// `npx usebeam add screens/<id>` -> app/<id>/page.tsx and components/*.tsx.
+const screens = [];
+const screensDir = join(root, "registry", "screens");
+for (const id of readdirSync(screensDir).sort()) {
+  const spec = JSON.parse(read("registry", "screens", id, "spec.json"));
+  const files = [];
+  const packages = new Set();
+  const components = new Set();
+  for (const rel of spec.files) {
+    let content = read("registry", "screens", id, rel);
+    if (rel.endsWith(".tsx")) {
+      for (const m of content.matchAll(/from "([^"]+)"/g)) {
+        const s = m[1];
+        const ui = s.match(/^@beam\/ui\/components\/([a-z-]+)$/);
+        if (ui) components.add(ui[1]);
+        else if (!s.startsWith(".") && !s.startsWith("@beam/") && s !== "react") packages.add(s.startsWith("@") ? s.split("/").slice(0, 2).join("/") : s.split("/")[0]);
+      }
+      content = content
+        .replaceAll(/from "@beam\/ui\/components\/([a-z-]+)"/g, 'from "@/components/ui/$1"')
+        .replaceAll('from "@beam/ui/lib/cn"', 'from "@/lib/beam"')
+        .replaceAll('from "@beam/ui/lib/use-mobile"', 'from "@/hooks/use-mobile"')
+        .replaceAll(/from "\.\/components\/([a-z-]+)"/g, 'from "@/components/$1"')
+        .replaceAll(/from "\.\/([a-z-]+)"/g, (whole, name) => (rel.startsWith("components/") ? `from "@/components/${name}"` : whole));
+    }
+    const page = !rel.startsWith("components/");
+    files.push({
+      path: `registry/screens/${id}/${rel}`,
+      type: rel === "page.tsx" ? "registry:page" : page ? "registry:file" : "registry:component",
+      target: page ? `app/${id}/${rel}` : rel,
+      content,
+    });
+  }
+  screens.push({
+    name: id,
+    type: "registry:block",
+    title: spec.title,
+    description: spec.summary,
+    dependencies: [...packages].sort(),
+    registryDependencies: [url("beam-utils"), url("beam-tokens"), ...[...components].sort().map(url)],
+    files,
+    meta: { beam: spec },
+  });
+}
+
+mkdirSync(join(outDir, "screens"), { recursive: true });
+for (const item of screens) {
+  writeFileSync(join(outDir, "screens", `${item.name}.json`), `${JSON.stringify({ $schema: "https://ui.shadcn.com/schema/registry-item.json", ...item }, null, 2)}
+`);
 }
 
 mkdirSync(outDir, { recursive: true });
@@ -97,4 +164,4 @@ writeFileSync(
   join(outDir, "registry.json"),
   `${JSON.stringify({ $schema: "https://ui.shadcn.com/schema/registry.json", name: "beam", homepage: "https://beam.dev", items: items.map(({ files, ...rest }) => ({ ...rest, files: files.map(({ content, ...f }) => f) })) }, null, 2)}\n`,
 );
-console.log(`registry: ${items.length} items -> ${outDir} (${base})`);
+console.log(`registry: ${items.length} items, ${screens.length} screens -> ${outDir} (${base})`);
