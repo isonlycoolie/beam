@@ -93,3 +93,42 @@ export function NavActions() {
 
   React.useEffect(() => {
     setIsOpen(true);
+  }, []);
+
+  return (
+    <div className="flex items-center gap-2 text-[14px] leading-[20px]">
+      <div className="hidden font-medium text-text-2 md:inline-block">Edit Oct 08</div>
+      <Button variant="ghost" size="icon" className="h-7 w-7">
+        <HugeiconsIcon icon={StarIcon} strokeWidth={1.75} />
+      </Button>
+      <Popover open={isOpen} onOpenChange={setIsOpen}>
+        <PopoverTrigger asChild>
+          <Button variant="ghost" size="icon" className="h-7 w-7 data-[state=open]:bg-secondary">
+            <HugeiconsIcon icon={MoreHorizontalIcon} strokeWidth={1.75} />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-56 overflow-hidden rounded-(--radius-card) p-0" align="end">
+          <Sidebar collapsible="none" className="bg-transparent">
+            <SidebarContent>
+              {data.map((group, index) => (
+                <SidebarGroup key={index} className="border-b last:border-none">
+                  <SidebarGroupContent className="gap-0">
+                    <SidebarMenu>
+                      {group.map((item, index) => (
+                        <SidebarMenuItem key={index}>
+                          <SidebarMenuButton>
+                            <HugeiconsIcon icon={item.icon} strokeWidth={1.75} /> <span>{item.label}</span>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      ))}
+                    </SidebarMenu>
+                  </SidebarGroupContent>
+                </SidebarGroup>
+              ))}
+            </SidebarContent>
+          </Sidebar>
+        </PopoverContent>
+      </Popover>
+    </div>
+  );
+}
