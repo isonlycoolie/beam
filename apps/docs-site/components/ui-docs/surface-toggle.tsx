@@ -7,7 +7,7 @@ import { flushSync } from "react-dom";
 export const GLASS_PHOTO = "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1280&q=55&auto=format&fit=crop";
 
 /** The photo under a light black veil, so components on it separate from it (stronger in dark mode). */
-export const GLASS_STAGE = `linear-gradient(var(--glass-stage-veil, rgb(0 0 0 / 0.12)), var(--glass-stage-veil, rgb(0 0 0 / 0.12))), url(${GLASS_PHOTO})`;
+export const GLASS_STAGE = `linear-gradient(var(--glass-stage-veil, rgb(0 0 0 / 0.35)), var(--glass-stage-veil, rgb(0 0 0 / 0.35))), url(${GLASS_PHOTO})`;
 
 /** Runs a change as a cross-fade of the whole page where the browser can, so the switch is barely noticed. */
 function crossFade(change: () => void) {

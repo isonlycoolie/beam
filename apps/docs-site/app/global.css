@@ -244,7 +244,7 @@ body[data-theme] {
 
 /* The veil over the glass preview photo: a little stronger in dark mode, so glass components stand off it. */
 .dark {
-  --glass-stage-veil: rgb(0 0 0 / 0.3);
+  --glass-stage-veil: rgb(0 0 0 / 0.35);
 }
 
 /* Moving between pages: the content fades and rises into place while the header and sidebar stay still
