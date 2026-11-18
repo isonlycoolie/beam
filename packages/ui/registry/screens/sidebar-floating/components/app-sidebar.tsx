@@ -188,3 +188,21 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   </a>
                 </SidebarMenuButton>
                 {item.items?.length ? (
+                  <SidebarMenuSub className="ml-0 border-l-0 px-1.5">
+                    {item.items.map((item) => (
+                      <SidebarMenuSubItem key={item.title}>
+                        <SidebarMenuSubButton asChild isActive={item.isActive}>
+                          <a href={item.url}>{item.title}</a>
+                        </SidebarMenuSubButton>
+                      </SidebarMenuSubItem>
+                    ))}
+                  </SidebarMenuSub>
+                ) : null}
+              </SidebarMenuItem>
+            ))}
+          </SidebarMenu>
+        </SidebarGroup>
+      </SidebarContent>
+    </Sidebar>
+  );
+}
