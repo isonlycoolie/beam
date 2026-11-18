@@ -473,3 +473,98 @@ export function DataTable({ data: initialData }: { data: z.infer<typeof schema>[
                 <HugeiconsIcon icon={ArrowLeftDoubleIcon} strokeWidth={1.75} />
               </Button>
               <Button variant="outline" className="size-8" size="icon" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
+                <span className="sr-only">Go to previous page</span>
+                <HugeiconsIcon icon={ArrowLeft01Icon} strokeWidth={1.75} />
+              </Button>
+              <Button variant="outline" className="size-8" size="icon" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
+                <span className="sr-only">Go to next page</span>
+                <HugeiconsIcon icon={ArrowRight01Icon} strokeWidth={1.75} />
+              </Button>
+              <Button
+                variant="outline"
+                className="hidden size-8 lg:flex"
+                size="icon"
+                onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+                disabled={!table.getCanNextPage()}
+              >
+                <span className="sr-only">Go to last page</span>
+                <HugeiconsIcon icon={ArrowRightDoubleIcon} strokeWidth={1.75} />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </TabsContent>
+      <TabsContent value="past-performance" className="flex flex-col px-4 lg:px-6">
+        <div className="aspect-video w-full flex-1 rounded-(--radius-card) border border-dashed"></div>
+      </TabsContent>
+      <TabsContent value="key-personnel" className="flex flex-col px-4 lg:px-6">
+        <div className="aspect-video w-full flex-1 rounded-(--radius-card) border border-dashed"></div>
+      </TabsContent>
+      <TabsContent value="focus-documents" className="flex flex-col px-4 lg:px-6">
+        <div className="aspect-video w-full flex-1 rounded-(--radius-card) border border-dashed"></div>
+      </TabsContent>
+    </Tabs>
+  );
+}
+
+const chartData = [
+  { month: "January", desktop: 186, mobile: 80 },
+  { month: "February", desktop: 305, mobile: 200 },
+  { month: "March", desktop: 237, mobile: 120 },
+  { month: "April", desktop: 73, mobile: 190 },
+  { month: "May", desktop: 209, mobile: 130 },
+  { month: "June", desktop: 214, mobile: 140 },
+];
+
+const chartConfig = {
+  desktop: {
+    label: "Desktop",
+    color: "var(--primary)",
+  },
+  mobile: {
+    label: "Mobile",
+    color: "var(--primary)",
+  },
+} satisfies ChartConfig;
+
+function TableCellViewer({ item }: { item: z.infer<typeof schema> }) {
+  const isMobile = useIsMobile();
+
+  return (
+    <Drawer direction={isMobile ? "bottom" : "right"}>
+      <DrawerTrigger asChild>
+        <Button variant="link" className="w-fit px-0 text-left text-text-1">
+          {item.header}
+        </Button>
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader className="gap-1">
+          <DrawerTitle>{item.header}</DrawerTitle>
+          <DrawerDescription>Showing total visitors for the last 6 months</DrawerDescription>
+        </DrawerHeader>
+        <div className="flex flex-col gap-4 overflow-y-auto px-4 text-[14px] leading-[20px]">
+          {!isMobile && (
+            <>
+              <ChartContainer config={chartConfig}>
+                <AreaChart
+                  accessibilityLayer
+                  data={chartData}
+                  margin={{
+                    left: 0,
+                    right: 10,
+                  }}
+                >
+                  <CartesianGrid vertical={false} />
+                  <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(value) => value.slice(0, 3)} hide />
+                  <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="dot" />} />
+                  <Area dataKey="mobile" type="natural" fill="var(--color-mobile)" fillOpacity={0.6} stroke="var(--color-mobile)" stackId="a" />
+                  <Area dataKey="desktop" type="natural" fill="var(--color-desktop)" fillOpacity={0.4} stroke="var(--color-desktop)" stackId="a" />
+                </AreaChart>
+              </ChartContainer>
+              <Separator />
+              <div className="grid gap-2">
+                <div className="flex gap-2 leading-none font-medium">
+                  Trending up by 5.2% this month <HugeiconsIcon icon={ChartIncreaseIcon} strokeWidth={1.75} className="size-4" />
+                </div>
+                <div className="text-text-2">
+                  Showing total visitors for the last 6 months. This is just some random text to test the layout. It spans multiple lines and should wrap
