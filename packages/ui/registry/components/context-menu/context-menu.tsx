@@ -1,5 +1,6 @@
 /* Based on shadcn/ui (MIT). Sizes, type and shadows are measured references (see CREDITS.md). */
 "use client";
+import { GlassBackdrop } from "../liquid-glass/liquid-glass";
 
 import { ArrowRight01Icon, CircleIcon, Tick02Icon } from "@hugeicons/core-free-icons";
 import { ContextMenu as ContextMenuPrimitive } from "radix-ui";
@@ -16,18 +17,34 @@ const ContextMenuTrigger = ContextMenuPrimitive.Trigger;
 // Measured menu surface (--popover, 1px --input, 6px radius, the menu shadow). Rows are
 // composed from measured parts: 14/20px text, 6px radius, --secondary when focused.
 const surface = "z-50 rounded-(--radius-md) border border-input bg-popover text-popover-foreground shadow-(--shadow-3) min-w-48 overflow-hidden p-1";
-const item = "relative flex cursor-default select-none items-center gap-2 rounded-(--radius-md) px-2 py-1.5 text-[14px] leading-[20px] text-text-1 outline-none focus:bg-secondary data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:shrink-0";
+const item =
+  "relative flex cursor-default select-none items-center gap-2 rounded-(--radius-md) px-2 py-1.5 text-[14px] leading-[20px] text-text-1 outline-none focus:bg-secondary data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:shrink-0";
 
 function ContextMenuContent({ className, sideOffset = 4, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Content>) {
   return (
     <ContextMenuPrimitive.Portal>
-      <ContextMenuPrimitive.Content data-slot="context-menu-content" sideOffset={sideOffset} className={cn(surface, className)} {...props} />
+      <ContextMenuPrimitive.Content data-slot="context-menu-content" sideOffset={sideOffset} className={cn(surface, className)} {...props}>
+        <GlassBackdrop />
+        {props.children}
+      </ContextMenuPrimitive.Content>
     </ContextMenuPrimitive.Portal>
   );
 }
 
-function ContextMenuItem({ className, inset, variant = "default", ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Item> & { inset?: boolean; variant?: "default" | "destructive" }) {
-  return <ContextMenuPrimitive.Item data-slot="context-menu-item" data-variant={variant} className={cn(item, inset && "ps-8", variant === "destructive" && "text-danger focus:bg-danger-soft", className)} {...props} />;
+function ContextMenuItem({
+  className,
+  inset,
+  variant = "default",
+  ...props
+}: React.ComponentProps<typeof ContextMenuPrimitive.Item> & { inset?: boolean; variant?: "default" | "destructive" }) {
+  return (
+    <ContextMenuPrimitive.Item
+      data-slot="context-menu-item"
+      data-variant={variant}
+      className={cn(item, inset && "ps-8", variant === "destructive" && "text-danger focus:bg-danger-soft", className)}
+      {...props}
+    />
+  );
 }
 
 function ContextMenuCheckboxItem({ className, children, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.CheckboxItem>) {
@@ -57,7 +74,13 @@ function ContextMenuRadioItem({ className, children, ...props }: React.Component
 }
 
 function ContextMenuLabel({ className, inset, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Label> & { inset?: boolean }) {
-  return <ContextMenuPrimitive.Label data-slot="context-menu-label" className={cn("px-2 py-1.5 text-[12px] leading-[16px] font-medium text-text-3", inset && "ps-8", className)} {...props} />;
+  return (
+    <ContextMenuPrimitive.Label
+      data-slot="context-menu-label"
+      className={cn("px-2 py-1.5 text-[12px] leading-[16px] font-medium text-text-3", inset && "ps-8", className)}
+      {...props}
+    />
+  );
 }
 
 function ContextMenuSeparator({ className, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Separator>) {
@@ -70,7 +93,11 @@ function ContextMenuShortcut({ className, ...props }: React.ComponentProps<"span
 
 function ContextMenuSubTrigger({ className, inset, children, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.SubTrigger> & { inset?: boolean }) {
   return (
-    <ContextMenuPrimitive.SubTrigger data-slot="context-menu-sub-trigger" className={cn(item, "data-[state=open]:bg-secondary", inset && "ps-8", className)} {...props}>
+    <ContextMenuPrimitive.SubTrigger
+      data-slot="context-menu-sub-trigger"
+      className={cn(item, "data-[state=open]:bg-secondary", inset && "ps-8", className)}
+      {...props}
+    >
       {children}
       <Icon icon={ArrowRight01Icon} size="sm" className="ms-auto" />
     </ContextMenuPrimitive.SubTrigger>
@@ -78,7 +105,27 @@ function ContextMenuSubTrigger({ className, inset, children, ...props }: React.C
 }
 
 function ContextMenuSubContent({ className, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.SubContent>) {
-  return <ContextMenuPrimitive.SubContent data-slot="context-menu-sub-content" className={cn(surface, className)} {...props} />;
+  return (
+    <ContextMenuPrimitive.SubContent data-slot="context-menu-sub-content" className={cn(surface, className)} {...props}>
+      <GlassBackdrop />
+      {props.children}
+    </ContextMenuPrimitive.SubContent>
+  );
 }
 
-export { ContextMenu, ContextMenuCheckboxItem, ContextMenuContent, ContextMenuGroup, ContextMenuItem, ContextMenuLabel, ContextMenuRadioGroup, ContextMenuRadioItem, ContextMenuSeparator, ContextMenuShortcut, ContextMenuSub, ContextMenuSubContent, ContextMenuSubTrigger, ContextMenuTrigger };
+export {
+  ContextMenu,
+  ContextMenuCheckboxItem,
+  ContextMenuContent,
+  ContextMenuGroup,
+  ContextMenuItem,
+  ContextMenuLabel,
+  ContextMenuRadioGroup,
+  ContextMenuRadioItem,
+  ContextMenuSeparator,
+  ContextMenuShortcut,
+  ContextMenuSub,
+  ContextMenuSubContent,
+  ContextMenuSubTrigger,
+  ContextMenuTrigger,
+};

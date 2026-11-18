@@ -1,5 +1,6 @@
 /* Based on shadcn/ui (MIT), converted to Beam's measured tokens (radius, shadows, focus, type). */
 "use client";
+import { GlassBackdrop } from "../liquid-glass/liquid-glass";
 
 import * as React from "react";
 import { Command as CommandPrimitive } from "cmdk";
@@ -15,7 +16,10 @@ function Command({ className, ...props }: React.ComponentProps<typeof CommandPri
       data-slot="command"
       className={cn("flex h-full w-full flex-col overflow-hidden rounded-(--radius-md) bg-popover text-popover-foreground", className)}
       {...props}
-    />
+    >
+      <GlassBackdrop />
+      {props.children}
+    </CommandPrimitive>
   );
 }
 
