@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
+import { PortalContainer } from "@beam/ui/components/portal-container";
 import { GLASS_STAGE, SurfaceToggle, useSurface } from "./surface-toggle";
 
 export type PreviewPanel = { id: string; label: string; preview: ReactNode; code?: ReactNode };
@@ -43,14 +44,9 @@ export function PreviewStage({ panels, tabs = false, minHeight = 350 }: { panels
       <div className="overflow-hidden rounded-xl border border-fd-border">
         {panels.map((p) => (
           <div key={p.id} hidden={p.id !== current?.id} role={tabs ? "tabpanel" : undefined}>
-            <div
-              data-theme="default"
-              data-preview=""
-              className="flex items-center justify-center bg-cover bg-center p-8 sm:p-10"
-              style={{ minHeight, backgroundImage: glass ? GLASS_STAGE : undefined }}
-            >
+            <Stage minHeight={minHeight} glass={glass}>
               {p.preview}
-            </div>
+            </Stage>
             {p.code && (
               <div className={`relative border-t border-fd-border bg-fd-card/40 ${open ? "" : "max-h-[116px] overflow-hidden"}`}>
                 {p.code}
@@ -70,6 +66,25 @@ export function PreviewStage({ panels, tabs = false, minHeight = 350 }: { panels
           </div>
         ))}
       </div>
+    </div>
+  );
+}
+
+/**
+ * The preview's stage. Dialogs, sheets and drawers opened in it render inside it (PortalContainer), centred in the
+ * stage and clipped to it, not over the page: the transform makes their fixed positioning relative to the stage.
+ */
+function Stage({ minHeight, glass, children }: { minHeight: number; glass: boolean; children: ReactNode }) {
+  const [el, setEl] = useState<HTMLDivElement | null>(null);
+  return (
+    <div
+      ref={setEl}
+      data-theme="default"
+      data-preview=""
+      className="relative flex items-center justify-center overflow-hidden bg-cover bg-center p-8 [transform:translateZ(0)] sm:p-10"
+      style={{ minHeight, backgroundImage: glass ? GLASS_STAGE : undefined }}
+    >
+      <PortalContainer container={el}>{children}</PortalContainer>
     </div>
   );
 }
