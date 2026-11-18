@@ -188,3 +188,53 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                       isActive={activeItem?.title === item.title}
                       className="px-2.5 md:px-2"
                     >
+                      <HugeiconsIcon icon={item.icon} strokeWidth={1.75} />
+                      <span>{item.title}</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+        <SidebarFooter>
+          <NavUser user={data.user} />
+        </SidebarFooter>
+      </Sidebar>
+
+      {/* This is the second sidebar */}
+      {/* We disable collapsible and let it fill remaining space */}
+      <Sidebar collapsible="none" className="hidden flex-1 md:flex">
+        <SidebarHeader className="gap-3.5 border-b p-4">
+          <div className="flex w-full items-center justify-between">
+            <div className="text-[16px] leading-[24px] font-medium text-text-1">{activeItem?.title}</div>
+            <Label className="flex items-center gap-2 text-[14px] leading-[20px]">
+              <span>Unreads</span>
+              <Switch className="shadow-none" />
+            </Label>
+          </div>
+          <SidebarInput placeholder="Type to search..." />
+        </SidebarHeader>
+        <SidebarContent>
+          <SidebarGroup className="px-0">
+            <SidebarGroupContent>
+              {mails.map((mail) => (
+                <a
+                  href="#"
+                  key={mail.email}
+                  className="flex flex-col items-start gap-2 border-b p-4 text-[14px] leading-[20px] leading-tight whitespace-nowrap last:border-b-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                >
+                  <div className="flex w-full items-center gap-2">
+                    <span>{mail.name}</span> <span className="ml-auto text-[12px] leading-[16px]">{mail.date}</span>
+                  </div>
+                  <span className="font-medium">{mail.subject}</span>
+                  <span className="line-clamp-2 w-[260px] text-[12px] leading-[16px] whitespace-break-spaces">{mail.teaser}</span>
+                </a>
+              ))}
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+      </Sidebar>
+    </Sidebar>
+  );
+}
