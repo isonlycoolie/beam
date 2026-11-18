@@ -188,3 +188,64 @@ title = lambda h: h.capitalize()
 WHY = {
     'complementary': '{P} and {S} sit opposite each other on the colour wheel: the strongest contrast, one colour for actions and one for highlights.',
     'analogous': '{A}, {P} and {S} sit side by side on the colour wheel: one calm family, with {P} leading.',
+    'triadic': '{P}, {S} and {A} are evenly spaced, a third of the colour wheel apart: lively, and still balanced.',
+    'split': '{P} with the two neighbours of its opposite, {S} and {A}: strong contrast, softer than a straight complement.',
+}
+
+harmony_count = 0
+for prim in HUES:
+    for scheme, offsets in SCHEMES.items():
+        taken = [prim]
+        parts = []
+        for off in offsets:
+            h = partner((HUE[prim] + off) % 360, taken)
+            taken.append(h)
+            parts.append(h)
+        sec = parts[0]
+        acc = parts[1] if len(parts) > 1 else sec
+        gray = NEUTRAL[prim]
+        sem = {k: next(c for c in v if c != prim) for k, v in SEMANTIC.items()}
+        modes = {}
+        for mode in ('light', 'dark'):
+            dk = mode == 'dark'
+            g, a, s, c = radix(gray, dk), radix(prim, dk), radix(sec, dk), radix(acc, dk)
+            S = {k: radix(v, dk) for k, v in sem.items()}
+            panel = g[2] if dk else '#ffffff'
+            modes[mode] = {
+                'background': g[1], 'surface-1': g[1], 'surface-2': g[2], 'surface-3': panel, 'card': panel, 'popover': panel,
+                'muted': g[3], 'secondary': g[3], 'accent': g[4], 'border': g[6], 'input': g[7],
+                'text-1': g[12], 'text-2': g[11], 'text-3': g[11],
+                'primary': a[9], 'ring': a[8], 'link': a[11],
+                'brand-secondary': s[9], 'brand-secondary-soft': s[3], 'brand-secondary-text': s[11],
+                'brand-accent': c[9], 'brand-accent-soft': c[3], 'brand-accent-text': c[11],
+                'success': S['success'][11], 'success-soft': S['success'][3], 'warning': S['warning'][11], 'warning-soft': S['warning'][3],
+                'danger': S['danger'][11], 'danger-soft': S['danger'][3], 'info': S['info'][11], 'info-soft': S['info'][3],
+                'chart-1': a[9], 'chart-2': s[9], 'chart-3': c[9] if acc != sec else g[9], 'chart-4': a[11], 'chart-5': s[11],
+                'on-primary': ['#ffffff', radix(gray, False)[12]],
+            }
+        lg = radix(gray, False)
+        Pn, Sn, An = title(prim), title(sec), title(acc)
+        name = f'{Pn} · {Sn}' + (f' · {An}' if acc != sec else '')
+        why = WHY[scheme].format(P=Pn, S=Sn, A=An) + f' Greys: Radix {title(gray)}, the neutral Radix pairs with {Pn}.'
+        palettes.append(dict(id=f'{prim}-{scheme}', name=name, description=why, source='Radix Colors', licence='MIT',
+            url='https://github.com/radix-ui/colors', version='@radix-ui/colors 3.0.0', light=modes['light'], dark=modes['dark'],
+            display=[lg[12], radix(prim, False)[9], radix(sec, False)[9], radix(acc, False)[9], lg[2]],
+            harmony=dict(scheme=SCHEME_NAME[scheme], family=FAMILY[prim], primary=prim, secondary=sec, accent=acc, neutral=gray, semantic=sem)))
+        harmony_count += 1
+print(harmony_count, 'harmony palettes')
+
+lines = ['// Generated from the official palette sources by Beam\'s palette import. Edit the mapping there, not these values.',
+         '// Each palette: its source, licence and version, the official colour each token takes in light and dark,',
+         '// and "on-primary": the official colours that may sit on the primary, best contrast first chosen at build time.',
+         'export type PaletteSource = {', '  id: string;', '  name: string;', '  description: string;', '  source: string;', '  licence: string;',
+         '  url: string;', '  version: string;', '  display: string[];', '  light: Record<string, string>;', '  dark: Record<string, string>;',
+         '  onPrimary: { light: string[]; dark: string[] };', '  harmony?: { scheme: string; family: string; primary: string; secondary: string; accent: string; neutral: string; semantic: Record<string, string> };', '};', '', 'export const PALETTES: PaletteSource[] = [']
+for p in palettes:
+    on = {m: p[m].pop('on-primary') for m in ('light', 'dark')}
+    entry = {k: p[k] for k in ('id', 'name', 'description', 'source', 'licence', 'url', 'version', 'display')}
+    entry.update(light=p['light'], dark=p['dark'], onPrimary=on)
+    if 'harmony' in p: entry['harmony'] = p['harmony']
+    lines.append('  ' + json.dumps(entry, ensure_ascii=False) + ',')
+lines += ['];', '']
+open(OUT, 'w', encoding='utf-8', newline='\n').write('\n'.join(lines))
+print(len(palettes), 'palettes')
