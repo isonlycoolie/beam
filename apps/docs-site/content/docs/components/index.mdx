@@ -16,9 +16,18 @@ Beam UI fixes the second half of the problem:
 | --- | --- |
 | One component | `npx usebeam add ui/button` |
 | A sidebar layout | `npx usebeam add ui/sidebar-icon-collapse` |
-| The same with the shadcn CLI | `npx shadcn@latest add https://beam.dev/r/button.json` |
 | A palette | `npx usebeam add ui/palette-navy`, then set `data-theme="navy"` |
 | Icons | `npm install @hugeicons/react @hugeicons/core-free-icons` and Beam's `<Icon>` |
+
+## Style any component the same way
+
+Every component follows one contract, so once you know Button you know them all.
+
+| Way | Example | Where it works |
+| --- | --- | --- |
+| Props | `<Button variant="outline" size="lg" className="w-full" />` | Sizes are always `sm`, `md`, `lg`; variants use the same words: `default`, `secondary`, `outline`, `ghost`, `destructive` |
+| CSS hooks | `[data-slot="button"][data-variant="outline"] { … }` | Every part has a `data-slot`; sized and varied parts carry `data-size` and `data-variant` |
+| Tokens | `--radius-md: 0` gives square buttons, inputs and menus | One variable restyles every component; palettes swap all colours; `data-surface="glass"` turns everything to liquid glass |
 
 ## What's here
 
