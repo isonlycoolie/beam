@@ -1,0 +1,95 @@
+/*
+ * Beam glass mode. Put data-surface="glass" on any ancestor (the docs put it on <html>, so menus and dialogs that
+ * render in <body> follow) and every Beam surface turns to frosted glass. Components keep one source file: this
+ * sheet styles them by their data-slot. Values from einui (MIT): blur, borders and shadows per surface tier;
+ * from Beam Glass: the inner rim and the dark tint; from liquid-glass-react (MIT): saturation. See CREDITS.md.
+ *
+ * Tiers: surface (cards, sidebars, bars), overlay (menus, dialogs, popovers: more opaque, they float over text),
+ * control (inputs, outline and secondary buttons, badges, tab lists). Solid fills (primary buttons, switches,
+ * checkboxes) stay solid. Glass only reads over content: use it over photos, gradients or scrolling pages.
+ */
+@custom-variant glass (&:where([data-surface="glass"], [data-surface="glass"] *));
+
+[data-surface="glass"] {
+  --glass-blur: 24px;
+  --glass-blur-overlay: 40px;
+  --glass-saturate: 180%;
+  --glass-bg: rgb(255 255 255 / 0.74);
+  --glass-bg-overlay: rgb(255 255 255 / 0.95);
+  --glass-bg-control: rgb(255 255 255 / 0.74);
+  --glass-border: rgb(255 255 255 / 0.6);
+  --glass-rim: inset 0 1px 0 rgb(255 255 255 / 0.7), inset 0 0 0 1px rgb(255 255 255 / 0.25);
+  --glass-shadow: 0 8px 32px rgb(0 0 0 / 0.18);
+  --glass-shadow-overlay: 0 8px 32px rgb(0 0 0 / 0.24);
+  --glass-shadow-control: 0 4px 16px rgb(0 0 0 / 0.1);
+  --glass-sheen: linear-gradient(180deg, rgb(255 255 255 / 0.28) 0%, rgb(255 255 255 / 0) 40%);
+}
+.dark[data-surface="glass"],
+.dark [data-surface="glass"],
+[data-surface="glass"] .dark {
+  --glass-bg: rgb(24 26 34 / 0.58);
+  --glass-bg-overlay: rgb(24 26 34 / 0.76);
+  --glass-bg-control: rgb(24 26 34 / 0.55);
+  --glass-border: rgb(255 255 255 / 0.18);
+  --glass-rim: inset 0 1px 0 rgb(255 255 255 / 0.22), inset 0 0 0 1px rgb(255 255 255 / 0.08);
+  --glass-shadow: 0 8px 32px rgb(0 0 0 / 0.37);
+  --glass-shadow-overlay: 0 8px 32px rgb(0 0 0 / 0.4);
+  --glass-shadow-control: 0 4px 16px rgb(0 0 0 / 0.2);
+  --glass-sheen: linear-gradient(180deg, rgb(255 255 255 / 0.1) 0%, rgb(255 255 255 / 0) 40%);
+}
+
+/* Secondary text on glass: pulled toward the primary text colour, as iOS's vibrancy keeps labels legible over
+   a moving background. Set on each glass element, so it wins over the palette inside it. */
+:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="card"], [data-slot="sidebar-inner"], [data-slot="sidebar-inset"], [data-slot$="-content"], [data-slot="command"], [data-slot="tabs-list"], [data-slot="menubar"]) {
+  --text-2: color-mix(in oklab, var(--text-1) 70%, var(--glass-text-2-base, #6f6f6f));
+  --text-3: color-mix(in oklab, var(--text-1) 55%, var(--glass-text-2-base, #6f6f6f));
+  --muted-foreground: var(--text-2);
+}
+
+/* Surfaces. */
+:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="card"], [data-slot="sidebar-inner"], [data-slot="sidebar-inset"], [data-slot="menubar"], [data-slot="navigation-menu-list"]) {
+  background: var(--glass-sheen), var(--glass-bg);
+  border-color: var(--glass-border);
+  box-shadow: var(--glass-rim), var(--glass-shadow);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+}
+
+/* Overlays. */
+:where([data-surface="glass"], [data-surface="glass"] *):is(
+    [data-slot="dialog-content"],
+    [data-slot="alert-dialog-content"],
+    [data-slot="sheet-content"],
+    [data-slot="drawer-content"],
+    [data-slot="popover-content"],
+    [data-slot="hover-card-content"],
+    [data-slot="dropdown-menu-content"],
+    [data-slot="dropdown-menu-sub-content"],
+    [data-slot="context-menu-content"],
+    [data-slot="context-menu-sub-content"],
+    [data-slot="menubar-content"],
+    [data-slot="menubar-sub-content"],
+    [data-slot="select-content"],
+    [data-slot="command"],
+    [data-slot="navigation-menu-viewport"]
+  ) {
+  background: var(--glass-sheen), var(--glass-bg-overlay);
+  border-color: var(--glass-border);
+  box-shadow: var(--glass-rim), var(--glass-shadow-overlay);
+  -webkit-backdrop-filter: blur(var(--glass-blur-overlay)) saturate(var(--glass-saturate));
+  backdrop-filter: blur(var(--glass-blur-overlay)) saturate(var(--glass-saturate));
+}
+/* A command palette inside a dialog is already on glass: no glass on glass. */
+:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="dialog-content"]) [data-slot="command"] {
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+/* Controls. */
+:where([data-surface="glass"], [data-surface="glass"] *):is(
+    [data-slot="input"],
+    [data-slot="textarea"],
+    [data-slot="input-group"],
+    [data-slot="select-trigger"],
