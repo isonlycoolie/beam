@@ -1,0 +1,24 @@
+{
+  "name": "liquid-glass",
+  "title": "Liquid Glass",
+  "summary": "Apple's liquid glass material: the backdrop blurs and bends at the edges, with a rim that catches the light.",
+  "source": "liquid-glass-react (MIT)",
+  "use_when": ["A floating bar, toolbar or button over photos, video, maps or a scrolling feed", "One focal surface over a rich background"],
+  "avoid_when": ["Over a flat solid background: there is nothing to bend", "Every card on a page", "Glass inside glass, except a Tab Bar's own lens", "Long text"],
+  "props": {
+    "displacement": "How far the edges bend the backdrop, in px (64)",
+    "blur": "Frosting, 0 is clear (0.1)",
+    "saturation": "Backdrop saturation in % (140)",
+    "aberration": "Colour fringing on the rim (2)",
+    "elasticity": "Stretch toward the pointer, 0 turns it off (0.15)",
+    "radius": "Corner radius in px, 999 is a pill",
+    "overLight": "Darker rim and shadow over light content"
+  },
+  "variants": ["default", "over-light"],
+  "styles": ["default", "toolbar"],
+  "composes_with": ["button", "tab-bar"],
+  "copy": {},
+  "states": ["default", "hover", "pressed"],
+  "a11y": ["Text on glass must still reach 4.5:1 at the busiest point of the background", "prefers-reduced-transparency gives a solid surface", "prefers-reduced-motion stops the stretch"],
+  "rules": ["state.complete"]
+}
