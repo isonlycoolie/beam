@@ -35,7 +35,9 @@ describe("glass mode", () => {
     it(`${component} renders the slots glass.css styles`, () => {
       for (const slot of slots) {
         expect(source(component), `${component} data-slot="${slot}"`).toContain(`data-slot="${slot}"`);
-        expect(css, `glass.css ${slot}`).toContain(`[data-slot="${slot}"]`);
+        // Floating layers are covered by one rule for every *-content slot; the rest by name.
+        const covered = css.includes(`[data-slot="${slot}"]`) || (slot.endsWith("-content") && css.includes('[data-slot$="-content"]'));
+        expect(covered, `glass.css ${slot}`).toBe(true);
       }
     });
 
