@@ -39,6 +39,10 @@ Mount the refraction filter once, near the root (for example in `app/layout.tsx`
 - `tone="light"` (default) for glass over light or mixed content, `tone="dark"` for glass over dark content (white text).
 - Tune per surface with CSS variables: `--glass-radius`, `--glass-blur`, `--glass-tint`, `--glass-edge`, `--glass-shadow`.
 
+## Beam UI components
+
+If the project uses Beam UI, do not wrap its components in GlassPanel. Put `data-surface="glass"` on `<html>` or `<body>` (with `styles/beam/glass.css` imported) and every card, menu, dialog, input and tab list turns to glass from its own source. For the iOS material with refraction, use Beam UI's `liquid-glass` component, and its `tab-bar` for bottom navigation: `npx usebeam add ui/tab-bar`.
+
 ## How it works
 
 - Every browser gets the frosted base: `backdrop-filter: blur() saturate()`, a tint, an inner edge highlight and a top sheen.

@@ -3,6 +3,10 @@
   "root": true,
   "pages": [
     "index",
+    "---Glass---",
+    "glass",
+    "liquid-glass",
+    "tab-bar",
     "---Forms---",
     "button",
     "button-group",

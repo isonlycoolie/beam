@@ -1,0 +1,41 @@
+---
+title: Tab Bar
+description: "The floating bottom navigation of iOS in liquid glass, with a lens that glides and stretches between tabs."
+---
+
+<ComponentPreview name="tab-bar" minHeight={640} />
+
+Tap a tab and the lens travels there on a spring, stretching along its path. Press and drag along the bar: the lens lifts, follows your finger and magnifies the icons it passes, then snaps to the nearest tab.
+
+## Installation
+
+<InstallTabs name="tab-bar" />
+
+## Usage
+
+```tsx
+import { Compass01Icon, Home01Icon, Search01Icon } from "@hugeicons/core-free-icons";
+import { TabBar } from "@/components/ui/tab-bar";
+
+const tabs = [
+  { value: "home", label: "Home", icon: Home01Icon, href: "/" },
+  { value: "explore", label: "Explore", icon: Compass01Icon, href: "/explore" },
+  { value: "search", label: "Search", icon: Search01Icon, href: "/search" },
+];
+
+<TabBar items={tabs} value={current} onValueChange={setCurrent} className="fixed bottom-4 left-1/2 -translate-x-1/2" />;
+```
+
+Put it over content that scrolls under it: the glass needs something behind it to bend.
+
+## Browser support
+
+The edge refraction runs in Chromium browsers (Chrome, Edge, Android). Safari, including Safari on iPhone, and Firefox show the frosted glass, the rim and the lens motion without the bending, because they do not apply SVG filters to the backdrop.
+
+## Rules for agents
+
+<AgentRules name="tab-bar" />
+
+## API reference
+
+<PropsTable name="tab-bar" />
