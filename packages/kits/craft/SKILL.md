@@ -14,6 +14,7 @@ Generated UIs look alike: centred everything, purple gradients, gradient headlin
 1. **Read the room.** Look at the project's existing tokens, fonts, components and pages. Extend them; do not start a parallel style.
 2. **Pick the scale once.** Choose a type scale (5 to 7 sizes) and a spacing scale (4px based) for the work and write them down in the code (CSS variables or Tailwind theme). Every value you use comes from these scales.
 3. **Decide the hierarchy.** For each screen, name the one thing the user must see first, the second, and what can recede. Size, weight and contrast follow that order, not decoration.
+4. **Start from a screen.** Building a dashboard, an app shell with a sidebar, a login or a sign-up page? Pick the closest screen in `references/screens.md` (or `screens_list` over MCP), install it and change its data and copy. Do not lay those pages out from scratch.
 
 ## While you build
 
