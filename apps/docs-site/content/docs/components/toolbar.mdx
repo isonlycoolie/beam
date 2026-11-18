@@ -1,0 +1,34 @@
+---
+title: Toolbar
+description: Controls that act on the current view, behind one Tab stop. The arrow keys move between them.
+---
+
+<ComponentPreview name="toolbar" styles />
+
+## Installation
+
+<InstallTabs name="toolbar" />
+
+## Usage
+
+```tsx
+import { Toolbar, ToolbarButton, ToolbarSeparator, ToolbarToggleGroup, ToolbarToggleItem } from "@/components/ui/toolbar";
+```
+
+```tsx
+<Toolbar aria-label="Table controls">
+  <ToolbarButton>Filter</ToolbarButton>
+  <ToolbarSeparator />
+  <ToolbarButton aria-label="Add row">
+    <Icon icon={Add01Icon} size="sm" />
+  </ToolbarButton>
+</Toolbar>
+```
+
+## Rules for agents
+
+<AgentRules name="toolbar" />
+
+## API reference
+
+<PropsTable name="toolbar" />

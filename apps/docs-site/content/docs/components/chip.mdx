@@ -1,0 +1,33 @@
+---
+title: Chip
+description: A compact item, filter or tag. ChipToggle turns on and off; ChipRemove takes it away.
+---
+
+<ComponentPreview name="chip" styles />
+
+## Installation
+
+<InstallTabs name="chip" />
+
+## Usage
+
+```tsx
+import { Chip, ChipToggle, ChipRemove } from "@/components/ui/chip";
+```
+
+```tsx
+<ChipToggle pressed={open} onPressedChange={setOpen}>Open</ChipToggle>
+
+<Chip>
+  Design
+  <ChipRemove label="Remove Design" onClick={remove} />
+</Chip>
+```
+
+## Rules for agents
+
+<AgentRules name="chip" />
+
+## API reference
+
+<PropsTable name="chip" />
