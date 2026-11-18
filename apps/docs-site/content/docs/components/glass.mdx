@@ -1,0 +1,44 @@
+---
+title: Glass
+description: "Every Beam component in frosted glass, switched on with one attribute."
+---
+
+Every preview in these docs has a **Normal · Glass** switch. Glass is not a second set of components: it is one attribute on any parent, and the same components turn to glass.
+
+```tsx
+<body data-surface="glass">
+```
+
+Put it on `<html>` or `<body>` when menus and dialogs should follow, since they render at the end of the page. Glass ships with Beam's tokens (`styles/beam/glass.css`); import it after `tailwind.css`.
+
+## What turns to glass
+
+| Tier | Components | Material |
+| --- | --- | --- |
+| Surfaces | Card, Sidebar, Menubar, Navigation Menu | Frosted, 24px blur |
+| Overlays | Dialog, Alert Dialog, Sheet, Drawer, Popover, Hover Card, menus, Select, Command | More opaque, 40px blur, so text above other text stays readable |
+| Controls | Input, Textarea, Input Group, Select trigger, Tabs, outline and secondary Button and Badge | Light frost |
+
+Primary buttons, switches and checkboxes stay solid: they carry the action and the state.
+
+For the iOS material with refraction (the bent edges and moving highlight), use [Liquid Glass](/docs/components/liquid-glass) and the [Tab Bar](/docs/components/tab-bar).
+
+## Where glass belongs
+
+- Over content: photos, video, maps, gradients, a page that scrolls underneath. On a flat background glass only looks grey.
+- Floating and temporary layers: bars, toolbars, menus, sheets, one hero card.
+- One layer at a time. No glass on glass.
+- Short text. Contrast moves as the background moves.
+
+## Tune it
+
+Set these on the element with `data-surface="glass"`:
+
+| Variable | Default (light) | Raise it for |
+| --- | --- | --- |
+| `--glass-bg` | `rgb(255 255 255 / 0.74)` | More contrast on busy photos |
+| `--glass-bg-overlay` | `rgb(255 255 255 / 0.95)` | Menus and dialogs over text |
+| `--glass-blur` | `24px` | Busier backgrounds |
+| `--glass-saturate` | `180%` | Richer colour through the glass |
+
+Dark mode has its own darker tint. People who turn on "Reduce transparency" get solid surfaces automatically.

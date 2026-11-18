@@ -1,0 +1,34 @@
+---
+title: Liquid Glass
+description: "Apple's liquid glass material: the backdrop blurs and bends at the edges, with a rim that catches the light."
+---
+
+<ComponentPreview name="liquid-glass" styles />
+
+## Installation
+
+<InstallTabs name="liquid-glass" />
+
+## Usage
+
+```tsx
+import { LiquidGlass } from "@/components/ui/liquid-glass";
+
+<LiquidGlass className="px-8 py-5">
+  <span className="font-semibold text-white">Now playing</span>
+</LiquidGlass>;
+```
+
+Use it for one floating surface over photos, video, maps or a scrolling feed: a bar, a toolbar, a button. For whole cards, menus and dialogs, switch the page to [glass mode](/docs/components/glass) instead.
+
+## Browser support
+
+The bending runs in Chromium browsers (Chrome, Edge, Android). Safari and Firefox show the frosted glass and rim without it. `prefers-reduced-transparency` gives a solid surface and `prefers-reduced-motion` stops the stretch.
+
+## Rules for agents
+
+<AgentRules name="liquid-glass" />
+
+## API reference
+
+<PropsTable name="liquid-glass" />
