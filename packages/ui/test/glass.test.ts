@@ -46,8 +46,8 @@ describe("glass mode", () => {
     expect(css).toMatch(/@media \(prefers-reduced-transparency: reduce\)[^]*\[data-liquid-warp\]/);
   });
 
-  it("has a see-through dark tint and iOS dark rim", () => {
-    expect(css).toMatch(/\.dark \{[^}]*--beam-glass-rim: 0\.13;[^}]*--beam-glass-tint: rgb\(40 40 40 \/ 0\.48\)/);
+  it("has a clear dark tint and a quiet dark rim", () => {
+    expect(css).toMatch(/\.dark \{[^}]*--beam-glass-rim: 0\.16;[^}]*--beam-glass-tint: rgb\(0 0 0 \/ 0\.14\)/);
   });
 
   it("exposes the four liquid controls with iOS defaults", () => {

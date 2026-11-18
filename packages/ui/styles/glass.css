@@ -18,7 +18,8 @@
   --beam-glass-frost: 3px;
   --beam-glass-saturate: 1.8;
   --beam-glass-rim: 0.3;
-  --beam-glass-tint: rgb(255 255 255 / 0.6);
+  /* Clear glass, as iOS 26 draws it over a photo: the frost and bend do the work, not a milky tint. */
+  --beam-glass-tint: rgb(255 255 255 / 0.12);
   --beam-glass-edge: rgb(0 0 0 / 0.08);
   --beam-glass-drop: 0 1px 3px rgb(0 0 0 / 0.06);
   /* Tab Bar: iOS's system grey 5 lens and increased-contrast system blue (Apple HIG, colour). */
@@ -28,8 +29,8 @@
   --tab-bar-active: #0040dd;
 }
 .dark {
-  --beam-glass-rim: 0.13;
-  --beam-glass-tint: rgb(40 40 40 / 0.48);
+  --beam-glass-rim: 0.16;
+  --beam-glass-tint: rgb(0 0 0 / 0.14);
   --beam-glass-edge: rgb(255 255 255 / 0.08);
   --beam-glass-drop: 0 0 0 transparent;
   --tab-bar-tint: rgb(40 40 40 / 0.62);
@@ -89,9 +90,9 @@
   --glass-sheen: linear-gradient(135deg, rgb(255 255 255 / 0.1) 0%, rgb(255 255 255 / 0) 30%, rgb(255 255 255 / 0) 70%, rgb(255 255 255 / 0.08) 100%);
   /* Liquid Glass inside glass mode: the same faint dim as cards, so its white text reads. */
   --beam-glass-tint: rgb(0 0 0 / 0.18);
-  --glass-highlight: inset 0 1px 0 rgb(255 255 255 / 0.5), inset 0 -1px 0 rgb(255 255 255 / 0.12);
+  /* One clean edge: the rim. The highlight is only a faint catch of light along the top. */
+  --glass-highlight: inset 0 1px 0 rgb(255 255 255 / 0.18);
   --glass-shadow: 0 8px 32px rgb(0 0 0 / 0.2);
-  --glass-rim: 0.6;
 }
 /* Legibility on glass: white text with Apple's soft shadow, set where the components render. */
 [data-surface="glass"] [data-preview],
@@ -140,7 +141,8 @@
     [data-slot="skeleton"]
   ) {
   background-image: var(--glass-sheen);
-  border-color: var(--border);
+  /* The rim is the edge: no second line. */
+  border-color: transparent;
   box-shadow: var(--glass-highlight), var(--glass-shadow);
   -webkit-backdrop-filter: blur(calc(var(--beam-glass-frost) * 4)) saturate(var(--beam-glass-saturate)) brightness(1.05);
   backdrop-filter: blur(calc(var(--beam-glass-frost) * 4)) saturate(var(--beam-glass-saturate)) brightness(1.05);
@@ -154,7 +156,8 @@
   ) {
   background-color: var(--popover);
   background-image: var(--glass-sheen);
-  border-color: var(--border);
+  /* The rim is the edge: no second line. */
+  border-color: transparent;
   box-shadow: var(--glass-highlight), 0 16px 48px rgb(0 0 0 / 0.3);
   -webkit-backdrop-filter: blur(calc(var(--beam-glass-frost) * 8)) saturate(var(--beam-glass-saturate)) brightness(1.05);
   backdrop-filter: blur(calc(var(--beam-glass-frost) * 8)) saturate(var(--beam-glass-saturate)) brightness(1.05);
@@ -296,7 +299,7 @@
 }
 :where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="button"][data-variant="default"]) {
   background-color: rgb(255 255 255 / 0.3);
-  --glass-rim: 0.8;
+  --glass-rim: 0.35;
 }
 :where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="button"][data-variant="outline"], [data-slot="button"][data-variant="secondary"]) {
   background-color: rgb(255 255 255 / 0.12);
