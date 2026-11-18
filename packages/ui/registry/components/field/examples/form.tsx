@@ -6,7 +6,7 @@ export default function FieldForm() {
   return (
     <form className="w-full max-w-sm">
       <FieldGroup>
-        <FieldGroup columns={2}>
+        <div className="grid grid-cols-2 gap-4">
           <Field>
             <FieldLabel htmlFor="first">First name</FieldLabel>
             <Input id="first" placeholder="Amina" />
@@ -15,7 +15,7 @@ export default function FieldForm() {
             <FieldLabel htmlFor="last">Last name</FieldLabel>
             <Input id="last" placeholder="Juma" />
           </Field>
-        </FieldGroup>
+        </div>
         <Field>
           <FieldLabel htmlFor="work">Work email</FieldLabel>
           <Input id="work" type="email" placeholder="amina@company.com" />
