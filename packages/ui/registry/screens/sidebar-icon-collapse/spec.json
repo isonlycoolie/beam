@@ -1,0 +1,15 @@
+{
+  "id": "sidebar-icon-collapse",
+  "group": "Sidebar",
+  "title": "Sidebar \u00b7 Collapses to icons",
+  "summary": "Team switcher, nested navigation, projects and a user menu; collapses to an icon rail.",
+  "source": "shadcn/ui (MIT)",
+  "files": [
+    "components/app-sidebar.tsx",
+    "components/nav-main.tsx",
+    "components/nav-projects.tsx",
+    "components/nav-user.tsx",
+    "components/team-switcher.tsx",
+    "page.tsx"
+  ]
+}
