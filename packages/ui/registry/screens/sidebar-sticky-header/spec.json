@@ -1,0 +1,17 @@
+{
+  "id": "sidebar-sticky-header",
+  "group": "Sidebar",
+  "title": "Sidebar \u00b7 Sticky site header",
+  "summary": "A full-width header above the sidebar and page.",
+  "source": "shadcn/ui (MIT)",
+  "files": [
+    "components/app-sidebar.tsx",
+    "components/nav-main.tsx",
+    "components/nav-projects.tsx",
+    "components/nav-secondary.tsx",
+    "components/nav-user.tsx",
+    "components/search-form.tsx",
+    "components/site-header.tsx",
+    "page.tsx"
+  ]
+}
