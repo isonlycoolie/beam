@@ -6,6 +6,8 @@ const withMDX = createMDX();
 const config = {
   reactStrictMode: true,
   transpilePackages: ["@beam/ui"],
+  // NEXT_BUILD_CPUS=3 builds with fewer page workers, for machines short on memory.
+  ...(process.env.NEXT_BUILD_CPUS ? { experimental: { cpus: Number(process.env.NEXT_BUILD_CPUS) } } : {}),
   // Beam UI was one section; it is now Components, Palettes and Icons.
   async redirects() {
     return [
