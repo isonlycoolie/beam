@@ -12,6 +12,9 @@ Beam builds on excellent open-source work. Thank you to everyone behind these pr
 | [class-variance-authority](https://github.com/joe-bell/cva) 0.7.1 | Apache 2.0 | Component variants |
 | [tailwind-merge](https://github.com/dcastil/tailwind-merge) 3.7.0 | MIT | Class merging |
 | [clsx](https://github.com/lukeed/clsx) 2.1.1 | MIT | Class joining |
+| [shadcn/ui blocks](https://github.com/shadcn-ui/ui/tree/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/apps/v4/registry/new-york-v4/blocks) (commit 968d8cb) | MIT | Beam Screens: dashboard-01, sidebar-01 to 16, login-01 to 05 and signup-01 to 05, converted to Beam components, icons and tokens |
+| [TanStack Table](https://github.com/TanStack/table) 9.3.1, [dnd kit](https://github.com/clauderic/dnd-kit) 6.3.1, [Zod](https://github.com/colinhacks/zod) 3.25.76 | MIT | The analytics dashboard screen's data table |
+| [Unsplash](https://unsplash.com/license) photo `photo-1497366216548-37526070297c` | Unsplash License | The image on the login and sign-up screens |
 
 ## Design references (visual only)
 
