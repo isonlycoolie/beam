@@ -1,0 +1,11 @@
+{
+  "id": "login-muted",
+  "group": "Login",
+  "title": "Login \u00b7 Muted background",
+  "summary": "A centred card with social sign-in on a muted page.",
+  "source": "shadcn/ui (MIT)",
+  "files": [
+    "components/login-form.tsx",
+    "page.tsx"
+  ]
+}
