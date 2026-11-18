@@ -93,3 +93,98 @@ export function TabBar({ items, value, defaultValue, onValueChange, overLight = 
   const moveTo = useCallback(
     (x: number, w: number, jump = false) => {
       target.current = { x, w };
+      if (jump || reduced) {
+        cancelAnimationFrame(frame.current);
+        state.current = { x, w, v: 0, stretch: 0 };
+        setLens({ ...state.current });
+      } else animate();
+    },
+    [animate, reduced],
+  );
+
+  // Rest on the active tab: jump there on first paint and on resize, glide there when the tab changes.
+  const first = useRef(true);
+  useLayoutEffect(() => {
+    const s = slot(items.findIndex((i) => i.value === active));
+    if (!s || dragging) return;
+    moveTo(s.x, s.w, first.current);
+    first.current = false;
+  }, [active, items, slot, moveTo, dragging]);
+  useEffect(() => {
+    const row = rowRef.current;
+    if (!row) return;
+    const observer = new ResizeObserver(() => {
+      const s = slot(items.findIndex((i) => i.value === active));
+      if (s) moveTo(s.x, s.w, true);
+    });
+    observer.observe(row);
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(frame.current);
+    };
+  }, [active, items, slot, moveTo]);
+
+  // Drag: the lens follows the finger, then snaps to the nearest tab.
+  const drag = useRef<{ id: number; startX: number; moved: boolean } | null>(null);
+  const pointerX = (e: PointerEvent) => e.clientX - (rowRef.current?.getBoundingClientRect().left ?? 0);
+  const nearest = (x: number) => {
+    let best = 0;
+    let bestD = Number.POSITIVE_INFINITY;
+    items.forEach((_, i) => {
+      const s = slot(i);
+      if (!s) return;
+      const d = Math.abs(s.x + s.w / 2 - x);
+      if (d < bestD) [best, bestD] = [i, d];
+    });
+    return best;
+  };
+  const onPointerDown = (e: PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    drag.current = { id: e.pointerId, startX: e.clientX, moved: false };
+  };
+  const onPointerMove = (e: PointerEvent<HTMLDivElement>) => {
+    const d = drag.current;
+    if (!d || d.id !== e.pointerId) return;
+    if (!d.moved && Math.abs(e.clientX - d.startX) < 6) return;
+    if (!d.moved) {
+      d.moved = true;
+      setDragging(true);
+      rowRef.current?.setPointerCapture(e.pointerId);
+    }
+    const w = target.current.w || state.current.w;
+    const max = (rowRef.current?.clientWidth ?? 0) - w;
+    moveTo(Math.max(0, Math.min(max, pointerX(e) - w / 2)), w);
+  };
+  const onPointerUp = (e: PointerEvent<HTMLDivElement>) => {
+    const d = drag.current;
+    drag.current = null;
+    if (!d?.moved) return;
+    setDragging(false);
+    const i = nearest(pointerX(e));
+    const s = slot(i);
+    if (s) moveTo(s.x, s.w);
+    const item = items[i];
+    if (item) select(item.value);
+  };
+
+  const onKeyDown = (e: KeyboardEvent) => {
+    const i = items.findIndex((x) => x.value === active);
+    const next = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: items.length - 1 }[e.key];
+    if (next === undefined) return;
+    e.preventDefault();
+    const n = (next + items.length) % items.length;
+    const item = items[n];
+    if (!item) return;
+    select(item.value);
+    tabRefs.current[n]?.focus();
+  };
+
+  const lensStyle = lens && {
+    transform: `translateX(${lens.x}px) scaleX(${1 + lens.stretch}) scaleY(${1 - lens.stretch * 0.35}) scale(${dragging ? 1.12 : 1})`,
+    width: lens.w,
+  };
+
+  return (
+    <nav data-slot="tab-bar" aria-label={props["aria-label"] ?? "Tabs"} className={cn("inline-flex", className)} {...props}>
+      <LiquidGlass radius={999} elasticity={0} overLight={overLight} className="p-1">
+        {/* The tint sits above the bent backdrop, so labels keep their contrast over bright and dark photos. */}
