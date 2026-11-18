@@ -40,11 +40,15 @@ describe("glass mode", () => {
     });
 
   it("falls back to solid surfaces for reduced transparency", () => {
-    expect(css).toMatch(/@media \(prefers-reduced-transparency: reduce\)[^]*--glass-blur: 0px/);
+    expect(css).toMatch(/@media \(prefers-reduced-transparency: reduce\)[^]*--beam-glass-frost: 0px/);
     expect(css).toMatch(/@media \(prefers-reduced-transparency: reduce\)[^]*\[data-liquid-warp\]/);
   });
 
-  it("has a dark tint for dark mode", () => {
-    expect(css).toMatch(/\.dark\[data-surface="glass"\][^]*--glass-bg: rgb\(24 26 34/);
+  it("has a see-through dark tint and iOS dark rim", () => {
+    expect(css).toMatch(/\.dark \{[^}]*--beam-glass-rim: 0\.13;[^}]*--beam-glass-tint: rgb\(40 40 40 \/ 0\.48\)/);
+  });
+
+  it("exposes the four liquid controls with iOS defaults", () => {
+    for (const v of ["--beam-glass-bend: 1;", "--beam-glass-dispersion: 0.6;", "--beam-glass-frost: 3px;", "--beam-glass-rim: 0.3;"]) expect(css).toContain(v);
   });
 });
