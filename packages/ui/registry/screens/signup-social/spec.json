@@ -1,0 +1,11 @@
+{
+  "id": "signup-social",
+  "group": "Sign up",
+  "title": "Sign up \u00b7 Social providers",
+  "summary": "Sign up with email or a provider.",
+  "source": "shadcn/ui (MIT)",
+  "files": [
+    "components/signup-form.tsx",
+    "page.tsx"
+  ]
+}
