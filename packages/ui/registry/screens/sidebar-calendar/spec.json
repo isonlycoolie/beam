@@ -1,0 +1,14 @@
+{
+  "id": "sidebar-calendar",
+  "group": "Sidebar",
+  "title": "Sidebar \u00b7 Calendar",
+  "summary": "A date picker and calendar list in the sidebar.",
+  "source": "shadcn/ui (MIT)",
+  "files": [
+    "components/app-sidebar.tsx",
+    "components/calendars.tsx",
+    "components/date-picker.tsx",
+    "components/nav-user.tsx",
+    "page.tsx"
+  ]
+}
