@@ -1,0 +1,13 @@
+{
+  "id": "sidebar-dropdown-submenus",
+  "group": "Sidebar",
+  "title": "Sidebar \u00b7 Dropdown submenus",
+  "summary": "Child pages open in a dropdown, with an opt-in card.",
+  "source": "shadcn/ui (MIT)",
+  "files": [
+    "components/app-sidebar.tsx",
+    "components/nav-main.tsx",
+    "components/sidebar-opt-in-form.tsx",
+    "page.tsx"
+  ]
+}
