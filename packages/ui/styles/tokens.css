@@ -73,3 +73,10 @@
     transform: translateX(100%);
   }
 }
+
+/* Status Dot's pulse while something runs: 1.5s, down to 45% opacity and back. */
+@keyframes beam-pulse {
+  50% {
+    opacity: 0.45;
+  }
+}
