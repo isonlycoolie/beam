@@ -93,3 +93,74 @@
     [data-slot="textarea"],
     [data-slot="input-group"],
     [data-slot="select-trigger"],
+    [data-slot="tabs-list"],
+    [data-slot="button"][data-variant="outline"],
+    [data-slot="button"][data-variant="secondary"],
+    [data-slot="badge"][data-variant="secondary"],
+    [data-slot="badge"][data-variant="outline"]
+  ) {
+  background: var(--glass-bg-control);
+  border-color: var(--glass-border);
+  box-shadow: var(--glass-rim), var(--glass-shadow-control);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+}
+/* An input group's own input sits on the group's glass. */
+:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="input-group"]) [data-slot="input-group-input"] {
+  background: transparent;
+}
+
+/* The active tab and the tooltip stay solid enough to read at a glance. */
+:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="tabs-trigger"][data-state="active"]) {
+  background: var(--glass-bg-overlay);
+  box-shadow: var(--glass-rim), var(--glass-shadow-control);
+}
+
+/* People who ask for less transparency get solid, readable surfaces. */
+@media (prefers-reduced-transparency: reduce) {
+  [data-surface="glass"] {
+    --glass-bg: var(--card);
+    --glass-bg-overlay: var(--popover);
+    --glass-bg-control: var(--background);
+    --glass-border: var(--border);
+    --glass-sheen: linear-gradient(transparent, transparent);
+    --glass-blur: 0px;
+    --glass-blur-overlay: 0px;
+    --glass-saturate: 100%;
+  }
+}
+
+/* Liquid Glass (components/liquid-glass): the rim is a 1.5px ring cut out of a gradient. */
+.liquid-glass-rim {
+  padding: 1.5px;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  box-shadow:
+    0 0 0 0.5px rgb(255 255 255 / 0.5) inset,
+    0 1px 3px rgb(255 255 255 / 0.25) inset,
+    0 1px 4px rgb(0 0 0 / 0.35);
+}
+@media (prefers-reduced-transparency: reduce) {
+  [data-liquid-warp] {
+    filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background: var(--popover);
+  }
+}
+
+/* Tab Bar colours: a tint so labels read over any photo; the lens is iOS's system grey 5 and the active tab its
+   increased-contrast system blue (Apple Human Interface Guidelines, colour), which keeps labels above 4.5:1. */
+:root {
+  --tab-bar-tint: rgb(255 255 255 / 0.8);
+  --tab-bar-lens: rgb(229 229 234 / 0.92);
+  --tab-bar-ink: #1c1c1e;
+  --tab-bar-active: #0040dd;
+}
+.dark {
+  --tab-bar-tint: rgb(28 28 30 / 0.78);
+  --tab-bar-lens: rgb(44 44 46 / 0.92);
+  --tab-bar-ink: #f2f2f7;
+  --tab-bar-active: #409cff;
+}
