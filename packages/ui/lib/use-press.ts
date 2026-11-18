@@ -93,3 +93,22 @@ export function usePress(ref: RefObject<HTMLElement | null>, enabled = true): vo
       if (!down || e.pointerId !== down.id) return;
       const { feel } = down;
       down = null;
+      delete el.dataset.pressed;
+      to([1, 1, 0, 0], feel.release);
+    };
+    el.addEventListener("pointerdown", press);
+    window.addEventListener("pointermove", move);
+    window.addEventListener("pointerup", release);
+    window.addEventListener("pointercancel", release);
+    return () => {
+      el.removeEventListener("pointerdown", press);
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerup", release);
+      window.removeEventListener("pointercancel", release);
+      springs.forEach((s) => s.stop());
+      el.style.scale = "";
+      el.style.translate = "";
+      delete el.dataset.pressed;
+    };
+  }, [ref, enabled]);
+}
