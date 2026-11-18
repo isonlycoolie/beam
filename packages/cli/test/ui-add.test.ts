@@ -11,6 +11,10 @@ describe("beam add ui/<component>", () => {
     ]);
   });
 
+  it("maps screens to their own folder", () => {
+    expect(uiItemUrls(["screens/login-simple"], "https://beam.dev/r")).toEqual(["https://beam.dev/r/screens/login-simple.json"]);
+  });
+
   it("installs through the shadcn CLI and reports failures with a fix", async () => {
     vi.spyOn(process.stdout, "write").mockImplementation(() => true);
     const runner = vi.fn(async () => 0);

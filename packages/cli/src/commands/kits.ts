@@ -32,10 +32,11 @@ const fail = (message: string, fix: string, exitCode = 2) =>
   Object.assign(new Error(message), { payload: { code: "BEAM_INVALID_INPUT", message, fix, exitCode } });
 
 export async function addCommand(names: string[], options: KitOptions = {}): Promise<void> {
-  // ui/<component> installs Beam UI components; everything else is a tool kit.
-  const components = names.filter((name) => name.startsWith("ui/"));
+  // ui/<component> and screens/<screen> install Beam UI through the shadcn CLI; everything else is a tool kit.
+  const isUi = (name: string) => name.startsWith("ui/") || name.startsWith("screens/");
+  const components = names.filter(isUi);
   if (components.length) await uiAddCommand(components);
-  names = names.filter((name) => !name.startsWith("ui/"));
+  names = names.filter((name) => !isUi(name));
   if (names.length === 0) return;
   const cwd = options.cwd ?? process.cwd();
   const kitsDir = options.kitsDir ?? (await defaultKitsDir());

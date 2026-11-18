@@ -13,10 +13,10 @@ const run: Runner = (command, args) =>
 
 export const DEFAULT_REGISTRY = "https://beam.dev/r";
 
-/** Registry item URLs for `ui/button ui/stat-card`. */
+/** Registry item URLs for `ui/button ui/stat-card screens/login-simple`. Screens live under /r/screens. */
 export function uiItemUrls(names: string[], registry: string): string[] {
   const base = registry.replace(/\/$/, "");
-  return names.map((name) => `${base}/${name.replace(/^ui\//, "")}.json`);
+  return names.map((name) => (name.startsWith("screens/") ? `${base}/${name}.json` : `${base}/${name.replace(/^ui\//, "")}.json`));
 }
 
 /**
