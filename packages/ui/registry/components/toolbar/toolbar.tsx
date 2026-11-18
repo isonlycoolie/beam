@@ -61,3 +61,51 @@ function ToolbarButton({ className, variant = "ghost", size = "default", childre
   return (
     <ToolbarPrimitive.Button asChild {...props}>
       <Button variant={variant} size={controlSize(toolbarSize, size === "icon")} className={className}>
+        {children}
+      </Button>
+    </ToolbarPrimitive.Button>
+  );
+}
+
+function ToolbarLink({ className, size = "default", ...props }: React.ComponentProps<typeof ToolbarPrimitive.Link> & Pick<ControlProps, "size">) {
+  const toolbarSize = React.useContext(ToolbarContext);
+  return <ToolbarPrimitive.Link data-slot="toolbar-link" className={cn(buttonVariants({ variant: "ghost", size: controlSize(toolbarSize, size === "icon") }), className)} {...props} />;
+}
+
+function ToolbarToggleGroup({ className, ...props }: React.ComponentProps<typeof ToolbarPrimitive.ToggleGroup>) {
+  return <ToolbarPrimitive.ToggleGroup data-slot="toolbar-toggle-group" className={cn("inline-flex items-center gap-1 group-data-[orientation=vertical]/toolbar:flex-col", className)} {...props} />;
+}
+
+/** A ghost Button that stays pressed: on, it takes the ghost hover (--secondary fill, full-strength text). */
+function ToolbarToggleItem({ className, size = "default", ...props }: React.ComponentProps<typeof ToolbarPrimitive.ToggleItem> & Pick<ControlProps, "size">) {
+  const toolbarSize = React.useContext(ToolbarContext);
+  return (
+    <ToolbarPrimitive.ToggleItem
+      data-slot="toolbar-toggle-item"
+      className={cn(buttonVariants({ variant: "ghost", size: controlSize(toolbarSize, size === "icon") }), "data-[state=on]:bg-secondary data-[state=on]:text-text-1", className)}
+      {...props}
+    />
+  );
+}
+
+/** A 16px line between groups: upright across a horizontal toolbar, flat down a vertical one. */
+function ToolbarSeparator({ className, ...props }: React.ComponentProps<typeof ToolbarPrimitive.Separator>) {
+  return (
+    <ToolbarPrimitive.Separator
+      data-slot="toolbar-separator"
+      className={cn(
+        "shrink-0 bg-border data-[orientation=vertical]:mx-0.5 data-[orientation=vertical]:h-4 data-[orientation=vertical]:w-px",
+        "data-[orientation=horizontal]:my-0.5 data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-4",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+/** A live value inside the toolbar, such as a zoom level, in Beam's 12px caption type. */
+function ToolbarOutput({ className, ...props }: React.ComponentProps<"output">) {
+  return <output data-slot="toolbar-output" aria-live="polite" className={cn("min-w-9 select-none text-center text-[12px] leading-[16px] text-text-2 tabular-nums", className)} {...props} />;
+}
+
+export { Toolbar, ToolbarButton, ToolbarLink, ToolbarToggleGroup, ToolbarToggleItem, ToolbarSeparator, ToolbarOutput, toolbarVariants };
