@@ -199,7 +199,9 @@ if (run("layout")) {
         .map((el) => {
           const r = el.getBoundingClientRect();
           return [el.dataset.slot, Math.round(r.x - o.x), Math.round(r.y - o.y), Math.round(r.width), Math.round(r.height)];
-        });
+        })
+        // Hidden parts (a closed accordion panel) have no size: where they sit doesn't matter.
+        .filter((b) => b[3] > 0 && b[4] > 0);
     });
   for (const name of all) {
     const shots = {};
