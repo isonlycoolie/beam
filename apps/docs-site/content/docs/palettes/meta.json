@@ -4,19 +4,19 @@
   "pages": [
     "index",
     "usage",
-    "---Radix Colors---",
-    "[Graphite](/docs/palettes/default)",
-    "[Slate & Indigo](/docs/palettes/slate)",
-    "[Sage & Teal](/docs/palettes/sage)",
-    "[Sand & Amber](/docs/palettes/sand)",
-    "[Mauve & Violet](/docs/palettes/mauve)",
-    "[Olive & Grass](/docs/palettes/olive)",
-    "[Gray & Crimson](/docs/palettes/crimson)",
-    "---Design systems---",
-    "[Carbon](/docs/palettes/carbon)",
-    "---Themes---",
-    "[Catppuccin](/docs/palettes/catppuccin)",
-    "[Rosé Pine](/docs/palettes/rose-pine)",
-    "[Flexoki](/docs/palettes/flexoki)"
+    "---Colour family---",
+    "[Curated](/docs/palettes/family/curated)",
+    "[Reds](/docs/palettes/family/reds)",
+    "[Pinks and purples](/docs/palettes/family/pinks-and-purples)",
+    "[Blues](/docs/palettes/family/blues)",
+    "[Greens](/docs/palettes/family/greens)",
+    "[Yellows and oranges](/docs/palettes/family/yellows-and-oranges)",
+    "[Earth](/docs/palettes/family/earth)",
+    "---Harmony scheme---",
+    "[Curated](/docs/palettes/scheme/curated)",
+    "[Complementary](/docs/palettes/scheme/complementary)",
+    "[Analogous](/docs/palettes/scheme/analogous)",
+    "[Triadic](/docs/palettes/scheme/triadic)",
+    "[Split-complementary](/docs/palettes/scheme/split-complementary)"
   ]
 }
