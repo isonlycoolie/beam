@@ -18,6 +18,10 @@ const PAIRS: Array<[string, string[]]> = [
   ["text-3", ["background", "surface-2", "card"]],
   // The accent as text: links and "featured" labels.
   ["link", ["background", "surface-2", "card"]],
+  // The harmony partners and info as text.
+  ["brand-secondary-text", ["background", "card"]],
+  ["brand-accent-text", ["background", "card"]],
+  ["info", ["info-soft", "background"]],
   ["success", ["success-soft"]],
   ["warning", ["warning-soft"]],
   ["danger", ["danger-soft"]],
@@ -40,6 +44,15 @@ function settle(t: Record<string, string>, token: string, on: string[], mode: "l
 
 function tokens(p: PaletteSource, mode: "light" | "dark", log: Adjustment[]): Record<string, string> {
   const t = { ...p[mode] };
+  // Curated palettes predate the harmony roles: give them the colours they already use in those places.
+  t["brand-secondary"] ??= t["chart-2"]!;
+  t["brand-secondary-soft"] ??= t.accent!;
+  t["brand-secondary-text"] ??= t.link!;
+  t["brand-accent"] ??= t["chart-3"]!;
+  t["brand-accent-soft"] ??= t.accent!;
+  t["brand-accent-text"] ??= t.link!;
+  t.info ??= t.link!;
+  t["info-soft"] ??= t.accent!;
   // On the primary: the official candidate with the best contrast; if none reaches 4.5:1, the primary moves.
   const on = p.onPrimary[mode].slice().sort((a, b) => contrast(b, t.primary!) - contrast(a, t.primary!))[0]!;
   t["primary-foreground"] = on;
