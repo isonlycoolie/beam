@@ -1,0 +1,13 @@
+{
+  "id": "sidebar-collapsible-sections",
+  "group": "Sidebar",
+  "title": "Sidebar \u00b7 Collapsible sections",
+  "summary": "Each section opens and closes on its own.",
+  "source": "shadcn/ui (MIT)",
+  "files": [
+    "components/app-sidebar.tsx",
+    "components/search-form.tsx",
+    "components/version-switcher.tsx",
+    "page.tsx"
+  ]
+}
