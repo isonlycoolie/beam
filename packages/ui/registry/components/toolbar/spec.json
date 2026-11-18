@@ -1,0 +1,33 @@
+{
+  "name": "toolbar",
+  "title": "Toolbar",
+  "summary": "A row of controls that act on the current view, reachable with one Tab stop and the arrow keys.",
+  "source": "Sesama UI (MIT); behaviour from Radix Toolbar (MIT)",
+  "use_when": [
+    "Formatting, filtering or zoom controls over an editor, canvas or table",
+    "A group of icon buttons that belong together"
+  ],
+  "avoid_when": [
+    "Page navigation: use Tabs or Navigation Menu",
+    "Two or three unrelated buttons: use Button Group or plain Buttons"
+  ],
+  "props": {
+    "variant": "default | ghost",
+    "orientation": "horizontal | vertical",
+    "ToolbarToggleGroup type": "single | multiple"
+  },
+  "variants": ["default", "ghost"],
+  "styles": ["default", "formatting", "vertical"],
+  "composes_with": ["Chip", "Tooltip", "Select", "Composer"],
+  "copy": {
+    "button": "A verb or a noun in one or two words; icon-only buttons need an aria-label"
+  },
+  "states": ["default", "hover", "focus", "pressed", "disabled"],
+  "a11y": [
+    "One Tab stop: the arrow keys move between controls, Home and End jump to the ends",
+    "Give the toolbar an aria-label that says what it acts on",
+    "Every icon-only control needs an aria-label"
+  ],
+  "rules": ["copy.verbs-on-actions", "state.complete"],
+  "sizes": ["sm", "md", "lg"]
+}
