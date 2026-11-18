@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
+import { GLASS_PHOTO, SurfaceToggle, useSurface } from "./surface-toggle";
 
 export type PreviewPanel = { id: string; label: string; preview: ReactNode; code?: ReactNode };
 
@@ -13,30 +14,40 @@ export function PreviewStage({ panels, tabs = false, minHeight = 350 }: { panels
   const [active, setActive] = useState(panels[0]?.id);
   const [open, setOpen] = useState(false);
   const current = panels.find((p) => p.id === active) ?? panels[0];
+  const [glass, setGlass] = useSurface();
   return (
     <div className="not-prose my-6">
-      {tabs && panels.length > 1 && (
-        <div role="tablist" aria-label="Style" className="mb-5 flex gap-6 overflow-x-auto whitespace-nowrap [scrollbar-width:none]">
-          {panels.map((p) => (
-            <button
-              key={p.id}
-              type="button"
-              role="tab"
-              aria-selected={p.id === current?.id}
-              onClick={() => setActive(p.id)}
-              className={`-mb-px border-b-2 pb-1.5 text-[15px] font-medium transition-colors ${
-                p.id === current?.id ? "border-fd-foreground text-fd-foreground" : "border-transparent text-fd-muted-foreground hover:text-fd-foreground"
-              }`}
-            >
-              {p.label}
-            </button>
-          ))}
-        </div>
-      )}
+      <div className="mb-5 flex items-end justify-between gap-4">
+        {tabs && panels.length > 1 ? (
+          <div role="tablist" aria-label="Style" className="flex min-w-0 gap-6 overflow-x-auto whitespace-nowrap [scrollbar-width:none]">
+            {panels.map((p) => (
+              <button
+                key={p.id}
+                type="button"
+                role="tab"
+                aria-selected={p.id === current?.id}
+                onClick={() => setActive(p.id)}
+                className={`-mb-px border-b-2 pb-1.5 text-[15px] font-medium transition-colors ${
+                  p.id === current?.id ? "border-fd-foreground text-fd-foreground" : "border-transparent text-fd-muted-foreground hover:text-fd-foreground"
+                }`}
+              >
+                {p.label}
+              </button>
+            ))}
+          </div>
+        ) : (
+          <span />
+        )}
+        <SurfaceToggle glass={glass} onChange={setGlass} />
+      </div>
       <div className="overflow-hidden rounded-xl border border-fd-border">
         {panels.map((p) => (
           <div key={p.id} hidden={p.id !== current?.id} role={tabs ? "tabpanel" : undefined}>
-            <div data-theme="default" className="flex items-center justify-center p-8 sm:p-10" style={{ minHeight }}>
+            <div
+              data-theme="default"
+              className="flex items-center justify-center bg-cover bg-center p-8 sm:p-10"
+              style={{ minHeight, backgroundImage: glass ? `url(${GLASS_PHOTO})` : undefined }}
+            >
               {p.preview}
             </div>
             {p.code && (

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { SurfaceToggle, useSurface } from "../ui-docs/surface-toggle";
 
 const WIDTHS = { Desktop: "100%", Tablet: "820px", Phone: "390px" } as const;
 type Width = keyof typeof WIDTHS;
@@ -9,6 +10,7 @@ type Width = keyof typeof WIDTHS;
 export function ScreenFrame({ id, height = 760 }: { id: string; height?: number }) {
   const [width, setWidth] = useState<Width>("Desktop");
   const src = `/preview/screens/${id}`;
+  const [glass, setGlass] = useSurface();
   return (
     <div className="not-prose my-6 overflow-hidden rounded-xl border border-fd-border">
       <div className="flex h-11 items-center gap-5 border-b border-fd-border px-4">
@@ -25,7 +27,10 @@ export function ScreenFrame({ id, height = 760 }: { id: string; height?: number 
             {w}
           </button>
         ))}
-        <a href={src} target="_blank" rel="noreferrer" className="ms-auto text-[13px] font-medium text-fd-muted-foreground hover:text-fd-foreground">
+        <span className="ms-auto">
+          <SurfaceToggle glass={glass} onChange={setGlass} />
+        </span>
+        <a href={src} target="_blank" rel="noreferrer" className="max-sm:hidden text-[13px] font-medium text-fd-muted-foreground hover:text-fd-foreground">
           Open in a new tab
         </a>
       </div>
