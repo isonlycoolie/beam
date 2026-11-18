@@ -285,7 +285,7 @@
 }
 
 /* ---------- Liquid controls ---------- */
-/* Buttons, iOS 26's liquid buttons: the primary action is the brightest glass with a bold label, the rest clear
+/* Buttons, iOS 26's liquid buttons: the primary action is the brightest glass with the strongest rim, the rest clear
    glass, destructive tinted red. Pill-shaped; pressed they grow and spring back past rest. */
 :where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="button"]) {
   border-radius: 999px;
@@ -296,7 +296,6 @@
 }
 :where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="button"][data-variant="default"]) {
   background-color: rgb(255 255 255 / 0.3);
-  font-weight: 600;
   --glass-rim: 0.8;
 }
 :where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="button"][data-variant="outline"], [data-slot="button"][data-variant="secondary"]) {
