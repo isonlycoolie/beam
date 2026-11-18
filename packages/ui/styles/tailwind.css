@@ -36,6 +36,15 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+  /* shadcn's sidebar colours, filled from the palette so every palette styles the Sidebar. */
+  --color-sidebar: var(--surface-2);
+  --color-sidebar-foreground: var(--text-1);
+  --color-sidebar-border: var(--border);
+  --color-sidebar-accent: var(--secondary);
+  --color-sidebar-accent-foreground: var(--text-1);
+  --color-sidebar-primary: var(--primary);
+  --color-sidebar-primary-foreground: var(--primary-foreground);
+  --color-sidebar-ring: var(--ring);
   --font-display: var(--theme-font-display);
   --font-text: var(--theme-font-text);
   --font-numeric: var(--theme-font-numeric);
