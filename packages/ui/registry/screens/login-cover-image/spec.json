@@ -1,0 +1,11 @@
+{
+  "id": "login-cover-image",
+  "group": "Login",
+  "title": "Login \u00b7 Cover image",
+  "summary": "Two columns: the form and a full-height image.",
+  "source": "shadcn/ui (MIT)",
+  "files": [
+    "components/login-form.tsx",
+    "page.tsx"
+  ]
+}
