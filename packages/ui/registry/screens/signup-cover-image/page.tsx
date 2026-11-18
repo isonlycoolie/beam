@@ -24,7 +24,7 @@ export default function SignupPage() {
       </div>
       <div className="relative hidden bg-surface-2 lg:block">
         <img
-          src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1400&q=80"
+          src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=60"
           alt="An open office with desks and plants"
           className="absolute inset-0 h-full w-full object-cover"
         />
