@@ -15,15 +15,16 @@ Beam UI fixes the second half of the problem:
 | You need | Run |
 | --- | --- |
 | One component | `npx usebeam add ui/button` |
+| A whole screen | `npx usebeam add screens/login-simple` |
 | The same with the shadcn CLI | `npx shadcn@latest add https://beam.dev/r/button.json` |
 | A palette | `npx usebeam add ui/palette-navy`, then set `data-theme="navy"` |
 | Icons | `npm install @hugeicons/react @hugeicons/core-free-icons` and Beam's `<Icon>` |
 
 ## What's here
 
-- [Foundations](/docs/components/foundations): tokens, type and space.
-- [Palettes](/docs/palettes): open-source palettes. Pick one, copy its tokens.
+- Components: all of shadcn/ui's set, from Button to Sidebar, on Beam's measured sizes and tokens.
+- [Screens](/docs/screens): whole pages to start from: dashboards, app sidebars, login and sign up.
+- [Palettes](/docs/palettes): open-source palettes; one attribute switches every component.
 - [Icons](/docs/icons): all 6,791 free Hugeicons, with install guides for every stack.
-- Components: Button, Input, Label, Field, Card, Badge, Skeleton, and Beam's own Stat Card, Empty State and Page Header.
 
 Beam UI is built on [shadcn/ui](https://ui.shadcn.com), [Radix UI](https://www.radix-ui.com) and the free [Hugeicons](https://hugeicons.com) set, all MIT licensed. See `CREDITS.md`.

@@ -3,7 +3,6 @@
   "root": true,
   "pages": [
     "index",
-    "foundations",
     "---Forms---",
     "button",
     "button-group",
