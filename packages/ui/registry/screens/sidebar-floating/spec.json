@@ -1,0 +1,11 @@
+{
+  "id": "sidebar-floating",
+  "group": "Sidebar",
+  "title": "Sidebar \u00b7 Floating",
+  "summary": "A floating sidebar with submenus, inset from the edge.",
+  "source": "shadcn/ui (MIT)",
+  "files": [
+    "components/app-sidebar.tsx",
+    "page.tsx"
+  ]
+}
