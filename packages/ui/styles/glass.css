@@ -1,62 +1,60 @@
 /*
- * Beam glass mode. Put data-surface="glass" on any ancestor (the docs put it on <html>, so menus and dialogs that
- * render in <body> follow) and every Beam surface turns to frosted glass. Components keep one source file: this
- * sheet styles them by their data-slot. Values from einui (MIT): blur, borders and shadows per surface tier;
- * from Beam Glass: the inner rim and the dark tint; from liquid-glass-react (MIT): saturation. See CREDITS.md.
- *
- * Tiers: surface (cards, sidebars, bars), overlay (menus, dialogs, popovers: more opaque, they float over text),
- * control (inputs, outline and secondary buttons, badges, tab lists). Solid fills (primary buttons, switches,
- * checkboxes) stay solid. Glass only reads over content: use it over photos, gradients or scrolling pages.
+ * Beam glass. Two parts:
+ *   Liquid Glass (components/liquid-glass, tab-bar): the material itself, with bend, dispersion, frost and rim.
+ *   Glass mode: data-surface="glass" on any ancestor (on <html>, menus and dialogs in <body> follow) turns every
+ *   Beam surface to glass, styled here by data-slot, so each component keeps one source file.
+ * Values are glisse's (MIT), measured from iOS 26; einui (MIT) set the surface tiers. See CREDITS.md.
+ * Outside glass mode nothing here applies: Normal is exactly the components as they were.
  */
 @custom-variant glass (&:where([data-surface="glass"], [data-surface="glass"] *));
 
-[data-surface="glass"] {
-  --glass-blur: 24px;
-  --glass-blur-overlay: 40px;
-  --glass-saturate: 180%;
-  --glass-bg: rgb(255 255 255 / 0.74);
-  --glass-bg-overlay: rgb(255 255 255 / 0.95);
-  --glass-bg-control: rgb(255 255 255 / 0.74);
-  --glass-border: rgb(255 255 255 / 0.6);
-  --glass-rim: inset 0 1px 0 rgb(255 255 255 / 0.7), inset 0 0 0 1px rgb(255 255 255 / 0.25);
-  --glass-shadow: 0 8px 32px rgb(0 0 0 / 0.18);
-  --glass-shadow-overlay: 0 8px 32px rgb(0 0 0 / 0.24);
-  --glass-shadow-control: 0 4px 16px rgb(0 0 0 / 0.1);
-  --glass-sheen: linear-gradient(180deg, rgb(255 255 255 / 0.28) 0%, rgb(255 255 255 / 0) 40%);
+/* The four controls, and the material's colours. Tune any of them on any element. */
+:root {
+  --beam-glass-bend: 1;
+  --beam-glass-dispersion: 0.6;
+  --beam-glass-frost: 3px;
+  --beam-glass-saturate: 1.5;
+  --beam-glass-rim: 0.3;
+  --beam-glass-tint: rgb(255 255 255 / 0.6);
+  --beam-glass-surface: rgb(250 250 252 / 0.86);
+  --beam-glass-control: rgb(255 255 255 / 0.6);
+  --beam-glass-edge: rgb(0 0 0 / 0.08);
+  --beam-glass-drop: 0 1px 3px rgb(0 0 0 / 0.06);
+  --beam-glass-shadow: 0 8px 32px rgb(25 25 35 / 0.12);
+  --beam-glass-ink-2: color-mix(in oklab, var(--text-1) 72%, #6f6f6f);
+  --beam-glass-danger: color-mix(in oklab, var(--danger) 78%, #000);
+  /* Tab Bar: iOS's system grey 5 lens and increased-contrast system blue (Apple HIG, colour). */
+  --tab-bar-tint: rgb(255 255 255 / 0.6);
+  --tab-bar-lens: rgb(229 229 234 / 0.92);
+  --tab-bar-ink: #1c1c1e;
+  --tab-bar-active: #0040dd;
 }
-.dark[data-surface="glass"],
-.dark [data-surface="glass"],
-[data-surface="glass"] .dark {
-  --glass-bg: rgb(24 26 34 / 0.58);
-  --glass-bg-overlay: rgb(24 26 34 / 0.76);
-  --glass-bg-control: rgb(24 26 34 / 0.55);
-  --glass-border: rgb(255 255 255 / 0.18);
-  --glass-rim: inset 0 1px 0 rgb(255 255 255 / 0.22), inset 0 0 0 1px rgb(255 255 255 / 0.08);
-  --glass-shadow: 0 8px 32px rgb(0 0 0 / 0.37);
-  --glass-shadow-overlay: 0 8px 32px rgb(0 0 0 / 0.4);
-  --glass-shadow-control: 0 4px 16px rgb(0 0 0 / 0.2);
-  --glass-sheen: linear-gradient(180deg, rgb(255 255 255 / 0.1) 0%, rgb(255 255 255 / 0) 40%);
-}
-
-/* Secondary text on glass: pulled toward the primary text colour, as iOS's vibrancy keeps labels legible over
-   a moving background. Set on each glass element, so it wins over the palette inside it. */
-:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="card"], [data-slot="sidebar-inner"], [data-slot="sidebar-inset"], [data-slot$="-content"], [data-slot="command"], [data-slot="tabs-list"], [data-slot="menubar"]) {
-  --text-2: color-mix(in oklab, var(--text-1) 70%, var(--glass-text-2-base, #6f6f6f));
-  --text-3: color-mix(in oklab, var(--text-1) 55%, var(--glass-text-2-base, #6f6f6f));
-  --muted-foreground: var(--text-2);
-}
-
-/* Surfaces. */
-:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="card"], [data-slot="sidebar-inner"], [data-slot="sidebar-inset"], [data-slot="menubar"], [data-slot="navigation-menu-list"]) {
-  background: var(--glass-sheen), var(--glass-bg);
-  border-color: var(--glass-border);
-  box-shadow: var(--glass-rim), var(--glass-shadow);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+.dark {
+  --beam-glass-rim: 0.13;
+  --beam-glass-tint: rgb(40 40 40 / 0.48);
+  --beam-glass-surface: rgb(28 28 31 / 0.86);
+  --beam-glass-control: rgb(40 40 40 / 0.62);
+  --beam-glass-edge: rgb(255 255 255 / 0.08);
+  --beam-glass-drop: 0 0 0 transparent;
+  --beam-glass-shadow: 0 8px 32px rgb(0 0 0 / 0.38);
+  --beam-glass-ink-2: color-mix(in oklab, var(--text-1) 72%, #8f8f8f);
+  --beam-glass-danger: var(--danger);
+  --tab-bar-tint: rgb(40 40 40 / 0.62);
+  --tab-bar-lens: rgb(44 44 46 / 0.92);
+  --tab-bar-ink: #f2f2f7;
+  --tab-bar-active: #409cff;
 }
 
-/* Overlays. */
+/* ---------- Liquid Glass: tint and rim ---------- */
+.beam-liquid {
+  background-color: var(--beam-glass-tint);
+  box-shadow: var(--beam-glass-drop);
+}
+/* The rim: a 1.22px line of light, from the top left and, fainter, its reflection bottom right, fading over the
+   corners between, over a 0.5px edge line. */
+.beam-liquid::after,
 :where([data-surface="glass"], [data-surface="glass"] *):is(
+    [data-slot="card"],
     [data-slot="dialog-content"],
     [data-slot="alert-dialog-content"],
     [data-slot="sheet-content"],
@@ -64,103 +62,34 @@
     [data-slot="popover-content"],
     [data-slot="hover-card-content"],
     [data-slot="dropdown-menu-content"],
-    [data-slot="dropdown-menu-sub-content"],
     [data-slot="context-menu-content"],
-    [data-slot="context-menu-sub-content"],
     [data-slot="menubar-content"],
-    [data-slot="menubar-sub-content"],
     [data-slot="select-content"],
-    [data-slot="command"],
-    [data-slot="navigation-menu-viewport"]
-  ) {
-  background: var(--glass-sheen), var(--glass-bg-overlay);
-  border-color: var(--glass-border);
-  box-shadow: var(--glass-rim), var(--glass-shadow-overlay);
-  -webkit-backdrop-filter: blur(var(--glass-blur-overlay)) saturate(var(--glass-saturate));
-  backdrop-filter: blur(var(--glass-blur-overlay)) saturate(var(--glass-saturate));
-}
-/* A command palette inside a dialog is already on glass: no glass on glass. */
-:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="dialog-content"]) [data-slot="command"] {
-  background: transparent;
-  box-shadow: none;
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-}
-
-/* Controls. */
-:where([data-surface="glass"], [data-surface="glass"] *):is(
     [data-slot="input"],
     [data-slot="textarea"],
     [data-slot="input-group"],
     [data-slot="select-trigger"],
-    [data-slot="tabs-list"],
-    [data-slot="button"][data-variant="outline"],
-    [data-slot="button"][data-variant="secondary"],
-    [data-slot="badge"][data-variant="secondary"],
-    [data-slot="badge"][data-variant="outline"]
-  ) {
-  background: var(--glass-bg-control);
-  border-color: var(--glass-border);
-  box-shadow: var(--glass-rim), var(--glass-shadow-control);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-}
-/* An input group's own input sits on the group's glass. */
-:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="input-group"]) [data-slot="input-group-input"] {
-  background: transparent;
-}
-
-/* The active tab and the tooltip stay solid enough to read at a glance. */
-:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="tabs-trigger"][data-state="active"]) {
-  background: var(--glass-bg-overlay);
-  box-shadow: var(--glass-rim), var(--glass-shadow-control);
-}
-
-/* People who ask for less transparency get solid, readable surfaces. */
-@media (prefers-reduced-transparency: reduce) {
-  [data-surface="glass"] {
-    --glass-bg: var(--card);
-    --glass-bg-overlay: var(--popover);
-    --glass-bg-control: var(--background);
-    --glass-border: var(--border);
-    --glass-sheen: linear-gradient(transparent, transparent);
-    --glass-blur: 0px;
-    --glass-blur-overlay: 0px;
-    --glass-saturate: 100%;
-  }
-}
-
-/* Liquid Glass (components/liquid-glass): the rim is a 1.5px ring cut out of a gradient. */
-.liquid-glass-rim {
-  padding: 1.5px;
+    [data-slot="button"],
+    [data-slot="badge"]
+  )::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  pointer-events: none;
+  padding: 1.22px;
+  background: linear-gradient(
+    135deg,
+    rgb(255 255 255 / var(--beam-glass-rim)) 0%,
+    rgb(255 255 255 / calc(var(--beam-glass-rim) * 0.35)) 22%,
+    transparent 40%,
+    transparent 60%,
+    rgb(255 255 255 / calc(var(--beam-glass-rim) * 0.35)) 78%,
+    rgb(255 255 255 / calc(var(--beam-glass-rim) * 0.7)) 100%
+  );
+  box-shadow: inset 0 0 0 0.5px var(--beam-glass-edge);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
-  box-shadow:
-    0 0 0 0.5px rgb(255 255 255 / 0.5) inset,
-    0 1px 3px rgb(255 255 255 / 0.25) inset,
-    0 1px 4px rgb(0 0 0 / 0.35);
-}
-@media (prefers-reduced-transparency: reduce) {
-  [data-liquid-warp] {
-    filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
-    background: var(--popover);
-  }
-}
-
-/* Tab Bar colours: a tint so labels read over any photo; the lens is iOS's system grey 5 and the active tab its
-   increased-contrast system blue (Apple Human Interface Guidelines, colour), which keeps labels above 4.5:1. */
-:root {
-  --tab-bar-tint: rgb(255 255 255 / 0.8);
-  --tab-bar-lens: rgb(229 229 234 / 0.92);
-  --tab-bar-ink: #1c1c1e;
-  --tab-bar-active: #0040dd;
-}
-.dark {
-  --tab-bar-tint: rgb(28 28 30 / 0.78);
-  --tab-bar-lens: rgb(44 44 46 / 0.92);
-  --tab-bar-ink: #f2f2f7;
-  --tab-bar-active: #409cff;
 }
