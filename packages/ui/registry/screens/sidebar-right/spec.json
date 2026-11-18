@@ -1,0 +1,11 @@
+{
+  "id": "sidebar-right",
+  "group": "Sidebar",
+  "title": "Sidebar \u00b7 On the right",
+  "summary": "A table of contents sidebar on the right.",
+  "source": "shadcn/ui (MIT)",
+  "files": [
+    "components/app-sidebar.tsx",
+    "page.tsx"
+  ]
+}
