@@ -1,0 +1,20 @@
+{
+  "id": "sidebar-left-and-right",
+  "group": "Sidebar",
+  "title": "Sidebar \u00b7 Left and right",
+  "summary": "Navigation on the left, a calendar panel on the right.",
+  "source": "shadcn/ui (MIT)",
+  "files": [
+    "components/calendars.tsx",
+    "components/date-picker.tsx",
+    "components/nav-favorites.tsx",
+    "components/nav-main.tsx",
+    "components/nav-secondary.tsx",
+    "components/nav-user.tsx",
+    "components/nav-workspaces.tsx",
+    "components/sidebar-left.tsx",
+    "components/sidebar-right.tsx",
+    "components/team-switcher.tsx",
+    "page.tsx"
+  ]
+}
