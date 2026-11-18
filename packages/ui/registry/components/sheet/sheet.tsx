@@ -1,5 +1,6 @@
 /* Based on shadcn/ui (MIT). Sizes, type and shadows are measured references (see CREDITS.md). */
 "use client";
+import { GlassBackdrop } from "../liquid-glass/liquid-glass";
 import { usePortalContainer } from "../portal-container/portal-container";
 
 import { Cancel01Icon } from "@hugeicons/core-free-icons";
@@ -24,7 +25,12 @@ function SheetContent({ className, children, side = "right", ...props }: React.C
   return (
     <SheetPrimitive.Portal container={usePortalContainer()}>
       <SheetPrimitive.Overlay className="fixed inset-0 z-50 bg-(--overlay)" />
-      <SheetPrimitive.Content data-slot="sheet-content" className={cn("fixed z-50 flex flex-col gap-4 border-border bg-card p-6 shadow-(--shadow-dialog) outline-none", SIDES[side], className)} {...props}>
+      <SheetPrimitive.Content
+        data-slot="sheet-content"
+        className={cn("fixed z-50 flex flex-col gap-4 border-border bg-card p-6 shadow-(--shadow-dialog) outline-none", SIDES[side], className)}
+        {...props}
+      >
+        <GlassBackdrop />
         {children}
         <SheetPrimitive.Close className="absolute end-4 top-4 grid size-7 place-items-center rounded-(--radius-md) text-text-3 outline-none hover:bg-secondary hover:text-text-1 focus-visible:shadow-(--focus-ring)">
           <Icon icon={Cancel01Icon} size="sm" label="Close" />

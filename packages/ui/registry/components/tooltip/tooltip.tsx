@@ -1,5 +1,6 @@
 /* Based on shadcn/ui (MIT). Sizes, type and shadows are measured references (see CREDITS.md). */
 "use client";
+import { GlassBackdrop } from "../liquid-glass/liquid-glass";
 
 import { Tooltip as TooltipPrimitive } from "radix-ui";
 import type * as React from "react";
@@ -18,7 +19,10 @@ function TooltipContent({ className, sideOffset = 6, ...props }: React.Component
         sideOffset={sideOffset}
         className={cn("z-50 max-w-64 rounded-(--radius-md) bg-text-1 px-2 py-1 text-[12px] leading-[16px] font-medium text-background", className)}
         {...props}
-      />
+      >
+        <GlassBackdrop />
+        {props.children}
+      </TooltipPrimitive.Content>
     </TooltipPrimitive.Portal>
   );
 }

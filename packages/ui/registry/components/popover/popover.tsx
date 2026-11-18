@@ -1,5 +1,6 @@
 /* Based on shadcn/ui (MIT). Sizes, type and shadows are measured references (see CREDITS.md). */
 "use client";
+import { GlassBackdrop } from "../liquid-glass/liquid-glass";
 
 import { Popover as PopoverPrimitive } from "radix-ui";
 import type * as React from "react";
@@ -19,7 +20,10 @@ function PopoverContent({ className, align = "center", sideOffset = 4, ...props 
         sideOffset={sideOffset}
         className={cn("z-50 rounded-(--radius-md) border border-input bg-popover text-popover-foreground shadow-(--shadow-3) w-72 p-4 outline-none", className)}
         {...props}
-      />
+      >
+        <GlassBackdrop />
+        {props.children}
+      </PopoverPrimitive.Content>
     </PopoverPrimitive.Portal>
   );
 }

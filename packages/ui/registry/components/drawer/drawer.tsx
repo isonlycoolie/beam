@@ -1,5 +1,6 @@
 /* Based on shadcn/ui (MIT), converted to Beam's measured tokens (radius, shadows, focus, type). */
 "use client";
+import { GlassBackdrop } from "../liquid-glass/liquid-glass";
 import { usePortalContainer } from "../portal-container/portal-container";
 
 import * as React from "react";
@@ -52,6 +53,7 @@ function DrawerContent({ className, children, ...props }: React.ComponentProps<t
         )}
         {...props}
       >
+        <GlassBackdrop />
         <div className="mx-auto mt-4 hidden h-2 w-[100px] shrink-0 rounded-full bg-surface-2 group-data-[vaul-drawer-direction=bottom]/drawer-content:block" />
         {children}
       </DrawerPrimitive.Content>

@@ -1,5 +1,6 @@
 /* Based on shadcn/ui (MIT). Sizes, type and shadows are measured references (see CREDITS.md). */
 "use client";
+import { GlassBackdrop } from "../liquid-glass/liquid-glass";
 import { usePortalContainer } from "../portal-container/portal-container";
 
 import { Cancel01Icon } from "@hugeicons/core-free-icons";
@@ -18,7 +19,12 @@ function DialogOverlay({ className, ...props }: React.ComponentProps<typeof Dial
   return <DialogPrimitive.Overlay data-slot="dialog-overlay" className={cn("fixed inset-0 z-50 bg-(--overlay)", className)} {...props} />;
 }
 
-function DialogContent({ className, children, showCloseButton = true, ...props }: React.ComponentProps<typeof DialogPrimitive.Content> & { showCloseButton?: boolean }) {
+function DialogContent({
+  className,
+  children,
+  showCloseButton = true,
+  ...props
+}: React.ComponentProps<typeof DialogPrimitive.Content> & { showCloseButton?: boolean }) {
   return (
     <DialogPortal container={usePortalContainer()}>
       <DialogOverlay />
@@ -30,6 +36,7 @@ function DialogContent({ className, children, showCloseButton = true, ...props }
         )}
         {...props}
       >
+        <GlassBackdrop />
         {children}
         {showCloseButton && (
           <DialogPrimitive.Close className="absolute end-4 top-4 grid size-7 place-items-center rounded-(--radius-md) text-text-3 outline-none hover:bg-secondary hover:text-text-1 focus-visible:shadow-(--focus-ring)">
