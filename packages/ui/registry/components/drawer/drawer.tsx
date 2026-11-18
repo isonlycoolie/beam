@@ -1,5 +1,6 @@
 /* Based on shadcn/ui (MIT), converted to Beam's measured tokens (radius, shadows, focus, type). */
 "use client";
+import { usePortalContainer } from "../portal-container/portal-container";
 
 import * as React from "react";
 import { cn } from "../../../lib/cn";
@@ -14,7 +15,8 @@ function DrawerTrigger({ ...props }: React.ComponentProps<typeof DrawerPrimitive
 }
 
 function DrawerPortal({ ...props }: React.ComponentProps<typeof DrawerPrimitive.Portal>) {
-  return <DrawerPrimitive.Portal data-slot="drawer-portal" {...props} />;
+  const container = usePortalContainer();
+  return <DrawerPrimitive.Portal data-slot="drawer-portal" container={container} {...props} />;
 }
 
 function DrawerClose({ ...props }: React.ComponentProps<typeof DrawerPrimitive.Close>) {

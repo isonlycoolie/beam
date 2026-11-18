@@ -1,5 +1,6 @@
 /* Based on shadcn/ui (MIT). Sizes, type and shadows are measured references (see CREDITS.md). */
 "use client";
+import { usePortalContainer } from "../portal-container/portal-container";
 
 import { AlertDialog as AlertDialogPrimitive } from "radix-ui";
 import type * as React from "react";
@@ -12,7 +13,7 @@ const AlertDialogTrigger = AlertDialogPrimitive.Trigger;
 // The Dialog's measured surface (12px radius, the 0 40px 100px shadow, a 20% overlay) at confirm size.
 function AlertDialogContent({ className, ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Content>) {
   return (
-    <AlertDialogPrimitive.Portal>
+    <AlertDialogPrimitive.Portal container={usePortalContainer()}>
       <AlertDialogPrimitive.Overlay className="fixed inset-0 z-50 bg-(--overlay)" />
       <AlertDialogPrimitive.Content
         data-slot="alert-dialog-content"

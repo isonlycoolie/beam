@@ -1,5 +1,6 @@
 /* Based on shadcn/ui (MIT). Sizes, type and shadows are measured references (see CREDITS.md). */
 "use client";
+import { usePortalContainer } from "../portal-container/portal-container";
 
 import { Cancel01Icon } from "@hugeicons/core-free-icons";
 import { Dialog as DialogPrimitive } from "radix-ui";
@@ -19,7 +20,7 @@ function DialogOverlay({ className, ...props }: React.ComponentProps<typeof Dial
 
 function DialogContent({ className, children, showCloseButton = true, ...props }: React.ComponentProps<typeof DialogPrimitive.Content> & { showCloseButton?: boolean }) {
   return (
-    <DialogPortal>
+    <DialogPortal container={usePortalContainer()}>
       <DialogOverlay />
       <DialogPrimitive.Content
         data-slot="dialog-content"

@@ -1,5 +1,6 @@
 /* Based on shadcn/ui (MIT). Sizes, type and shadows are measured references (see CREDITS.md). */
 "use client";
+import { usePortalContainer } from "../portal-container/portal-container";
 
 import { Cancel01Icon } from "@hugeicons/core-free-icons";
 import { Dialog as SheetPrimitive } from "radix-ui";
@@ -21,7 +22,7 @@ const SIDES = {
 // The Dialog's measured parts: the 20% overlay and the dialog shadow; a --border edge and 24px padding.
 function SheetContent({ className, children, side = "right", ...props }: React.ComponentProps<typeof SheetPrimitive.Content> & { side?: keyof typeof SIDES }) {
   return (
-    <SheetPrimitive.Portal>
+    <SheetPrimitive.Portal container={usePortalContainer()}>
       <SheetPrimitive.Overlay className="fixed inset-0 z-50 bg-(--overlay)" />
       <SheetPrimitive.Content data-slot="sheet-content" className={cn("fixed z-50 flex flex-col gap-4 border-border bg-card p-6 shadow-(--shadow-dialog) outline-none", SIDES[side], className)} {...props}>
         {children}
