@@ -8,6 +8,9 @@ import { chromium } from "playwright";
 import { PNG } from "pngjs";
 
 const base = process.argv[2] ?? "http://localhost:3100";
+// GLASS_ONLY=contrast|difference|solid runs one check, for machines short on memory.
+const only = process.env.GLASS_ONLY;
+const run = (phase) => !only || only === phase;
 // Static previews, and overlays opened by the first button in the preview.
 const PAGES = ["card", "input", "textarea", "input-group", "tabs", "badge", "button", "menubar", "liquid-glass", "tab-bar"];
 const OVERLAYS = ["dialog", "alert-dialog", "popover", "dropdown-menu", "sheet"];
@@ -28,7 +31,7 @@ const waitForPhoto = (page) =>
 const browser = await chromium.launch();
 const failures = [];
 let checked = 0;
-for (const scheme of ["light", "dark"]) {
+for (const scheme of run("contrast") ? ["light", "dark"] : []) {
   for (const name of [...PAGES, ...OVERLAYS]) {
     const page = await browser.newPage({ viewport: { width: 1280, height: 900 }, colorScheme: scheme });
     await page.goto(`${base}/docs/components/${name}`, { waitUntil: "domcontentloaded" });
@@ -108,7 +111,7 @@ const lab = ([r, g, b]) => {
 };
 const DIFFER = [["card", "[data-slot=card]"], ["button", "[data-slot=button]"], ["input", "[data-slot=input]"], ["tabs", "[data-slot=tabs-list]"]];
 const same = [];
-for (const scheme of ["light", "dark"]) {
+for (const scheme of run("difference") ? ["light", "dark"] : []) {
   const context = await browser.newContext({ viewport: { width: 1280, height: 900 }, colorScheme: scheme });
   const page = await context.newPage();
   for (const [name, selector] of DIFFER) {
@@ -144,9 +147,47 @@ for (const scheme of ["light", "dark"]) {
   await context.close();
 }
 
+// No solid parts left: in Glass, nothing inside a preview may keep an opaque fill, apart from the fills iOS keeps
+// solid (a switch that is on, a checked box, thumbs, progress, images).
+const SOLID_OK = '[data-slot="switch"][data-state="checked"],[data-slot="switch-thumb"],[data-slot="checkbox"][data-state="checked"],[data-slot="radio-group-indicator"],[data-slot="progress-indicator"],[role="slider"],[data-slot="slider"] *,img,svg,video,canvas,code,pre,[data-slot="tab-bar"] *,[data-slot="liquid-glass"] *,[data-slot="chart"] *';
+const { readFileSync } = await import("node:fs");
+const all = JSON.parse(readFileSync(new URL("../apps/docs-site/content/docs/components/meta.json", import.meta.url), "utf8")).pages.filter((n) => !n.startsWith("---") && n !== "index" && n !== "sidebars" && n !== "glass");
+const solid = [];
+if (run("solid")) {
+  const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  await context.addInitScript(() => {
+    try {
+      localStorage.setItem("beam-surface", "glass");
+    } catch {}
+  });
+  await context.route(/images\.unsplash\.com/, (r) => r.abort());
+  const page = await context.newPage();
+  for (const name of all) {
+    await page.goto(`${base}/docs/components/${name}`, { waitUntil: "domcontentloaded" });
+    await page.waitForTimeout(900);
+    const found = await page.evaluate((OK) => {
+      const stage = document.querySelector(".not-prose [data-preview]");
+      if (!stage) return [];
+      const out = [];
+      for (const el of stage.querySelectorAll("*")) {
+        const r = el.getBoundingClientRect();
+        if (r.width < 12 || r.height < 12 || el.closest(OK) || el.matches(OK)) continue;
+        const bg = getComputedStyle(el).backgroundColor.match(/[\d.]+/g)?.map(Number) ?? [0, 0, 0, 0];
+        const alpha = bg.length > 3 ? bg[3] : 1;
+        if (alpha >= 0.95) out.push(`${el.dataset.slot ?? el.tagName.toLowerCase()} rgb(${bg.slice(0, 3).join(" ")})`);
+      }
+      return [...new Set(out)].slice(0, 4);
+    }, SOLID_OK);
+    if (found.length) solid.push(`${name}: ${found.join(", ")}`);
+  }
+  await context.close();
+}
+
 await browser.close();
+console.log(`glass solid parts: ${all.length} component pages, ${solid.length} with opaque parts`);
+for (const s of solid) console.log(`  ${s}`);
 console.log(`glass contrast: ${checked} text boxes checked, ${failures.length} below the minimum`);
 for (const f of failures) console.log(`  ${f}`);
 console.log(`glass difference: ${DIFFER.length * 2} components compared, ${same.length} too close to normal`);
 for (const s of same) console.log(`  ${s}`);
-process.exit(failures.length || same.length ? 1 : 0);
+process.exit(failures.length || same.length || solid.length ? 1 : 0);
