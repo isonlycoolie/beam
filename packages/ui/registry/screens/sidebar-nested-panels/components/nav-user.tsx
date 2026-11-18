@@ -93,3 +93,8 @@ export function NavUser({
               Log out
             </DropdownMenuItem>
           </DropdownMenuContent>
+        </DropdownMenu>
+      </SidebarMenuItem>
+    </SidebarMenu>
+  );
+}
