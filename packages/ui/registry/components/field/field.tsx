@@ -1,55 +1,95 @@
-/* Based on shadcn/ui Field (MIT). Simplified for Beam UI: a visible label, optional help, and an error that replaces it. */
-import type * as React from "react";
+/* Based on shadcn/ui (MIT), converted to Beam's Stripe-measured tokens (radius, shadows, focus, type). */
+"use client";
+
+import { useMemo } from "react";
+import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../../lib/cn";
-import { Label } from "../label";
 
-/** One form field: label on top, control, then help or error. Rule form.labels-visible. */
-function Field({ className, invalid, ...props }: React.ComponentProps<"div"> & { invalid?: boolean }) {
+import { Label } from "../label/label";
+import { Separator } from "../separator/separator";
+
+function FieldSet({ className, ...props }: React.ComponentProps<"fieldset">) {
   return (
-    <div
-      role="group"
-      data-slot="field"
-      data-invalid={invalid || undefined}
-      className={cn("group/field flex w-full flex-col gap-1.5", className)}
+    <fieldset
+      data-slot="field-set"
+      className={cn("flex flex-col gap-6", "has-[>[data-slot=checkbox-group]]:gap-3 has-[>[data-slot=radio-group]]:gap-3", className)}
       {...props}
     />
   );
 }
 
-function FieldLabel(props: React.ComponentProps<typeof Label>) {
-  return <Label data-slot="field-label" {...props} />;
-}
-
-/** Help text: one short line on how to fill the field. Hidden while an error shows. */
-function FieldDescription({ className, ...props }: React.ComponentProps<"p">) {
+function FieldLegend({ className, variant = "legend", ...props }: React.ComponentProps<"legend"> & { variant?: "legend" | "label" }) {
   return (
-    <p
-      data-slot="field-description"
-      className={cn("text-small text-text-2 group-data-[invalid=true]/field:hidden", className)}
+    <legend
+      data-slot="field-legend"
+      data-variant={variant}
+      className={cn("mb-3 font-medium", "data-[variant=legend]:text-[16px] leading-[24px]", "data-[variant=label]:text-[14px] leading-[20px]", className)}
       {...props}
     />
   );
 }
 
-/** What went wrong and how to fix it, in one sentence. */
-function FieldError({ className, children, ...props }: React.ComponentProps<"p">) {
-  if (!children) return null;
-  return (
-    <p role="alert" data-slot="field-error" className={cn("text-small font-medium text-danger", className)} {...props}>
-      {children}
-    </p>
-  );
-}
-
-/** Stacks fields with the form rhythm. Short related pairs can sit side by side with columns={2}. */
-function FieldGroup({ className, columns = 1, ...props }: React.ComponentProps<"div"> & { columns?: 1 | 2 }) {
+function FieldGroup({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="field-group"
-      className={cn("grid gap-5", columns === 2 && "sm:grid-cols-2 sm:gap-x-4", className)}
+      className={cn(
+        "group/field-group @container/field-group flex w-full flex-col gap-7 data-[slot=checkbox-group]:gap-3 [&>[data-slot=field-group]]:gap-4",
+        className,
+      )}
       {...props}
     />
   );
 }
 
-export { Field, FieldDescription, FieldError, FieldGroup, FieldLabel };
+const fieldVariants = cva("group/field flex w-full gap-3 data-[invalid=true]:text-danger", {
+  variants: {
+    orientation: {
+      vertical: ["flex-col [&>*]:w-full [&>.sr-only]:w-auto"],
+      horizontal: [
+        "flex-row items-center",
+        "[&>[data-slot=field-label]]:flex-auto",
+        "has-[>[data-slot=field-content]]:items-start has-[>[data-slot=field-content]]:[&>[role=checkbox],[role=radio]]:mt-px",
+      ],
+      responsive: [
+        "flex-col @md/field-group:flex-row @md/field-group:items-center [&>*]:w-full @md/field-group:[&>*]:w-auto [&>.sr-only]:w-auto",
+        "@md/field-group:[&>[data-slot=field-label]]:flex-auto",
+        "@md/field-group:has-[>[data-slot=field-content]]:items-start @md/field-group:has-[>[data-slot=field-content]]:[&>[role=checkbox],[role=radio]]:mt-px",
+      ],
+    },
+  },
+  defaultVariants: {
+    orientation: "vertical",
+  },
+});
+
+function Field({ className, orientation = "vertical", ...props }: React.ComponentProps<"div"> & VariantProps<typeof fieldVariants>) {
+  return <div role="group" data-slot="field" data-orientation={orientation} className={cn(fieldVariants({ orientation }), className)} {...props} />;
+}
+
+function FieldContent({ className, ...props }: React.ComponentProps<"div">) {
+  return <div data-slot="field-content" className={cn("group/field-content flex flex-1 flex-col gap-1.5 leading-snug", className)} {...props} />;
+}
+
+function FieldLabel({ className, ...props }: React.ComponentProps<typeof Label>) {
+  return (
+    <Label
+      data-slot="field-label"
+      className={cn(
+        "group/field-label peer/field-label flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:opacity-50",
+        "has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col has-[>[data-slot=field]]:rounded-(--radius-md) has-[>[data-slot=field]]:border [&>*]:data-[slot=field]:p-4",
+        "has-data-[state=checked]:border-primary has-data-[state=checked]:bg-primary/5",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+function FieldTitle({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="field-label"
+      className={cn("flex w-fit items-center gap-2 text-[14px] leading-[20px] leading-snug font-medium group-data-[disabled=true]/field:opacity-50", className)}
+      {...props}
+    />
