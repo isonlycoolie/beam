@@ -155,6 +155,22 @@ for (const item of screens) {
   writeFileSync(join(outDir, "screens", `${item.name}.json`), `${JSON.stringify({ $schema: "https://ui.shadcn.com/schema/registry-item.json", ...item }, null, 2)}
 `);
 }
+// Sidebar layouts are components too: `npx usebeam add ui/sidebar-calendar` reads /r/sidebar-calendar.json.
+const sidebars = screens.filter((s) => s.meta.beam.group === "Sidebar");
+for (const item of sidebars) {
+  writeFileSync(join(outDir, `${item.name}.json`), `${JSON.stringify({ $schema: "https://ui.shadcn.com/schema/registry-item.json", ...item }, null, 2)}\n`);
+}
+// The screens index agents read (MCP screens_list): what each screen is for and what it is built from.
+const screenIndex = screens.map((s) => ({
+  id: s.name,
+  group: s.meta.beam.group,
+  title: s.meta.beam.title,
+  summary: s.meta.beam.summary,
+  components: s.registryDependencies.filter((u) => !/beam-(utils|tokens)\.json$/.test(u)).map((u) => u.split("/").pop().replace(/\.json$/, "")),
+  files: s.files.map((f) => f.target),
+  install: `npx usebeam add screens/${s.name}`,
+}));
+writeFileSync(join(outDir, "screens", "index.json"), `${JSON.stringify(screenIndex, null, 2)}\n`);
 
 mkdirSync(outDir, { recursive: true });
 for (const item of items) {
@@ -164,4 +180,4 @@ writeFileSync(
   join(outDir, "registry.json"),
   `${JSON.stringify({ $schema: "https://ui.shadcn.com/schema/registry.json", name: "beam", homepage: "https://beam.dev", items: items.map(({ files, ...rest }) => ({ ...rest, files: files.map(({ content, ...f }) => f) })) }, null, 2)}\n`,
 );
-console.log(`registry: ${items.length} items, ${screens.length} screens -> ${outDir} (${base})`);
+console.log(`registry: ${items.length} items, ${screens.length} screens, ${sidebars.length} sidebar layouts -> ${outDir} (${base})`);
