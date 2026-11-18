@@ -188,3 +188,62 @@ export function TabBar({ items, value, defaultValue, onValueChange, overLight = 
     <nav data-slot="tab-bar" aria-label={props["aria-label"] ?? "Tabs"} className={cn("inline-flex", className)} {...props}>
       <LiquidGlass radius={999} elasticity={0} overLight={overLight} className="p-1">
         {/* The tint sits above the bent backdrop, so labels keep their contrast over bright and dark photos. */}
+        <span aria-hidden="true" className="absolute inset-0 rounded-[inherit] bg-(--tab-bar-tint)" />
+        <div
+          ref={rowRef}
+          role="tablist"
+          aria-orientation="horizontal"
+          tabIndex={-1}
+          onKeyDown={onKeyDown}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={onPointerUp}
+          onPointerCancel={onPointerUp}
+          className="relative flex touch-pan-y select-none items-stretch"
+        >
+          {lensStyle && (
+            <LiquidGlass
+              aria-hidden="true"
+              data-slot="tab-bar-lens"
+              radius={999}
+              elasticity={0}
+              displacement={dragging ? 90 : 40}
+              blur={dragging ? 0 : 0.05}
+              className={cn("pointer-events-none absolute inset-y-0 left-0 origin-center transition-[box-shadow] duration-200", dragging ? "z-20" : "z-0")}
+              style={{ ...lensStyle, boxShadow: dragging ? "0 8px 24px rgb(0 0 0 / 0.22)" : "none" }}
+            >
+              {/* Above the lens's own bent backdrop, so the active label keeps its contrast. Lifted, it clears. */}
+              <span className={cn("absolute inset-0 rounded-[inherit] transition-colors duration-200", dragging ? "bg-white/10" : "bg-(--tab-bar-lens)")} />
+            </LiquidGlass>
+          )}
+          {items.map((item, i) => {
+            const selected = item.value === active;
+            const Tag = item.href ? "a" : "button";
+            return (
+              <Tag
+                key={item.value}
+                ref={(el: HTMLAnchorElement | HTMLButtonElement | null) => {
+                  tabRefs.current[i] = el;
+                }}
+                role="tab"
+                aria-selected={selected}
+                aria-current={selected && item.href ? "page" : undefined}
+                tabIndex={selected ? 0 : -1}
+                {...(item.href ? { href: item.href } : { type: "button" as const })}
+                onClick={() => select(item.value)}
+                className={cn(
+                  "relative z-10 flex min-w-[68px] flex-1 flex-col items-center justify-center gap-0.5 rounded-full px-3 pt-1.5 pb-1 outline-none transition-colors duration-200",
+                  "focus-visible:shadow-(--focus-ring)",
+                  selected ? "text-(--tab-bar-active)" : "text-(--tab-bar-ink)",
+                )}
+              >
+                <HugeiconsIcon icon={item.icon} size={24} strokeWidth={selected ? 2 : 1.75} aria-hidden="true" />
+                <span className="text-[10px] leading-[12px] font-medium">{item.label}</span>
+              </Tag>
+            );
+          })}
+        </div>
+      </LiquidGlass>
+    </nav>
+  );
+}
