@@ -93,3 +93,98 @@ export const schema = z.object({
   id: z.number(),
   header: z.string(),
   type: z.string(),
+  status: z.string(),
+  target: z.string(),
+  limit: z.string(),
+  reviewer: z.string(),
+});
+
+// Create a separate component for the drag handle
+function DragHandle({ id }: { id: number }) {
+  const { attributes, listeners } = useSortable({
+    id,
+  });
+
+  return (
+    <Button {...attributes} {...listeners} variant="ghost" size="icon" className="size-7 text-text-2 hover:bg-transparent">
+      <HugeiconsIcon icon={DragDropVerticalIcon} strokeWidth={1.75} className="size-3 text-text-2" />
+      <span className="sr-only">Drag to reorder</span>
+    </Button>
+  );
+}
+
+const columns = columnHelper.columns([
+  columnHelper.display({
+    id: "drag",
+    header: () => null,
+    cell: ({ row }) => <DragHandle id={row.original.id} />,
+  }),
+  columnHelper.display({
+    id: "select",
+    header: ({ table }) => (
+      <div className="flex items-center justify-center">
+        <Checkbox
+          checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")}
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+        />
+      </div>
+    ),
+    cell: ({ row }) => (
+      <div className="flex items-center justify-center">
+        <Checkbox checked={row.getIsSelected()} onCheckedChange={(value) => row.toggleSelected(!!value)} aria-label="Select row" />
+      </div>
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  }),
+  columnHelper.accessor("header", {
+    header: "Header",
+    cell: ({ row }) => {
+      return <TableCellViewer item={row.original} />;
+    },
+    enableHiding: false,
+  }),
+  columnHelper.accessor("type", {
+    header: "Section Type",
+    cell: ({ row }) => (
+      <div className="w-32">
+        <Badge variant="outline" className="px-1.5 text-text-2">
+          {row.original.type}
+        </Badge>
+      </div>
+    ),
+  }),
+  columnHelper.accessor("status", {
+    header: "Status",
+    cell: ({ row }) => (
+      <Badge variant="outline" className="px-1.5 text-text-2">
+        {row.original.status === "Done" ? (
+          <HugeiconsIcon icon={CheckmarkCircle02Icon} strokeWidth={1.75} className="fill-green-500" />
+        ) : (
+          <HugeiconsIcon icon={Loading03Icon} strokeWidth={1.75} />
+        )}
+        {row.original.status}
+      </Badge>
+    ),
+  }),
+  columnHelper.accessor("target", {
+    header: () => <div className="w-full text-right">Target</div>,
+    cell: ({ row }) => (
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          toast.promise(new Promise((resolve) => setTimeout(resolve, 1000)), {
+            loading: `Saving ${row.original.header}`,
+            success: "Done",
+            error: "Error",
+          });
+        }}
+      >
+        <Label htmlFor={`${row.original.id}-target`} className="sr-only">
+          Target
+        </Label>
+        <Input
+          className="h-(--control-sm) w-16 border-transparent bg-transparent text-right shadow-none hover:bg-input/30 focus-visible:border focus-visible:bg-background"
+          defaultValue={row.original.target}
+          id={`${row.original.id}-target`}
