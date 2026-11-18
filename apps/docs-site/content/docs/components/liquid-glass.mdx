@@ -5,6 +5,19 @@ description: "Apple's liquid glass material: the backdrop blurs and bends at the
 
 <ComponentPreview name="liquid-glass" styles />
 
+## Tune it
+
+Four controls shape the material. Their defaults are iOS 26's, as glisse measured them: drag the sliders, then copy the CSS onto any element (or a whole page) to tune every Liquid Glass inside it.
+
+<LiquidGlassTuner />
+
+| Control | What it does | iOS default |
+| --- | --- | --- |
+| Bend | How far the rim bends what's behind it. Only a band along the edge bends, 0.3 of the shorter side and at most 36px; the middle stays clear | `1` |
+| Dispersion | Colour split at the edge: red bends a little further than blue | `0.6` (12%) |
+| Frost | Blur behind the glass. Keep it thin: heavy blur turns glass into frosted plastic | `3px` |
+| Rim | The line of light on the edge, lit from the top left with a fainter reflection bottom right | `0.3` light, `0.13` dark |
+
 ## Installation
 
 <InstallTabs name="liquid-glass" />
@@ -14,8 +27,8 @@ description: "Apple's liquid glass material: the backdrop blurs and bends at the
 ```tsx
 import { LiquidGlass } from "@/components/ui/liquid-glass";
 
-<LiquidGlass className="px-8 py-5">
-  <span className="font-semibold text-white">Now playing</span>
+<LiquidGlass pressable className="px-8 py-5">
+  <span className="font-semibold">Now playing</span>
 </LiquidGlass>;
 ```
 
@@ -23,7 +36,7 @@ Use it for one floating surface over photos, video, maps or a scrolling feed: a 
 
 ## Browser support
 
-The bending runs in Chromium browsers (Chrome, Edge, Android). Safari and Firefox show the frosted glass and rim without it. `prefers-reduced-transparency` gives a solid surface and `prefers-reduced-motion` stops the stretch.
+The bending runs in Chromium browsers (Chrome, Edge, Android). Safari and Firefox show the frost and rim without it. `prefers-reduced-transparency` gives a solid surface and `prefers-reduced-motion` stops the press spring.
 
 ## Rules for agents
 

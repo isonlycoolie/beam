@@ -7,6 +7,7 @@ import { ComponentPreview } from "@/components/ui-docs/component-preview";
 import { DoDont } from "@/components/ui-docs/do-dont";
 import { InstallTabs } from "@/components/ui-docs/install-tabs";
 import { ScreenCode, ScreenData, ScreenInstall, ScreenPreview } from "@/components/screens/screen-docs";
+import { LiquidGlassTuner } from "@/components/ui-docs/liquid-glass-tuner";
 import { AgentRules, PropsTable } from "@/components/ui-docs/spec-sections";
 import { IconBrowser } from "@/components/ui-docs/icon-browser";
 import { PaletteGrid } from "@/components/ui-docs/palette-grid";
@@ -32,7 +33,7 @@ export default async function Page({ params }: Props) {
       <h1 className="beam-title">{page.data.title}</h1>
       {page.data.description && <p className="beam-lead mb-2">{page.data.description}</p>}
       <DocsBody>
-        <Body components={{ ...defaultMdxComponents, ComponentPreview, DoDont, InstallTabs, PropsTable, AgentRules, IconBrowser, PaletteGrid, ScreenCode, ScreenData, ScreenInstall, ScreenPreview, Tab, Tabs }} />
+        <Body components={{ ...defaultMdxComponents, ComponentPreview, DoDont, InstallTabs, PropsTable, AgentRules, IconBrowser, LiquidGlassTuner, PaletteGrid, ScreenCode, ScreenData, ScreenInstall, ScreenPreview, Tab, Tabs }} />
       </DocsBody>
     </DocsPage>
   );

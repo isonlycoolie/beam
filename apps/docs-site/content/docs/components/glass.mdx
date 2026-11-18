@@ -32,13 +32,14 @@ For the iOS material with refraction (the bent edges and moving highlight), use 
 
 ## Tune it
 
-Set these on the element with `data-surface="glass"`:
+Set these on `<html>`, a section or any element. The defaults are iOS 26's, as glisse measured them.
 
-| Variable | Default (light) | Raise it for |
+| Variable | Default | What it does |
 | --- | --- | --- |
-| `--glass-bg` | `rgb(255 255 255 / 0.74)` | More contrast on busy photos |
-| `--glass-bg-overlay` | `rgb(255 255 255 / 0.95)` | Menus and dialogs over text |
-| `--glass-blur` | `24px` | Busier backgrounds |
-| `--glass-saturate` | `180%` | Richer colour through the glass |
+| `--beam-glass-frost` | `3px` | Blur behind glass. Surfaces use 3×, menus and dialogs 8× |
+| `--beam-glass-rim` | `0.3` (`0.13` dark) | The line of light on every glass edge |
+| `--beam-glass-tint` | `rgb(255 255 255 / 0.6)` | Cards and bars |
+| `--beam-glass-surface` | `rgb(250 250 252 / 0.86)` | Menus, dialogs, popovers: denser, they float over text |
+| `--beam-glass-bend`, `--beam-glass-dispersion` | `1`, `0.6` | Refraction on [Liquid Glass](/docs/components/liquid-glass) and the [Tab Bar](/docs/components/tab-bar) |
 
-Dark mode has its own darker tint. People who turn on "Reduce transparency" get solid surfaces automatically.
+In glass mode, buttons become iOS 26 liquid buttons: the primary action is filled, the rest are clear glass, all pill-shaped, and they grow and spring back when pressed. Switching between Normal and Glass cross-fades the whole page. People who turn on "Reduce transparency" get solid surfaces automatically.
