@@ -1,0 +1,56 @@
+/* Based on shadcn/ui (MIT), converted to Beam components and tokens. */
+import { cn } from "@beam/ui/lib/cn";
+
+import { Button } from "@beam/ui/components/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@beam/ui/components/card";
+import { Field, FieldDescription, FieldGroup, FieldLabel } from "@beam/ui/components/field";
+import { Input } from "@beam/ui/components/input";
+
+export function SignupForm({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div className={cn("flex flex-col gap-6", className)} {...props}>
+      <Card>
+        <CardHeader className="text-center">
+          <CardTitle className="text-xl">Create your account</CardTitle>
+          <CardDescription>Enter your email below to create your account</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form>
+            <FieldGroup>
+              <Field>
+                <FieldLabel htmlFor="name">Full Name</FieldLabel>
+                <Input id="name" type="text" placeholder="John Doe" required />
+              </Field>
+              <Field>
+                <FieldLabel htmlFor="email">Email</FieldLabel>
+                <Input id="email" type="email" placeholder="amina@pwani.co" required />
+              </Field>
+              <Field>
+                <Field className="grid grid-cols-2 gap-4">
+                  <Field>
+                    <FieldLabel htmlFor="password">Password</FieldLabel>
+                    <Input id="password" type="password" required />
+                  </Field>
+                  <Field>
+                    <FieldLabel htmlFor="confirm-password">Confirm Password</FieldLabel>
+                    <Input id="confirm-password" type="password" required />
+                  </Field>
+                </Field>
+                <FieldDescription>Must be at least 8 characters long.</FieldDescription>
+              </Field>
+              <Field>
+                <Button type="submit">Create Account</Button>
+                <FieldDescription className="text-center">
+                  Already have an account? <a href="#">Sign in</a>
+                </FieldDescription>
+              </Field>
+            </FieldGroup>
+          </form>
+        </CardContent>
+      </Card>
+      <FieldDescription className="px-6 text-center">
+        By clicking continue, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+      </FieldDescription>
+    </div>
+  );
+}

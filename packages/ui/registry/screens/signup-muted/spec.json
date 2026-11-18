@@ -1,0 +1,11 @@
+{
+  "id": "signup-muted",
+  "group": "Sign up",
+  "title": "Sign up \u00b7 Muted background",
+  "summary": "A centred card on a muted page.",
+  "source": "shadcn/ui (MIT)",
+  "files": [
+    "components/signup-form.tsx",
+    "page.tsx"
+  ]
+}
