@@ -1,4 +1,4 @@
-// Checks text contrast on glass, where the background is a photo seen through blur and changes under every
+// Checks glass: text contrast on glass, and that Glass visibly differs from Normal. Contrast first: where the background is a photo seen through blur and changes under every
 // letter. For each component page in Glass mode (light and dark): find the text on glass, hide all text, capture
 // what is really behind it, and compare the text colour with the worst pixel under its box.
 // 4.5:1 for body text, 3:1 for large text (24px, or 18.66px bold). Needs the docs on :3100.
@@ -19,6 +19,12 @@ const lum = ([r, g, b]) => {
 };
 const ratio = (a, b) => (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
 
+/** Glass needs its photo: wait until it has arrived (a slow network otherwise measures glass over black). */
+const waitForPhoto = (page) =>
+  page
+    .waitForFunction(() => performance.getEntriesByType("resource").some((e) => e.name.includes("unsplash") && e.responseEnd > 0), null, { timeout: 60000 })
+    .catch(() => console.log("  photo did not load; results for this page are not meaningful"));
+
 const browser = await chromium.launch();
 const failures = [];
 let checked = 0;
@@ -31,6 +37,7 @@ for (const scheme of ["light", "dark"]) {
       localStorage.setItem("theme", s);
     }, scheme);
     await page.reload({ waitUntil: "domcontentloaded" });
+    await waitForPhoto(page);
     const stage = page.locator(".not-prose [data-theme=default]").first();
     await stage.scrollIntoViewIfNeeded();
     if (OVERLAYS.includes(name)) {
@@ -91,7 +98,55 @@ for (const scheme of ["light", "dark"]) {
     await page.close();
   }
 }
+// Glass must look like glass: the component in Glass differs clearly from Normal (mean CIELAB ΔE above 10).
+const lab = ([r, g, b]) => {
+  const f = (v) => ((v /= 255) > 0.04045 ? ((v + 0.055) / 1.055) ** 2.4 : v / 12.92);
+  const [R, G, B] = [f(r), f(g), f(b)];
+  const k = (t) => (t > 0.008856 ? Math.cbrt(t) : 7.787 * t + 16 / 116);
+  const [x, y, z] = [k((0.4124 * R + 0.3576 * G + 0.1805 * B) / 0.95047), k(0.2126 * R + 0.7152 * G + 0.0722 * B), k((0.0193 * R + 0.1192 * G + 0.9505 * B) / 1.08883)];
+  return [116 * y - 16, 500 * (x - y), 200 * (y - z)];
+};
+const DIFFER = [["card", "[data-slot=card]"], ["button", "[data-slot=button]"], ["input", "[data-slot=input]"], ["tabs", "[data-slot=tabs-list]"]];
+const same = [];
+for (const scheme of ["light", "dark"]) {
+  const context = await browser.newContext({ viewport: { width: 1280, height: 900 }, colorScheme: scheme });
+  const page = await context.newPage();
+  for (const [name, selector] of DIFFER) {
+    const shots = {};
+    for (const surface of ["normal", "glass"]) {
+      await page.goto(`${base}/docs/components/${name}`, { waitUntil: "domcontentloaded" });
+      await page.evaluate(([s, m]) => {
+        localStorage.setItem("beam-surface", s);
+        localStorage.setItem("theme", m);
+      }, [surface, scheme]);
+      await page.reload({ waitUntil: "domcontentloaded" });
+      if (surface === "glass") await waitForPhoto(page);
+      const stage = page.locator(".not-prose [data-theme=default]").first();
+      await stage.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(1200);
+      shots[surface] = PNG.sync.read(await stage.locator(selector).first().screenshot());
+    }
+    const [a, c] = [shots.normal, shots.glass];
+    let sum = 0;
+    let n = 0;
+    for (let y = 0; y < Math.min(a.height, c.height); y++)
+      for (let x = 0; x < Math.min(a.width, c.width); x++) {
+        const i = (y * a.width + x) * 4;
+        const j = (y * c.width + x) * 4;
+        const p = lab([a.data[i], a.data[i + 1], a.data[i + 2]]);
+        const q = lab([c.data[j], c.data[j + 1], c.data[j + 2]]);
+        sum += Math.hypot(p[0] - q[0], p[1] - q[1], p[2] - q[2]);
+        n++;
+      }
+    const delta = sum / n;
+    if (delta <= 10) same.push(`${scheme} ${name}: glass looks like normal (ΔE ${delta.toFixed(1)})`);
+  }
+  await context.close();
+}
+
 await browser.close();
 console.log(`glass contrast: ${checked} text boxes checked, ${failures.length} below the minimum`);
 for (const f of failures) console.log(`  ${f}`);
-process.exit(failures.length ? 1 : 0);
+console.log(`glass difference: ${DIFFER.length * 2} components compared, ${same.length} too close to normal`);
+for (const s of same) console.log(`  ${s}`);
+process.exit(failures.length || same.length ? 1 : 0);
