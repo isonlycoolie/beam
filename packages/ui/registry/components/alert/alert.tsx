@@ -1,4 +1,5 @@
 /* Based on shadcn/ui (MIT), converted to Beam's measured tokens (radius, shadows, focus, type). */
+import { GlassBackdrop } from "../liquid-glass/liquid-glass";
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../../lib/cn";
@@ -19,7 +20,12 @@ const alertVariants = cva(
 );
 
 function Alert({ className, variant, ...props }: React.ComponentProps<"div"> & VariantProps<typeof alertVariants>) {
-  return <div data-slot="alert" role="alert" className={cn(alertVariants({ variant }), className)} {...props} />;
+  return (
+    <div data-slot="alert" role="alert" className={cn(alertVariants({ variant }), className)} {...props}>
+      <GlassBackdrop />
+      {props.children}
+    </div>
+  );
 }
 
 function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {

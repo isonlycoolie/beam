@@ -1,4 +1,5 @@
 /* Based on shadcn/ui (MIT). Sizes, type and shadows are measured references (see CREDITS.md). */
+import { GlassBackdrop } from "../liquid-glass/liquid-glass";
 import { cva, type VariantProps } from "class-variance-authority";
 import type * as React from "react";
 import { cn } from "../../../lib/cn";
@@ -17,17 +18,19 @@ const cardVariants = cva("flex flex-col text-card-foreground", {
 });
 
 function Card({ className, variant, ...props }: React.ComponentProps<"div"> & VariantProps<typeof cardVariants>) {
-  return <div data-slot="card" data-variant={variant ?? "default"} className={cn(cardVariants({ variant }), className)} {...props} />;
+  return (
+    <div data-slot="card" data-variant={variant ?? "default"} className={cn(cardVariants({ variant }), className)} {...props}>
+      <GlassBackdrop />
+      {props.children}
+    </div>
+  );
 }
 
 function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="card-header"
-      className={cn(
-        "grid auto-rows-min items-start gap-1 px-6 pt-6 has-data-[slot=card-action]:grid-cols-[1fr_auto]",
-        className,
-      )}
+      className={cn("grid auto-rows-min items-start gap-1 px-6 pt-6 has-data-[slot=card-action]:grid-cols-[1fr_auto]", className)}
       {...props}
     />
   );
@@ -43,13 +46,7 @@ function CardDescription({ className, ...props }: React.ComponentProps<"p">) {
 }
 
 function CardAction({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card-action"
-      className={cn("col-start-2 row-span-2 row-start-1 self-start justify-self-end", className)}
-      {...props}
-    />
-  );
+  return <div data-slot="card-action" className={cn("col-start-2 row-span-2 row-start-1 self-start justify-self-end", className)} {...props} />;
 }
 
 function CardContent({ className, ...props }: React.ComponentProps<"div">) {
@@ -57,13 +54,7 @@ function CardContent({ className, ...props }: React.ComponentProps<"div">) {
 }
 
 function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card-footer"
-      className={cn("flex items-center gap-2 border-t border-border px-6 py-4", className)}
-      {...props}
-    />
-  );
+  return <div data-slot="card-footer" className={cn("flex items-center gap-2 border-t border-border px-6 py-4", className)} {...props} />;
 }
 
 export { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle };

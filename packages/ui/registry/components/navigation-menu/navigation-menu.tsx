@@ -1,4 +1,5 @@
 /* Based on shadcn/ui (MIT), converted to Beam's measured tokens (radius, shadows, focus, type). */
+import { GlassBackdrop } from "../liquid-glass/liquid-glass";
 import * as React from "react";
 import { cva } from "class-variance-authority";
 import { cn } from "../../../lib/cn";
@@ -83,7 +84,10 @@ function NavigationMenuViewport({ className, ...props }: React.ComponentProps<ty
           className,
         )}
         {...props}
-      />
+      >
+        <GlassBackdrop />
+        {props.children}
+      </NavigationMenuPrimitive.Viewport>
     </div>
   );
 }

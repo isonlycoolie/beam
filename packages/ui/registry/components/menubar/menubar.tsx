@@ -1,5 +1,6 @@
 /* Based on shadcn/ui (MIT), converted to Beam's measured tokens (radius, shadows, focus, type). */
 "use client";
+import { GlassBackdrop } from "../liquid-glass/liquid-glass";
 
 import * as React from "react";
 import { cn } from "../../../lib/cn";
@@ -13,7 +14,10 @@ function Menubar({ className, ...props }: React.ComponentProps<typeof MenubarPri
       data-slot="menubar"
       className={cn("flex h-(--control-md) items-center gap-1 rounded-(--radius-md) border bg-background p-1 shadow-(--shadow-control)", className)}
       {...props}
-    />
+    >
+      <GlassBackdrop />
+      {props.children}
+    </MenubarPrimitive.Root>
   );
 }
 
@@ -59,7 +63,10 @@ function MenubarContent({ className, align = "start", alignOffset = -4, sideOffs
           className,
         )}
         {...props}
-      />
+      >
+        <GlassBackdrop />
+        {props.children}
+      </MenubarPrimitive.Content>
     </MenubarPortal>
   );
 }
@@ -190,7 +197,10 @@ function MenubarSubContent({ className, ...props }: React.ComponentProps<typeof 
         className,
       )}
       {...props}
-    />
+    >
+      <GlassBackdrop />
+      {props.children}
+    </MenubarPrimitive.SubContent>
   );
 }
 

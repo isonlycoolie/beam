@@ -1,5 +1,6 @@
 /* Based on shadcn/ui (MIT). Sizes, type and shadows are measured references (see CREDITS.md). */
 "use client";
+import { GlassBackdrop } from "../liquid-glass/liquid-glass";
 
 import type { VariantProps } from "class-variance-authority";
 import { ToggleGroup as ToggleGroupPrimitive } from "radix-ui";
@@ -26,6 +27,7 @@ function ToggleGroup({
       className={cn("flex w-fit items-center", variant === "outline" ? "gap-0 rounded-(--radius-md) shadow-[0_0_0_1px_var(--input)]" : "gap-2", className)}
       {...props}
     >
+      <GlassBackdrop />
       <ToggleGroupContext.Provider value={{ variant, size }}>{children}</ToggleGroupContext.Provider>
     </ToggleGroupPrimitive.Root>
   );

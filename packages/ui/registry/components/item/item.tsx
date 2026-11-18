@@ -1,11 +1,21 @@
 /* Based on shadcn/ui (MIT). Sizes, type and shadows are measured references (see CREDITS.md). */
+import { GlassBackdrop } from "../liquid-glass/liquid-glass";
 import type * as React from "react";
 import { cn } from "../../../lib/cn";
 
 // The card menu item, flat: a 48px round icon tile, a 16/600/24px title, a 14/20px description 4px
 // below, 16px gap; the outline variant keeps its 1px --input border and 10px radius.
 function Item({ className, variant = "default", ...props }: React.ComponentProps<"div"> & { variant?: "default" | "outline" }) {
-  return <div data-slot="item" className={cn("flex items-center gap-4 p-4", variant === "outline" && "rounded-(--radius-lg) border border-input", className)} {...props} />;
+  return (
+    <div
+      data-slot="item"
+      className={cn("flex items-center gap-4 p-4", variant === "outline" && "rounded-(--radius-lg) border border-input", className)}
+      {...props}
+    >
+      <GlassBackdrop />
+      {props.children}
+    </div>
+  );
 }
 
 function ItemMedia({ className, ...props }: React.ComponentProps<"span">) {

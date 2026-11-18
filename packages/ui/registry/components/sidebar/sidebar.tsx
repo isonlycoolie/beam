@@ -1,5 +1,6 @@
 /* Based on shadcn/ui (MIT), converted to Beam's Stripe-measured tokens (radius, shadows, focus, type). */
 "use client";
+import { GlassBackdrop } from "../liquid-glass/liquid-glass";
 
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
@@ -153,6 +154,7 @@ function Sidebar({
   if (collapsible === "none") {
     return (
       <div data-slot="sidebar" className={cn("flex h-full w-(--sidebar-width) flex-col bg-sidebar text-sidebar-foreground", className)} {...props}>
+        <GlassBackdrop />
         {children}
       </div>
     );
@@ -224,6 +226,7 @@ function Sidebar({
           data-slot="sidebar-inner"
           className="flex h-full w-full flex-col bg-sidebar group-data-[variant=floating]:rounded-(--radius-card) group-data-[variant=floating]:border group-data-[variant=floating]:border-sidebar-border group-data-[variant=floating]:shadow-(--shadow-control)"
         >
+          <GlassBackdrop />
           {children}
         </div>
       </div>
