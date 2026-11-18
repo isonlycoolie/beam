@@ -1,0 +1,11 @@
+{
+  "id": "login-simple",
+  "group": "Login",
+  "title": "Login \u00b7 Simple",
+  "summary": "Email and password in one card.",
+  "source": "shadcn/ui (MIT)",
+  "files": [
+    "components/login-form.tsx",
+    "page.tsx"
+  ]
+}
