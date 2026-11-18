@@ -93,3 +93,98 @@
   --glass-shadow: 0 8px 32px rgb(0 0 0 / 0.2);
   --glass-rim: 0.6;
 }
+/* Legibility on glass: white text with Apple's soft shadow, set where the components render. */
+[data-surface="glass"] [data-preview],
+[data-surface="glass"] [data-slot$="-content"],
+[data-surface="glass"] [data-slot="command"] {
+  color: var(--text-1);
+  text-shadow: 0 1px 2px rgb(0 0 0 / 0.22);
+}
+
+/* ---------- 2. The material ---------- */
+/* Every surface a component paints: frost, saturation, light gradient, inner highlight. */
+:where([data-surface="glass"], [data-surface="glass"] *):is(
+    [data-slot="card"],
+    [data-slot="alert"],
+    [data-slot="callout"],
+    [data-slot="accordion-item"],
+    [data-slot="table"],
+    [data-slot="sidebar-inner"],
+    [data-slot="sidebar-inset"],
+    [data-slot="menubar"],
+    [data-slot="navigation-menu-list"],
+    [data-slot="stat-card"],
+    [data-slot="empty"],
+    [data-slot="item"],
+    [data-slot="bubble"],
+    [data-slot="attachment"],
+    [data-slot="calendar"],
+    [data-slot="chart"],
+    [data-slot="kbd"],
+    [data-slot="avatar"],
+    [data-slot="input"],
+    [data-slot="textarea"],
+    [data-slot="input-group"],
+    [data-slot="input-otp-slot"],
+    [data-slot="native-select"],
+    [data-slot="select-trigger"],
+    [data-slot="combobox-trigger"],
+    [data-slot="tabs-list"][data-variant="segmented"],
+    [data-slot="toggle"],
+    [data-slot="toggle-group"],
+    [data-slot="badge"],
+    [data-slot="button"],
+    [data-slot="checkbox"],
+    [data-slot="radio-group-item"],
+    [data-slot="switch"],
+    [data-slot="progress"],
+    [data-slot="skeleton"]
+  ) {
+  background-image: var(--glass-sheen);
+  border-color: var(--border);
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+  -webkit-backdrop-filter: blur(calc(var(--beam-glass-frost) * 4)) saturate(var(--beam-glass-saturate)) brightness(1.05);
+  backdrop-filter: blur(calc(var(--beam-glass-frost) * 4)) saturate(var(--beam-glass-saturate)) brightness(1.05);
+}
+/* Floating layers: the same clear glass, a little denser and frostier, so it reads over the page. */
+:where([data-surface="glass"], [data-surface="glass"] *):is(
+    [data-slot$="-content"]:not([data-slot="tabs-content"]):not([data-slot="accordion-content"]):not([data-slot="collapsible-content"]):not([data-slot="card-content"]),
+    [data-slot$="-sub-content"],
+    [data-slot="command"],
+    [data-slot="navigation-menu-viewport"],
+    [data-sonner-toast]
+  ) {
+  background-color: var(--popover);
+  background-image: var(--glass-sheen);
+  border-color: var(--border);
+  box-shadow: var(--glass-highlight), 0 16px 48px rgb(0 0 0 / 0.3);
+  -webkit-backdrop-filter: blur(calc(var(--beam-glass-frost) * 8)) saturate(var(--beam-glass-saturate)) brightness(1.05);
+  backdrop-filter: blur(calc(var(--beam-glass-frost) * 8)) saturate(var(--beam-glass-saturate)) brightness(1.05);
+}
+/* Refraction: where the browser bends the backdrop through an SVG filter (Chromium), glass bends at its edges. The
+   filter is <GlassFilter />, mounted once (components/liquid-glass). Elsewhere glass keeps its frost. */
+@supports (backdrop-filter: url(#beam-glass)) {
+  :where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="card"], [data-slot="button"], [data-slot="input"], [data-slot="textarea"], [data-slot="select-trigger"], [data-slot="tabs-list"][data-variant="segmented"], [data-slot="badge"], [data-slot="alert"], [data-slot="item"]) {
+    backdrop-filter: url(#beam-glass) blur(calc(var(--beam-glass-frost) * 4)) saturate(var(--beam-glass-saturate)) brightness(1.05);
+  }
+  :where([data-surface="glass"], [data-surface="glass"] *):is([data-slot$="-content"]:not([data-slot="tabs-content"]):not([data-slot="accordion-content"]):not([data-slot="collapsible-content"]):not([data-slot="card-content"]), [data-slot="command"]) {
+    backdrop-filter: url(#beam-glass) blur(calc(var(--beam-glass-frost) * 8)) saturate(var(--beam-glass-saturate)) brightness(1.05);
+  }
+}
+/* No glass on glass: a command list inside a dialog, an input inside an input group. */
+:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="dialog-content"]) [data-slot="command"],
+:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="input-group"]) [data-slot="input-group-input"] {
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+/* Focus stays visible on glass. */
+:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot]:not([data-slot$="-item"])):focus-visible {
+  box-shadow: var(--glass-highlight), 0 0 0 2px rgb(255 255 255 / 0.85);
+}
+
+/* The rim: a line of light, from the top left and, fainter, its reflection bottom right, over a 0.5px edge. */
+.beam-liquid::after,
+:where([data-surface="glass"], [data-surface="glass"] *):is(
+    [data-slot="card"],
