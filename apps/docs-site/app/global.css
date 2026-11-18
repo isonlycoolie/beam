@@ -241,3 +241,40 @@ body[data-theme] {
   line-height: 1.5;
   color: var(--color-fd-foreground);
 }
+
+/* The veil over the glass preview photo: a little stronger in dark mode, so glass components stand off it. */
+.dark {
+  --glass-stage-veil: rgb(0 0 0 / 0.3);
+}
+
+/* Moving between pages: the content fades and rises into place while the header and sidebar stay still
+   (app/docs/template.tsx re-mounts it on every navigation). */
+@keyframes beam-page-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+#nd-page {
+  animation: beam-page-in 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  #nd-page {
+    animation: none;
+  }
+}
+
+/* Previews scroll by wheel, touch or keys, without a scrollbar drawn inside the widget. The full-page screen
+   previews (iframes) hide the page's own scrollbar too. */
+[data-preview],
+[data-preview] *,
+html:has(> body [data-preview].min-h-svh),
+html:has(> body [data-preview].min-h-svh) body {
+  scrollbar-width: none;
+}
+[data-preview]::-webkit-scrollbar,
+[data-preview] *::-webkit-scrollbar,
+html:has(> body [data-preview].min-h-svh)::-webkit-scrollbar,
+html:has(> body [data-preview].min-h-svh) body::-webkit-scrollbar {
+  display: none;
+}
