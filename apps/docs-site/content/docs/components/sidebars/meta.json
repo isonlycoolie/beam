@@ -1,0 +1,21 @@
+{
+  "title": "Sidebar layouts",
+  "pages": [
+    "sidebar-calendar",
+    "sidebar-collapsible-sections",
+    "sidebar-collapsible-submenus",
+    "sidebar-dropdown-submenus",
+    "sidebar-file-tree",
+    "sidebar-floating",
+    "sidebar-grouped",
+    "sidebar-icon-collapse",
+    "sidebar-in-dialog",
+    "sidebar-in-popover",
+    "sidebar-inset",
+    "sidebar-left-and-right",
+    "sidebar-nested-panels",
+    "sidebar-right",
+    "sidebar-sticky-header",
+    "sidebar-submenus"
+  ]
+}

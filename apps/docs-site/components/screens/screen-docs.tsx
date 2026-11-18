@@ -1,9 +1,7 @@
 import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
-import Link from "next/link";
-import { allScreens, readScreen, screenSource } from "@/lib/screens";
+import { readScreen, screenSource } from "@/lib/screens";
 import { ScreenFrame } from "./screen-frame";
-import { ScreenThumb } from "./screen-thumb";
 
 const tall = (id: string) => (id.startsWith("dashboard") || id.startsWith("sidebar") ? 820 : 720);
 
@@ -11,14 +9,16 @@ export function ScreenPreview({ id }: { id: string }) {
   return <ScreenFrame id={id} height={tall(id)} />;
 }
 
-export function ScreenInstall({ id }: { id: string }) {
+/** `component` installs a sidebar layout by its component name, like every other component. */
+export function ScreenInstall({ id, component = false }: { id: string; component?: boolean }) {
+  const path = component ? id : `screens/${id}`;
   return (
     <Tabs items={["Command", "shadcn CLI"]}>
       <Tab value="Command">
-        <DynamicCodeBlock lang="bash" code={`npx usebeam add screens/${id}`} />
+        <DynamicCodeBlock lang="bash" code={`npx usebeam add ${component ? `ui/${id}` : path}`} />
       </Tab>
       <Tab value="shadcn CLI">
-        <DynamicCodeBlock lang="bash" code={`npx shadcn@latest add https://beam.dev/r/screens/${id}.json`} />
+        <DynamicCodeBlock lang="bash" code={`npx shadcn@latest add https://beam.dev/r/${path}.json`} />
       </Tab>
     </Tabs>
   );
@@ -37,9 +37,11 @@ export function ScreenData({ id }: { id: string }) {
           own records, or load them in the page and pass them down; the components only read the same fields.
         </p>
       ) : (
-        <p>This screen has no sample data: wire the form to your own action or route.</p>
+        <p>This layout has no sample data: wire it to your own action or route.</p>
       )}
-      <p className="text-fd-muted-foreground">It installs into <code>app/{id}/page.tsx</code>, with its parts in <code>components/</code>. Based on {spec.source}.</p>
+      <p className="text-fd-muted-foreground">
+        It installs a working page at <code>app/{id}/page.tsx</code>, with its parts in <code>components/</code>. Based on {spec.source}.
+      </p>
     </div>
   );
 }
@@ -55,35 +57,5 @@ export function ScreenCode({ id }: { id: string }) {
         </Tab>
       ))}
     </Tabs>
-  );
-}
-
-const GROUP_TITLES: Record<string, string> = { Dashboard: "Dashboards", Sidebar: "Sidebars", Login: "Login", "Sign up": "Sign up" };
-
-/** Every screen, grouped, each card showing the live page scaled down. */
-export function ScreenGrid() {
-  const screens = allScreens();
-  const groups = Object.keys(GROUP_TITLES).map((g) => ({ g, items: screens.filter((s) => s.group === g) }));
-  return (
-    <div className="not-prose flex flex-col gap-12">
-      {groups.map(({ g, items }) => (
-        <section key={g}>
-          <h2 className="mb-4 text-[18px] font-semibold text-fd-foreground">
-            {GROUP_TITLES[g]} <span className="ms-1 text-[14px] font-normal text-fd-muted-foreground">{items.length}</span>
-          </h2>
-          <div className="grid gap-6 sm:grid-cols-2">
-            {items.map((s) => (
-              <Link key={s.id} href={`/docs/screens/${s.id}`} className="group block">
-                <div className="overflow-hidden rounded-xl border border-fd-border transition-colors group-hover:border-fd-foreground/30">
-                  <ScreenThumb id={s.id} />
-                </div>
-                <div className="mt-3 text-[14px] font-medium text-fd-foreground">{s.title.split(" · ").slice(1).join(" · ")}</div>
-                <div className="text-[13px] text-fd-muted-foreground">{s.summary}</div>
-              </Link>
-            ))}
-          </div>
-        </section>
-      ))}
-    </div>
   );
 }

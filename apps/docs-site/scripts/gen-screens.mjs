@@ -1,12 +1,11 @@
-// Writes components/screens/screens.gen.tsx (each screen's page, loaded on demand) and one docs page per screen in
-// content/docs/screens, from packages/ui/registry/screens/*/spec.json. Run by predev and prebuild.
-import { readdirSync, readFileSync, writeFileSync } from "node:fs";
+// Writes components/screens/screens.gen.tsx (each screen's page, loaded on demand, for the preview route) and one
+// Components page per sidebar layout, from packages/ui/registry/screens/*/spec.json. Run by predev and prebuild.
+import { mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("../../../packages/ui/registry/screens", import.meta.url));
 const here = (p) => fileURLToPath(new URL(`../${p}`, import.meta.url));
-const GROUPS = ["Dashboard", "Sidebar", "Login", "Sign up"];
 const specs = readdirSync(root)
   .sort()
   .map((id) => JSON.parse(readFileSync(join(root, id, "spec.json"), "utf8")));
@@ -28,18 +27,39 @@ writeFileSync(
 );
 
 const short = (s) => s.title.split(" · ").slice(1).join(" · ");
-for (const s of specs) {
+
+// Screens are agent knowledge, not a docs section: only the sidebar layouts get pages, as components.
+// The preview route (/preview/screens/<id>) serves every screen for agents and for those pages.
+const dir = here("content/docs/components/sidebars");
+rmSync(here("content/docs/screens"), { recursive: true, force: true });
+rmSync(dir, { recursive: true, force: true });
+mkdirSync(dir, { recursive: true });
+const sidebars = specs.filter((s) => s.group === "Sidebar");
+for (const s of sidebars) {
   writeFileSync(
-    here(`content/docs/screens/${s.id}.mdx`),
-    `---\ntitle: "${s.title}"\ndescription: "${s.summary}"\nfull: true\n---\n\n<ScreenPreview id="${s.id}" />\n\n## Installation\n\n<ScreenInstall id="${s.id}" />\n\n## Your data\n\n<ScreenData id="${s.id}" />\n\n## Code\n\n<ScreenCode id="${s.id}" />\n`,
+    join(dir, `${s.id}.mdx`),
+    `---
+title: "${short(s)}"
+description: "${s.summary}"
+full: true
+---
+
+<ScreenPreview id="${s.id}" />
+
+## Installation
+
+<ScreenInstall id="${s.id}" component />
+
+## Usage
+
+<ScreenData id="${s.id}" />
+
+## Code
+
+<ScreenCode id="${s.id}" />
+`,
   );
 }
-const pages = ["index"];
-for (const g of GROUPS) {
-  const inGroup = specs.filter((s) => s.group === g);
-  if (!inGroup.length) continue;
-  pages.push(`---${g === "Dashboard" ? "Dashboards" : g === "Sidebar" ? "Sidebars" : g}---`);
-  for (const s of inGroup) pages.push(`[${short(s)}](/docs/screens/${s.id})`);
-}
-writeFileSync(here("content/docs/screens/meta.json"), `${JSON.stringify({ title: "Screens", root: true, pages }, null, 2)}\n`);
-console.log(`screens: ${specs.length}`);
+writeFileSync(join(dir, "meta.json"), `${JSON.stringify({ title: "Sidebar layouts", pages: sidebars.map((s) => s.id) }, null, 2)}
+`);
+console.log(`screens: ${specs.length}, sidebar pages: ${sidebars.length}`);
