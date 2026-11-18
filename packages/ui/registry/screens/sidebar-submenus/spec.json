@@ -1,0 +1,11 @@
+{
+  "id": "sidebar-submenus",
+  "group": "Sidebar",
+  "title": "Sidebar \u00b7 Submenus",
+  "summary": "Parents with their child pages always shown.",
+  "source": "shadcn/ui (MIT)",
+  "files": [
+    "components/app-sidebar.tsx",
+    "page.tsx"
+  ]
+}
