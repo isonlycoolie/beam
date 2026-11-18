@@ -18,6 +18,7 @@ import { registerFigmaImportTools } from "./figma-import.js";
 import { registerFreeLocalTools } from "./free-local.js";
 import { registerCompareTools } from "./compare.js";
 import { jsonContent, toolError } from "./responses.js";
+import { registerScreenTools } from "./screens.js";
 import { registerVariableTools } from "./variables.js";
 import { registerVerifyTools } from "./verify.js";
 export { freeMcpCapabilities } from "./capabilities.js";
@@ -32,6 +33,9 @@ export type BeamToolContext = {
   captureForClone?: typeof captureForClone;
   importFigmaBundle?: typeof importFigmaBundle;
   reviewPage?: typeof reviewPage;
+  /** Where screens_list and screens_get read the registry; defaults to BEAM_REGISTRY_URL, then beam.dev. */
+  registryUrl?: string;
+  fetchJson?: (url: string) => Promise<unknown>;
 };
 
 export function registerBeamTools(
@@ -71,4 +75,5 @@ export function registerBeamTools(
   registerCloneTools(server, context);
   registerFigmaImportTools(server, context);
   registerCraftTools(server, context);
+  registerScreenTools(server, context);
 }
