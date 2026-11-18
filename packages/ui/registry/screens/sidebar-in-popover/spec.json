@@ -1,0 +1,17 @@
+{
+  "id": "sidebar-in-popover",
+  "group": "Sidebar",
+  "title": "Sidebar \u00b7 Favorites and workspaces",
+  "summary": "Favorites, workspaces and a page actions popover.",
+  "source": "shadcn/ui (MIT)",
+  "files": [
+    "components/app-sidebar.tsx",
+    "components/nav-actions.tsx",
+    "components/nav-favorites.tsx",
+    "components/nav-main.tsx",
+    "components/nav-secondary.tsx",
+    "components/nav-workspaces.tsx",
+    "components/team-switcher.tsx",
+    "page.tsx"
+  ]
+}
