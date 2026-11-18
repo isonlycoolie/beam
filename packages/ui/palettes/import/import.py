@@ -93,3 +93,98 @@ def rp(theme):
         'muted': v['overlay'], 'secondary': v['overlay'], 'accent': v['highlight-low'], 'border': v['highlight-med'], 'input': v['highlight-high'],
         'text-1': v['text'], 'text-2': v['subtle'], 'text-3': v['muted'],
         'primary': v['pine'], 'on-primary': ['#ffffff', v['base']], 'ring': v['iris'], 'link': v['foam'],
+        'success': v['pine'], 'success-soft': v['overlay'], 'warning': v['gold'], 'warning-soft': v['overlay'], 'danger': v['love'], 'danger-soft': v['overlay'],
+        'chart-1': v['pine'], 'chart-2': v['iris'], 'chart-3': v['foam'], 'chart-4': v['rose'], 'chart-5': v['muted'],
+    }, v
+rl, rpl = rp('theme-rp-dawn'); rd, rpd = rp('theme-rp')
+palettes.append(dict(id='rose-pine', name='Rosé Pine', description='Rosé Pine Dawn for light and the main theme for dark, with Pine.', source='Rosé Pine',
+    licence='MIT', url='https://github.com/rose-pine/palette', version='@rose-pine/palette 4.0.1', light=rl, dark=rd,
+    display=[rpd['base'], rpd['love'], rpd['gold'], rpd['pine'], rpd['iris']]))
+
+fx = {k.replace('flexoki-', ''): v for k, v in css_vars('flexoki.css').items()}
+def flexoki(dark):
+    s = (lambda k: fx[k]) 
+    bg, bg2, ui, ui2, ui3, tx3, tx2, tx = (('black', '950', '900', '850', '800', '700', '500', '200') if dark else ('paper', '50', '100', '150', '200', '300', '600', 'black'))
+    tone = '400' if dark else '600'
+    soft = '950' if dark else '50'
+    return {
+        'background': fx[bg], 'surface-1': fx[bg], 'surface-2': fx[bg2], 'surface-3': fx[bg2], 'card': fx[bg2], 'popover': fx[bg2],
+        'muted': fx[bg2], 'secondary': fx[ui], 'accent': fx[ui], 'border': fx[ui], 'input': fx[ui2],
+        'text-1': fx[tx], 'text-2': fx[tx2], 'text-3': fx[tx2],
+        # Flexoki: cy is "links, active states".
+        'primary': fx[f'blue-{tone}'], 'on-primary': [fx['paper'], fx['black']], 'ring': fx[f'cyan-{tone}'], 'link': fx[f'cyan-{tone}'],
+        'success': fx[f'green-{tone}'], 'success-soft': fx[f'green-{soft}'], 'warning': fx[f'orange-{tone}'], 'warning-soft': fx[f'orange-{soft}'],
+        'danger': fx[f'red-{tone}'], 'danger-soft': fx[f'red-{soft}'],
+        'chart-1': fx[f'blue-{tone}'], 'chart-2': fx[f'cyan-{tone}'], 'chart-3': fx[f'purple-{tone}'], 'chart-4': fx[f'orange-{tone}'], 'chart-5': fx[tx3],
+    }
+palettes.append(dict(id='flexoki', name='Flexoki', description='Flexoki: an inky palette for prose and code, on paper or black, with Blue.', source='Flexoki by Steph Ango',
+    licence='MIT', url='https://github.com/kepano/flexoki', version='kepano/flexoki @ 8d723ba', light=flexoki(False), dark=flexoki(True),
+    display=[fx['black'], fx['red-600'], fx['yellow-400'], fx['blue-600'], fx['paper']]))
+
+
+# ---------- Harmony palettes: 25 Radix hues x 4 colour-harmony schemes ----------
+# Every colour is an official Radix step. The primary is a hue's step 9; its greys are the neutral Radix pairs it
+# with (radix-ui.com/colors/docs/palette-composition/composing-a-palette); its partners come from a harmony rule on
+# the OKLCH hue wheel, snapped to the nearest Radix hue; success, warning, danger and info are never the primary's own.
+import math
+HUES = ['tomato', 'red', 'ruby', 'crimson', 'pink', 'plum', 'purple', 'violet', 'iris', 'indigo', 'blue', 'sky', 'cyan',
+        'teal', 'jade', 'mint', 'green', 'grass', 'lime', 'yellow', 'amber', 'orange', 'brown', 'bronze', 'gold']
+NEUTRAL = {**{h: 'mauve' for h in ['tomato', 'red', 'ruby', 'crimson', 'pink', 'plum', 'purple', 'violet']},
+           **{h: 'slate' for h in ['iris', 'indigo', 'blue', 'sky', 'cyan']},
+           **{h: 'sage' for h in ['mint', 'teal', 'jade', 'green']},
+           **{h: 'olive' for h in ['grass', 'lime']},
+           **{h: 'sand' for h in ['yellow', 'amber', 'orange', 'brown', 'bronze', 'gold']}}
+FAMILY = {**{h: 'Reds' for h in ['tomato', 'red', 'ruby', 'crimson']}, **{h: 'Pinks and purples' for h in ['pink', 'plum', 'purple', 'violet']},
+          **{h: 'Blues' for h in ['iris', 'indigo', 'blue', 'sky', 'cyan']}, **{h: 'Greens' for h in ['teal', 'jade', 'mint', 'green', 'grass', 'lime']},
+          **{h: 'Yellows and oranges' for h in ['yellow', 'amber', 'orange']}, **{h: 'Earth' for h in ['brown', 'bronze', 'gold']}}
+# Partners need a clear hue; the muted earth hues are primaries only.
+PARTNERS = [h for h in HUES if h not in ('brown', 'bronze', 'gold')]
+SEMANTIC = {'success': ['green', 'grass', 'jade', 'teal'], 'warning': ['amber', 'orange', 'yellow'],
+            'danger': ['red', 'tomato', 'ruby', 'crimson'], 'info': ['blue', 'sky', 'indigo', 'cyan']}
+SCHEMES = {'complementary': [180], 'analogous': [30, -30], 'triadic': [120, 240], 'split': [150, 210]}
+SCHEME_NAME = {'complementary': 'complementary', 'analogous': 'analogous', 'triadic': 'triadic', 'split': 'split-complementary'}
+
+def oklab(hexv):
+    r, g, b = (int(hexv[i:i + 2], 16) / 255 for i in (1, 3, 5))
+    lin = lambda c: c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
+    r, g, b = lin(r), lin(g), lin(b)
+    l = (0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b) ** (1 / 3)
+    m = (0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b) ** (1 / 3)
+    s = (0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b) ** (1 / 3)
+    return (0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s, 1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s,
+            0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s)
+
+def delta_e(h1, h2):
+    """Colour difference in OKLab, x100: under ~10 the two read as the same colour."""
+    return 100 * math.dist(oklab(h1), oklab(h2))
+
+def oklch_hue(hexv):
+    r, g, b = (int(hexv[i:i + 2], 16) / 255 for i in (1, 3, 5))
+    lin = lambda c: c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
+    r, g, b = lin(r), lin(g), lin(b)
+    l = 0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b
+    m = 0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b
+    s = 0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b
+    l, m, s = (x ** (1 / 3) for x in (l, m, s))
+    A = 1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s
+    B = 0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s
+    return math.degrees(math.atan2(B, A)) % 360
+
+HUE = {h: oklch_hue(radix(h, False)[9]) for h in HUES}
+gap = lambda a, b: abs((a - b + 180) % 360 - 180)
+
+def distinct(h, taken):
+    """Far enough round the wheel, and different enough to the eye in light and dark."""
+    return all(gap(HUE[h], HUE[t]) >= 18 and min(delta_e(radix(h, d)[9], radix(t, d)[9]) for d in (False, True)) >= 12 for t in taken)
+
+def partner(target, taken):
+    best = sorted((gap(HUE[h], target), h) for h in PARTNERS if h not in taken)
+    for d, h in best:
+        if distinct(h, taken):
+            return h
+    return best[0][1]
+
+title = lambda h: h.capitalize()
+WHY = {
+    'complementary': '{P} and {S} sit opposite each other on the colour wheel: the strongest contrast, one colour for actions and one for highlights.',
+    'analogous': '{A}, {P} and {S} sit side by side on the colour wheel: one calm family, with {P} leading.',
