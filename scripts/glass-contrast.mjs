@@ -93,3 +93,5 @@ for (const scheme of ["light", "dark"]) {
 }
 await browser.close();
 console.log(`glass contrast: ${checked} text boxes checked, ${failures.length} below the minimum`);
+for (const f of failures) console.log(`  ${f}`);
+process.exit(failures.length ? 1 : 0);
