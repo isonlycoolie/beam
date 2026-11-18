@@ -17,8 +17,11 @@ const badgeVariants = cva(
         success: "border border-transparent bg-success-soft text-success",
         warning: "border border-transparent bg-warning-soft text-warning",
         danger: "border border-transparent bg-danger-soft text-danger",
+        // The shared name for danger, as on Button.
+        destructive: "border border-transparent bg-danger-soft text-danger",
       },
       size: {
+        sm: "px-1.5 py-px text-[11px] leading-[14px]",
         md: "px-2 py-0.5 text-[12px] leading-[16px]",
         lg: "gap-1 px-3 py-2 text-[14px] leading-[18.2px] [&_svg]:size-4",
       },
@@ -35,7 +38,7 @@ function Badge({
   ...props
 }: React.ComponentProps<"span"> & VariantProps<typeof badgeVariants> & { asChild?: boolean }) {
   const Comp = asChild ? Slot.Root : "span";
-  return <Comp data-slot="badge" data-variant={variant ?? "default"} className={cn(badgeVariants({ variant, size }), className)} {...props} />;
+  return <Comp data-slot="badge" data-variant={variant ?? "default"} data-size={size ?? "md"} className={cn(badgeVariants({ variant, size }), className)} {...props} />;
 }
 
 export { Badge, badgeVariants };

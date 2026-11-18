@@ -16,6 +16,7 @@ const inputVariants = cva(
   {
     variants: {
       size: {
+        sm: "h-(--control-sm) px-2.5 text-[13px] leading-[18px]",
         md: "h-(--control-md) px-3 text-[14px] leading-[20px]",
         lg: "h-(--control-lg) px-3 py-2 text-[16px] leading-[24px]",
       },
@@ -25,7 +26,7 @@ const inputVariants = cva(
 );
 
 function Input({ className, type, size, ...props }: Omit<React.ComponentProps<"input">, "size"> & VariantProps<typeof inputVariants>) {
-  return <input type={type} data-slot="input" className={cn(inputVariants({ size }), className)} {...props} />;
+  return <input type={type} data-slot="input" data-size={size ?? "md"} className={cn(inputVariants({ size }), className)} {...props} />;
 }
 
 export { Input, inputVariants };

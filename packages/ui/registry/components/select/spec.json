@@ -36,5 +36,10 @@
   "rules": [
     "form.labels-visible",
     "state.complete"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
   ]
 }

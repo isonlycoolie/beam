@@ -13,6 +13,9 @@ const attachmentVariants = cva(
       size: {
         default:
           "gap-2 text-[14px] leading-[20px] has-data-[slot=attachment-content]:px-2.5 has-data-[slot=attachment-content]:py-2 has-data-[slot=attachment-media]:p-2",
+        // The shared scale: md is default, lg a step up.
+        md: "gap-2 text-[14px] leading-[20px] has-data-[slot=attachment-content]:px-2.5 has-data-[slot=attachment-content]:py-2 has-data-[slot=attachment-media]:p-2",
+        lg: "gap-2.5 text-[16px] leading-[24px] has-data-[slot=attachment-content]:px-3 has-data-[slot=attachment-content]:py-2.5 has-data-[slot=attachment-media]:p-2.5",
         sm: "gap-2.5 text-[12px] leading-[16px] has-data-[slot=attachment-content]:px-2 has-data-[slot=attachment-content]:py-1.5 has-data-[slot=attachment-media]:p-1.5",
         xs: "gap-1.5 rounded-(--radius-card) text-[12px] leading-[16px] has-data-[slot=attachment-content]:px-1.5 has-data-[slot=attachment-content]:py-1 has-data-[slot=attachment-media]:p-1",
       },

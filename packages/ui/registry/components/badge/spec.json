@@ -20,7 +20,8 @@
     "outline",
     "success",
     "warning",
-    "danger"
+    "danger",
+    "destructive"
   ],
   "styles": [
     "default",
@@ -45,5 +46,10 @@
   ],
   "rules": [
     "copy.length-caps"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
   ]
 }

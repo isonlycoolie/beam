@@ -32,5 +32,10 @@
   ],
   "rules": [
     "state.complete"
+  ],
+  "sizes": [
+    "sm",
+    "md",
+    "lg"
   ]
 }
