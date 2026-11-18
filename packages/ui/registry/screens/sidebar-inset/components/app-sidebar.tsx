@@ -93,3 +93,87 @@ const data = {
     },
     {
       title: "Settings",
+      url: "#",
+      icon: Settings02Icon,
+      items: [
+        {
+          title: "General",
+          url: "#",
+        },
+        {
+          title: "Team",
+          url: "#",
+        },
+        {
+          title: "Billing",
+          url: "#",
+        },
+        {
+          title: "Limits",
+          url: "#",
+        },
+      ],
+    },
+  ],
+  navSecondary: [
+    {
+      title: "Support",
+      url: "#",
+      icon: LifebuoyIcon,
+    },
+    {
+      title: "Feedback",
+      url: "#",
+      icon: SendIcon,
+    },
+  ],
+  projects: [
+    {
+      name: "Design Engineering",
+      url: "#",
+      icon: FrameIcon,
+    },
+    {
+      name: "Sales & Marketing",
+      url: "#",
+      icon: PieChartIcon,
+    },
+    {
+      name: "Travel",
+      url: "#",
+      icon: MapIcon,
+    },
+  ],
+};
+
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  return (
+    <Sidebar variant="inset" {...props}>
+      <SidebarHeader>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton size="lg" asChild>
+              <a href="#">
+                <div className="flex aspect-square size-8 items-center justify-center rounded-(--radius-card) bg-sidebar-primary text-sidebar-primary-foreground">
+                  <HugeiconsIcon icon={CommandIcon} strokeWidth={1.75} className="size-4" />
+                </div>
+                <div className="grid flex-1 text-left text-[14px] leading-[20px] leading-tight">
+                  <span className="truncate font-medium">Acme Inc</span>
+                  <span className="truncate text-[12px] leading-[16px]">Enterprise</span>
+                </div>
+              </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarHeader>
+      <SidebarContent>
+        <NavMain items={data.navMain} />
+        <NavProjects projects={data.projects} />
+        <NavSecondary items={data.navSecondary} className="mt-auto" />
+      </SidebarContent>
+      <SidebarFooter>
+        <NavUser user={data.user} />
+      </SidebarFooter>
+    </Sidebar>
+  );
+}
