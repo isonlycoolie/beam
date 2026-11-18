@@ -2,6 +2,7 @@ import { RootProvider } from "fumadocs-ui/provider/next";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import type { ReactNode } from "react";
+import { GlassFilter } from "@beam/ui/components/liquid-glass";
 import "./global.css";
 
 // Geist and Geist Mono by Vercel, SIL Open Font License 1.1: the faces shadcn/ui uses.
@@ -19,6 +20,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en" className={`${geist.variable} ${geistMono.variable} dark`} suppressHydrationWarning>
       {/* The default palette on body, so portalled UI (menus, dialogs, tooltips) gets Beam tokens too. */}
       <body data-theme="default">
+        {/* The refraction glass mode bends through, mounted once. */}
+        <GlassFilter />
         <RootProvider theme={{ defaultTheme: "dark", enableSystem: false }}>{children}</RootProvider>
       </body>
     </html>

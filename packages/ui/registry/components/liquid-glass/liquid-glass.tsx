@@ -113,3 +113,20 @@ export function LiquidGlass({ bend, dispersion, frost, rim, radius = 999, pressa
     </div>
   );
 }
+
+/**
+ * The refraction every glass surface in glass mode bends through (backdrop-filter: url(#beam-glass), Chromium).
+ * Mount it once, near the root. Bend and dispersion follow --beam-glass-bend and --beam-glass-dispersion.
+ */
+export function GlassFilter() {
+  const [map, setMap] = useState("");
+  const [vars, setVars] = useState({ bend: 1, dispersion: 0.6 });
+  useEffect(() => {
+    // One generic bezel, stretched to each surface: a band along the rim, the middle clear.
+    setMap(displacementMap(256, 256, 48));
+    const root = document.documentElement;
+    setVars({ bend: num(root, "--beam-glass-bend", 1), dispersion: num(root, "--beam-glass-dispersion", 0.6) });
+  }, []);
+  if (!map) return null;
+  return <LiquidFilter id="beam-glass" map={map} shift={14 * vars.bend} dispersion={vars.dispersion} />;
+}

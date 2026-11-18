@@ -1,1 +1,1 @@
-export { LiquidGlass, type LiquidGlassProps } from "./liquid-glass";
+export { GlassFilter, LiquidGlass, type LiquidGlassProps } from "./liquid-glass";
