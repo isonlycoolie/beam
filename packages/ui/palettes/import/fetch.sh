@@ -3,7 +3,8 @@
 #   sh fetch.sh /tmp/pal && python import.py /tmp/pal ../sources.ts
 set -eu
 D="$1"; mkdir -p "$D"
-for c in gray slate sage mauve olive sand indigo teal amber violet grass crimson green red; do
+# All 31 Radix scales: six greys and the 25 hues the harmony palettes are built from.
+for c in gray mauve slate sage olive sand tomato red ruby crimson pink plum purple violet iris indigo blue cyan teal jade green grass bronze gold brown orange amber yellow lime mint sky; do
   curl -fsSL "https://unpkg.com/@radix-ui/colors@3.0.0/$c.css" -o "$D/radix-$c.css"
   curl -fsSL "https://unpkg.com/@radix-ui/colors@3.0.0/$c-dark.css" -o "$D/radix-$c-dark.css"
 done
