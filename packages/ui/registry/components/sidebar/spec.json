@@ -1,25 +1,36 @@
 {
   "name": "sidebar",
   "title": "Sidebar",
-  "summary": "App and docs navigation: sections, groups and items.",
+  "summary": "App navigation: a header with your logo, groups, parents with children, a footer, and an icon-only collapsed state.",
   "source": "shadcn/ui (MIT)",
   "use_when": [
-    "Navigation with more than five destinations or nested sections"
+    "Apps with more than five destinations, or sections with sub-pages"
   ],
   "avoid_when": [
     "Three to five top-level pages: use top tabs"
   ],
   "props": {
-    "isActive": "boolean (SidebarMenuButton)",
-    "nested": "boolean (SidebarMenuButton)"
+    "SidebarProvider": "defaultOpen, open, onOpenChange: the expanded state (Ctrl/Cmd + B toggles it)",
+    "Sidebar side": "left | right",
+    "Sidebar variant": "sidebar | floating | inset",
+    "Sidebar collapsible": "offcanvas | icon | none",
+    "SidebarMenuButton": "isActive, size (default | sm | lg), tooltip (shown when collapsed to icons), asChild",
+    "SidebarMenuSubButton": "isActive, size, asChild"
   },
   "variants": [
-    "default"
+    "default",
+    "nested"
   ],
   "styles": [
-    "default"
+    "default",
+    "nested"
   ],
-  "composes_with": [],
+  "composes_with": [
+    "Collapsible",
+    "DropdownMenu",
+    "Avatar",
+    "Sheet"
+  ],
   "copy": {
     "items": "Nouns, sentence case, two to four words"
   },
@@ -30,7 +41,9 @@
     "focus"
   ],
   "a11y": [
-    "nav landmark; the active item has aria-current=page"
+    "Keyboard: Ctrl/Cmd + B toggles it",
+    "On phones it opens as a Sheet",
+    "The active item has data-active and should also get aria-current"
   ],
   "rules": [
     "copy.sentence-case",
