@@ -1,0 +1,32 @@
+{
+  "name": "status-dot",
+  "title": "Status Dot",
+  "summary": "A small coloured dot that shows the state of something, with or without a word.",
+  "source": "Sesama UI (MIT)",
+  "use_when": [
+    "Presence or health next to a name: online, running, failed",
+    "Dense lists where a Badge would be too heavy"
+  ],
+  "avoid_when": [
+    "The state needs words to be understood on its own: use Badge",
+    "Something the user can change: use Switch or Chip"
+  ],
+  "props": {
+    "variant": "default | info | success | warning | danger | disabled",
+    "label": "string: the accessible name when there is no visible text",
+    "pulse": "boolean: pulses while something is in progress"
+  },
+  "variants": ["default", "info", "success", "warning", "danger", "destructive", "disabled"],
+  "styles": ["default", "variants", "pulse"],
+  "composes_with": ["Item", "Table", "Agent Run", "Avatar"],
+  "copy": {
+    "text": "One word in sentence case: Online, Running, Failed"
+  },
+  "states": ["default", "pulse"],
+  "a11y": [
+    "Never rely on colour alone: give visible text, or a label when the dot stands alone",
+    "The pulse stops under reduced motion"
+  ],
+  "rules": ["copy.length-caps", "copy.sentence-case"],
+  "sizes": ["sm", "md", "lg"]
+}
