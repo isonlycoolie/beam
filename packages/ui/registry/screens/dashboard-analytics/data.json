@@ -93,3 +93,98 @@
     "id": 11,
     "header": "Adaptive Communication Protocols",
     "type": "Narrative",
+    "status": "Done",
+    "target": "9",
+    "limit": "31",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 12,
+    "header": "Advantages Over Current Technologies",
+    "type": "Narrative",
+    "status": "Done",
+    "target": "12",
+    "limit": "0",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 13,
+    "header": "Past Performance",
+    "type": "Narrative",
+    "status": "Done",
+    "target": "22",
+    "limit": "33",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 14,
+    "header": "Customer Feedback and Satisfaction Levels",
+    "type": "Narrative",
+    "status": "Done",
+    "target": "15",
+    "limit": "34",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 15,
+    "header": "Implementation Challenges and Solutions",
+    "type": "Narrative",
+    "status": "Done",
+    "target": "3",
+    "limit": "35",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 16,
+    "header": "Security Measures and Data Protection Policies",
+    "type": "Narrative",
+    "status": "In Process",
+    "target": "6",
+    "limit": "36",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 17,
+    "header": "Scalability and Future Proofing",
+    "type": "Narrative",
+    "status": "Done",
+    "target": "4",
+    "limit": "37",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 18,
+    "header": "Cost-Benefit Analysis",
+    "type": "Plain language",
+    "status": "Done",
+    "target": "14",
+    "limit": "38",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 19,
+    "header": "User Training and Onboarding Experience",
+    "type": "Narrative",
+    "status": "Done",
+    "target": "17",
+    "limit": "39",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 20,
+    "header": "Future Development Roadmap",
+    "type": "Narrative",
+    "status": "Done",
+    "target": "11",
+    "limit": "40",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 21,
+    "header": "System Architecture Overview",
+    "type": "Technical content",
+    "status": "In Process",
+    "target": "24",
+    "limit": "18",
+    "reviewer": "Maya Johnson"
+  },
