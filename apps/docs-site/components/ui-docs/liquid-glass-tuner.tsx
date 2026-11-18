@@ -21,7 +21,7 @@ export function LiquidGlassTuner() {
     <div data-preview="" className="not-prose my-6 overflow-hidden rounded-xl border border-fd-border">
       <div className="flex h-[300px] items-center justify-center bg-cover bg-center" style={{ backgroundImage: `url(${GLASS_PHOTO})` }}>
         <LiquidGlass pressable bend={v.bend} dispersion={v.dispersion} frost={v.frost} rim={v.rim} className="px-10 py-6">
-          <span className="text-[17px] leading-[22px] font-semibold text-text-1">Liquid glass</span>
+          <span className="text-[17px] leading-[22px] font-semibold text-white [text-shadow:0_1px_2px_rgb(0_0_0/0.3)]">Liquid glass</span>
         </LiquidGlass>
       </div>
       <div className="grid gap-4 border-t border-fd-border p-4 sm:grid-cols-2">

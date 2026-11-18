@@ -17,7 +17,7 @@ export default function LiquidGlassToolbar() {
     >
       <LiquidGlass className="flex items-center gap-1 p-1.5">
         {ACTIONS.map((a) => (
-          <button key={a.label} type="button" aria-label={a.label} className="flex size-11 items-center justify-center rounded-full text-text-1 outline-none hover:bg-black/5 focus-visible:shadow-(--focus-ring)">
+          <button key={a.label} type="button" aria-label={a.label} className="flex size-11 items-center justify-center rounded-full text-white [text-shadow:0_1px_2px_rgb(0_0_0/0.3)] outline-none hover:bg-white/15 focus-visible:shadow-(--focus-ring)">
             <HugeiconsIcon icon={a.icon} size={22} strokeWidth={1.75} />
           </button>
         ))}

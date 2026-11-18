@@ -8,7 +8,7 @@ export default function LiquidGlassDefault() {
       style={{ backgroundImage: "url(https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1120&q=55&auto=format&fit=crop)" }}
     >
       <LiquidGlass pressable className="px-8 py-5">
-        <span className="text-[17px] leading-[22px] font-semibold text-text-1">Liquid glass</span>
+        <span className="text-[17px] leading-[22px] font-semibold text-white [text-shadow:0_1px_2px_rgb(0_0_0/0.3)]">Liquid glass</span>
       </LiquidGlass>
     </div>
   );
