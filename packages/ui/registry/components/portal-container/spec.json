@@ -1,0 +1,16 @@
+{
+  "name": "portal-container",
+  "title": "Portal Container",
+  "summary": "Opens dialogs, sheets and drawers inside an element instead of over the whole page.",
+  "source": "Beam",
+  "use_when": ["Overlays should stay inside a panel, a preview or a device frame"],
+  "avoid_when": ["Normal app pages: overlays should cover the page"],
+  "props": { "container": "The element overlays render into; give it transform or contain: layout" },
+  "variants": ["default"],
+  "styles": ["default"],
+  "composes_with": ["dialog", "alert-dialog", "sheet", "drawer"],
+  "copy": {},
+  "states": ["default"],
+  "a11y": ["Focus is still trapped in the open overlay; the rest of the page stays reachable only after it closes"],
+  "rules": ["state.complete"]
+}
