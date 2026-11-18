@@ -1,6 +1,6 @@
 import { ArrowDown01Icon, Copy01Icon } from "@hugeicons/core-free-icons";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@beam/ui/components/breadcrumb";
-import { SidebarGroupLabel, SidebarMenuButton } from "@beam/ui/components/sidebar";
+import { SidebarGroupLabel, SidebarMenuButton, SidebarMenuSubButton, SidebarProvider } from "@beam/ui/components/sidebar";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@beam/ui/components/table";
 import { Icon } from "@beam/ui/icons";
 import type { ComponentType } from "react";
@@ -33,21 +33,25 @@ export const NAV_REFS: Record<string, { mode: "light" | "dark"; Component: Compo
   "ui-nav-active": {
     mode: "light",
     Component: () => (
-      <SidebarMenuButton href="#" nested isActive className="w-[244px]">
-        <span>Create a customer</span>
-      </SidebarMenuButton>
+      <SidebarProvider className="min-h-0">
+        <SidebarMenuSubButton href="#" isActive className="w-[244px] translate-x-0 ps-4">
+          <span>Create a customer</span>
+        </SidebarMenuSubButton>
+      </SidebarProvider>
     ),
   },
   "ui-nav-group": {
     mode: "light",
     Component: () => (
-      <SidebarMenuButton href="#" className="w-[260px]">
-        <span>Core Resources</span>
-        <Icon icon={ArrowDown01Icon} size="sm" className="ms-auto" />
-      </SidebarMenuButton>
+      <SidebarProvider className="min-h-0">
+        <SidebarMenuButton className="w-[260px] font-medium">
+          <span>Core Resources</span>
+          <Icon icon={ArrowDown01Icon} size="sm" className="ms-auto" />
+        </SidebarMenuButton>
+      </SidebarProvider>
     ),
   },
-  "ui-nav-section": { mode: "light", Component: () => <SidebarGroupLabel className="w-fit">Online payments</SidebarGroupLabel> },
+  "ui-nav-section": { mode: "light", Component: () => <SidebarGroupLabel className="h-auto w-fit rounded-none px-0">Online payments</SidebarGroupLabel> },
   "ui-table": {
     mode: "light",
     Component: () => (
