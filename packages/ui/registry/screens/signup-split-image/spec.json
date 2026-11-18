@@ -1,0 +1,11 @@
+{
+  "id": "signup-split-image",
+  "group": "Sign up",
+  "title": "Sign up \u00b7 Card with image",
+  "summary": "Form and image side by side in one card.",
+  "source": "shadcn/ui (MIT)",
+  "files": [
+    "components/signup-form.tsx",
+    "page.tsx"
+  ]
+}
