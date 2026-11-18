@@ -1,0 +1,12 @@
+{
+  "id": "sidebar-nested-panels",
+  "group": "Sidebar",
+  "title": "Sidebar \u00b7 Icon rail with a list panel",
+  "summary": "An icon rail and a second panel, like a mail app.",
+  "source": "shadcn/ui (MIT)",
+  "files": [
+    "components/app-sidebar.tsx",
+    "components/nav-user.tsx",
+    "page.tsx"
+  ]
+}
