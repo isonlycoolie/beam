@@ -1,6 +1,7 @@
 import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { readScreen, screenSource } from "@/lib/screens";
+import { CodeFold } from "./code-fold";
 import { ScreenFrame } from "./screen-frame";
 
 const tall = (id: string) => (id.startsWith("dashboard") || id.startsWith("sidebar") ? 820 : 720);
@@ -53,7 +54,9 @@ export function ScreenCode({ id }: { id: string }) {
     <Tabs items={order.map((f) => f.replace("components/", ""))}>
       {order.map((f) => (
         <Tab key={f} value={f.replace("components/", "")}>
-          <DynamicCodeBlock lang="tsx" code={screenSource(id, f)} codeblock={{ "data-line-numbers": true, className: "max-h-[560px]" }} />
+          <CodeFold>
+            <DynamicCodeBlock lang="tsx" code={screenSource(id, f)} codeblock={{ "data-line-numbers": true, className: "max-h-[560px]" }} />
+          </CodeFold>
         </Tab>
       ))}
     </Tabs>
