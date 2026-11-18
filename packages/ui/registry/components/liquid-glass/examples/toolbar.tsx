@@ -13,11 +13,11 @@ export default function LiquidGlassToolbar() {
   return (
     <div
       className="relative flex h-[320px] w-full max-w-[560px] items-end justify-center overflow-hidden rounded-[16px] bg-cover bg-center pb-6"
-      style={{ backgroundImage: "url(https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1200&q=70&auto=format)" }}
+      style={{ backgroundImage: "url(https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1120&q=55&auto=format&fit=crop)" }}
     >
       <LiquidGlass className="flex items-center gap-1 p-1.5">
         {ACTIONS.map((a) => (
-          <button key={a.label} type="button" aria-label={a.label} className="flex size-11 items-center justify-center rounded-full text-white outline-none hover:bg-white/15 focus-visible:shadow-(--focus-ring)">
+          <button key={a.label} type="button" aria-label={a.label} className="flex size-11 items-center justify-center rounded-full text-text-1 outline-none hover:bg-black/5 focus-visible:shadow-(--focus-ring)">
             <HugeiconsIcon icon={a.icon} size={22} strokeWidth={1.75} />
           </button>
         ))}

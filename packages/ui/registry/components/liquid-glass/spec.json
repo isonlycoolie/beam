@@ -2,23 +2,48 @@
   "name": "liquid-glass",
   "title": "Liquid Glass",
   "summary": "Apple's liquid glass material: the backdrop blurs and bends at the edges, with a rim that catches the light.",
-  "source": "liquid-glass-react (MIT)",
-  "use_when": ["A floating bar, toolbar or button over photos, video, maps or a scrolling feed", "One focal surface over a rich background"],
-  "avoid_when": ["Over a flat solid background: there is nothing to bend", "Every card on a page", "Glass inside glass, except a Tab Bar's own lens", "Long text"],
+  "source": "liquid-glass-react (MIT), tuned with glisse (MIT)",
+  "use_when": [
+    "A floating bar, toolbar or button over photos, video, maps or a scrolling feed",
+    "One focal surface over a rich background"
+  ],
+  "avoid_when": [
+    "Over a flat solid background: there is nothing to bend",
+    "Every card on a page",
+    "Glass inside glass, except a Tab Bar's own lens",
+    "Long text"
+  ],
   "props": {
-    "displacement": "How far the edges bend the backdrop, in px (64)",
-    "blur": "Frosting, 0 is clear (0.1)",
-    "saturation": "Backdrop saturation in % (140)",
-    "aberration": "Colour fringing on the rim (2)",
-    "elasticity": "Stretch toward the pointer, 0 turns it off (0.15)",
+    "bend": "How far the rim bends the backdrop, as a share of the bend band (1)",
+    "dispersion": "Colour split at the rim: 0.6 bends red 12% further than blue",
+    "frost": "Blur behind the glass in px (3)",
+    "rim": "Brightness of the rim light, 0 to 1 (0.3 light, 0.13 dark)",
     "radius": "Corner radius in px, 999 is a pill",
-    "overLight": "Darker rim and shadow over light content"
+    "pressable": "Grow and spring back when pressed"
   },
-  "variants": ["default", "over-light"],
-  "styles": ["default", "toolbar"],
-  "composes_with": ["button", "tab-bar"],
+  "variants": [
+    "default"
+  ],
+  "styles": [
+    "default",
+    "toolbar"
+  ],
+  "composes_with": [
+    "button",
+    "tab-bar"
+  ],
   "copy": {},
-  "states": ["default", "hover", "pressed"],
-  "a11y": ["Text on glass must still reach 4.5:1 at the busiest point of the background", "prefers-reduced-transparency gives a solid surface", "prefers-reduced-motion stops the stretch"],
-  "rules": ["state.complete"]
+  "states": [
+    "default",
+    "hover",
+    "pressed"
+  ],
+  "a11y": [
+    "Text on glass must still reach 4.5:1 at the busiest point of the background",
+    "prefers-reduced-transparency gives a solid surface",
+    "prefers-reduced-motion stops the press spring"
+  ],
+  "rules": [
+    "state.complete"
+  ]
 }
