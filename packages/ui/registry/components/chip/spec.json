@@ -1,0 +1,35 @@
+{
+  "name": "chip",
+  "title": "Chip",
+  "summary": "A compact item, filter or tag that can be turned on, or removed.",
+  "source": "Sesama UI (MIT)",
+  "use_when": [
+    "Filters above a list that turn on and off: ChipToggle",
+    "Values the user picked and can take away again: Chip with ChipRemove",
+    "Tags inside a Tag Input"
+  ],
+  "avoid_when": [
+    "A read-only status: use Badge",
+    "One choice from a few options: use Toggle Group or Radio Group",
+    "An action: use Button"
+  ],
+  "props": {
+    "variant": "default | info | success | warning | danger",
+    "pressed": "boolean (ChipToggle)",
+    "onPressedChange": "(pressed: boolean) => void (ChipToggle)",
+    "label": "string: ChipRemove's accessible name, e.g. \"Remove Design\""
+  },
+  "variants": ["default", "info", "success", "warning", "danger", "destructive"],
+  "styles": ["default", "toggle", "removable", "variants"],
+  "composes_with": ["Tag Input", "Toolbar", "Item"],
+  "copy": {
+    "text": "One or two words in sentence case"
+  },
+  "states": ["default", "hover", "focus", "pressed", "disabled"],
+  "a11y": [
+    "ChipToggle is a toggle button: screen readers hear it as pressed or not",
+    "Name every ChipRemove after its chip: \"Remove Design\", not \"Remove\""
+  ],
+  "rules": ["copy.length-caps", "copy.sentence-case", "state.complete"],
+  "sizes": ["sm", "md", "lg"]
+}
