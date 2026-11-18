@@ -1,5 +1,6 @@
 /* Based on shadcn/ui (MIT). Sizes, type and shadows are measured references (see CREDITS.md). */
 "use client";
+import { GlassBackdrop } from "../liquid-glass/liquid-glass";
 
 import { ArrowRight01Icon, CircleIcon, Tick02Icon } from "@hugeicons/core-free-icons";
 import { DropdownMenu as DropdownMenuPrimitive } from "radix-ui";
@@ -15,18 +16,34 @@ const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;
 // Measured menu surface (--popover, 1px --input, 6px radius, the menu shadow). Rows are
 // composed from measured parts: 14/20px text, 6px radius, --secondary when focused.
 const surface = "z-50 rounded-(--radius-md) border border-input bg-popover text-popover-foreground shadow-(--shadow-3) min-w-48 overflow-hidden p-1";
-const item = "relative flex cursor-default select-none items-center gap-2 rounded-(--radius-md) px-2 py-1.5 text-[14px] leading-[20px] text-text-1 outline-none focus:bg-secondary data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:shrink-0";
+const item =
+  "relative flex cursor-default select-none items-center gap-2 rounded-(--radius-md) px-2 py-1.5 text-[14px] leading-[20px] text-text-1 outline-none focus:bg-secondary data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:shrink-0";
 
 function DropdownMenuContent({ className, sideOffset = 4, ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.Content>) {
   return (
     <DropdownMenuPrimitive.Portal>
-      <DropdownMenuPrimitive.Content data-slot="dropdown-menu-content" sideOffset={sideOffset} className={cn(surface, className)} {...props} />
+      <DropdownMenuPrimitive.Content data-slot="dropdown-menu-content" sideOffset={sideOffset} className={cn(surface, className)} {...props}>
+        <GlassBackdrop />
+        {props.children}
+      </DropdownMenuPrimitive.Content>
     </DropdownMenuPrimitive.Portal>
   );
 }
 
-function DropdownMenuItem({ className, inset, variant = "default", ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.Item> & { inset?: boolean; variant?: "default" | "destructive" }) {
-  return <DropdownMenuPrimitive.Item data-slot="dropdown-menu-item" data-variant={variant} className={cn(item, inset && "ps-8", variant === "destructive" && "text-danger focus:bg-danger-soft", className)} {...props} />;
+function DropdownMenuItem({
+  className,
+  inset,
+  variant = "default",
+  ...props
+}: React.ComponentProps<typeof DropdownMenuPrimitive.Item> & { inset?: boolean; variant?: "default" | "destructive" }) {
+  return (
+    <DropdownMenuPrimitive.Item
+      data-slot="dropdown-menu-item"
+      data-variant={variant}
+      className={cn(item, inset && "ps-8", variant === "destructive" && "text-danger focus:bg-danger-soft", className)}
+      {...props}
+    />
+  );
 }
 
 function DropdownMenuCheckboxItem({ className, children, ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.CheckboxItem>) {
@@ -56,7 +73,13 @@ function DropdownMenuRadioItem({ className, children, ...props }: React.Componen
 }
 
 function DropdownMenuLabel({ className, inset, ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.Label> & { inset?: boolean }) {
-  return <DropdownMenuPrimitive.Label data-slot="dropdown-menu-label" className={cn("px-2 py-1.5 text-[12px] leading-[16px] font-medium text-text-3", inset && "ps-8", className)} {...props} />;
+  return (
+    <DropdownMenuPrimitive.Label
+      data-slot="dropdown-menu-label"
+      className={cn("px-2 py-1.5 text-[12px] leading-[16px] font-medium text-text-3", inset && "ps-8", className)}
+      {...props}
+    />
+  );
 }
 function DropdownMenuSeparator({ className, ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.Separator>) {
   return <DropdownMenuPrimitive.Separator data-slot="dropdown-menu-separator" className={cn("-mx-1 my-1 h-px bg-border", className)} {...props} />;
@@ -67,7 +90,11 @@ function DropdownMenuShortcut({ className, ...props }: React.ComponentProps<"spa
 
 function DropdownMenuSubTrigger({ className, inset, children, ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.SubTrigger> & { inset?: boolean }) {
   return (
-    <DropdownMenuPrimitive.SubTrigger data-slot="dropdown-menu-sub-trigger" className={cn(item, "data-[state=open]:bg-secondary", inset && "ps-8", className)} {...props}>
+    <DropdownMenuPrimitive.SubTrigger
+      data-slot="dropdown-menu-sub-trigger"
+      className={cn(item, "data-[state=open]:bg-secondary", inset && "ps-8", className)}
+      {...props}
+    >
       {children}
       <Icon icon={ArrowRight01Icon} size="sm" className="ms-auto" />
     </DropdownMenuPrimitive.SubTrigger>
@@ -75,12 +102,23 @@ function DropdownMenuSubTrigger({ className, inset, children, ...props }: React.
 }
 
 function DropdownMenuSubContent({ className, ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.SubContent>) {
-  return <DropdownMenuPrimitive.SubContent data-slot="dropdown-menu-sub-content" className={cn(surface, className)} {...props} />;
+  return (
+    <DropdownMenuPrimitive.SubContent data-slot="dropdown-menu-sub-content" className={cn(surface, className)} {...props}>
+      <GlassBackdrop />
+      {props.children}
+    </DropdownMenuPrimitive.SubContent>
+  );
 }
 
 // Card item: 1px --input border, 10px radius, 16px padding and gap, a 48px round icon tile in
 // --secondary, a 16/600/24px title and a 14/20px description 4px below.
-function DropdownMenuCardItem({ className, icon, title, description, ...props }: Omit<React.ComponentProps<typeof DropdownMenuPrimitive.Item>, "title"> & { icon: React.ReactNode; title: string; description: string }) {
+function DropdownMenuCardItem({
+  className,
+  icon,
+  title,
+  description,
+  ...props
+}: Omit<React.ComponentProps<typeof DropdownMenuPrimitive.Item>, "title"> & { icon: React.ReactNode; title: string; description: string }) {
   return (
     <DropdownMenuPrimitive.Item
       data-slot="dropdown-menu-card-item"
@@ -96,4 +134,20 @@ function DropdownMenuCardItem({ className, icon, title, description, ...props }:
   );
 }
 
-export { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuCardItem, DropdownMenuTrigger };
+export {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuCardItem,
+  DropdownMenuTrigger,
+};
