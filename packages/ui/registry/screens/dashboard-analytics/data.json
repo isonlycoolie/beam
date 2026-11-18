@@ -283,3 +283,98 @@
     "header": "Maintenance Plan",
     "type": "Technical content",
     "status": "Done",
+    "target": "16",
+    "limit": "23",
+    "reviewer": "Alex Thompson"
+  },
+  {
+    "id": 33,
+    "header": "User Personas",
+    "type": "Research",
+    "status": "In Process",
+    "target": "27",
+    "limit": "24",
+    "reviewer": "Nina Patel"
+  },
+  {
+    "id": 34,
+    "header": "Accessibility Compliance",
+    "type": "Legal",
+    "status": "Done",
+    "target": "18",
+    "limit": "21",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 35,
+    "header": "Performance Metrics",
+    "type": "Technical content",
+    "status": "In Process",
+    "target": "23",
+    "limit": "26",
+    "reviewer": "David Kim"
+  },
+  {
+    "id": 36,
+    "header": "Disaster Recovery Plan",
+    "type": "Technical content",
+    "status": "Done",
+    "target": "14",
+    "limit": "17",
+    "reviewer": "Jamik Tashpulatov"
+  },
+  {
+    "id": 37,
+    "header": "Third-party Integrations",
+    "type": "Technical content",
+    "status": "In Process",
+    "target": "25",
+    "limit": "28",
+    "reviewer": "Eddie Lake"
+  },
+  {
+    "id": 38,
+    "header": "User Feedback Summary",
+    "type": "Research",
+    "status": "Done",
+    "target": "20",
+    "limit": "15",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 39,
+    "header": "Localization Strategy",
+    "type": "Narrative",
+    "status": "In Process",
+    "target": "12",
+    "limit": "19",
+    "reviewer": "Maria Garcia"
+  },
+  {
+    "id": 40,
+    "header": "Mobile Compatibility",
+    "type": "Technical content",
+    "status": "Done",
+    "target": "28",
+    "limit": "31",
+    "reviewer": "James Wilson"
+  },
+  {
+    "id": 41,
+    "header": "Data Migration Plan",
+    "type": "Technical content",
+    "status": "In Process",
+    "target": "19",
+    "limit": "22",
+    "reviewer": "Assign reviewer"
+  },
+  {
+    "id": 42,
+    "header": "Quality Assurance Protocols",
+    "type": "Technical content",
+    "status": "Done",
+    "target": "30",
+    "limit": "33",
+    "reviewer": "Priya Singh"
+  },
+  {
