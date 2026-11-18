@@ -18,8 +18,6 @@ export type TabBarProps = Omit<ComponentProps<"nav">, "onChange"> & {
   value?: string;
   defaultValue?: string;
   onValueChange?: (value: string) => void;
-  /** Over light content: a darker rim and shadow so the bar's edge still reads. */
-  overLight?: boolean;
 };
 
 // The spring the lens rides on: stiff enough to arrive quickly, damped just under critical for one soft overshoot.
@@ -40,7 +38,7 @@ function useReducedMotion() {
   return reduced;
 }
 
-export function TabBar({ items, value, defaultValue, onValueChange, overLight = false, className, ...props }: TabBarProps) {
+export function TabBar({ items, value, defaultValue, onValueChange, className, ...props }: TabBarProps) {
   const [inner, setInner] = useState(defaultValue ?? items[0]?.value);
   const active = value ?? inner;
   const reduced = useReducedMotion();
@@ -186,7 +184,7 @@ export function TabBar({ items, value, defaultValue, onValueChange, overLight = 
 
   return (
     <nav data-slot="tab-bar" aria-label={props["aria-label"] ?? "Tabs"} className={cn("inline-flex", className)} {...props}>
-      <LiquidGlass radius={999} elasticity={0} overLight={overLight} className="p-1">
+      <LiquidGlass radius={999} className="p-1 shadow-[0_8px_32px_rgb(0_0_0/0.18)]">
         {/* The tint sits above the bent backdrop, so labels keep their contrast over bright and dark photos. */}
         <span aria-hidden="true" className="absolute inset-0 rounded-[inherit] bg-(--tab-bar-tint)" />
         <div
@@ -206,9 +204,8 @@ export function TabBar({ items, value, defaultValue, onValueChange, overLight = 
               aria-hidden="true"
               data-slot="tab-bar-lens"
               radius={999}
-              elasticity={0}
-              displacement={dragging ? 90 : 40}
-              blur={dragging ? 0 : 0.05}
+              bend={dragging ? 1.6 : 0.8}
+              frost={dragging ? 0 : 1}
               className={cn("pointer-events-none absolute inset-y-0 left-0 origin-center transition-[box-shadow] duration-200", dragging ? "z-20" : "z-0")}
               style={{ ...lensStyle, boxShadow: dragging ? "0 8px 24px rgb(0 0 0 / 0.22)" : "none" }}
             >

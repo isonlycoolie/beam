@@ -22,7 +22,7 @@ export default function TabBarDefault() {
         <p className="px-5 pt-5 pb-3 text-[22px] leading-[28px] font-semibold text-text-1 capitalize">{tab}</p>
         <div className="grid gap-2 px-3">
           {PHOTOS.map((id) => (
-            <img key={id} src={`https://images.unsplash.com/${id}?w=640&q=70&auto=format`} alt="" width={640} height={420} loading="lazy" className="h-[190px] w-full rounded-[18px] object-cover" />
+            <img key={id} src={`https://images.unsplash.com/${id}?w=600&q=55&auto=format&fit=crop`} alt="" width={600} height={380} loading="lazy" className="h-[190px] w-full rounded-[18px] object-cover" />
           ))}
         </div>
       </div>

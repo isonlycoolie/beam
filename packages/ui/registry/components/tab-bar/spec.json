@@ -2,21 +2,49 @@
   "name": "tab-bar",
   "title": "Tab Bar",
   "summary": "The floating bottom navigation of iOS in liquid glass, with a lens that glides and stretches between tabs.",
-  "source": "liquid-glass-react (MIT)",
-  "use_when": ["Switching between 3 to 5 top-level sections of a phone app or mobile web app", "A bottom bar over scrolling content"],
-  "avoid_when": ["More than 5 sections: use a sidebar or a menu", "Desktop layouts: use the sidebar", "Actions such as Save or Share: use a toolbar"],
+  "source": "liquid-glass-react (MIT), tuned with glisse (MIT)",
+  "use_when": [
+    "Switching between 3 to 5 top-level sections of a phone app or mobile web app",
+    "A bottom bar over scrolling content"
+  ],
+  "avoid_when": [
+    "More than 5 sections: use a sidebar or a menu",
+    "Desktop layouts: use the sidebar",
+    "Actions such as Save or Share: use a toolbar"
+  ],
   "props": {
     "items": "Tabs: value, label, icon and an optional href",
     "value": "The active tab (controlled)",
     "defaultValue": "The first active tab (uncontrolled)",
-    "onValueChange": "Called with the tab's value when it changes",
-    "overLight": "Darker rim and shadow over light content"
+    "onValueChange": "Called with the tab's value when it changes"
   },
-  "variants": ["default"],
-  "styles": ["default"],
-  "composes_with": ["liquid-glass"],
-  "copy": { "label": "One word per tab, at most 12 characters", "count": "3 to 5 tabs" },
-  "states": ["default", "selected", "dragging", "focus"],
-  "a11y": ["A tablist: arrow keys, Home and End move between tabs", "Tabs with an href mark the current page with aria-current", "Labels stay visible under the icons", "prefers-reduced-motion moves the lens without the spring"],
-  "rules": ["copy.length-caps", "state.complete"]
+  "variants": [
+    "default"
+  ],
+  "styles": [
+    "default"
+  ],
+  "composes_with": [
+    "liquid-glass"
+  ],
+  "copy": {
+    "label": "One word per tab, at most 12 characters",
+    "count": "3 to 5 tabs"
+  },
+  "states": [
+    "default",
+    "selected",
+    "dragging",
+    "focus"
+  ],
+  "a11y": [
+    "A tablist: arrow keys, Home and End move between tabs",
+    "Tabs with an href mark the current page with aria-current",
+    "Labels stay visible under the icons",
+    "prefers-reduced-motion moves the lens without the spring"
+  ],
+  "rules": [
+    "copy.length-caps",
+    "state.complete"
+  ]
 }
