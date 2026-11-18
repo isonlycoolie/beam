@@ -264,15 +264,17 @@ body[data-theme] {
   }
 }
 
-/* Previews scroll by wheel, touch or keys, without a scrollbar drawn inside the widget. The full-page screen
-   previews (iframes) hide the page's own scrollbar too. */
+/* Previews and code blocks scroll by wheel, touch or keys, without a scrollbar drawn inside them. The full-page
+   screen previews (iframes) hide the page's own scrollbar too. */
 [data-preview],
 [data-preview] *,
+figure.shiki .fd-scroll-container,
 html:has(> body [data-preview].min-h-svh),
 html:has(> body [data-preview].min-h-svh) body {
   scrollbar-width: none;
 }
 [data-preview]::-webkit-scrollbar,
+figure.shiki .fd-scroll-container::-webkit-scrollbar,
 [data-preview] *::-webkit-scrollbar,
 html:has(> body [data-preview].min-h-svh)::-webkit-scrollbar,
 html:has(> body [data-preview].min-h-svh) body::-webkit-scrollbar {
