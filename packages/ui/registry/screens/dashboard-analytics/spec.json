@@ -1,0 +1,20 @@
+{
+  "id": "dashboard-analytics",
+  "group": "Dashboard",
+  "title": "Dashboard \u00b7 Analytics dashboard",
+  "summary": "Sidebar, metric cards, an area chart and a sortable, editable data table.",
+  "source": "shadcn/ui (MIT)",
+  "files": [
+    "components/app-sidebar.tsx",
+    "components/chart-area-interactive.tsx",
+    "components/data-table.tsx",
+    "components/nav-documents.tsx",
+    "components/nav-main.tsx",
+    "components/nav-secondary.tsx",
+    "components/nav-user.tsx",
+    "components/section-cards.tsx",
+    "components/site-header.tsx",
+    "data.json",
+    "page.tsx"
+  ]
+}
