@@ -10,19 +10,9 @@ export function ScreenPreview({ id }: { id: string }) {
   return <ScreenFrame id={id} height={tall(id)} />;
 }
 
-/** `component` installs a sidebar layout by its component name, like every other component. */
+/** One command: sidebar layouts install as components, other screens by their screens/ path. */
 export function ScreenInstall({ id, component = false }: { id: string; component?: boolean }) {
-  const path = component ? id : `screens/${id}`;
-  return (
-    <Tabs items={["Command", "shadcn CLI"]}>
-      <Tab value="Command">
-        <DynamicCodeBlock lang="bash" code={`npx usebeam add ${component ? `ui/${id}` : path}`} />
-      </Tab>
-      <Tab value="shadcn CLI">
-        <DynamicCodeBlock lang="bash" code={`npx shadcn@latest add https://beam.dev/r/${path}.json`} />
-      </Tab>
-    </Tabs>
-  );
+  return <DynamicCodeBlock lang="bash" code={`npx usebeam add ${component ? `ui/${id}` : `screens/${id}`}`} />;
 }
 
 /** Where the sample data lives, so swapping in real data is one edit. */
