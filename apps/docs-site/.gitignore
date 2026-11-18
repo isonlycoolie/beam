@@ -5,3 +5,4 @@ next-env.d.ts
 components/ui-docs/examples.gen.tsx
 public/ui/icons.json
 public/r/
+components/screens/screens.gen.tsx
