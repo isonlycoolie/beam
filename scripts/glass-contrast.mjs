@@ -8,7 +8,7 @@ import { chromium } from "playwright";
 import { PNG } from "pngjs";
 
 const base = process.argv[2] ?? "http://localhost:3100";
-// GLASS_ONLY=contrast|difference|solid runs one check, for machines short on memory.
+// GLASS_ONLY=contrast|difference|solid|layout runs one check, for machines short on memory.
 const only = process.env.GLASS_ONLY;
 const run = (phase) => !only || only === phase;
 // Static previews, and overlays opened by the first button in the preview.
@@ -183,11 +183,51 @@ if (run("solid")) {
   await context.close();
 }
 
+// Layout unchanged: glass may restyle, never move. Every part's box in Glass matches Normal within 1px.
+const moved = [];
+if (run("layout")) {
+  const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  await context.route(/images\.unsplash\.com/, (r) => r.abort());
+  const page = await context.newPage();
+  const boxes = () =>
+    page.evaluate(() => {
+      // Relative to the preview, so the page moving around it doesn't count.
+      const stage = document.querySelector(".not-prose [data-preview]");
+      const o = stage.getBoundingClientRect();
+      return [...stage.querySelectorAll("[data-slot]")]
+        .filter((el) => el.dataset.slot !== "glass-backdrop")
+        .map((el) => {
+          const r = el.getBoundingClientRect();
+          return [el.dataset.slot, Math.round(r.x - o.x), Math.round(r.y - o.y), Math.round(r.width), Math.round(r.height)];
+        });
+    });
+  for (const name of all) {
+    const shots = {};
+    for (const surface of ["normal", "glass"]) {
+      await page.goto(`${base}/docs/components/${name}`, { waitUntil: "domcontentloaded" });
+      await page.evaluate((s) => localStorage.setItem("beam-surface", s), surface);
+      await page.reload({ waitUntil: "domcontentloaded" });
+      await page.waitForTimeout(1000);
+      shots[surface] = await boxes();
+    }
+    const diffs = [];
+    shots.normal.forEach((n, i) => {
+      const g = shots.glass[i];
+      if (!g || g[0] !== n[0]) return;
+      if ([1, 2, 3, 4].some((k) => Math.abs(n[k] - g[k]) > 1)) diffs.push(`${n[0]} ${n.slice(1).join(",")} -> ${g.slice(1).join(",")}`);
+    });
+    if (diffs.length) moved.push(`${name}: ${diffs.slice(0, 3).join("; ")}`);
+  }
+  await context.close();
+}
+
 await browser.close();
+console.log(`glass layout: ${all.length} component pages, ${moved.length} where glass moved something`);
+for (const m of moved) console.log(`  ${m}`);
 console.log(`glass solid parts: ${all.length} component pages, ${solid.length} with opaque parts`);
 for (const s of solid) console.log(`  ${s}`);
 console.log(`glass contrast: ${checked} text boxes checked, ${failures.length} below the minimum`);
 for (const f of failures) console.log(`  ${f}`);
 console.log(`glass difference: ${DIFFER.length * 2} components compared, ${same.length} too close to normal`);
 for (const s of same) console.log(`  ${s}`);
-process.exit(failures.length || same.length || solid.length ? 1 : 0);
+process.exit(failures.length || same.length || solid.length || moved.length ? 1 : 0);
