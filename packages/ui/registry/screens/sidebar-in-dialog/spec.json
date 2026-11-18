@@ -1,0 +1,11 @@
+{
+  "id": "sidebar-in-dialog",
+  "group": "Sidebar",
+  "title": "Sidebar \u00b7 Settings dialog",
+  "summary": "A settings dialog with its own sidebar.",
+  "source": "shadcn/ui (MIT)",
+  "files": [
+    "components/settings-dialog.tsx",
+    "page.tsx"
+  ]
+}
