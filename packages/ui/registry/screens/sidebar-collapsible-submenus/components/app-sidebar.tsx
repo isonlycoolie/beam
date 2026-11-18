@@ -188,3 +188,31 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <Collapsible key={item.title} defaultOpen={index === 1} className="group/collapsible">
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
+                    <SidebarMenuButton>
+                      {item.title} <HugeiconsIcon icon={Add01Icon} strokeWidth={1.75} className="ml-auto group-data-[state=open]/collapsible:hidden" />
+                      <HugeiconsIcon icon={MinusIcon} strokeWidth={1.75} className="ml-auto group-data-[state=closed]/collapsible:hidden" />
+                    </SidebarMenuButton>
+                  </CollapsibleTrigger>
+                  {item.items?.length ? (
+                    <CollapsibleContent>
+                      <SidebarMenuSub>
+                        {item.items.map((item) => (
+                          <SidebarMenuSubItem key={item.title}>
+                            <SidebarMenuSubButton asChild isActive={item.isActive}>
+                              <a href={item.url}>{item.title}</a>
+                            </SidebarMenuSubButton>
+                          </SidebarMenuSubItem>
+                        ))}
+                      </SidebarMenuSub>
+                    </CollapsibleContent>
+                  ) : null}
+                </SidebarMenuItem>
+              </Collapsible>
+            ))}
+          </SidebarMenu>
+        </SidebarGroup>
+      </SidebarContent>
+      <SidebarRail />
+    </Sidebar>
+  );
+}
