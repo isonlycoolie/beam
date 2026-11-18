@@ -1,0 +1,11 @@
+{
+  "id": "login-split-image",
+  "group": "Login",
+  "title": "Login \u00b7 Card with image",
+  "summary": "Form and image side by side in one card.",
+  "source": "shadcn/ui (MIT)",
+  "files": [
+    "components/login-form.tsx",
+    "page.tsx"
+  ]
+}
