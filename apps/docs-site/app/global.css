@@ -280,3 +280,54 @@ html:has(> body [data-preview].min-h-svh)::-webkit-scrollbar,
 html:has(> body [data-preview].min-h-svh) body::-webkit-scrollbar {
   display: none;
 }
+
+/* iOS sliders (the Liquid Glass tuner): a thin track filled blue up to the value, and a wide white pill thumb. */
+.beam-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 24px;
+  background: transparent;
+  cursor: pointer;
+}
+.beam-range::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(to right, #0091ff var(--pct, 50%), rgb(120 120 128 / 0.32) var(--pct, 50%));
+}
+.beam-range::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: rgb(120 120 128 / 0.32);
+}
+.beam-range::-moz-range-progress {
+  height: 6px;
+  border-radius: 999px;
+  background: #0091ff;
+}
+.beam-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 38px;
+  height: 24px;
+  margin-top: -9px;
+  border: 0;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.25), 0 0 0 0.5px rgb(0 0 0 / 0.08);
+  transition: scale 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.beam-range::-moz-range-thumb {
+  width: 38px;
+  height: 24px;
+  border: 0;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.25), 0 0 0 0.5px rgb(0 0 0 / 0.08);
+}
+.beam-range:active::-webkit-slider-thumb {
+  scale: 1.08;
+}
+.beam-range:focus-visible {
+  outline: 2px solid #0091ff;
+  outline-offset: 4px;
+  border-radius: 999px;
+}

@@ -1,6 +1,7 @@
 "use client";
 
 import { LiquidGlass } from "@beam/ui/components/liquid-glass";
+import type React from "react";
 import { useState } from "react";
 import { GLASS_PHOTO } from "./surface-toggle";
 
@@ -34,7 +35,8 @@ export function LiquidGlassTuner() {
               step={c.step}
               value={v[c.key]}
               onChange={(e) => setV({ ...v, [c.key]: Number(e.target.value) })}
-              className="min-w-0 flex-1 accent-fd-foreground"
+              className="beam-range min-w-0 flex-1"
+              style={{ "--pct": `${((v[c.key] - c.min) / (c.max - c.min)) * 100}%` } as React.CSSProperties}
             />
             <span className="w-12 shrink-0 text-right tabular-nums text-fd-muted-foreground">
               {v[c.key]}

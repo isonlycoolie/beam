@@ -179,9 +179,25 @@
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
 }
-/* Focus stays visible on glass. */
-:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot]:not([data-slot$="-item"])):focus-visible {
+/* Focus stays visible on glass: one ring that follows the shape. Inside an input group the group shows it, so the
+   inner input never draws a box of its own. */
+:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot]:not([data-slot$="-item"]):not([data-slot="input-group-input"])):focus-visible,
+:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="input-group"]):focus-within {
   box-shadow: var(--glass-highlight), 0 0 0 2px rgb(255 255 255 / 0.85);
+}
+:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="input-group"]) [data-slot="input-group-input"] {
+  outline: none;
+  box-shadow: none;
+}
+/* A key or button inside a field sits flat on the field's glass: no glass on glass. */
+:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="input-group"]) :is([data-slot="kbd"], [data-slot="badge"]) {
+  background: rgb(255 255 255 / 0.14);
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="input-group"]) :is([data-slot="badge"])::after {
+  content: none;
 }
 
 /* The rim: a line of light, from the top left and, fainter, its reflection bottom right, over a 0.5px edge. */
@@ -264,6 +280,16 @@
   transition-duration: 160ms, 0s;
   background-image: radial-gradient(circle 240px at 50% 0%, rgb(255 255 255 / 0.22), transparent), var(--glass-sheen);
 }
+/* Slider: iOS's thin track that fills blue, with a wide white pill of a thumb. */
+:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="slider"]) [data-orientation] > [data-orientation] {
+  background-color: #0091ff;
+}
+:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="slider"]) [role="slider"] {
+  width: 38px;
+  height: 24px;
+  border-radius: 999px;
+}
+
 /* Switch: a glass track that fills with iOS green when on, and a white lens of a thumb (glisse's values). */
 :where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="switch"][data-state="checked"]) {
   background-color: #34c759;
