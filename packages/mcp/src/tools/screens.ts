@@ -24,8 +24,8 @@ export function registerScreenTools(server: McpServer, context: BeamToolContext)
 
   server.tool(
     "screens_list",
-    "List Beam's finished screens: dashboards, app sidebar layouts, login and sign-up pages, with what each is for and the components it uses. Call this before building any of those pages and start from the closest one.",
-    { group: z.enum(["Dashboard", "Sidebar", "Login", "Sign up"]).optional() },
+    "List Beam's finished screens: dashboards, an agent workspace, app sidebar layouts, login and sign-up pages, with what each is for and the components it uses. Call this before building any of those pages and start from the closest one.",
+    { group: z.enum(["Dashboard", "Agent", "Sidebar", "Login", "Sign up"]).optional() },
     async ({ group }) => {
       try {
         const index = (await get(`${registry()}/screens/index.json`)) as { group: string }[];

@@ -1,6 +1,6 @@
 # Screens
 
-Finished screens built from Beam UI components. When the task is a dashboard, an app shell with a sidebar, a login or a sign-up page, start from the closest screen here: install it, then change its data and copy. Do not lay the page out from scratch.
+Finished screens built from Beam UI components. When the task is a dashboard, an agent or chat workspace, an app shell with a sidebar, a login or a sign-up page, start from the closest screen here: install it, then change its data and copy. Do not lay the page out from scratch.
 
 - Install: `npx usebeam add screens/<id>` writes `app/<id>/page.tsx` and its parts in `components/`.
 - Sidebar layouts also install as components: `npx usebeam add ui/<id>`.
@@ -12,6 +12,12 @@ Finished screens built from Beam UI components. When the task is a dashboard, an
 | id | Use it for | Built from |
 | --- | --- | --- |
 | `dashboard-analytics` | Sidebar, metric cards, an area chart and a sortable, editable data table. | avatar, badge, button, card, chart, checkbox, drawer, dropdown-menu, input, label, select, separator, sidebar, table, tabs, toggle-group |
+
+## Agent
+
+| id | Use it for | Built from |
+| --- | --- | --- |
+| `ai-workspace` | Chats and files in a sidebar, a conversation where the agent's runs and tool calls sit above its replies, and a composer with Send and Stop. | agent-run, bubble, button, composer, message, message-scroller, separator, sidebar, status-dot, tool-call, tree |
 
 ## Sidebar
 

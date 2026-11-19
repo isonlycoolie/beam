@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 
 const screensDir = fileURLToPath(new URL("../registry/screens", import.meta.url));
 const out = fileURLToPath(new URL("../../kits/craft/references/screens.md", import.meta.url));
-const GROUPS = ["Dashboard", "Sidebar", "Login", "Sign up"];
+const GROUPS = ["Dashboard", "Agent", "Sidebar", "Login", "Sign up"];
 
 const screens = readdirSync(screensDir)
   .sort()
@@ -22,7 +22,7 @@ const screens = readdirSync(screensDir)
 const lines = [
   "# Screens",
   "",
-  "Finished screens built from Beam UI components. When the task is a dashboard, an app shell with a sidebar, a login or a sign-up page, start from the closest screen here: install it, then change its data and copy. Do not lay the page out from scratch.",
+  "Finished screens built from Beam UI components. When the task is a dashboard, an agent or chat workspace, an app shell with a sidebar, a login or a sign-up page, start from the closest screen here: install it, then change its data and copy. Do not lay the page out from scratch.",
   "",
   "- Install: `npx usebeam add screens/<id>` writes `app/<id>/page.tsx` and its parts in `components/`.",
   "- Sidebar layouts also install as components: `npx usebeam add ui/<id>`.",
