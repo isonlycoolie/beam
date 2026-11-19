@@ -1,0 +1,12 @@
+{
+  "id": "ai-workspace",
+  "group": "Agent",
+  "title": "Agent · AI workspace",
+  "summary": "Chats and files in a sidebar, a conversation where the agent's runs and tool calls sit above its replies, and a composer with Send and Stop.",
+  "source": "Sesama UI (MIT)",
+  "files": [
+    "components/app-sidebar.tsx",
+    "components/conversation.tsx",
+    "page.tsx"
+  ]
+}
