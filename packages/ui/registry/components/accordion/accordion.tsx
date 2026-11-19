@@ -7,7 +7,9 @@ import type * as React from "react";
 import { Icon } from "../../../icons/icon";
 import { cn } from "../../../lib/cn";
 
-const Accordion = AccordionPrimitive.Root;
+function Accordion(props: React.ComponentProps<typeof AccordionPrimitive.Root>) {
+  return <AccordionPrimitive.Root data-slot="accordion" {...props} />;
+}
 
 function AccordionItem({ className, ...props }: React.ComponentProps<typeof AccordionPrimitive.Item>) {
   return <AccordionPrimitive.Item data-slot="accordion-item" className={cn("border-b border-border", className)} {...props} />;

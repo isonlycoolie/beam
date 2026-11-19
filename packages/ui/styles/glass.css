@@ -108,7 +108,7 @@
     [data-slot="card"],
     [data-slot="alert"],
     [data-slot="callout"],
-    [data-slot="accordion-item"],
+    [data-slot="accordion"],
     [data-slot="table"],
     [data-slot="sidebar-inner"],
     [data-slot="menubar"],
@@ -265,6 +265,7 @@
     [data-slot="badge"],
     [data-slot="chip"],
     [data-slot="toolbar"][data-variant="default"],
+    [data-slot="accordion"],
     [data-slot="item"]
   )::after {
   content: "";
@@ -288,9 +289,20 @@
   -webkit-mask-composite: xor;
   mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
 }
-/* Inputs and textareas carry a rim too. */
-:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="input"], [data-slot="textarea"]) {
+/* Inputs, textareas and accordions carry a rim too. */
+:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="input"], [data-slot="textarea"], [data-slot="accordion"]) {
   position: relative;
+}
+
+/* Accordion: one glass card for the whole group with hairlines between the rows, as iOS groups rows in a list.
+   The rows themselves stay flat: glass per row stacks shadows and loses the dividers. */
+:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="accordion"]) {
+  border-radius: var(--radius-lg);
+  padding-inline: 16px;
+  background-color: var(--card);
+}
+:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="accordion-item"]):last-child {
+  border-bottom-color: transparent;
 }
 
 /* ---------- Liquid controls ---------- */

@@ -30,6 +30,7 @@ const SLOTS: Record<string, string[]> = {
   badge: ["badge"],
   chip: ["chip"],
   toolbar: ["toolbar"],
+  accordion: ["accordion"],
 };
 
 describe("glass mode", () => {
