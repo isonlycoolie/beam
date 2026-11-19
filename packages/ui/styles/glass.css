@@ -108,7 +108,6 @@
     [data-slot="card"],
     [data-slot="alert"],
     [data-slot="callout"],
-    [data-slot="accordion"],
     [data-slot="table"],
     [data-slot="sidebar-inner"],
     [data-slot="menubar"],
@@ -309,17 +308,32 @@
   -webkit-mask-composite: xor;
   mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
 }
-/* Inputs, textareas and accordions carry a rim too. */
-:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="input"], [data-slot="textarea"], [data-slot="accordion"]) {
+/* Inputs and textareas carry a rim too. */
+:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="input"], [data-slot="textarea"]) {
   position: relative;
 }
 
 /* Accordion: one glass card for the whole group with hairlines between the rows, as iOS groups rows in a list.
-   The rows themselves stay flat: glass per row stacks shadows and loses the dividers. */
+   The rows themselves stay flat: glass per row stacks shadows and loses the dividers. The card is drawn 16px past
+   each side on a layer behind the rows, so the rows stay exactly where Normal puts them. */
 :where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="accordion"]) {
+  position: relative;
+  isolation: isolate;
+}
+:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="accordion"])::before {
+  content: "";
+  position: absolute;
+  inset: 0 -16px;
+  z-index: -1;
   border-radius: var(--radius-lg);
-  padding-inline: 16px;
   background-color: var(--card);
+  background-image: var(--glass-sheen);
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+  -webkit-backdrop-filter: blur(calc(var(--beam-glass-frost) * 4)) saturate(var(--beam-glass-saturate)) brightness(1.05);
+  backdrop-filter: blur(calc(var(--beam-glass-frost) * 4)) saturate(var(--beam-glass-saturate)) brightness(1.05);
+}
+:where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="accordion"])::after {
+  inset: 0 -16px;
 }
 :where([data-surface="glass"], [data-surface="glass"] *):is([data-slot="accordion-item"]):last-child {
   border-bottom-color: transparent;
