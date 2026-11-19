@@ -78,3 +78,66 @@ function Composer({ value: valueProp, defaultValue = "", onValueChange, onSubmit
       >
         <GlassBackdrop />
         {children}
+      </form>
+    </ComposerContext.Provider>
+  );
+}
+
+// Files waiting to send: two Attachments a row, four from 600px.
+function ComposerAttachments({ className, ...props }: React.ComponentProps<"div">) {
+  return <div data-slot="composer-attachments" className={cn("grid grid-cols-2 gap-2 px-3 pt-3 min-[600px]:grid-cols-4 empty:hidden", className)} {...props} />;
+}
+
+// Grows with the text from 56px to 240px (or a third of a short screen), then scrolls.
+function ComposerInput({ className, onKeyDown, ...props }: Omit<React.ComponentProps<"textarea">, "value" | "defaultValue">) {
+  const { value, setValue } = useComposer();
+  return (
+    <textarea
+      data-slot="composer-input"
+      aria-label={props["aria-label"] ?? "Message"}
+      rows={1}
+      value={value}
+      onChange={(event) => setValue(event.target.value)}
+      onKeyDown={(event) => {
+        onKeyDown?.(event);
+        if (event.defaultPrevented || !isSubmitKey({ key: event.key, shiftKey: event.shiftKey, isComposing: event.nativeEvent.isComposing })) return;
+        event.preventDefault();
+        event.currentTarget.form?.requestSubmit();
+      }}
+      className={cn(
+        "field-sizing-content max-h-[min(240px,35dvh)] min-h-14 w-full resize-none bg-transparent px-3 pt-3 pb-1",
+        "text-[14px] leading-[20px] text-text-1 outline-none placeholder:text-text-3 disabled:cursor-not-allowed disabled:opacity-50",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+// The bar under the text: actions start left; push the rest right with ms-auto on the first of them.
+function ComposerFooter({ className, ...props }: React.ComponentProps<"div">) {
+  return <div data-slot="composer-footer" className={cn("flex items-center gap-1 p-2", className)} {...props} />;
+}
+
+/** An icon action in the bar (attach, microphone): a ghost Button at 28px. Give it an aria-label. */
+function ComposerAction({ variant = "ghost", size = "icon-sm", ...props }: React.ComponentProps<typeof Button>) {
+  return <Button data-slot="composer-action" type="button" variant={variant} size={size} {...props} />;
+}
+
+// Send, the one primary Button; Stop takes its place while the reply runs.
+function ComposerSubmit({ className, ...props }: Omit<React.ComponentProps<typeof Button>, "children">) {
+  const { status, canSubmit, onStop } = useComposer();
+  if (status === "running")
+    return (
+      <Button type="button" size="icon-sm" aria-label="Stop" onClick={onStop} className={className} {...props}>
+        <Icon icon={StopIcon} size="sm" />
+      </Button>
+    );
+  return (
+    <Button type="submit" size="icon-sm" aria-label="Send" disabled={!canSubmit} className={className} {...props}>
+      <Icon icon={ArrowUp02Icon} size="sm" />
+    </Button>
+  );
+}
+
+export { Composer, ComposerAction, ComposerAttachments, ComposerFooter, ComposerInput, ComposerSubmit, isSubmitKey, useComposer };

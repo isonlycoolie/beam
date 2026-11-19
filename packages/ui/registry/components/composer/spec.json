@@ -1,0 +1,34 @@
+{
+  "name": "composer",
+  "title": "Composer",
+  "summary": "The box people write to an agent in: a growing text field, attached files and a bar of actions with Send.",
+  "source": "Sesama UI (MIT)",
+  "use_when": [
+    "The input at the bottom of a chat or agent workspace",
+    "A prompt that can carry files, a model or a context choice"
+  ],
+  "avoid_when": [
+    "A comment or note without an agent: use Textarea with a Button",
+    "A one-line search: use Input Group"
+  ],
+  "props": {
+    "value / defaultValue / onValueChange": "the message text",
+    "onSubmit": "(message: string) => void, called with the trimmed text on Enter or Send",
+    "status": "idle | running: while running, Send becomes Stop",
+    "onStop": "() => void",
+    "hasAttachments": "boolean: lets a message with files but no text send"
+  },
+  "variants": [],
+  "styles": ["default", "running", "attachments"],
+  "composes_with": ["Attachment", "Select", "Button", "Message Scroller", "Agent Run"],
+  "copy": {
+    "placeholder": "An invitation in a few words: \"Ask anything\"",
+    "actions": "Every icon action has an aria-label: \"Add files\", \"Dictate\""
+  },
+  "states": ["empty", "ready", "focus", "running", "disabled"],
+  "a11y": [
+    "Enter sends and Shift+Enter starts a new line; nothing sends mid-composition in an input method",
+    "Send is disabled while the message is empty; Stop replaces it while the reply runs"
+  ],
+  "rules": ["action.one-primary", "state.complete"]
+}
