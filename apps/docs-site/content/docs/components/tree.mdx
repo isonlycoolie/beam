@@ -1,0 +1,30 @@
+---
+title: Tree
+description: Nested items that open and close, moved through with the arrow keys as a WAI-ARIA tree.
+---
+
+<ComponentPreview name="tree" styles />
+
+## Installation
+
+<InstallTabs name="tree" />
+
+## Usage
+
+```tsx
+import { Tree, TreeSection, type TreeItem } from "@/components/ui/tree";
+```
+
+```tsx
+<TreeSection title="Projects" action={addButton}>
+  <Tree aria-label="Projects" items={items} defaultExpanded={["website"]} />
+</TreeSection>
+```
+
+## Rules for agents
+
+<AgentRules name="tree" />
+
+## API reference
+
+<PropsTable name="tree" />

@@ -1,0 +1,31 @@
+---
+title: Tool Call
+description: One call an agent made to a tool: its name, state and time, opening to the input and the output or error.
+---
+
+<ComponentPreview name="tool-call" styles />
+
+## Installation
+
+<InstallTabs name="tool-call" />
+
+## Usage
+
+```tsx
+import { ToolCall, ToolCallInput, ToolCallOutput, ToolCallError } from "@/components/ui/tool-call";
+```
+
+```tsx
+<ToolCall name="Search files" state="completed" duration="0.8s">
+  <ToolCallInput value={{ query: "payout" }} />
+  <ToolCallOutput value="3 matches" />
+</ToolCall>
+```
+
+## Rules for agents
+
+<AgentRules name="tool-call" />
+
+## API reference
+
+<PropsTable name="tool-call" />
