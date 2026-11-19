@@ -58,3 +58,47 @@ function ToolCall({ name, state = "completed", duration, icon = CodeIcon, classN
         {state === "running" ? <RunStateIcon state="running" /> : <Icon icon={icon} size="sm" className="text-text-3" />}
         <span className="min-w-0 truncate font-medium">{name}</span>
         <RunMeta state={state} duration={duration} />
+        <Icon
+          icon={ArrowDown01Icon}
+          size="sm"
+          className="ms-auto size-3 text-text-3 transition-transform duration-(--dur-fast) group-data-[state=open]/tool-call:rotate-180"
+        />
+      </CollapsiblePrimitive.Trigger>
+      <CollapsiblePrimitive.Content data-slot="tool-call-content" className="overflow-hidden">
+        <div className="ms-2 flex flex-col gap-2 border-s border-border py-1 ps-4">
+          {children ?? <p className="text-[12px] leading-[16px] text-text-3">No output yet.</p>}
+        </div>
+      </CollapsiblePrimitive.Content>
+    </CollapsiblePrimitive.Root>
+  );
+}
+
+const show = (value: unknown) => (typeof value === "string" ? value : JSON.stringify(value, null, 2));
+
+type ToolCallBlockProps = Omit<React.ComponentProps<"div">, "children"> & {
+  /** A string, or any value: objects print as indented JSON. */
+  value: unknown;
+};
+
+function block(slot: string, label: string, tone: string) {
+  function ToolCallBlock({ value, className, ...props }: ToolCallBlockProps) {
+    return (
+      <div data-slot={slot} className={cn("flex flex-col gap-1", className)} {...props}>
+        <span className="text-[12px] leading-[16px] font-medium text-text-2">{label}</span>
+        <pre className={cn("overflow-x-auto rounded-(--radius-md) px-3 py-2 font-mono text-[12px] leading-[16px] whitespace-pre-wrap break-words", tone)}>
+          {show(value)}
+        </pre>
+      </div>
+    );
+  }
+  return ToolCallBlock;
+}
+
+/** What the agent sent the tool. */
+const ToolCallInput = block("tool-call-input", "Input", "bg-surface-2 text-text-2");
+/** What the tool sent back. */
+const ToolCallOutput = block("tool-call-output", "Output", "bg-surface-2 text-text-2");
+/** Why the call failed. */
+const ToolCallError = block("tool-call-error", "Error", "bg-danger-soft text-danger");
+
+export { RUN_STATE_LABEL, RunMeta, RunStateIcon, ToolCall, ToolCallError, ToolCallInput, ToolCallOutput, type RunState };

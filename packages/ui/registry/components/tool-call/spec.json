@@ -1,0 +1,34 @@
+{
+  "name": "tool-call",
+  "title": "Tool Call",
+  "summary": "One call an agent made to a tool: its name, state and time, opening to the input and the output or error.",
+  "source": "Sesama UI (MIT)",
+  "use_when": [
+    "Showing what an agent did, one tool at a time, inside an Agent Run or a Message",
+    "Letting people check the exact input and output of a call"
+  ],
+  "avoid_when": [
+    "A whole task with several steps: use Agent Run around the calls",
+    "Logs or long files: link to them instead of printing them"
+  ],
+  "props": {
+    "name": "ReactNode: the tool's name, \"Search files\"",
+    "state": "queued | running | completed | failed | cancelled",
+    "duration": "string: how long it took, \"1.2s\"",
+    "icon": "Hugeicons icon for the tool (default CodeIcon); a Spinner replaces it while running",
+    "open / defaultOpen / onOpenChange": "Radix Collapsible props",
+    "value": "unknown (ToolCallInput, ToolCallOutput, ToolCallError): strings print as they are, objects as JSON"
+  },
+  "variants": [],
+  "styles": ["default", "output"],
+  "composes_with": ["Agent Run", "Message", "Status Dot"],
+  "copy": {
+    "name": "The tool's action in sentence case: \"Search files\", not \"search_files()\""
+  },
+  "states": ["queued", "running", "completed", "failed", "cancelled", "open", "closed", "focus"],
+  "a11y": [
+    "The row is a button that says whether it is open",
+    "State icons carry their state as a label, so the meaning is not colour alone"
+  ],
+  "rules": ["copy.sentence-case", "state.complete"]
+}
