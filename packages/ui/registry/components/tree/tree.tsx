@@ -158,3 +158,70 @@ function Tree({ items, selected: selectedProp, defaultSelected, onSelectedChange
             data-slot="tree-row"
             data-selected={item.id === selected || undefined}
             style={{ "--level": level - 1 } as React.CSSProperties}
+            className={cn("group/tree-row", treeRowVariants({ size }))}
+            onClick={() => {
+              setFocused(item.id);
+              select(item);
+            }}
+          >
+            {folder ? (
+              <Icon icon={ArrowRight01Icon} size="sm" className={cn("size-3 text-text-3 transition-transform duration-(--dur-fast)", open && "rotate-90")} />
+            ) : (
+              <span aria-hidden className="size-3 shrink-0" />
+            )}
+            {item.icon ? <Icon icon={item.icon} size="sm" className="text-text-3" /> : null}
+            <span className="min-w-0 flex-1 truncate">{item.label}</span>
+            {item.actions ? (
+              <span
+                className="flex shrink-0 items-center opacity-0 group-hover/tree-row:opacity-100 group-data-[selected]/tree-row:opacity-100"
+                onClick={(event) => event.stopPropagation()}
+              >
+                {item.actions}
+              </span>
+            ) : null}
+          </div>
+          {open && (item.children?.length || item.loading) ? (
+            <ul role="group" className="flex flex-col gap-px pt-px">
+              {item.children ? render(item.children, level + 1) : null}
+              {item.loading ? (
+                <li role="none" style={{ "--level": level } as React.CSSProperties} className={cn(treeRowVariants({ size }), "cursor-default text-text-3 hover:bg-transparent hover:text-text-3")}>
+                  <Spinner label="Loading" />
+                  Loading
+                </li>
+              ) : null}
+            </ul>
+          ) : null}
+        </li>
+      );
+    });
+
+  return (
+    <ul role="tree" data-slot="tree" data-size={size ?? "md"} className={cn("flex w-full min-w-0 flex-col gap-px", className)} {...props}>
+      {render(items, 1)}
+    </ul>
+  );
+}
+
+type TreeSectionProps = Omit<React.ComponentProps<"section">, "title"> & {
+  title: React.ReactNode;
+  /** A small action beside the title, e.g. a ghost icon Button "Add project". */
+  action?: React.ReactNode;
+};
+
+// A titled group of trees, its title in the sidebar's group label type.
+function TreeSection({ title, action, className, children, ...props }: TreeSectionProps) {
+  const id = React.useId();
+  return (
+    <section data-slot="tree-section" aria-labelledby={id} className={cn("flex flex-col gap-1", className)} {...props}>
+      <div className="flex h-(--control-sm) items-center justify-between gap-2 px-2">
+        <h3 id={id} className="text-[14px] leading-[20px] font-semibold text-text-2 uppercase">
+          {title}
+        </h3>
+        {action}
+      </div>
+      {children}
+    </section>
+  );
+}
+
+export { Tree, TreeSection, treeKeyMove, treeRowVariants, visibleNodes, type TreeItem };
