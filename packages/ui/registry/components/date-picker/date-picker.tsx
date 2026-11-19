@@ -58,3 +58,58 @@ function DatePicker(props: DatePickerProps) {
     <div data-slot="date-picker" data-size={size} className={cn("relative inline-flex w-fit min-w-0", className)}>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
+          <Button
+            id={id}
+            variant="outline"
+            size={size}
+            disabled={disabled}
+            aria-label={props["aria-label"]}
+            aria-invalid={props["aria-invalid"]}
+            className={cn("w-full justify-start font-normal", !label && "text-text-3", clearable && label && "pe-9")}
+          >
+            <Icon icon={Calendar03Icon} size="sm" className="text-text-3" />
+            {label || placeholder}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent align="start" className="w-auto p-0">
+          {props.mode === "range" ? (
+            <Calendar
+              mode="range"
+              numberOfMonths={2}
+              selected={value as DateRange | undefined}
+              defaultMonth={(value as DateRange | undefined)?.from}
+              onSelect={(range) => {
+                change(range);
+                if (range?.from && range.to && range.from.getTime() !== range.to.getTime()) setOpen(false);
+              }}
+            />
+          ) : (
+            <Calendar
+              mode="single"
+              selected={value as Date | undefined}
+              defaultMonth={value as Date | undefined}
+              onSelect={(date) => {
+                change(date);
+                setOpen(false);
+              }}
+            />
+          )}
+        </PopoverContent>
+      </Popover>
+      {clearable && label && !disabled ? (
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon-xs"
+          aria-label="Clear date"
+          className="absolute end-1.5 top-1/2 -translate-y-1/2"
+          onClick={() => change(undefined)}
+        >
+          <Icon icon={Cancel01Icon} size="sm" />
+        </Button>
+      ) : null}
+    </div>
+  );
+}
+
+export { DatePicker, formatDateValue };
