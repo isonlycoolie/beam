@@ -68,3 +68,56 @@ describe("Tree", () => {
 
   it("moves with the WAI-ARIA keys", () => {
     const open = new Set(["web"]);
+    const nodes = visibleNodes(ITEMS, open);
+    expect(treeKeyMove(nodes, "web", "ArrowDown", open)).toEqual({ focus: "overview" });
+    expect(treeKeyMove(nodes, "overview", "ArrowUp", open)).toEqual({ focus: "web" });
+    expect(treeKeyMove(nodes, "pricing", "Home", open)).toEqual({ focus: "web" });
+    expect(treeKeyMove(nodes, "web", "End", open)).toEqual({ focus: "notes" });
+    expect(treeKeyMove(nodes, "web", "ArrowRight", open)).toEqual({ focus: "overview" });
+    expect(treeKeyMove(nodes, "app", "ArrowRight", open)).toEqual({ expand: "app" });
+    expect(treeKeyMove(nodes, "web", "ArrowLeft", open)).toEqual({ collapse: "web" });
+    expect(treeKeyMove(nodes, "pricing", "ArrowLeft", open)).toEqual({ focus: "web" });
+    expect(treeKeyMove(nodes, "notes", "ArrowRight", open)).toBeNull();
+  });
+
+  it("jumps to the next row starting with a typed letter, wrapping round", () => {
+    const open = new Set(["web"]);
+    const nodes = visibleNodes(ITEMS, open);
+    expect(treeKeyMove(nodes, "web", "p", open)).toEqual({ focus: "pricing" });
+    expect(treeKeyMove(nodes, "notes", "w", open)).toEqual({ focus: "web" });
+  });
+
+  it("renders a treeview with one tab stop and the aria states", () => {
+    const html = renderToStaticMarkup(h(Tree, { "aria-label": "Projects", items: ITEMS, defaultExpanded: ["web"], defaultSelected: "pricing" }));
+    expect(html).toContain('role="tree"');
+    expect(html.match(/tabindex="0"/g)).toHaveLength(1);
+    expect(html).toMatch(/aria-expanded="true"[^>]*aria-selected="false"/);
+    expect(html).toMatch(/aria-selected="true" tabindex="0"/);
+    expect(html).toContain('role="group"');
+  });
+});
+
+describe("Date Picker", () => {
+  it("formats single dates and ranges, with the year once", () => {
+    expect(formatDateValue(new Date(2026, 10, 18), "en-US")).toBe("Nov 18, 2026");
+    expect(formatDateValue({ from: new Date(2026, 10, 3), to: new Date(2026, 10, 18) }, "en-US")).toBe("Nov 3 – Nov 18, 2026");
+    expect(formatDateValue({ from: new Date(2025, 11, 30), to: new Date(2026, 0, 2) }, "en-US")).toBe("Dec 30, 2025 – Jan 2, 2026");
+    expect(formatDateValue(undefined)).toBe("");
+  });
+
+  it("shows the placeholder, and a clear button once a date is set", () => {
+    expect(renderToStaticMarkup(h(DatePicker, {}))).toContain("Pick a date");
+    expect(renderToStaticMarkup(h(DatePicker, { defaultValue: new Date(2026, 10, 18) }))).toContain('aria-label="Clear date"');
+  });
+});
+
+describe("Tool Call and Agent Run", () => {
+  it("say their state in words and as a label", () => {
+    const html = renderToStaticMarkup(h(ToolCall, { name: "Write file", state: "failed", duration: "0.4s" }, h(ToolCallError, { value: "Denied" })));
+    expect(html).toContain("Failed · 0.4s");
+    expect(html).toContain('data-status="failed"');
+    const run = renderToStaticMarkup(h(AgentRun, { title: "Review", state: "running", defaultOpen: true }, h(AgentRunStep, { state: "completed" }, "Read")));
+    expect(run).toContain('role="status"');
+    expect(run).toContain('aria-label="Completed"');
+  });
+});
