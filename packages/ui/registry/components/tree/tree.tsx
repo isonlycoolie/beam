@@ -78,3 +78,83 @@ const treeRowVariants = cva(
       },
     },
     defaultVariants: { size: "md" },
+  },
+);
+
+type TreeProps = Omit<React.ComponentProps<"ul">, "children"> &
+  VariantProps<typeof treeRowVariants> & {
+    items: TreeItem[];
+    selected?: string;
+    defaultSelected?: string;
+    onSelectedChange?: (id: string) => void;
+    expanded?: string[];
+    defaultExpanded?: string[];
+    onExpandedChange?: (ids: string[]) => void;
+  };
+
+function Tree({ items, selected: selectedProp, defaultSelected, onSelectedChange, expanded: expandedProp, defaultExpanded = [], onExpandedChange, size, className, ...props }: TreeProps) {
+  const [innerSelected, setInnerSelected] = React.useState(defaultSelected);
+  const [innerExpanded, setInnerExpanded] = React.useState(defaultExpanded);
+  const selected = selectedProp ?? innerSelected;
+  const expanded = React.useMemo(() => new Set(expandedProp ?? innerExpanded), [expandedProp, innerExpanded]);
+  const nodes = visibleNodes(items, expanded);
+  const [focused, setFocused] = React.useState<string>();
+  const tabStop = nodes.some((n) => n.item.id === focused) ? focused : nodes.some((n) => n.item.id === selected) ? selected : nodes[0]?.item.id;
+  const refs = React.useRef(new Map<string, HTMLLIElement>());
+
+  const setExpanded = (id: string, open: boolean) => {
+    const next = new Set(expanded);
+    if (open) next.add(id);
+    else next.delete(id);
+    if (expandedProp === undefined) setInnerExpanded([...next]);
+    onExpandedChange?.([...next]);
+  };
+  const select = (item: TreeItem) => {
+    if (selectedProp === undefined) setInnerSelected(item.id);
+    onSelectedChange?.(item.id);
+    if (isFolder(item)) setExpanded(item.id, !expanded.has(item.id));
+  };
+  const focus = (id: string) => {
+    setFocused(id);
+    refs.current.get(id)?.focus();
+  };
+
+  const render = (list: TreeItem[], level: number): React.ReactNode =>
+    list.map((item, index) => {
+      const open = expanded.has(item.id);
+      const folder = isFolder(item);
+      return (
+        <li
+          key={item.id}
+          ref={(el) => {
+            if (el) refs.current.set(item.id, el);
+            else refs.current.delete(item.id);
+          }}
+          role="treeitem"
+          data-slot="tree-item"
+          aria-level={level}
+          aria-setsize={list.length}
+          aria-posinset={index + 1}
+          aria-expanded={folder ? open : undefined}
+          aria-selected={item.id === selected}
+          tabIndex={item.id === tabStop ? 0 : -1}
+          className="group/tree-item outline-none focus-visible:[&>[data-slot=tree-row]]:shadow-(--focus-ring)"
+          onFocus={(event) => event.target === event.currentTarget && setFocused(item.id)}
+          onKeyDown={(event) => {
+            if (event.target !== event.currentTarget) return;
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              return select(item);
+            }
+            const move = treeKeyMove(nodes, item.id, event.key, expanded);
+            if (!move) return;
+            event.preventDefault();
+            if (move.expand) setExpanded(move.expand, true);
+            if (move.collapse) setExpanded(move.collapse, false);
+            if (move.focus) focus(move.focus);
+          }}
+        >
+          <div
+            data-slot="tree-row"
+            data-selected={item.id === selected || undefined}
+            style={{ "--level": level - 1 } as React.CSSProperties}
