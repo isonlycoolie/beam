@@ -1,0 +1,28 @@
+---
+title: Tag Input
+description: A field that turns what people type into removable tags. Enter or comma adds, Backspace removes the last, and pasted lists split.
+---
+
+<ComponentPreview name="tag-input" styles />
+
+## Installation
+
+<InstallTabs name="tag-input" />
+
+## Usage
+
+```tsx
+import { TagInput } from "@/components/ui/tag-input";
+```
+
+```tsx
+<TagInput label="Tags" value={tags} onValueChange={setTags} max={5} />
+```
+
+## Rules for agents
+
+<AgentRules name="tag-input" />
+
+## API reference
+
+<PropsTable name="tag-input" />
