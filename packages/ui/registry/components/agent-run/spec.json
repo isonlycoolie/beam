@@ -1,0 +1,33 @@
+{
+  "name": "agent-run",
+  "title": "Agent Run",
+  "summary": "One task an agent works through: a title with its state and time, opening to the steps, thinking and tool calls.",
+  "source": "Sesama UI (MIT)",
+  "use_when": [
+    "Showing the progress of an agent's task while it runs and after it ends",
+    "Grouping the steps and tool calls of one task inside a Message"
+  ],
+  "avoid_when": [
+    "A single tool call: use Tool Call on its own",
+    "Progress with a known percentage: use Progress"
+  ],
+  "props": {
+    "title": "ReactNode: the task, \"Review project\"",
+    "state": "queued | running | completed | failed | cancelled (AgentRun, AgentRunStep, AgentRunThinking)",
+    "duration": "string: how long the run took, \"12s\"",
+    "open / defaultOpen / onOpenChange": "Radix Collapsible props (AgentRun, AgentRunThinking)"
+  },
+  "variants": [],
+  "styles": ["default", "in-message"],
+  "composes_with": ["Tool Call", "Message", "Composer", "Spinner"],
+  "copy": {
+    "title": "The task as a verb phrase: \"Review project\"",
+    "step": "What the agent does, in a few words: \"Read the brief\""
+  },
+  "states": ["queued", "running", "completed", "failed", "cancelled", "open", "closed", "focus"],
+  "a11y": [
+    "The title row is a button that says whether it is open",
+    "The running Spinner is a status with a label; finished steps carry their state as a label"
+  ],
+  "rules": ["copy.verbs-on-actions", "copy.sentence-case", "state.complete"]
+}
