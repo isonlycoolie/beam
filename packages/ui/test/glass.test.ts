@@ -31,6 +31,9 @@ const SLOTS: Record<string, string[]> = {
   chip: ["chip"],
   toolbar: ["toolbar"],
   accordion: ["accordion"],
+  composer: ["composer"],
+  "agent-run": ["agent-run"],
+  "tag-input": ["tag-input"],
 };
 
 describe("glass mode", () => {
