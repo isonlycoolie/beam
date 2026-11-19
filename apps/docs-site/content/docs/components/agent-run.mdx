@@ -1,0 +1,34 @@
+---
+title: Agent Run
+description: One task an agent works through, opening to its steps, thinking and tool calls.
+---
+
+<ComponentPreview name="agent-run" styles />
+
+## Installation
+
+<InstallTabs name="agent-run" />
+
+## Usage
+
+```tsx
+import { AgentRun, AgentRunStep, AgentRunThinking } from "@/components/ui/agent-run";
+import { ToolCall } from "@/components/ui/tool-call";
+```
+
+```tsx
+<AgentRun title="Review project" state="running" defaultOpen>
+  <AgentRunStep>Read the brief</AgentRunStep>
+  <AgentRunThinking>Comparing the brief with the layout.</AgentRunThinking>
+  <ToolCall name="Search files" duration="0.8s" />
+  <AgentRunStep state="running">Draft the changes</AgentRunStep>
+</AgentRun>
+```
+
+## Rules for agents
+
+<AgentRules name="agent-run" />
+
+## API reference
+
+<PropsTable name="agent-run" />

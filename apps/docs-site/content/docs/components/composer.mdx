@@ -1,0 +1,42 @@
+---
+title: Composer
+description: The box people write to an agent in. Enter sends, Shift+Enter starts a new line, and Send turns into Stop while the reply runs.
+---
+
+<ComponentPreview name="composer" styles />
+
+## Installation
+
+<InstallTabs name="composer" />
+
+## Usage
+
+```tsx
+import { Composer, ComposerInput, ComposerFooter, ComposerAction, ComposerSubmit } from "@/components/ui/composer";
+```
+
+```tsx
+<Composer status={status} onSubmit={send} onStop={stop}>
+  <ComposerInput placeholder="Ask anything" />
+  <ComposerFooter>
+    <ComposerAction aria-label="Add files">…</ComposerAction>
+    <ComposerSubmit className="ms-auto" />
+  </ComposerFooter>
+</Composer>
+```
+
+## In a workspace
+
+Composer, Agent Run, Tool Call and Tree together in the `ai-workspace` screen.
+
+<ScreenPreview id="ai-workspace" />
+
+<ScreenInstall id="ai-workspace" />
+
+## Rules for agents
+
+<AgentRules name="composer" />
+
+## API reference
+
+<PropsTable name="composer" />
