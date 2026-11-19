@@ -1,0 +1,35 @@
+{
+  "name": "tree",
+  "title": "Tree",
+  "summary": "Nested items, such as folders and files, that open and close and are moved through with the arrow keys.",
+  "source": "Sesama UI (MIT)",
+  "use_when": [
+    "Folders and files, projects and pages, or any hierarchy more than one level deep",
+    "A side panel where people open branches and pick one item"
+  ],
+  "avoid_when": [
+    "One level of links: use Sidebar menu items",
+    "A flat list of records: use Table or Item"
+  ],
+  "props": {
+    "items": "TreeItem[]: { id, label, icon?, children?, loading?, actions? }",
+    "selected / defaultSelected / onSelectedChange": "the picked item's id",
+    "expanded / defaultExpanded / onExpandedChange": "string[]: ids of open folders",
+    "size": "sm | md | lg (rows 24, 28 or 36px)",
+    "aria-label": "string: name the tree, e.g. \"Projects\"",
+    "title / action": "TreeSection: a heading and a small action beside it"
+  },
+  "variants": [],
+  "styles": ["default", "section"],
+  "composes_with": ["Sidebar", "Button", "Spinner"],
+  "copy": {
+    "label": "Names as people know them, in sentence case"
+  },
+  "states": ["default", "hover", "focus", "selected", "expanded", "loading"],
+  "a11y": [
+    "WAI-ARIA tree: one tab stop; Up and Down move, Right opens or steps in, Left closes or steps out, Home and End jump, a letter jumps to the next match, Enter or Space picks",
+    "Give the tree an aria-label, or put it in a TreeSection"
+  ],
+  "rules": ["copy.sentence-case", "state.complete"],
+  "sizes": ["sm", "md", "lg"]
+}
