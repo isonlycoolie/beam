@@ -1,0 +1,37 @@
+{
+  "name": "tag-input",
+  "title": "Tag Input",
+  "summary": "A field that turns what people type into removable tags.",
+  "source": "Sesama UI (MIT)",
+  "use_when": [
+    "A short free list: labels, keywords, email addresses",
+    "Values people both add and take away again in one field"
+  ],
+  "avoid_when": [
+    "Picking from a known list: use Combobox or a group of ChipToggles",
+    "One value: use Input"
+  ],
+  "props": {
+    "value / defaultValue / onValueChange": "string[]",
+    "max": "number: the most tags it takes",
+    "placeholder": "string, shown while there are no tags",
+    "label": "string: the accessible name, e.g. \"Tags\"",
+    "name": "string: submits the tags with a form, joined by commas",
+    "size": "sm | md | lg (Input's heights)",
+    "aria-invalid": "boolean: the danger ring"
+  },
+  "variants": [],
+  "styles": ["default", "limit"],
+  "composes_with": ["Chip", "Field", "Label"],
+  "copy": {
+    "tag": "As typed; one or two words",
+    "description": "Say how to add: \"Press Enter or comma to add a tag\""
+  },
+  "states": ["empty", "filled", "focus", "full", "invalid", "disabled"],
+  "a11y": [
+    "Enter or comma adds, Backspace in an empty field removes the last tag, pasting a list adds each item",
+    "Every remove button is named after its tag: \"Remove Design\""
+  ],
+  "rules": ["form.labels-visible", "state.complete"],
+  "sizes": ["sm", "md", "lg"]
+}

@@ -68,3 +68,60 @@ function TagInput({ value: valueProp, defaultValue = [], onValueChange, max, pla
   };
   const add = (raw: string) => {
     const next = addTags(tags, raw, max);
+    if (next.length !== tags.length) commit(next);
+    setDraft("");
+  };
+  const chipSize = size === "lg" ? "md" : "sm";
+
+  return (
+    <div
+      data-slot="tag-input"
+      data-size={size ?? "md"}
+      data-disabled={disabled || undefined}
+      role="group"
+      aria-label={label}
+      className={cn(tagInputVariants({ size }), className)}
+      onClick={() => inputRef.current?.focus()}
+      {...props}
+    >
+      <GlassBackdrop />
+      {tags.map((tag) => (
+        <Chip key={tag} size={chipSize}>
+          {tag}
+          <ChipRemove label={`Remove ${tag}`} disabled={disabled} onClick={() => commit(tags.filter((t) => t !== tag))} />
+        </Chip>
+      ))}
+      <input
+        ref={inputRef}
+        id={id}
+        data-slot="tag-input-input"
+        aria-label={label}
+        value={draft}
+        disabled={disabled}
+        readOnly={full}
+        placeholder={tags.length === 0 ? placeholder : undefined}
+        onChange={(event) => setDraft(event.target.value)}
+        onKeyDown={(event) => {
+          if ((event.key === "Enter" || event.key === ",") && !event.nativeEvent.isComposing) {
+            if (!draft.trim()) return;
+            event.preventDefault();
+            add(draft);
+          } else if (event.key === "Backspace" && draft === "" && tags.length > 0) {
+            commit(tags.slice(0, -1));
+          }
+        }}
+        onPaste={(event) => {
+          const text = event.clipboardData.getData("text");
+          if (!/[,\n]/.test(text)) return;
+          event.preventDefault();
+          add(draft + text);
+        }}
+        onBlur={() => draft.trim() && add(draft)}
+        className="h-6 min-w-16 flex-1 bg-transparent px-1.5 outline-none placeholder:text-text-3 disabled:cursor-not-allowed"
+      />
+      {name ? <input type="hidden" name={name} value={tags.join(",")} /> : null}
+    </div>
+  );
+}
+
+export { addTags, TagInput, tagInputVariants };
